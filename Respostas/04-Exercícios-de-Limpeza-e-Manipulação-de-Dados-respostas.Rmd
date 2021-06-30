@@ -1,0 +1,951 @@
+---
+title: "04 - Exercícios de Limpeza e Manipulação de Dados"
+output: 
+  html_notebook:
+    toc: true
+    number_section: true
+---
+
+# **Pinguins do Arquipélogo Palmer**
+
+Você vai trabalhar na manipulação e limpeza de um *data frame* que contém dados coletados pela pesquisadora Dra. Kristen Gorman no projeto Pesquisas Ecológicas de Longa Duração da Estação Palmer, na Antártida. O *data frame* sobre o qual você irá trabalhar, `mypenguins_raw` é uma versão adaptada do *data frame* `penguins_raw` pertencente ao pacote `palmerpenguins`. O *data frame* traz dados de
+medidas relacionadas a tamanho (massa, tamanho da nadadeira, largura e comprimento do bico), sexo, observações de ninhos (data do ovo e se eclodiu) e razão isotópica (carbono, $\delta^{13}C$ e nitrogênio $\delta^{15}N$) para três espécies de pinguins: *Pygoscelis adeliae*, *P. papua* e *P. antartica*. Os dados foram coletados em três ilhas na Antártida: Biscoe, Dream e Torgersen.
+ 
+Sua tarefa é eliminar do *data frame* qualquer problema que possa impedir a sumarização e visualizção dos dados. Para isso, você irá utilizar as funcionalidades do pacote `tidyverse`. 
+
+- Carregue o pacote `tidyverse` para que você possa utilizá-lo utilizando a função library.
+
+```{r}
+# Carregar pacote
+library(tidyverse)
+```
+
+# **Carregar dados e reconhecer a tabela**
+
+- Carregue os dados utilizando a função `read_csv()` e armazene-o num objeto chamado `mypenguins_raw`.
+
+```{r}
+# Carregar os dados
+mypenguins_raw <- read_csv("mypenguins_raw.csv", col_names = TRUE, guess_max = 0) # não altere os argumentos
+```
+
+- Utilize as funções `head()`, `glimpse()` e `skim()` para fazer uma inspeção nos dados e tente encontrar problemas que possam impedir a sua posterior sumarização e visualização. Lembre-se de carregar o pacote `skimr` para utilizar a função `skim()`.
+
+```{r}
+# Inspecione os dados
+head(mypenguins_raw)
+glimpse(mypenguins_raw)
+
+# Carregar pacote skimr
+library(skimr)
+
+# Inspecionar os dados com a função skim()
+skim(mypenguins_raw)
+```
+
+# **Selecionar variáveis de interesse, conveter tipos de dados e corrigir nome de observações**
+
+O *data frame* possui 344 observações e 17 variáveis. Não precisaremos de todas as variáveis do *data frame* original. Além disso, os nomes de algumas variáveis estão longos, com espaços e letras maiúsculas (clique [aqui](https://journal.r-project.org/archive/2012-2/RJournal_2012-2_Baaaath.pdf) e nos links citados para consultar ler sobre convenções úteis para aperfeiçoar o estilo do seu código). Utilize a função `select()` do pacote `dplyr` para selecionar e renomear as variáveis de interesse. 
+
+- Gere um novo objeto, `mypenguins_clean1`contendo as variáveis `Date Egg`, `Species`, `Island`, `Culmen Length (mm)`, `Culmen Depth (mm)`, `Flipper Lenght(mm)`, `Body Mass (g)`, `Sex`, `Delta 15 N (o/oo)` e `Delta 13 C (o/oo)`. 
+
+- Renomeie as variáveis reduzindo seu tamanho, eliminando espaços, letras maiúsculas (exceto as que representam nitrogênio e carbono), parênteses e unidades de medidas. Utilize os seguintes nomes: `date`, `species`, `island`, `culmen_len`, `culmen_depth`, `flip_len`, `body_mass`, `sex`, `deltaN`, `deltaC`.
+
+```{r}
+mypenguins_clean1 <- mypenguins_raw %>% 
+  select(date = `Date Egg`, species = `Species`, island = `Island`, culmen_len = `Culmen Length (mm)`, culmen_depth = `Culmen Depth (mm)`, flip_len = `Flipper Length (mm)`, body_mass = `Body Mass (g)`, sex = `Sex`, deltaN = `Delta 15 N (o/oo)`, deltaC = `Delta 13 C (o/oo)`)
+```
+
+Seu data frame foi reduzido e agora possui apenas as variáveis que você vai precisar. Mas ele ainda apresenta alguns problemas.
+
+```{r}
+glimpse(mypenguins_clean1)
+```
+
+As variáveis `date`, `culmen_len` e `body_mass` deveriam ser do tipo `date` e `double` (`dbl`) mas foram atribuídas como `character`. Também é necessário abreviar o nome das espécies de pinguim. Além disso, será conveniente que as variáveis `species`, `island` e `sex` sejam do tipo `factor`. Utilize a função `mutate()` do pacote `dplyr` para:
+
+- Converter a variável `date` para o tipo `date` utilizando a função `ymd()`do pacote `lubridate`
+
+- Converter as variáveis `culmen_len`, `culmen_depth`, `flip_len`, `body_mass`, `deltaN` e `deltaC` para o tipo `double` utilizando a função `as.numeric()`.
+
+- Substitua o nome das espécies pelos seus apelidos `Adelia`, `Gentoo` e `Chinstrap` utilizando a função `str_replace_all()` do pacote `stringr`.
+
+- Converter as variáveis `species`, `island` e `sex` para o tipo `factor`.
+
+- Armazene as alterações realizadas no *data frame* em um novo objeto chamado `mypenguins_clean2`.
+
+```{r}
+# carregar pacotes
+library(lubridate)
+library(stringr)
+
+# efetuar alterações
+mypenguins_clean2 <- mypenguins_clean1 %>% 
+  mutate(date = ymd(date),
+         species = as.factor(str_replace_all(mypenguins_clean1$species, coll(c("Adelie Penguin (Pygoscelis adeliae)" = "Adelie",                     "Chinstrap penguin (Pygoscelis antarctica)" = "Gentoo",               "Gentoo penguin (Pygoscelis papua)" = "Chinstrap")))),
+         island = as.factor(island),
+         culmen_len = as.numeric(culmen_len),
+         culmen_depth = as.numeric(culmen_depth),
+         flip_len = as.numeric(flip_len),
+         body_mass = as.numeric(body_mass),
+         sex = as.factor(sex),
+         deltaN = as.numeric(deltaN),
+         deltaC = as.numeric(deltaC))
+```
+
+- Realize uma inspeção no *data frame* para confirmar se as mudanças surtiram o efeito desejado.
+
+```{r}
+# inspecione o data frame e confirme a correção dos tipos das variáveis
+glimpse(mypenguins_clean2)
+```
+
+# **Convertendo tipos de dados ao carregar o *data frame* **
+
+Também é possível converter os tipos dos dados ao carregar o *data frame* utilizando a função `read_csv()` e o argumento `cols_types = cols()`. 
+
+- Faça a conversão dos tipos de dados ao carregá-lo e armazene no objeto `mypenguins_clean2`. **Não** realize a conversão da variável `Species` nessa etapa. Antes de convertê-la a fator será necessário alterar o nome das espécies. Essa tarefa será realizada na próxima etapa.
+
+```{r}
+mypenguins_clean2 <- read_csv("mypenguins_raw.csv",
+                          col_types = cols(
+                            Island = col_factor(),
+                            `Date Egg` = col_date(),
+                            `Culmen Length (mm)` = col_double(),
+                            `Culmen Depth (mm)` = col_double(),
+                            `Flipper Length (mm)` = col_double(),
+                            `Body Mass (g)` = col_double(),
+                            Sex = col_factor(),
+                            `Delta 15 N (o/oo)` = col_double(),
+                            `Delta 13 C (o/oo)` = col_double()))
+```
+
+- Realize uma inspeção no *data frame* para confirmar se as mudanças surtiram o efeito desejado.
+
+```{r}
+# inspecione o data frame e confirme a correção dos tipos das variáveis
+glimpse(mypenguins_clean2)
+```
+
+Como os dados foram novamente carregados você precisa selecionar as variáveis, corrigir o nome das espécies novamente e transformá-la em fator. 
+
+- Utilize os códigos referentes ao uso da função `select()` e `mutate()` (apenas a variável `species`) do item 3 que realizam essas tarefas como referência para finalizar as alterações e armazene o resultado no objeto `mypenguins_clean2`.
+
+```{r}
+# repita a seleção e renomeação das variáveis e das observações realizada no item 3
+mypenguins_clean2 <- mypenguins_clean2 %>% 
+  select(date = `Date Egg`, species = `Species`, island = `Island`, culmen_len = `Culmen Length (mm)`, culmen_depth = `Culmen Depth (mm)`, flip_len = `Flipper Length (mm)`, body_mass = `Body Mass (g)`, sex = `Sex`, deltaN = `Delta 15 N (o/oo)`, deltaC = `Delta 13 C (o/oo)`) %>% 
+  mutate(species = as.factor(str_replace_all(species, coll(c("Adelie Penguin (Pygoscelis adeliae)" = "Adelie",
+         "Chinstrap penguin (Pygoscelis antarctica)" = "Gentoo",
+         "Gentoo penguin (Pygoscelis papua)" = "Chinstrap")))))
+```
+
+- Realize mais uma inspeção no *data frame* para confirmar se as mudanças surtiram o efeito desejado.
+
+```{r}
+# inspecione o data frame e confirme a correção dos tipos das variáveis
+glimpse(mypenguins_clean2)
+```
+# **Obtendo subconjunto dos dados para espécies e ilhas**
+
+Muitas vezes precisamos trabalhar apenas com um subconjunto das observações do *data frame*. O "verbo" `filter()` do pacote `dplyr` permite que obtenhamos apenas o subconjunto das observações que necessitamos. Com ele é possível flitrar subconjuntos de observações de uma ou mias variáveis ao mesmo tempo.
+
+- A partir do *data frame* `mypenguins_clean2` gere três novos *data frame*'s, `adeliae`, `chinstrap` e `gentoo`, e armazene somente as observações equivalentes a espécie de pinguim correspondente: `"Adelie"`, `"Chinstrap"` e `"Gentoo"`, respectivamente.
+
+```{r}
+# gerar data frame com as observações da espécie adeliae 
+adelie <- mypenguins_clean2 %>% 
+  filter(species == "Adelie")
+
+# gerar data frame com as observações da espécie chinstrap
+chinstrap <- mypenguins_clean2 %>% 
+  filter(species == "Chinstrap")
+
+# gerar data frame com as observações da espécie gentoo
+gentoo <- mypenguins_clean2 %>% 
+  filter(species == "Gentoo")
+```
+
+- Inspecione os objetos criados e visualize as 10 primeiras linhas usando as funções `head()` e `glimpse()`.
+
+```{r}
+# inspecione os objetos criados
+head(adelie)
+glimpse(adelie)
+```
+
+```{r}
+# inspecione os objetos criados
+head(chinstrap)
+glimpse(chinstrap)
+```
+
+```{r}
+# inspecione os objetos criados
+head(gentoo)
+glimpse(gentoo)
+```
+
+- A partir do *data frame* `mypenguins_clean2` gere três novos *data frame*'s, `biscoe`, `dream` e `torgersen`, e armazene somente as observações equivalentes a ilha correspondente: `Biscoe`, `Dream` e `Torgersen`, respectivamente.
+
+```{r}
+# gerar data frame com as observações da ilha Biscoe 
+biscoe <- mypenguins_clean2 %>% 
+  filter(island == "Biscoe")
+
+# gerar data frame com as observações da ilha Dream
+dream <- mypenguins_clean2 %>% 
+  filter(island == "Dream")
+
+# gerar data frame com as observações da ilha Torgersen
+torgersen <- mypenguins_clean2 %>% 
+  filter(island == "Torgersen")
+```
+
+```{r}
+# inspecione os objetos criados
+head(biscoe)
+glimpse(biscoe)
+```
+
+```{r}
+# inspecione os objetos criados
+head(dream)
+glimpse(dream)
+```
+
+
+```{r}
+# inspecione os objetos criados
+head(torgersen)
+glimpse(torgersen)
+```
+
+O uso da função `filter()` não é restrito a uma única variável. Você pode filtrar um *data frame* a partir de quantas vairáveis for necessário para obter o subconjunto de dados que necessita.
+
+- Filtre o *data frame* `mypenguins_clean2` a partir das variáveis `island` e `species` e obtenha subconjunto das observações de cada espécies para cada ilha. Armazene os resultados nos objetos `adelie_biscoe`, `adelie_dream`, `adelie_torgersen`, `chinstrap_biscoe`, `chinstrap_dream`, `chinstrap_torgersen`, `gentoo_biscoe`, `gentoo_dream` e `gentoo_torgersen`.
+
+```{r}
+# obtendo o subconjunto de observações da espécie Adelie para cada ilha
+adelie_biscoe <- mypenguins_clean2 %>% 
+  filter(species == "Adelie", island == "Biscoe")
+
+adelie_dream <- mypenguins_clean2 %>% 
+  filter(species == "Adelie", island == "Dream")
+
+adelie_torgersen <- mypenguins_clean2 %>% 
+  filter(species == "Adelie", island == "Torgersen")
+
+# obtendo o subconjunto de observações da espécie Chinstrap para cada ilha
+chinstrap_biscoe <- mypenguins_clean2 %>% 
+  filter(species == "Chinstrap", island == "Biscoe")
+
+chinstrap_dream <- mypenguins_clean2 %>% 
+  filter(species == "Chinstrap", island == "Dream")
+
+chinstrap_torgersen <- mypenguins_clean2 %>% 
+  filter(species == "Chinstrap", island == "Torgersen")
+
+# obtendo o subconjunto de observações da espécie Gentoo para cada ilha
+gentoo_biscoe <- mypenguins_clean2 %>% 
+  filter(species == "Gentoo", island == "Biscoe")
+
+gentoo_dream <- mypenguins_clean2 %>% 
+  filter(species == "Gentoo", island == "Dream")
+
+gentoo_torgersen <- mypenguins_clean2 %>% 
+  filter(species == "Gentoo", island == "Torgersen")
+
+```
+
+```{r}
+# inspecione os objetos criados
+head(adelie_biscoe)
+glimpse(adelie_biscoe)
+```
+
+```{r}
+# inspecione os objetos criados
+head(adelie_dream)
+glimpse(adelie_dream)
+```
+
+```{r}
+# inspecione os objetos criados
+head(adelie_torgersen)
+glimpse(adelie_torgersen)
+```
+
+```{r}
+# inspecione os objetos criados
+head(chinstrap_biscoe)
+glimpse(chinstrap_biscoe)
+```
+
+```{r}
+# inspecione os objetos criados
+head(chinstrap_dream)
+glimpse(chinstrap_dream)
+```
+
+```{r}
+# inspecione os objetos criados
+head(chinstrap_torgersen)
+glimpse(chinstrap_torgersen)
+```
+
+```{r}
+# inspecione os objetos criados
+head(gentoo_biscoe)
+glimpse(gentoo_biscoe)
+```
+
+```{r}
+# inspecione os objetos criados
+head(gentoo_dream)
+glimpse(gentoo_dream)
+```
+
+```{r}
+# inspecione os objetos criados
+head(gentoo_torgersen)
+glimpse(gentoo_torgersen)
+```
+
+Note que a espécie Chinstrap ocorre apenas na ilha Biscoe e a espécie Gentoo ocorre apenas na ilha Dream.
+
+# **A qual espécie pertence o pinguim mais leve e o mais pesado - ordenando observações a partir de uma variável**
+
+Muitas vezes é necessário identificar a origem de observações extremas diretamente no *data frame*. Para isso, você pode utilizar a função `arrange()` que permite ordenar a planilha em ordem crescente ou decrescente de uma variável.
+
+- Descubra a qual espécie pertence o pinguim mais leve e mais pesado no *data frame* `mypenguins_clean2`.
+
+- Selecione as variáveis `species` e `body_mass`.
+
+- Em seguida, ordene a variável `body_mass` de forma crescente e decrescente. 
+
+- Lembre-se que para ordenar de forma decrescente é necessário utilizar a função `desc()`.
+
+```{r}
+# ordenando de forma crescente para conhecer a espécie mais leve
+mypenguins_clean2 %>% 
+  select(species, body_mass) %>% 
+  arrange(body_mass)
+```
+
+```{r}
+# ordenando de forma decrescente para conhecer a espécies mais pesada
+mypenguins_clean2 %>% 
+  select(species, body_mass) %>% 
+  arrange(desc(body_mass))
+
+```
+
+# **Quanto pesa o pinguim mais pesado de cada espécie**
+
+Essa questão pode ser respondida combinando o uso dos verbos `filter()` e `arrange()`.
+
+- Filtre o *data frame* `mypenguis_clean2` para obter as observações relativas a cada espécie. 
+
+- Selecione a variável `body_mass`. 
+
+- Ordene a variável `body_mass` de forma decrescente e armazene a sua primeira linha nos *data frames* restultantes para cada espécie nos objetos `adelie_havier`, `chinstrap_havier`, `gentoo_havier`.
+
+- Lembre-se que para ordenar de forma decrescente é necessário utilizar a função `desc()`.
+
+- Para obter apenas primeira linha do *data frama* use a função `head(n = 1)`.
+
+```{r}
+# odenando de forma decrescente o data frame da espécie Adelie a partir da variável body_mass
+adelie_desc <- mypenguins_clean2 %>% 
+  filter(species == "Adelie") %>% 
+  select(body_mass) %>% 
+  arrange(desc(body_mass)) %>% 
+  head(n = 1)
+```
+
+```{r}
+# odenando de forma decrescente o data frame da espécie Chinstrap a partir da variável body_mass
+chinstrap_desc <- mypenguins_clean2 %>% 
+  filter(species == "Chinstrap") %>% 
+  select(body_mass) %>% 
+  arrange(desc(body_mass)) %>% 
+  head(n = 1)
+```
+
+```{r}
+# odenando de forma decrescente o data frame da espécie Gentoo a partir da variável body_mass
+gentoo_desc <- mypenguins_clean2 %>% 
+  filter(species == "Gentoo") %>% 
+  select(body_mass) %>% 
+  arrange(desc(body_mass)) %>% 
+  head(n = 1)
+```
+
+- Agora, imprima cada um dos *data frames* gerados para descobrir qual é a espécie mais pesada de pinguim.
+
+```{r}
+# obter o indivíduo mais pesado da espécie Adelie
+print(adelie_desc)
+```
+
+```{r}
+# obter o indivíduo mais pesado da espécie Chinstrap
+print(chinstrap_desc)
+```
+
+```{r}
+# obter o indivíduo mais pesado da espécie Gentoo
+print(gentoo_desc)
+```
+
+Note que você pode obter o mesmo resultado utilizando os *data frames* gerados para cada espécie no item 5.
+
+- Use os obejetos que você gerou no item 5, `adelie`, `chinstrap` e `gentoo` para obter o indivíduo mais pesado de cada espécie.
+
+```{r}
+# obter o pinguim mais pesado de Adelie 
+adelie %>% 
+  select(body_mass) %>% 
+  arrange(desc(body_mass)) %>% 
+  head(n = 1)
+```
+
+```{r}
+# obter o pinguim mais pesado de Chinstrap 
+chinstrap %>% 
+  select(body_mass) %>% 
+  arrange(desc(body_mass)) %>% 
+  head(n = 1)
+```
+
+```{r}
+# obter o pinguim mais pesado de Gentoo
+gentoo %>% 
+  select(body_mass) %>% 
+  arrange(desc(body_mass)) %>% 
+  head(n = 1)
+```
+
+# **A qual espécie pertence o pinguim mais pesada de cada ilha**
+
+Além de combinar o uso dos verbos `filter()` e `arrange()`, também é possível filtrar mais de uma variável ao mesmo tempo.
+
+- Filtre o *data frame* `mypenguis_clean2` para obter as observações relativas a cada espécie (`species`) e a cada ilha (`island`).
+
+- Selecione a variável `body_mass`.
+
+- Ordene-a de forma decrescente. Lembre-se de utilizar a função `desc()`.
+
+- Aplique a função `head(n = 1)` para armazenar a primeira linha nos objetos `adelie_biscoe_havier`, `adelie_dream_havier`, `adelie_torgersen_havier`, `chinstrap_biscoe_havier`, `chinstrap_dream_havier`, `chinstrap_torgersen_havier`, `gentoo_biscoe_havier`, `gentoo_dream_havier` e `gentoo_torgersen_havier`. 
+
+```{r}
+# obtendo o subconjunto de observações da espécie Adelie para cada ilha
+adelie_biscoe_havier <- mypenguins_clean2 %>% 
+  filter(species == "Adelie", island == "Biscoe") %>% 
+  select(body_mass) %>% 
+  arrange(body_mass) %>% 
+  head(n = 1)
+
+adelie_dream_havier <- mypenguins_clean2 %>% 
+  filter(species == "Adelie", island == "Dream") %>% 
+  select(body_mass) %>% 
+  arrange(body_mass) %>% 
+  head(n = 1)
+
+adelie_torgersen_havier <- mypenguins_clean2 %>% 
+  filter(species == "Adelie", island == "Torgersen") %>% 
+  select(body_mass) %>% 
+  arrange(body_mass) %>% 
+  head(n = 1)
+
+# obtendo o subconjunto de observações da espécie Chinstrap para cada ilha
+chinstrap_biscoe_havier <- mypenguins_clean2 %>% 
+  filter(species == "Chinstrap", island == "Biscoe") %>% 
+  select(body_mass) %>% 
+  arrange(body_mass) %>% 
+  head(n = 1)
+
+chinstrap_dream_havier <- mypenguins_clean2 %>% 
+  filter(species == "Chinstrap", island == "Dream") %>% 
+  select(body_mass) %>% 
+  arrange(body_mass) %>% 
+  head(n = 1)
+
+chinstrap_torgersen_havier <- mypenguins_clean2 %>% 
+  filter(species == "Chinstrap", island == "Torgersen") %>% 
+  select(body_mass) %>% 
+  arrange(body_mass) %>% 
+  head(n = 1)
+
+# obtendo o subconjunto de observações da espécie Gentoo para cada ilha
+gentoo_biscoe_havier <- mypenguins_clean2 %>% 
+  filter(species == "Gentoo", island == "Biscoe") %>% 
+  select(body_mass) %>% 
+  arrange(body_mass) %>% 
+  head(n = 1)
+
+gentoo_dream_havier <- mypenguins_clean2 %>% 
+  filter(species == "Gentoo", island == "Dream") %>% 
+  select(body_mass) %>% 
+  arrange(body_mass) %>% 
+  head(n = 1)
+
+gentoo_torgersen_havier <- mypenguins_clean2 %>% 
+  filter(species == "Gentoo", island == "Torgersen") %>% 
+  select(body_mass) %>% 
+  arrange(body_mass) %>% 
+  head(n = 1)
+```
+
+- Agora, imprima cada um dos *data frames* gerados utilizando a função `print()` para descobrir qual é a espécie mais pesada de pinguim em cada ilha.
+
+```{r}
+# obtendo o pinguim mais pesado da espécie Adelie para cada ilha
+print(adelie_biscoe_havier)
+```
+
+```{r}
+# obtendo o pinguim mais pesado da espécie Adelie para cada ilha
+print(adelie_dream_havier)
+```
+
+```{r}
+# obtendo o pinguim mais pesado da espécie Adelie para cada ilha
+print(adelie_torgersen_havier)
+```
+
+```{r}
+# obtendo o pinguim mais pesado da espécie Chinstrap para cada ilha
+print(chinstrap_biscoe_havier)
+```
+
+```{r}
+# obtendo o pinguim mais pesado da espécie Chinstrap para cada ilha
+print(chinstrap_dream_havier)
+```
+
+```{r}
+# obtendo o pinguim mais pesado da espécie Chinstrap para cada ilha
+print(chinstrap_torgersen_havier)
+```
+
+```{r}
+# obtendo o pinguim mais pesado da espécie Gentoo para cada ilha
+print(gentoo_biscoe_havier)
+```
+
+```{r}
+# obtendo o pinguim mais pesado da espécie Gentoo para cada ilha
+print(gentoo_dream_havier)
+```
+
+```{r}
+# obtendo o pinguim mais pesado da espécie Gentoo para cada ilha
+print(gentoo_torgersen_havier)
+```
+
+Conforme constatado no exercício 5, pinguins da espécie Chinstrap ocorrem apenas na ilha Biscoe e piguins da espécie Gentoo ocorrem apenas nas ilhas Dream.
+
+Note que você pode obter o mesmo resultado utilizando os *data frames* gerados para cada ilha no exercício 5.
+
+- Utilize os *data frame*'s `biscoe`, `dream` e `torgersen` gerados no exercício 5 para obter o indivíduo mais pesado da ilha e sua respectiva espécie. 
+
+- Você precisará utilizar a função `select()` para selecionar a variável `species` e `body_mass`, a função `arrange()` e `desc()` para ordenar `body_mass` de forma decrescente e a função `head()` para mostrar a primeira linha de cada *data frame* que será gerado.
+
+```{r}
+# obter o pinguim mais pesado da ilha Biscoe 
+biscoe %>% 
+  select(species, body_mass) %>% 
+  arrange(desc(body_mass)) %>% 
+  head(n = 1)
+```
+
+```{r}
+# obter o pinguim mais pesado da ilha Dream 
+dream %>% 
+  select(species, body_mass) %>% 
+  arrange(desc(body_mass)) %>% 
+  head(n = 1)
+```
+
+```{r}
+# obter o pinguim mais pesado da ilha Torgersen
+torgersen %>% 
+  select(species, body_mass) %>% 
+  arrange(desc(body_mass)) %>% 
+  head(n = 1)
+```
+
+# **Avaliando o formato dos bicos dos pinguins**
+
+Para descobrir qual indivíduo apresenta um formato de bico mais longo e fino, qual possui um formato de bico mais curto e largo e a qual espécie de pinguim esses indivíduos pertencem, é necessário obter a razão entre a largura (`culmen_depth`) e o comprimento do bico (`cumen_len`). Valores muito inferiores a 1 indicam que o bico é mais longo e fino, enquanto valores próximos a 1 indicam que o bico tende a ser mais largo e robusto. 
+
+- Utilize o *data frame* `mypenguins_clea2` e calcule essa nova variável, `ratio_culmen_depth_len`, para cada espécie e identifique o indivíduo que possui a maior razão entre a largura e o comprimento do bico, utilizando as funções `filter()`, `mutate()` e `arrange()`.
+
+- Lembre-se de selecionar apenas as variáveis de interesse ao final do código (`species` e `ratio_culmen_depth_len`) utilizando a função `select()` e de imprimir apenas a primeira linha do *data frame* utilizando a função `head()`.
+
+```{r}
+# indivíduo com a maior razão entre largura e comprimento de bico de Adelie
+mypenguins_clean2 %>% 
+  filter(species == "Adelie") %>% 
+  mutate(ratio_culmen_depth_len = culmen_depth/culmen_len) %>% 
+  select(species, ratio_culmen_depth_len) %>% 
+  head(n = 1)
+```
+
+```{r}
+# indivíduo com a maior razão entre largura e comprimento de bico de Chinstrap
+mypenguins_clean2 %>% 
+  filter(species == "Chinstrap") %>% 
+  mutate(ratio_culmen_depth_len = culmen_depth/culmen_len) %>% 
+  select(species, ratio_culmen_depth_len) %>% 
+  head(n = 1)
+```
+
+```{r}
+# indivíduo com a maior razão entre largura e comprimento de bico de Gentoo
+mypenguins_clean2 %>% 
+  filter(species == "Gentoo") %>% 
+  mutate(ratio_culmen_depth_len = culmen_depth/culmen_len) %>% 
+  select(species, ratio_culmen_depth_len) %>% 
+  head(n = 1)
+```
+
+Note que você pode obter o mesmo resultado utilizando os *data frame*'s gerados para cada espécie no exercício 5, `adelie`, `chinstrap` e `gentoo`.
+
+```{r}
+# indivíduo com a maior razão entre largura e comprimento de bico de Adelie
+adelie %>% 
+  mutate(ratio_culmen_depth_len = culmen_depth/culmen_len) %>% 
+  select(species, ratio_culmen_depth_len) %>% 
+  head(n = 1)
+```
+
+```{r}
+# indivíduo com a maior razão entre largura e comprimento de bico de Chinstrap
+chinstrap %>% 
+  mutate(ratio_culmen_depth_len = culmen_depth/culmen_len) %>% 
+  select(species, ratio_culmen_depth_len) %>% 
+  head(n = 1)
+```
+
+```{r}
+# indivíduo com a maior razão entre largura e comprimento de bico de Gentoo
+gentoo %>% 
+  mutate(ratio_culmen_depth_len = culmen_depth/culmen_len) %>% 
+  select(species, ratio_culmen_depth_len) %>% 
+  head(n = 1)
+```
+
+# **Obtendo a massa média das espécies de pinguins**
+
+Até agora, você realizou operações para selecionar variáveis (`select()`), subconjuntos de observações (`filter()`), obteve valores máximos, mínimos (`arrange()`) e gerou novas variáveis a partir de variáveis existentes (`mutate()`). Agora você irá gerar *data frame*'s sumários a partir das variáveis existentes no *data frame* inicial e a partir daquelas variáveis que você gerou.
+
+- Calcule a massa média de todos os pinguins da amostra, `mean_all` utilizando a função `summarise()`. 
+
+- Para calcular a média utilize a função `mean()`. 
+
+- Utilize o data frame `mypenguins_clean2`.
+
+- Existem valores ausentes de massa (`NA`) no *data frame*. Para evitar mensagens de erro durante o cálculo, utilize a função `drop_na()` antes de calcular a média.
+
+```{r}
+mypenguins_clean2 %>% 
+  drop_na() %>% 
+  summarise(mean_all = mean(body_mass))
+```
+
+# **Obtendo a massa média das espécies de pinguins**
+
+Até agora, as "comparações" entre as três espécies de pinguim foram realizadas utilizando os valores máximos das variáveis. Embora seja informativo, utilizar apenas valores máximos não é a forma mais adequada para realizar comparações da variação da massa entre as espécies. Ao em vez disso, você pode utilizar uma medida de posição e tendência central que sumariza todas as observações realizadas para uma espécies em um único valor, a média aritmética.
+
+- Utiliando o *data frame* `mypenguins_clean2`, calcule a média da massa corporal de cada espécies de pinguim, `mean_mass_adelie`, `mean_mass_chinstrap` e `mean_mass_gentoo`.
+
+- Utilizando as funções `filter()`, `summarise()` e `mean()`.
+
+- Lembre-se de eliminar os valores ausentes utilizando `drop_na()` para evitar mensagens de erro durante o cálculo da média.
+
+```{r}
+# massa corporal média de pinguins Adelie
+mypenguins_clean2 %>% 
+  filter(species == "Adelie") %>% 
+  drop_na() %>% 
+  summarise(mean_mass_adelie = mean(body_mass))
+```
+
+```{r}
+# massa corporal média de pinguins Chinstrap
+mypenguins_clean2 %>% 
+  filter(species == "Chinstrap") %>% 
+  drop_na() %>% 
+  summarise(mean_mass_chinstrap = mean(body_mass))
+```
+
+```{r}
+# massa corporal média de pinguins Gentoo
+mypenguins_clean2 %>% 
+  filter(species == "Gentoo") %>% 
+  drop_na() %>% 
+  summarise(mean_mass_gentoo = mean(body_mass))
+```
+
+Note que você também pode utilizar os *data frame*'s gerados para cada espécie no exercício 5.
+
+- Utilizando os *data frame*'s gerados para cada espécie no exercício 5, `adelie`, `chinstrap` e `gentoo`, calcule a média da massa corporal de cada espécie de pinguim aplicando as funções `summarise()` e `mean()`.
+
+- Lembre-se de descartar os valores ausentes (`NA`) utilizando a função `drop_na()`.
+
+```{r}
+# massa corporal média de pinguins Adelie
+adelie %>% 
+  drop_na() %>% 
+  summarise(mean_mass_adelie = mean(body_mass))
+```
+
+```{r}
+# massa corporal média de pinguins Chinstrap
+chinstrap %>% 
+  drop_na() %>% 
+  summarise(mean_mass_chinstrap = mean(body_mass))
+```
+
+```{r}
+# massa corporal média de pinguins Gentoo
+gentoo %>% 
+  drop_na() %>% 
+  summarise(mean_mass_gentoo = mean(body_mass))
+```
+
+# **Descrevendo os dados de massa dos pinguins de cada espécie 1**
+
+A média é uma estatística importante para descrever a posição central na distribuição de frequências das observações de uma amostra quando esta é simétrica (ex. curva de sino da distribuição normal). Mas para compreender a variabilidade da amostra, ou seja, como se dá a distribuição das observações ao redor da média, precisamos calcular outras estatísticas. 
+
+Neste exercício, você irá utilizar o *data frame* `mypenguins_clean2` para calcular a mediana (outra medida de posição e de tendência central), o desvio padrão, a variância e o intervalo interquartil que medem a variabilidade das observações de massa realizadas para as três espécies de pinguim.
+
+- Utilize a função `filter()` para obter o subconjunto de observações da variável `species` para cada uma das espécies, `"Adelie"`, "`Chinstrap"` e "`Gentoo`".
+
+- Utilize a função `summarise()` para gerar um sumário estatístico das observações de massa dos pinguins, calculando a média (`mean()`), o desvio padrão (`sd()`), a variância (`var()`), o intervalo interquartil (`quantile()`) e o número de observações realizadas para cada espécie (`n()`). 
+
+- A função `quantile()` retorna um vetor com os cinco quartis, que representam os valores mínimos e máximos (primeiro e quinto quartil), o segundo quartil (a observação que marca o fim dos 25% iniciais dos dados), terceiro quartil (mediana - 50%) e quarto quartil (a observação que marca o início dos 25% finais dos dados). 
+
+```{r}
+# a função quantile() retorna um vetor com cinco valores
+quantile(mypenguins_clean2$body_mass, na.rm = TRUE)
+```
+
+- Lembre-se que para acessar cada resultado da função `quantile()` individualmente, é necessário utilizar o colcehtes indicando uma posição de 1 a 5 ao final da chamada da função (ex. `quantile[1]`).
+
+```{r}
+# massa corporal média de pinguins Adelie
+mypenguins_clean2 %>% 
+  filter(species == "Adelie") %>% 
+  drop_na() %>% 
+  summarise(mean_mass_adelie = mean(body_mass),
+            sd_mass_adelie = sd(body_mass),
+            min_mass_adelie = quantile(body_mass)[1],
+            qrt2_mass_adelie = quantile(body_mass)[2],
+            median_mass_adelie = quantile(body_mass)[3],
+            qrt3_mass_adelie = quantile(body_mass)[4],
+            max_mass_adelie = quantile(body_mass)[5],
+            n_mass_adelie = n())
+```
+
+```{r}
+# massa corporal média de pinguins Chinstrap
+mypenguins_clean2 %>% 
+  filter(species == "Chinstrap") %>% 
+  drop_na() %>% 
+  summarise(mean_mass_chinstrap = mean(body_mass),
+            sd_mass_chinstrap = sd(body_mass),
+            min_mass_chinstrap = quantile(body_mass)[1],
+            qrt2_mass_chinstrap = quantile(body_mass)[2],
+            median_mass_chinstrap = quantile(body_mass)[3],
+            qrt3_mass_chinstrap = quantile(body_mass)[4],
+            max_mass_chinstrap = quantile(body_mass)[5],
+            n_mass_chinstrap = n())
+```
+
+```{r}
+# massa corporal média de pinguins Gentoo
+mypenguins_clean2 %>% 
+  filter(species == "Gentoo") %>% 
+  drop_na() %>% 
+  summarise(mean_mass_gentoo = mean(body_mass),
+            sd_mass_gentoo = sd(body_mass),
+            min_mass_gentoo = quantile(body_mass)[1],
+            qrt2_mass_gentoo = quantile(body_mass)[2],
+            median_mass_gentoo = quantile(body_mass)[3],
+            qrt3_mass_gentoo = quantile(body_mass)[4],
+            max_mass_gentoo = quantile(body_mass)[5],
+            n_mass_gentoo = n())
+```
+
+Como nas práticas anteriores, você também pode utilizar os *data frame*'s gerados para cada espécie no exercício 5, `adelie`, `chinstrap` e `gentoo`. 
+
+- Complete as linhas de comando para obter o sumário estatístico de cada espécie.
+
+- Lembre-se de utilizar a função `drop_na()` para eliminar valores ausentes e evitar erros durante os cálculos do sumário.
+
+```{r}
+# massa corporal média de pinguins Adelie
+adelie %>% 
+  drop_na() %>% 
+  summarise(mean_mass_adelie = mean(body_mass),
+            sd_mass_adelie = sd(body_mass),
+            min_mass_adelie = quantile(body_mass)[1],
+            qrt2_mass_adelie = quantile(body_mass)[2],
+            median_mass_adelie = quantile(body_mass)[3],
+            qrt3_mass_adelie = quantile(body_mass)[4],
+            max_mass_adelie = quantile(body_mass)[5],
+            n_mass_adelie = n())
+```
+
+```{r}
+# massa corporal média de pinguins Chinstrap
+chinstrap %>% 
+  drop_na() %>% 
+  summarise(mean_mass_chinstrap = mean(body_mass),
+            sd_mass_chinstrap = sd(body_mass),
+            min_mass_chinstrap = quantile(body_mass)[1],
+            qrt2_mass_chinstrap = quantile(body_mass)[2],
+            median_mass_chinstrap = quantile(body_mass)[3],
+            qrt3_mass_chinstrap = quantile(body_mass)[4],
+            max_mass_chinstrap = quantile(body_mass)[5],
+            n_mass_chinstrap = n())
+```
+
+```{r}
+# massa corporal média de pinguins Gentoo
+gentoo %>% 
+  drop_na() %>% 
+  summarise(mean_mass_gentoo = mean(body_mass),
+            sd_mass_gentoo = sd(body_mass),
+            min_mass_gentoo = quantile(body_mass)[1],
+            qrt2_mass_gentoo = quantile(body_mass)[2],
+            median_mass_gentoo = quantile(body_mass)[3],
+            qrt3_mass_gentoo = quantile(body_mass)[4],
+            max_mass_gentoo = quantile(body_mass)[5],
+            n_mass_gentoo = n())
+```
+
+# **Descrevendo os dados de massa dos pinguins de cada espécie 2**
+
+Utilizar o verbo `filter()` é bastante útil quando você precisa executar uma tarefa com um suconjuto das observações. Contudo, quando é necessário trabalhar com diversos subconjuntos ao mesmo tempo, como no exercício anterior, o uso do `filter()` é pouco prático, pois exige muita repetição de código. Nesse caso, é possível utilizar o verbo `group_by()` que agrupa as observações em subconjuntos tomando como referência uma variável agrupdora (ex. `species`).
+
+- Produza novamente o sumário estatístico das observações de massa das três espécies de pinguim a partir do *data frame* `mypenguins_clean2`.
+
+- Dessa vez, utilize a função `group_by()` e a variável `species` como variável agregadora.
+
+- Em seguida, aplique a função `sumarise()` para gerar o sumário estatístico.
+
+- Lembre-se de utilizar a função `drop_na()` para eliminar observações ausentes (`NA`).
+
+```{r}
+mypenguins_clean2 %>% 
+  group_by(species) %>% 
+  drop_na() %>% 
+  summarise(mean_mass = mean(body_mass),
+            sd_mass = sd(body_mass),
+            min_mass = quantile(body_mass)[1],
+            qrt2_mass = quantile(body_mass)[2],
+            median_mass = quantile(body_mass)[3],
+            qrt3_mass = quantile(body_mass)[4],
+            max_mass = quantile(body_mass)[5],
+            n_mass = n())
+
+```
+
+# **Descrevendo os dados de massa dos pinguins de cada espécie para cada ilha**
+
+A função `group_by()` permite agrupar as obsevações por mais de uma variável agrupadora viabilizando a sumarização dos dados para todas as combinações possíveis entre os níveis de duas ou mais variáveis categóricas. 
+
+- Aplique a função `group_by()` para obter um sumário estatístico das observações de massa para cada espécie e em cada uma das ilhas a partir do *data frame* `mypenguins_clean2`. 
+
+- Utilize as variáveis `species` e `island` para agrupar os dados.
+
+- Em seguida, aplique a função `sumarise()` para gerar o sumário estatístico.
+
+- Lembre-se de utilizar a função `drop_na()` para eliminar observações ausentes (`NA`).
+
+```{r}
+mypenguins_clean2 %>% 
+  group_by(species, island) %>% 
+  drop_na() %>% 
+  summarise(mean_mass = mean(body_mass),
+            sd_mass = sd(body_mass),
+            min_mass = quantile(body_mass)[1],
+            qrt2_mass = quantile(body_mass)[2],
+            median_mass = quantile(body_mass)[3],
+            qrt3_mass = quantile(body_mass)[4],
+            max_mass = quantile(body_mass)[5],
+            n_mass = n())
+```
+
+# **Obtendo o número de pinguins de cada espécie - `count()` 1**
+
+A função `count()` também pode ser utilizada para realizar a contagem de observações de uma variável categórica com diferentes níveis. 
+
+- Obtenha o número de indivíduos para cada espécie a partir do *data frame* `mypenguins_clean2` utilizando a função `count()`.
+
+- Lembre-se de eliminar os valores ausentes (`NA`) utilizando a função `drop_na()`.
+
+```{r}
+mypenguins_clean2 %>% 
+  drop_na() %>% 
+  count(species)
+```
+
+# **Obtendo o número de pinguins de cada espécie - `count()` 2**
+
+A função `count()` também pode ser utilizada para realizar a contagem de observações para mais de uma variável categórica (ex. `species` e `island`).
+
+- Obtenha o número de indivíduos para de cada espécie em cada ilha a partir do *data frame*  `mypenguins_clean2` utilizando a função `count()`.
+
+- Lembre-se de eliminar os valores ausentes (`NA`) utilizando a função `drop_na()`.
+
+```{r}
+mypenguins_clean2 %>% 
+  drop_na() %>% 
+  count(species, island)
+```
+
+# **Obtendo a abundância relativa das espécies**
+
+Podemos combinar o uso da função `count()` e `mutate()` para obter a contagem dos diferentes níveis de uma variável catagórica e sua proporção em relação a amostra.
+
+- Aplique a função `count()` para gerar uma contagem de cada espécies.
+
+- Em seguida, aplique a função `mutate()` para gerar a abundância relativa de cada espécie. 
+
+- Para obter a abundância relativa (`rel_abund`), divida o valor da contagem gerada para cada espécie (`n`) pelo número total de pinguins observados (`sum(n)`).
+
+- Lembre-se de utilizar a função `drop_na()` para eliminar os valores ausentes (`NA`).
+
+```{r}
+mypenguins_clean2 %>% 
+  drop_na() %>% 
+  count(species, island) %>% 
+  mutate(rel_abund = n/sum(n))
+```
+
+Note que utilizando a função `count()` você obterá o valor de abundância relativa ao número total de pinguins observados (ex. relativo ao total de toda a amostra). Se você necessita da abundância relativa ao total observado dentro de cada grupo, é necessário combinar as funções `group_by()`,  `summarise()` e `n()`.
+
+- Obtenha o número de pinguins relativo ao total de cada grupo a partir do *data frame* `mypenguins_clean2`.
+
+- Aplique a função `drop_na()` para eliminar valores ausentes (`NA`).
+
+- Agrupe as observações pelas variáveis `species` e `island`.
+
+- Obtenha o número de pinguins para cada espécie e em cada ilha utilizando as funções `summarise()` e `n()`.
+
+- Uitilize a função `mutate()` para obter a abundância relativa (`rel_abund`), dividindo o valor da contagem gerada para cada espécie (`n`) pelo número total de pinguins observados (`sum(n)`). 
+
+```{r}
+mypenguins_clean2 %>% 
+  group_by(species, island) %>% 
+  drop_na() %>% 
+  summarise(n = n()) %>% 
+  mutate(rel_abund = n/sum(n))
+```
+
