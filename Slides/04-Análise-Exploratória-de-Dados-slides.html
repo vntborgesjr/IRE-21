@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introdução ao R para Ecólogos</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vitor Borges" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/shareon/shareon.min.css" rel="stylesheet" />
+    <script src="libs/shareon/shareon.min.js"></script>
+    <link href="libs/xaringanExtra-shareagain/shareagain.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-shareagain/shareagain.js"></script>
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <script src="libs/peerjs/peerjs.min.js"></script>
+    <script src="libs/tiny.toast/toast.min.js"></script>
+    <link href="libs/xaringanExtra-broadcast/broadcast.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-broadcast/broadcast.js"></script>
+    <script src="libs/fabric/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30}) })</script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+  </head>
+  <body>
+    <textarea id="source">
+
+
+layout: true
+name: basic
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+
+
+---
+name: Title
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png")
+background-position: 0% 100%
+background-size: 20%
+class: inverse, center, middle, title-slide
+
+# .blue[**Introdução ao R para Ecólogos**]
+
+## .blue[**⚔&lt;br/&gt;Manipulação e Limpeza de Dados**]
+
+### .blue[Vitor Borges-Júnior]
+
+### .blue[PPGBIO - UNIRIO]
+
+### .blue[2021/06/15 (updated: 2021-06-15)]
+
+---
+
+# .blue[**Nas Aulas Passadas...**]
+
+&lt;BR/&gt;
+
+- Objetos do R 
+
+- Indexação por posição e por lógica
+
+- Funções loop
+
+- Programar funções
+
+- Controladores de fluxo
+
+???
+Com isso fechamos a parte de introdução a linguagem R.
+
+Agora vamos dar os primeiros passos no fluxo de trabalho de um projeto de análise de dados.
+
+---
+
+# .blue[**Tópicos da Aula**]
+
+&lt;BR/&gt;
+.center[.red[**Manipulação, Limpeza e Sumarização de Dados**]]
+.pull-left[
+- .red[Carregar] os dados para o .blue[R]
+
+- .red[Diagnosticar] e .red[solucionar problemas] no conjunto de dados
+
+- .red[Gerar] novas .red[variáveis] e novas .red[tabelas de dados]
+
+- Identificar .red[valores fora da amplitude de variação] esperada
+
+- .red[Renomear] ou .red[redefinir observações] (linhas) categóricas
+]
+
+.pull-right[
+- .red[Renomear] variáveis] (colunas)
+
+- Atribuir o .red[tipo] das variáveis
+
+- .red[Selecionar] subconjuntos observações e variáveis
+
+- .red[Ordenar] a tabela de dados a partir de uma variável
+
+- .red[Agrupar] e .red[sumarizar] variáveis
+]
+
+???
+Erros de digitação podem causar erros de entrada dos dados.
+
+Renomear em caso de caracter ou fator e redefinir no caso de numérico.
+
+Os nomes da variáveis são curtos e objetivos?
+
+Tipo correto de variável é importante em qualquer linguagem de programação.
+
+---
+
+# .blue[**Fluxo de Trabalho para Análise de Dados**]
+
+&lt;BR/&gt;
+
+&lt;BR/&gt;
+
+&lt;img src="https://d33wubrfki0l68.cloudfront.net/795c039ba2520455d833b4034befc8cf360a70ba/558a5/diagrams/data-science-explore.png" style="display: block; margin: auto;" /&gt;
+
+
+
+???
+Vamos cobrir as duas primeiras etapas e um pouquinho da terceira. 
+
+O caminho a ser percorrido até obtermos os resultados que buscamos é longo e acidentado. Hoje começaremos esse caminho de forma a tentar torna-lo menos tortuoso estabelecendo um fluxo de trabalho com etapas bem definidas. 
+
+Crédito da imagem: [R for Data Science](https://d33wubrfki0l68.cloudfront.net/795c039ba2520455d833b4034befc8cf360a70ba/558a5/diagrams/data-science-explore.png)
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Tidyverse**]
+
+&lt;BR/&gt;
+
+&lt;img src="https://www.storybench.org/wp-content/uploads/2017/05/tidyverse.png" width="180%" style="display: block; margin: auto;" /&gt;
+
+???
+Caixa de ferramenta Tidyverse.
+
+Tidyverse não é apenas um pacote. Ele é uma coletânea de pacotes com funcionalidades que cobrem todas as etapas do fluxo de trabalho de análise de dados: importação, manipulação, transformação, visualização, modelagem...
+
+Tidyverse é uma ferramenta poderosa para preparar os dados para em seguida realizar a sumarização numérica, gráfica e análises.
+
+Crédito da imagem: [Storybench](https://www.storybench.org/wp-content/uploads/2017/05/tidyverse.png)
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Carregando o Tidyverse**]
+
+&lt;BR/&gt;
+
+
+```r
+library(tidyverse)
+```
+&lt;img src="https://www.storybench.org/wp-content/uploads/2017/05/tidyverse.png" width="180%" style="display: block; margin: auto;" /&gt;
+
+???
+Tidyverse não é apenas um pacote. Ele é uma coletânea de pacotes com funcionalidades que cobrem todas as etapas do fluxo de trabalho de análise de dados: importação, manipulação, transformação, visualização, modelagem...
+
+Tidyverse é uma ferramenta poderosa para preparar os dados para em seguida realizar a sumarização numérica e gráfica.
+
+Crédito da imagem: []()
+
+---
+
+# .blue[**Girinos da REGUA**]
+
+&lt;BR/&gt;
+
+- Medidas relacionadas a:       
+  
+  - Tamanho   
+  
+  - Estágio de desevolvimento   
+  
+  - Uso do microhabitat   
+  
+- Girinos de 13 espécies de anuros 
+ 
+- 12 riachos de primeira ordem
+ 
+- 19 meses
+ 
+???
+Dados coletados por mim durante o projeto de doutorado Dsitribuição das assembleias de girinos associados a riachos na Reserva Ecológica de Guapiaçu, no município de Cachoeiras de Macacú, Rio de Janeiro.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://readr.tidyverse.org/logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Importação dos dados**]
+
+&lt;BR/&gt;
+
+
+```r
+tadpoles_raw &lt;- read_csv(file = "tadpoles_raw.csv", 
+                             col_names = TRUE, 
+                             na = c("NA"))
+```
+
+???
+Explicar os argumentos utilizados e warning.
+
+---
+ 
+# .blue[**Inspecionando os Dados**]
+
+
+```r
+head(tadpoles_raw, n = 8)
+```
+
+```
+## # A tibble: 8 x 14
+##   Date   Stream Point `Longitude (UTM)` `Latitude (UTM)` Method Species   
+##   &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt;            &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;     
+## 1 06/09…      1 A               7.33e14          7.52e14 Dipnet Aplastodi…
+## 2 06/09…      1 A               7.33e14          7.52e14 Dipnet Aplastodi…
+## 3 06/09…      1 B               7.33e14          7.52e14 Dipnet Aplastodi…
+## 4 06/09…      1 C               7.33e14          7.52e14 Dipnet Aplastodi…
+## 5 07/13…      1 A               7.33e14          7.52e14 Visual Aplastodi…
+## 6 07/13…      1 A               7.33e14          7.52e14 Visual Aplastodi…
+## 7 07/13…      1 A               7.33e14          7.52e14 Dipnet Aplastodi…
+## 8 07/13…      1 A               7.33e14          7.52e14 Dipnet Aplastodi…
+## # … with 7 more variables: Stage of development &lt;chr&gt;,
+## #   Body Length (mm) &lt;dbl&gt;, Total Length (mm) &lt;dbl&gt;, Bottom Type &lt;chr&gt;,
+## #   Depth (cm) &lt;chr&gt;, Sample &lt;chr&gt;, Obs &lt;chr&gt;
+```
+
+???
+APRENDER A IMPRIMIR OBJETO TIBBLE USANDO KNITR
+
+`tadpoles_raw` é uma tabela de dados retangular. Cada linha representa uma observação e cada coluna representa uma variável.
+
+Dados também podem ser armazenados em formato hierárquico. É o que acontece, por exemplo, com arquivos json e xml.
+
+#names(tadpoles_raw) &lt;- kableExtra::cell_spec(names(tadpoles_raw), background = "black")
+
+#knitr::kable(tadpoles_raw[1:8, ], escape = FALSE, format = "html") #%&gt;% 
+ # kableExtra::column_spec(1:ncol(tadpoles_raw), background = "black")
+---
+
+# .blue[**Inspecionando os Dados**]
+
+&lt;BR/&gt;
+
+
+```r
+glimpse(tadpoles_raw)
+```
+
+```
+## Rows: 6,006
+## Columns: 14
+## $ Date                   &lt;chr&gt; "06/09/11", "06/09/11", "06/09/11", "06/0…
+## $ Stream                 &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+## $ Point                  &lt;chr&gt; "A", "A", "B", "C", "A", "A", "A", "A", "…
+## $ `Longitude (UTM)`      &lt;dbl&gt; 7.328311e+14, 7.328311e+14, 7.328311e+14,…
+## $ `Latitude (UTM)`       &lt;dbl&gt; 7.519532e+14, 7.519532e+14, 7.519532e+14,…
+## $ Method                 &lt;chr&gt; "Dipnet", "Dipnet", "Dipnet", "Dipnet", "…
+## $ Species                &lt;chr&gt; "Aplastodiscus eugenioi", "Aplastodiscus …
+## $ `Stage of development` &lt;chr&gt; "25", "27", "25", "25", NA, NA, "25", "25…
+## $ `Body Length (mm)`     &lt;dbl&gt; 8.89, 11.32, 5.03, 5.32, NA, NA, 8.82, NA…
+## $ `Total Length (mm)`    &lt;dbl&gt; 2909.00, 37.62, 20.10, 18.88, NA, NA, 35.…
+## $ `Bottom Type`          &lt;chr&gt; "Periphyton.Vegetation", "Periphyton.Vege…
+## $ `Depth (cm)`           &lt;chr&gt; "2.5", "3", "4.5", "3", "2", "2", NA, NA,…
+## $ Sample                 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ Obs                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+```
+
+???
+Algumas variáveis tiveram seus tipos atribuídos corretamente (ex. Body_length, Total_length), enquanto outras não tiveram (ex. Date, Depth).
+
+Antes de podermos manipular e explorar os dados, usalmente é necessário realizar uma limpeza nos dados.
+
+---
+
+# .blue[**Inspecionando os Dados**]
+
+&lt;BR/&gt;
+
+
+```r
+library(skimr)
+skim(tadpoles_raw)
+```
+
+&lt;BR/&gt;
+
+- Gera um .red[sumário] para a .red[tabela de dados] como um todo&lt;br/&gt;
+&lt;BR/&gt;
+
+- Gera um .red[sumário] para cada .red[variável]&lt;br/&gt;
+&lt;BR/&gt;
+
+- As caracterísitcas do sumário .red[diferem] dependendo do .red[tipo da variável]
+
+???
+Explorar o output no console.
+
+Após esse reconhecimento dos dados foi possível identificar alguns problemas:
+
+- Valores ausentes - NA
+- Variáveis com tipos errados
+
+---
+
+# .blue[**Parcial do Diagnóstico**]
+
+&lt;BR/&gt;
+
+- Variáveis com tipo errado
+
+- Variáveis com nomes inadequados
+
+- Observações do tipo caracter com nomes inadequados
+
+- Valores fora da amplitude de variação esperada
+
+- Valores ausentes (`NA`'s)
+
+???
+- date, depth
+
+- Longitude, latitude, tamanho total e do corpo
+
+- Espécies
+
+- Tamanho total
+
+- Estágio
+
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 98%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Pacote dplyr**]
+O pacote .red[dplyr] é composto por diferentes .red[verbos]
+
+- Verbos para .red[linhas]:
+
+  - `filter()` escolhe as linhas com base nos valores das colunas
+  - `slice()` escolhe as linhas baseado na localização
+  - `arrange()` altera a ordem das linhas (ex. crescente, ou decrescente)
+
+- Verbos para .red[colunas]:
+
+  - `select()` seleciona as colunas desejadas
+  - `rename()` altera o nome das colunas
+  - `mutate()` cria uma nova coluna a partir de operações realizadas com as colunas existentes
+  - `relocate()` altera a ordem das colunas
+  
+- Verbos para .red[agrupar] e .red[sumarizar linhas]:
+
+  - `group_by()` agrupa as linhas para gerar um sumário para cada grupo
+  - `summarise()` sumariza um grupo de linhas em uma única linha
+  - `count()` agrupa as linhas e gera uma contagem (n) de cada grupo
+  
+???
+INCLUIR O SÍMBULO DO PACOTE DPLYR NO CANTO SPERIOR DIREITO (???)
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Pacote dplyr**]
+
+O pacote .red[dplyr] é composto por diferentes .red[verbos]
+
+- Verbos para .red[linhas]:
+
+  - .red[`filter()`] escolhe as linhas com base nos valores das colunas
+  - .red[`arrange()`] altera a ordem das linhas (ex. crescente, ou decrescente)
+
+- Verbos para .red[colunas]:
+
+  - .red[`select()`] seleciona as colunas desejadas
+  - .red[`mutate()`] cria uma nova coluna a partir de operações realizadas com as cuolunas existentes
+  
+- Verbos para .red[agrupar] e .red[sumarizar linhas]:
+
+  - `group_by()` agrupa as linhas para gerar um sumário para cada grupo
+  - `summarise()` sumariza um grupo de linhas em uma única linha
+  - `count()` agrupa as linhas e gera uma contagem (n) de cada grupo
+  
+???
+
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Sintaxes do dplyr**]
+
+&lt;BR/&gt;
+
+.center[Sintaxe .red["Clássica"]]
+
+```r
+nome_da_função(data_frame, ação)
+```
+
+&lt;BR/&gt;
+
+.center[Operador .red[Pipe `%&gt;%`]]
+
+```r
+data_frame %&gt;% 
+  nome_da_primeira_função(ação) %&gt;% 
+  nome_da_segunda_função(ação)
+```
+
+???
+Há duas sintaxes possíveis no uso das funções do pacote dplyr. 
+A sintaxe básica...
+E a sintaxe do operador pipe `%&gt;%`. O pipe torna a programaçção fluida pois permite o encadeamento de operações gerando um fluxo de trabalho.
+
+Um dos problemas detectados na inspeção dos dados foi o nome das variáveis (muito extensos e complexos). 
+
+Além disso, algumas colunas não são necessárias e podemos descartá-las do conjunto de dados.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Verbo select()**]
+
+&lt;BR/&gt;
+
+&lt;img src="https://www.datasciencemadesimple.com/wp-content/uploads/2020/09/Select-function-in-R-dplyr-select-22.png" width="180%" style="display: block; margin: auto;" /&gt;
+
+???
+SUBSTITUIR POR UM EXEMPLO COM A TABELA TADPOLES_RAW 
+Usamos select() para renomear, alterar a ordem ou obter um subconjunto das variáveis (colunas).
+
+
+Crédito da imagem: [Data Science Made Simple](https://www.datasciencemadesimple.com/wp-content/uploads/2020/09/Select-function-in-R-dplyr-select-22.png)
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Selecionando e Alterando a Ordem das Variáveis com select()**]
+
+&lt;BR/&gt;
+
+.center[Sintaxe .red["Clássica"]]
+
+
+```r
+select(tadpoles_raw, Species, `Total Length (mm)`, 
+            `Body Length (mm)`, `Stage of development`)
+```
+&lt;BR/&gt;
+
+.center[Operador .red[Pipe `%&gt;%`]]
+
+
+```r
+tadpoles_raw %&gt;% 
+  select(Species, `Total Length (mm)`, `Body Length (mm)`,
+         `Stage of development`)
+```
+
+???
+Obtendo um subconjunto e reordenando as variáveis (colunas).
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Renomeando Variáveis com select()**]
+
+&lt;BR/&gt;
+
+
+```r
+tadpoles_raw %&gt;% 
+  select(date = Date, stream = Stream, 
+         x_coord = `Longitude (UTM)`,
+         y_coord = `Latitude (UTM)`, 
+         method = Method, species = Species, 
+         stage = `Stage of development`, 
+         body_len = `Body Length (mm)`, 
+         total_len = `Total Length (mm)`,
+         depth = `Depth (cm)`)
+```
+
+???
+Renomeando um subconjunto das variáveis (colunas).
+
+Outros problemas detectados no conjunto de dados foram:
+- a necessidade de atribuir o tipo correto a algumas variáveis.
+- a necessidade de renomear observações
+
+---
+
+# .blue[**Atribuindo Tipos**]
+
+&lt;BR/&gt;
+
+
+
+```r
+mean(tadpoles_raw$Depth)
+```
+
+```
+## Warning: Unknown or uninitialised column: `Depth`.
+```
+
+```
+## Warning in mean.default(tadpoles_raw$Depth): argumento não é numérico nem
+## lógico: retornando NA
+```
+
+```
+## [1] NA
+```
+.center[.red[Por isso é importante verificar e corrigir o tipo de dado contido nas colunas!]]
+
+???
+
+---
+
+# .blue[**Limpeza de Dados - Atribuindo Tipo Numérico para Variável Caracter com as.numeric()**]
+
+&lt;BR/&gt;
+
+
+```r
+head(tadpoles_raw$`Depth (cm)`)
+```
+
+```
+## [1] "2.5" "3"   "4.5" "3"   "2"   "2"
+```
+
+
+```r
+head(as.numeric(tadpoles_raw$`Depth (cm)`))
+```
+
+```
+## Warning in head(as.numeric(tadpoles_raw$`Depth (cm)`)): NAs introduzidos
+## por coerção
+```
+
+```
+## [1] 2.5 3.0 4.5 3.0 2.0 2.0
+```
+
+???
+
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Atribuindo Tipo Data para Variável Caracter - lubridate::mdy()**]
+
+
+
+```r
+library(lubridate)
+head(mdy(tadpoles_raw$Date))
+```
+
+```
+## [1] "2011-06-09" "2011-06-09" "2011-06-09" "2011-06-09" "2011-07-13"
+## [6] "2011-07-13"
+```
+
+O .blue[**R**] transforma as datas para o formato .red[ano-mês-dia] automaticamente
+
+???
+lubridate é um pacote do dplyr
+
+---
+
+# .blue[**Atribuindo Tipo Fator para Variável Caracter - as.factor()**]
+
+
+
+```r
+head(as.factor(tadpoles_raw$Stream))
+```
+
+```
+## [1] 1 1 1 1 1 1
+## Levels: 1 2 3 4 5 6 7 8 9 10 11 12
+```
+
+
+```r
+head(as.factor(tadpoles_raw$Species))
+```
+
+```
+## [1] Aplastodiscus eugenioi Aplastodiscus eugenioi Aplastodiscus eugenioi
+## [4] Aplastodiscus eugenioi Aplastodiscus eugenioi Aplastodiscus eugenioi
+## 13 Levels: Aplastodiscus eugenioi ... Scinax flavoguttatus
+```
+
+
+```r
+head(as.factor(tadpoles_raw$`Stage of development`))
+```
+
+```
+## [1] 25   27   25   25   &lt;NA&gt; &lt;NA&gt;
+## 20 Levels: &gt; 42 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 ... 43
+```
+
+???
+Próxima tarefa - renomear as espécies
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstringr.tidyverse.org%2Freference%2Ffigures%2Flogo.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Renomeando Caracteres com stringr::str_replace_all()**]
+
+&lt;BR/&gt;
+
+
+```r
+library(stringr)
+str_replace_all(tadpoles_raw$Species,
+                c("Aplastodiscus eugenioi" = "Ae", 
+                "Bokermannohyla circumdata" = "Bc",
+                "Crossodactylus aeneus" = "Ca",
+                "Hylodes asper" = "Ha",
+                "Hylodes charadranaetes" = "Hc",
+                "Hylodes lateristrigatus" = "Hl",
+                "Hylodes pipilans" = "Hp",
+                "Physalaemus signifer" = "Ps",
+                "Proceratophrys appendiculata" = "Pa",
+                "Proceratophrys boiei" = "Pb",
+                "Rhinella ornata" = "Ro", 
+                "Scinax albicans" = "Sa",
+                "Scinax flavoguttatus" = "Sf"))
+```
+
+???
+Todas essas tarefas podem ser realizadas com utilizando a função mutate() do pacote dpyr.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Verbo mutate()**]
+
+&lt;BR/&gt;
+
+&lt;img src="https://cmdlinetips.com/wp-content/uploads/2020/07/create_new_column_with_dplyr_mutate.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+
+
+???
+Transformar colunas existentes ou criar novas colunas a partir da transformação de colunas existentes.
+
+Crédito da imagem: [](https://cmdlinetips.com/wp-content/uploads/2020/07/create_new_column_with_dplyr_mutate.png)
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Atribuindo o tipo a uma variável com mutate()**]
+
+&lt;BR/&gt;
+
+.center[Sintaxe .red["Clássica"]]
+
+
+```r
+mutate(tadpoles_raw, `Depth (cm)` = as.numeric(`Depth (cm)`))
+```
+
+&lt;BR/&gt;
+
+.center[Operador .red[Pipe `%&gt;%`]]
+
+
+```r
+tadpoles_raw %&gt;% 
+  mutate(`Depth (cm)` = as.numeric(`Depth (cm)`)) %&gt;% 
+  head()
+```
+
+???
+
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Atribuindo o tipo a multiplas variáveis com mutate()**]
+
+&lt;BR/&gt;
+
+
+```r
+tadpoles_raw %&gt;% 
+  mutate(Date = mdy(Date), Stream = as.factor(Stream),
+         Species = as.factor(Species), 
+         `Stage of development` = as.factor(`Stage of development`),
+         `Depth (cm)` = as.factor(`Depth (cm)`)) 
+```
+
+
+
+???
+
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstringr.tidyverse.org%2Freference%2Ffigures%2Flogo.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Alterando o Nome de Observações com srt_replace_all() e mutate()**]
+
+&lt;BR/&gt;
+
+
+```r
+tadpoles_raw %&gt;% 
+  mutate(Species = str_replace_all(Species,
+                c("Aplastodiscus eugenioi" = "Ae", 
+                "Bokermannohyla circumdata" = "Bc",
+                "Crossodactylus aeneus" = "Ca",
+                "Hylodes asper" = "Ha",
+                "Hylodes charadranaetes" = "Hc",
+                "Hylodes lateristrigatus" = "Hl",
+                "Hylodes pipilans" = "Hp",
+                "Physalaemus signifer" = "Ps",
+                "Proceratophrys appendiculata" = "Pa",
+                "Proceratophrys boiei" = "Pb",
+                "Rhinella ornata" = "Ro", 
+                "Scinax albicans" = "Sa",
+                "Scinax flavoguttatus" = "Sf"))) 
+```
+
+
+
+???
+
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Selecionando e Atribuindo o tipo a multiplas variáveis com select() e mutate()**]
+
+&lt;BR/&gt;
+
+.center[Sintaxe .red["Clássica"]]
+
+
+```r
+mutate(select(tadpoles_raw, date = Date, stream = Stream,
+         x_coord = `Longitude (UTM)`,
+         y_coord = `Latitude (UTM)`, method = Method, 
+         species = Species, stage = `Stage of development`, 
+         body_len = `Body Length (mm)`, 
+         total_len = `Total Length (mm)`,
+         depth = `Depth (cm)`), 
+       date = mdy(date), stream = as.factor(stream),
+         species = as.factor(species), 
+         stage = as.factor(stage),
+         depth = as.factor(depth))
+```
+
+
+
+???
+Chamar a atenção para a diferença entre as duas formas de escrever. Quanto mais funções forem chamadas, mais difícil se torna a leitura e compreesão código.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Selecionando e Atribuindo o tipo a multiplas variáveis com select() e mutate()**]
+
+&lt;BR/&gt;
+
+.center[Sintaxe .red["Pipe %&gt;%"]]
+
+
+```r
+tadpoles_raw %&gt;% 
+  select(date = Date, stream = Stream,
+         x_coord = `Longitude (UTM)`,
+         y_coord = `Latitude (UTM)`, method = Method, 
+         species = Species, stage = `Stage of development`, 
+         body_len = `Body Length (mm)`, 
+         total_len = `Total Length (mm)`,
+         depth = `Depth (cm)`) %&gt;% 
+  mutate(data = mdy(date), stream = as.factor(stream),
+         species = as.factor(species), 
+         stage = as.factor(stage),
+         depth = as.factor(depth))
+```
+
+
+
+???
+Também podemos alterar o nome das observações em espécies ao mesmo tempo em que alteramos os tipos das variáveis. Mostar o código no script. 
+
+Esse método de atribuição de tipo de variáveis faz sentido quando não conhecemos o conjunto de dados e precisamos carregá-lo e averiguá-lo no R.
+
+Quando conhecemos bem o conjunto de dados, existe uma alternativa para se atribuir os tipos das variáveis no momento em que carregamos os dados no R
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.rstudio.com%2Fwp-content%2Fuploads%2F2014%2F04%2Freadr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Atribuindo Tipos às Variáveis ao Carregar os Dados**]
+
+
+```r
+tadpoles_raw &lt;- read_csv(file = "tadpoles_raw.csv", 
+                col_names = TRUE, 
+                na = c("NA"),
+                col_types = cols(Date = col_date(format = "%m/%d/%y"),
+                Stream = col_factor(),
+                Species = col_factor(),
+                `Stage of development` = col_factor(),
+                `Depth (cm)` = col_number()))
+```
+
+Representação de datas no .blue[**R**]:
+
+- Ano: "%Y" (4 dígitos); "%y" (2 dígitos)
+- Mês: "%m" (2 dígitos); "%b" (abreviação); "%B" (nome completo)
+- Dia: "%d" (2 dígitos)
+
+???
+
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.rstudio.com%2Fwp-content%2Fuploads%2F2014%2F04%2Freadr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Atribuindo Tipos às Variáveis ao Carregar os Dados**]
+
+&lt;BR/&gt;
+
+
+```r
+glimpse(tadpoles_raw)
+```
+
+```
+## Rows: 6,006
+## Columns: 14
+## $ Date                   &lt;date&gt; 2011-06-09, 2011-06-09, 2011-06-09, 2011…
+## $ Stream                 &lt;fct&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+## $ Point                  &lt;chr&gt; "A", "A", "B", "C", "A", "A", "A", "A", "…
+## $ `Longitude (UTM)`      &lt;dbl&gt; 7.328311e+14, 7.328311e+14, 7.328311e+14,…
+## $ `Latitude (UTM)`       &lt;dbl&gt; 7.519532e+14, 7.519532e+14, 7.519532e+14,…
+## $ Method                 &lt;chr&gt; "Dipnet", "Dipnet", "Dipnet", "Dipnet", "…
+## $ Species                &lt;fct&gt; Aplastodiscus eugenioi, Aplastodiscus eug…
+## $ `Stage of development` &lt;fct&gt; 25, 27, 25, 25, NA, NA, 25, 25, 25, NA, 2…
+## $ `Body Length (mm)`     &lt;dbl&gt; 8.89, 11.32, 5.03, 5.32, NA, NA, 8.82, NA…
+## $ `Total Length (mm)`    &lt;dbl&gt; 2909.00, 37.62, 20.10, 18.88, NA, NA, 35.…
+## $ `Bottom Type`          &lt;chr&gt; "Periphyton.Vegetation", "Periphyton.Vege…
+## $ `Depth (cm)`           &lt;dbl&gt; 2.50, 3.00, 4.50, 3.00, 2.00, 2.00, NA, N…
+## $ Sample                 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ Obs                    &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+```
+
+
+
+???
+
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Verbo filter()**]
+
+&lt;BR/&gt;
+
+&lt;img src="https://www.datasciencemadesimple.com/wp-content/uploads/2020/09/subset-or-filter-in-R-17.png" width="180%" style="display: block; margin: auto;" /&gt;
+
+???
+Usamos filter para obter um subconjunto das observações (linhas)
+
+Crédito da imagem: [Data Science Made Simple](https://www.datasciencemadesimple.com/wp-content/uploads/2020/09/subset-or-filter-in-R-17.png)
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Selecionando Observações de uma Variável com filter()**]
+
+&lt;BR/&gt;
+
+.center[Sintaxe .red["Clássica"]]
+
+
+```r
+filter(tadpoles_raw, Method == "Dipnet")
+```
+
+&lt;BR/&gt;
+
+.center[Operador .red[Pipe `%&gt;%`]]
+
+
+```r
+tadpoles_raw %&gt;% 
+  filter(Method == "Dipnet")
+```
+
+???
+
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Selecionando Observações de Múltiplas Variáveis com filter()**]
+
+&lt;BR/&gt;
+
+.center[Sintaxe .red["Clássica"]]
+
+
+```r
+filter(tadpoles_raw, Method == "Dipnet", 
+       Species == "Aplastodiscus eugenioi",
+            `Stage of development` == 25)
+```
+
+&lt;BR/&gt;
+
+.center[Operador .red[Pipe `%&gt;%`]]
+
+
+```r
+tadpoles_raw %&gt;% 
+  filter(Method == "Dipnet",
+         Species == "Aplastodiscus eugenioi",
+            `Stage of development` == 25)
+```
+
+???
+Filter será útil para sumarizar e visualizar apenas um subconjunto dos dados.
+
+Voltaremos a esse tema mais adiante.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Verbo arrange()**]
+
+&lt;BR/&gt;
+
+&lt;img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.datasciencemadesimple.com%2Fwp-content%2Fuploads%2F2020%2F09%2FSort-dataframe-in-R-using-dplyr-arrange-order-2.png&amp;f=1&amp;nofb=1" width="180%" style="display: block; margin: auto;" /&gt;
+
+
+???
+Ordena as observações na tabela de dados em ordem crescente, ou decrescente, com base em uma de suas variáveis. Útil para reconhecer valores extremos no conjunto de dados.
+
+Crédito da imagem: [Data Science Made Simple](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.datasciencemadesimple.com%2Fwp-content%2Fuploads%2F2020%2F09%2FSort-dataframe-in-R-using-dplyr-arrange-order-2.png&amp;f=1&amp;nofb=1)
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Observações em Ordem Crescente com arrange()**]
+
+&lt;BR/&gt;
+
+.center[Sintaxe .red["Clássica"]]
+
+
+```r
+arrange(tadpoles_raw, `Total Length (mm)`)
+```
+
+&lt;BR/&gt;
+
+.center[Operador .red[Pipe `%&gt;%`]]
+
+
+```r
+tadpoles_raw %&gt;% 
+  arrange(`Total Length (mm)`)
+```
+
+???
+Data frame em ordem crescente de tamanho corporal.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Observações em Ordem Decrescente com arrange()**]
+
+&lt;BR/&gt;
+
+.center[Sintaxe .red["Clássica"]]
+
+
+```r
+arrange(tadpoles_raw, desc(`Total Length (mm)`))
+```
+
+&lt;BR/&gt;
+
+.center[Operador .red[Pipe `%&gt;%`]]
+
+
+```r
+tadpoles_raw %&gt;% 
+  arrange(`Total Length (mm)`)
+```
+
+???
+Muito útil para:
+- identificar valores extremos
+- localizar e corrigir valores que foram digitados incorretamente
+
+Voltaremos a esse tema mais a frente.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Combinando filter() e arrange()**]
+
+&lt;BR/&gt;
+
+.center[Sintaxe .red["Clássica"]]
+
+
+```r
+filter(arrange(tadpoles_raw, desc(`Total Length (mm)`)), 
+       Species == "Aplastodiscus eugenioi")
+```
+
+&lt;BR/&gt;
+
+.center[Sintaxe .red["Pipe `%&gt;%`"]]
+
+
+```r
+tadpoles_raw %&gt;% 
+  filter(Species == "Aplastodiscus eugenioi") %&gt;% 
+  arrange(desc(`Total Length (mm)`))
+```
+
+???
+Apontar a discrepância entre os valores mais altos e as demais observações.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Combinando filter(), arrange() e mutate()**]
+
+&lt;BR/&gt;
+
+
+```r
+tadpoles_raw %&gt;% 
+  filter(Species == "Hylodes asper") %&gt;% 
+  arrange(desc(`Stage of development`)) %&gt;% 
+  mutate(ratio_bl_tl = `Total Length (mm)`/`Body Length (mm)`)
+```
+
+
+???
+Avaliar a razão entre o tamanho do corpo e o tamanho total ao longo dos estágio de desenvolvimento permite compreender, por exemplo, se o corpo e a cauda do girino crecem de forma homogênea, ou não, ao longo da metamorfose dos girinos.
+
+Se a razão diminui, significa que (1) o crescimento do corpo se dá proporcionalmente mais rápido do que o cresimento da cauda ao longo do desenvolvimento ou (2) o tamanho da cauda está diminuindo apontando para as etapas finais de metamorfose (ex. apoptose da cauda).
+
+
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Verbo summarise()**]
+
+&lt;BR/&gt;
+
+&lt;img src="https://moderndive.github.io/moderndive_labs/static/previous_versions/v0.4.0/images/summarize1.png" width="180%" style="display: block; margin: auto;" /&gt;
+
+
+
+???
+Sumarizar muitas observações em um único valor, como uma média, ou mediana por exemplo.
+
+Crédito da imagem: []()
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Sumarizando variáveis com summarise()**]
+
+&lt;BR/&gt;
+
+.center[Sintaxe .red["Clássica"]]
+
+
+```r
+summarise(tadpoles_raw, media = mean(`Body Length (mm)`, na.rm = TRUE))
+```
+
+&lt;BR/&gt;
+
+.center[Sintaxe .red["Pipe `%&gt;%`"]]
+
+
+```r
+tadpoles_raw %&gt;% 
+  summarise(media = mean(`Body Length (mm)`, na.rm = TRUE))
+```
+
+???
+O verbo summarise() é útil para:
+- aplicar qualquer função sobre uma ou mais variáveis
+- obter sumários estatísticos 
+- avaliar se os valores das variáveis estão dento dos limites de variação esperados
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("/home/cla/Imagens/assertive.jpeg")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Valores Fora da Amplitude de Variação com o Pacote assertive**]
+
+
+```r
+library(assertive)
+assert_all_are_in_closed_range(tadpoles_raw$`Body Length (mm)`,
+                               lower = 2, upper = 50)
+```
+
+```
+## Error in eval(expr, envir, enclos): is_in_closed_range : tadpoles_raw$`Body Length (mm)` are not all in the range [2,50].
+## There were 2965 failures (showing the first 10):
+##    Position Value   Cause
+## 1         5    NA missing
+## 2         6    NA missing
+## 3         8    NA missing
+## 4        10    NA missing
+## 5        12    NA missing
+## 6        13    NA missing
+## 7        14    NA missing
+## 8        17    NA missing
+## 9        18    NA missing
+## 10       25    NA missing
+```
+
+???
+Os valores NA são um problema no uso das funções do pacote assertive.
+Precsamos eliminá-los antes de avaliar se a apmlitude de variação dos dados está dentro do esperado.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Eliminando Valores NA com select() e drop_na()**]
+
+
+```r
+tadpoles_raw %&gt;% 
+  select(`Stage of development`, `Body Length (mm)`, `Total Length (mm)`) %&gt;% 
+  drop_na()
+```
+
+???
+Assim, mantemos apenas as observações completas de cada coluna selecionada.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("/home/cla/Imagens/assertive.jpeg")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Valores Fora da Amplitude de Variação com o Pacote assertive e summarise()**]
+
+
+```r
+tadpoles_raw %&gt;% 
+  select(`Body Length (mm)`) %&gt;% 
+  drop_na() %&gt;% 
+  summarise(assert_all_are_in_closed_range(`Body Length (mm)`,
+                                           lower = 2, upper = 45))
+```
+
+???
+A tabela com os valores de tamanho de corpo foi gerada e nenhuma mensagem de erro foi produzida. Ótimo! Isto indica que os valores estão dentro da amplitude de variação esperada.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("/home/cla/Imagens/assertive.jpeg")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Valores Fora da Amplitude de Variação com o Pacote assertive e summarise()**]
+
+&lt;img src="04-Análise-Exploratória-de-Dados-slides_files/figure-html/valores fora da amplitude 3-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+???
+Podemos avaliar graficamente a presença de valores fora da amplitude de variação esperada. Veremos como fazer gráficos na próxima aula.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("/home/cla/Imagens/assertive.jpeg")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Valores Fora da Amplitude de Variação com o Pacote assertive**]
+
+
+
+```r
+tadpoles_raw  %&gt;%  
+  select(`Total Length (mm)`) %&gt;% 
+  drop_na() %&gt;% 
+  summarise(assert_all_are_in_closed_range(`Total Length (mm)`,
+                                           lower = 5, upper = 100))
+```
+
+```
+## Error: Problem with `summarise()` input `..1`.
+## ℹ `..1 = assert_all_are_in_closed_range(...)`.
+## x is_in_closed_range : Total Length (mm) are not all in the range [5,100].
+## There were 6 failures:
+##   Position Value    Cause
+## 1        1  2909 too high
+## 2        6  4005 too high
+## 3       72  5374 too high
+## 4       84  4827 too high
+## 5       89  3961 too high
+## 6       94  2589 too high
+```
+
+
+???
+
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("/home/cla/Imagens/assertive.jpeg")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Valores Fora da Amplitude de Variação com o Pacote assertive e summarise()**]
+
+
+```r
+tadpoles_raw  %&gt;%  
+  select(`Total Length (mm)`) %&gt;% 
+  drop_na() %&gt;% 
+  filter(`Total Length (mm)` &lt; 2500) %&gt;% 
+  summarise(assert_all_are_in_closed_range(`Total Length (mm)`,
+                                           lower = 5, upper = 100))
+```
+
+```
+## # A tibble: 3,055 x 1
+##    `assert_all_are_in_closed_range(...)`
+##                                    &lt;dbl&gt;
+##  1                                  37.6
+##  2                                  20.1
+##  3                                  18.9
+##  4                                  35.5
+##  5                                  25.6
+##  6                                  25.8
+##  7                                  13.2
+##  8                                  25.9
+##  9                                  26.4
+## 10                                  26.4
+## # … with 3,045 more rows
+```
+
+
+???
+A tabela foi impressa o que siginifica que não há dados fora da amplitude de variação.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Corrgindo Valores Fora da Amplitude de Variação com mutate() e replace()**]
+
+
+
+```r
+tadpoles_raw %&gt;%  
+  select(Species, `Total Length (mm)`) %&gt;% 
+  drop_na()  %&gt;% 
+  mutate(`Total Length (mm)` = replace(`Total Length (mm)`, 
+         `Total Length (mm)` == 2909, 29.09),
+         `Total Length (mm)` = replace(`Total Length (mm)`, 
+         `Total Length (mm)` == 4005, 40.05),
+         `Total Length (mm)` = replace(`Total Length (mm)`, 
+         `Total Length (mm)` == 5374, 53.74),
+         `Total Length (mm)` = replace(`Total Length (mm)`, 
+         `Total Length (mm)` == 4827, 48.27),
+         `Total Length (mm)` = replace(`Total Length (mm)`, 
+         `Total Length (mm)` == 3961, 39.61),
+         `Total Length (mm)` = replace(`Total Length (mm)`, 
+         `Total Length (mm)` == 2589, 25.89)) %&gt;% 
+  summarise(assert_all_are_in_closed_range(`Total Length (mm)`,
+                                           lower = 5, upper = 100))
+```
+
+
+???
+Podemos corrigir os valores utilizando as funções mutate() e replace() para alterar as observações.
+
+A tabela foi impressa o que siginifica que não há dados fora da amplitude de variação.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Valores Fora da Amplitude de Variação**]
+
+
+&lt;img src="04-Análise-Exploratória-de-Dados-slides_files/figure-html/valores fora da amplitude 7-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+
+???
+Também é possível gerar mais de um sumário ao mesmo tempo utilizando summarise() 
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Múltiplos Sumários de uma Variável com summarise()**]
+
+
+
+```r
+tadpoles_raw %&gt;% 
+  summarise(media = mean(`Body Length (mm)`, na.rm = TRUE),
+            desvpad = sd(`Body Length (mm)`, na.rm = TRUE),
+            min = quantile(`Body Length (mm)`, na.rm = TRUE)[1],
+            qrt2 = quantile(`Body Length (mm)`, na.rm = TRUE)[2],
+            mediana = quantile(`Body Length (mm)`, na.rm = TRUE)[3],
+            qrt4 = quantile(`Body Length (mm)`, na.rm = TRUE)[4],
+            maximo = quantile(`Body Length (mm)`, na.rm = TRUE)[5])
+```
+
+???
+Útil para gerar sumários estatísticos dos dados.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Combinando filter() e summarise()**]
+
+&lt;BR/&gt;
+
+
+```r
+tadpoles_raw %&gt;% 
+  filter(Species == "Crossodactylus aeneus") %&gt;% 
+  summarise(media = mean(`Body Length (mm)`, na.rm = TRUE),
+            desvpad = sd(`Body Length (mm)`, na.rm = TRUE),
+            min = quantile(`Body Length (mm)`, na.rm = TRUE)[1],
+            qrt2 = quantile(`Body Length (mm)`, na.rm = TRUE)[2],
+            mediana = quantile(`Body Length (mm)`, na.rm = TRUE)[3],
+            qrt4 = quantile(`Body Length (mm)`, na.rm = TRUE)[4],
+            maximo = quantile(`Body Length (mm)`, na.rm = TRUE)[5])
+```
+
+
+???
+Útil para gerar sumários estatísticos de um subconjunto dos dados.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Combinando filter() e summarise()**]
+
+&lt;BR/&gt;
+
+
+```r
+tadpoles_raw %&gt;% 
+  filter(Method = "Dipnet", 
+         Species == "Crossodactylus aeneus") %&gt;% 
+  summarise(media = mean(`Body Length (mm)`, na.rm = TRUE),
+            desvpad = sd(`Body Length (mm)`, na.rm = TRUE),
+            min = quantile(`Body Length (mm)`, na.rm = TRUE)[1],
+            qrt2 = quantile(`Body Length (mm)`, na.rm = TRUE)[2],
+            mediana = quantile(`Body Length (mm)`, na.rm = TRUE)[3],
+            qrt4 = quantile(`Body Length (mm)`, na.rm = TRUE)[4],
+            maximo = quantile(`Body Length (mm)`, na.rm = TRUE)[5])
+```
+
+
+???
+Útil para gerar sumários estatísticos de um subconjunto dos dados.
+
+Mas pouco prático para gerar sumários de vários subconjuntos dos dados. Requer muita repetição de código.
+
+A solução para esse problema é o verbo group_by().
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Verbo group_by()**]
+
+&lt;BR/&gt;
+
+&lt;img src="http://swcarpentry.github.io/r-novice-gapminder/fig/13-dplyr-fig2.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+
+
+???
+Agrupa as observações utilizando uma variável para gerar os grupos.
+
+Crédito da imagem: [](http://swcarpentry.github.io/r-novice-gapminder/fig/13-dplyr-fig2.png)
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Sumarizando variáveis com group_by() e summarise()**]
+
+&lt;BR/&gt;
+
+&lt;img src="https://rstudio-conf-2020.github.io/r-for-excel/img/rstudio-cheatsheet-group_by_summarize.png" width="180%" style="display: block; margin: auto;" /&gt;
+
+???
+O uso da função `group_by()` só faz sentido em combinação com a função `summarise()`. 
+
+[](https://rstudio-conf-2020.github.io/r-for-excel/img/rstudio-cheatsheet-group_by_summarize.png)
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Sumarizando variáveis com group_by() e summarise()**]
+
+&lt;BR/&gt;
+
+.center[Sintaxe .red["Clássica"]]
+
+
+
+```r
+summarise(group_by(tadpoles_raw, Species), 
+          media = mean(`Body Length (mm)`, na.rm = TRUE),
+          desvpad = sd(`Body Length (mm)`, na.rm = TRUE),
+          min = quantile(`Body Length (mm)`, na.rm = TRUE)[1],
+          qrt2 = quantile(`Body Length (mm)`, na.rm = TRUE)[2],
+          mediana = quantile(`Body Length (mm)`, na.rm = TRUE)[3],
+          qrt4 = quantile(`Body Length (mm)`, na.rm = TRUE)[4],
+          maximo = quantile(`Body Length (mm)`, na.rm = TRUE)[5])
+```
+
+???
+
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Sumarizando variáveis com group_by() e summarise()**]
+
+&lt;BR/&gt;
+
+.center[Sintaxe .red["Pipe %&gt;%"]]
+
+
+```r
+tadpoles_raw %&gt;% 
+  group_by(Species) %&gt;% 
+  summarise(media = mean(`Body Length (mm)`, na.rm = TRUE),
+            desvpad = sd(`Body Length (mm)`, na.rm = TRUE),
+            min = quantile(`Body Length (mm)`, na.rm = TRUE)[1],
+            qrt2 = quantile(`Body Length (mm)`, na.rm = TRUE)[2],
+            mediana = quantile(`Body Length (mm)`, na.rm = TRUE)[3],
+            qrt4 = quantile(`Body Length (mm)`, na.rm = TRUE)[4],
+            maximo = quantile(`Body Length (mm)`, na.rm = TRUE)[5])
+```
+
+???
+Note que o uso da função group_by() substitui o uso da função filter. Agora, ao em vez de obter um sumário para somente um subconjunto das observações, é possível obtê-lo para mais de um subconjunto de uma só vez.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Verbo count()**]
+
+&lt;BR/&gt;
+
+.pull-left[
+
+```r
+tadpoles_raw %&gt;% 
+  count(Species)
+```
+
+```
+## # A tibble: 14 x 2
+##    Species                          n
+##    &lt;fct&gt;                        &lt;int&gt;
+##  1 Aplastodiscus eugenioi         273
+##  2 Crossodactylus aeneus         1970
+##  3 Bokermannohyla circumdata      164
+##  4 Physalaemus signifer           391
+##  5 Scinax albicans               1129
+##  6 Proceratophrys boiei           616
+##  7 Rhinella ornata                 70
+##  8 Hylodes pipilans               775
+##  9 Scinax flavoguttatus           223
+## 10 Hylodes asper                   18
+## 11 Proceratophrys appendiculata    83
+## 12 Hylodes charadranaetes         270
+## 13 Hylodes lateristrigatus          5
+## 14 &lt;NA&gt;                            19
+```
+]
+
+.pull-right[
+
+```r
+tadpoles_raw %&gt;% 
+  group_by(Species) %&gt;% 
+  summarise(n = n())
+```
+
+```
+## # A tibble: 14 x 2
+##    Species                          n
+##    &lt;fct&gt;                        &lt;int&gt;
+##  1 Aplastodiscus eugenioi         273
+##  2 Crossodactylus aeneus         1970
+##  3 Bokermannohyla circumdata      164
+##  4 Physalaemus signifer           391
+##  5 Scinax albicans               1129
+##  6 Proceratophrys boiei           616
+##  7 Rhinella ornata                 70
+##  8 Hylodes pipilans               775
+##  9 Scinax flavoguttatus           223
+## 10 Hylodes asper                   18
+## 11 Proceratophrys appendiculata    83
+## 12 Hylodes charadranaetes         270
+## 13 Hylodes lateristrigatus          5
+## 14 &lt;NA&gt;                            19
+```
+
+]
+
+???
+O verbo count() produz o mesmo resultado de group_by() de summarise() para contar as linhas por grupo.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Sumarizando duas variáveis com count() e mutate()**]
+
+&lt;BR/&gt;
+
+.pull-left[
+
+```r
+tadpoles_raw %&gt;% 
+  count(Species, 
+        `Stage of development`) %&gt;% 
+  mutate(`n (%)` = n/sum(n))
+```
+]
+
+.pull-right[
+
+```r
+tadpoles_raw %&gt;% 
+  group_by(Species, 
+           `Stage of development`) %&gt;% 
+  summarize(n = n()) %&gt;% 
+  mutate(`N (%)` = n/sum(n))
+```
+]
+
+???
+Os valores diferem porque ao usar group_by() o denominador é gerado como a soma de n para cada grupo e não para a coluna. 
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Sumarizando duas variáveis com count() e mutate()**]
+
+&lt;BR/&gt;
+
+.pull-left[
+
+```r
+tadpoles_raw %&gt;% 
+  count(Species, 
+        `Stage of development`) %&gt;% 
+  mutate(`n (%)` = n/sum(n))
+```
+]
+
+.pull-right[
+
+```r
+tadpoles_raw %&gt;% 
+  group_by(Species, 
+           `Stage of development`) %&gt;% 
+  summarize(n = n()) %&gt;% 
+  ungroup() %&gt;% 
+  mutate(`N (%)` = n/sum(n))
+```
+]
+
+???
+Para obter o mesmo resultado utilizando group_by() e summarise() é necessário utilizar a função ungroup() antes da função mutate().
+
+Contudo, o uso da função count() reduz a digitação e facilita a leitura.
+
+Agora, vamos utilizar as funções que aprendemos para gerar a tabela de dado limpa que utilizaremos para gerar as tabelas para visualizações e análise dos dados.
+
+---
+
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Gerando a tabela de dados limpas**]
+
+&lt;br/&gt;
+
+- .red[Filtrar] os dados pelo método .red[`Dipnet`]&lt;br/&gt;
+
+- .red[Selecionar] e .red[renomear] as colunas de interesse:
+  - Data
+  - Riachos
+  - Espécies
+  - Estágio de desnvolvimento
+  - Tamanho corporal e total&lt;br/&gt;
+  
+- Atribuir o .red[tipo correto] das variáveis&lt;br/&gt;
+
+- .red[Abreviar o nome] das espécies&lt;br/&gt;
+
+- Corrigir os .red[valores fora da amplitude de variação]&lt;br/&gt;
+
+- Eliminar valores .red[NA]*
+
+???
+Não eliminaremos varores NA por enquanto porque precisaremos do conjunto total das observações para gerar outra tabelas para análises (ex. tabelas de abundâncias das espécies).
+
+---
+
+layout: false
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+class: middle, center
+
+
+## **Gere um código utilizando o operador `%&gt;%` e as funções aprendidas para realizar essas tarefas**
+
+Todos as linhas de comando necessárias já foram fornecidas ao longo da aula
+
+Basta você reconhecer qual delas você deverá utilizar e encadeá-las de forma adequada
+
+
+???
+
+
+---
+
+class: inverse
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Minha Solução para a Tarefa**]
+
+Carregar os dados atribuindo os tipos adequados às variáveis
+
+
+```r
+tadpoles_raw &lt;- read_csv(file = "tadpoles_raw.csv", 
+                         col_names = TRUE, 
+                         na = c("NA"),
+                         col_types = cols(Date = col_date(format = "%m/%d/%y"),
+                                          Stream = col_factor(),
+                                          Species = col_factor(),
+                                          `Stage of development` = col_factor(),
+                                          `Depth (cm)` = col_number()))
+```
+
+
+???
+
+
+---
+
+class: inverse
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Minha Solução para a Tarefa**]
+
+Filtrar, selecionar e renomear variáveis, abreviar o nome das espécies e corrigir os valores fora da amplitude de variação
+
+
+```r
+tadpoles_raw &lt;- tadpoles_raw %&gt;% 
+  filter(Method == "Dipnet") %&gt;% 
+  select(date = Date, 
+         stream = Stream, 
+         species = Species,
+         stage = `Stage of development`,
+         total_len = `Total Length (mm)`, 
+         body_len = `Body Length (mm)`) %&gt;% 
+  mutate(Species = str_replace_all(species, 
+                                   c("Aplastodiscus eugenioi" = "Ae", 
+                                     "Bokermannohyla circumdata" = "Bc",
+                                     "Crossodactylus aeneus" = "Ca",
+                                     "Hylodes asper" = "Ha",
+                                     "Hylodes charadranaetes" = "Hc",
+                                     "Hylodes lateristrigatus" = "Hl",
+                                     "Hylodes pipilans" = "Hp",
+                                     "Physalaemus signifer" = "Ps",
+                                     "Proceratophrys appendiculata" = "Pa",
+                                     "Proceratophrys boiei" = "Pb",
+                                     "Rhinella ornata" = "Ro", 
+                                     "Scinax albicans" = "Sa",
+                                     "Scinax flavoguttatus" = "Sf")))
+```
+
+???
+
+
+---
+
+class: inverse
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Minha Solução para a Tarefa**]
+
+Corrigir os valores fora da amplitude de variação
+
+
+```r
+tadpoles_raw$total_len[which(tadpoles_raw$total_len &gt; 100)] &lt;- tadpoles_raw$total_len[which(tadpoles_raw$total_len &gt; 100)] /100
+```
+
+???
+Teste para valores fora da amplitude de variação.
+
+assert_all_are_in_closed_range(tadpoles_raw$total_len,
+                               lower = 2, upper = 100, 
+                               na_ignore = TRUE)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

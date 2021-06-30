@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introdução ao R para Ecólogos</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vitor Borges" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/shareon/shareon.min.css" rel="stylesheet" />
+    <script src="libs/shareon/shareon.min.js"></script>
+    <link href="libs/xaringanExtra-shareagain/shareagain.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-shareagain/shareagain.js"></script>
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <script src="libs/peerjs/peerjs.min.js"></script>
+    <script src="libs/tiny.toast/toast.min.js"></script>
+    <link href="libs/xaringanExtra-broadcast/broadcast.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-broadcast/broadcast.js"></script>
+    <script src="libs/fabric/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30}) })</script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+layout: true
+name: basic
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+
+
+---
+name: Title
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png")
+background-position: 0% 100%
+background-size: 20%
+class: inverse, center, middle, title-slide
+
+# .blue[Introdução ao R para Ecólogos]
+
+## .blue[⚔&lt;br/&gt;Introdução a escrita de funções em R]
+
+### .blue[Vitor Borges-Júnior]
+
+### .blue[PPGBIO - UNIRIO]
+
+### .blue[2021/06/08]
+
+---
+
+# .blue[**Funções**]
+ 
+
+&lt;BR/&gt;
+
+- Toda .red[ação] no `R` se dá através das .red[funções]&lt;br/&gt;
+&lt;BR/&gt;
+- Funcionam como .red["caixas pretas"]&lt;br/&gt;
+&lt;BR/&gt;
+
+&lt;img src="https://designshack.net/wp-content/uploads/blackbox-3.jpg" style="display: block; margin: auto;" /&gt;
+
+???
+Mostrar exemplo de funções quando falar em caixa preta
+
+---
+
+# .blue[**Funções**]
+ 
+
+&lt;BR/&gt;
+
+- Muitas delas já estão programadas direto na `base` do R...&lt;br/&gt;
+&lt;BR/&gt;
+- Outras estão programadas em .red[pacotes]&lt;br/&gt;
+&lt;BR/&gt;
+- Outras serão programadas por .red[você]&lt;br/&gt;
+&lt;BR/&gt;
+- .red[Por que] escrever funções?&lt;br/&gt;
+&lt;BR/&gt;
+
+???
+
+
+---
+
+# .blue[**Benefícios de escrever funções**]
+
+&lt;BR/&gt;
+
+- .red[Eliminar repetição] nos scripts&lt;br/&gt;
+&lt;BR/&gt;
+- .red[Minimizar] a digitação&lt;br/&gt;
+&lt;BR/&gt;
+- .red[Evitar erros copia/cola]&lt;br/&gt;
+&lt;BR/&gt;
+- Facilita a .red[reutilização] do código em diferentes projetos&lt;br/&gt;
+&lt;BR/&gt;
+- Escrever funções para atender suas .red[necessidades]&lt;br/&gt;
+&lt;BR/&gt;
+
+???
+
+---
+
+# .blue[**Sintaxe de uma função**]
+
+&lt;BR/&gt;
+
+- Usamos .red[`function() {}`] para criar uma função
+
+
+```r
+minha_funcao &lt;- function(arg1, arg2){
+  # Faça alguma coisa
+}
+```
+--
+- .red[Chamada]
+
+```r
+function(arg1, arg2) 
+```
+--
+- .red[Algoritmo]
+
+```r
+{
+  # Faça alguma coisa!
+}
+```
+
+???
+
+Mostrar exemplos de argumentos
+
+---
+
+# .blue[**Exemplo simples**]
+
+&lt;BR/&gt;
+
+- Função .red[`soma()`]
+
+
+```r
+# função que soma dois valores
+soma &lt;- function(x, y) {
+  print(x + y)
+}
+
+# usando a função soma
+soma(2, 5)
+```
+
+```
+## [1] 7
+```
+
+???
+
+---
+
+# .blue[**Outro exemplo simples**] 
+
+&lt;BR/&gt;
+
+- Função .red[`razao()`] - calcula a razão entre dois valores:&lt;br/&gt;
+&lt;BR/&gt;
+
+
+```r
+razao &lt;- function(valor1, valor2){
+  
+  print(valor1/valor2)
+  
+}
+
+# Uso da função
+razao(valor1 = 10, valor2 = 5)
+```
+
+```
+## [1] 2
+```
+
+???
+
+
+---
+
+# .blue[**Outro exemplo simples**] 
+
+&lt;BR/&gt;
+
+* Podemos .red[modificar a ordem] em que alimentamos os .red[argumentos], ou mesmo .red[suprimir] o nome dos argumentos (mas mantendo a ordem original)&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+# forma mais 'correta'
+razao(valor1 = 10, valor2 = 5)
+
+# mesmo resultado
+razao(valor2 = 5, valor1 = 10)
+
+# não é necessário forcencer os nomes dos argumentos
+razao(10, 5)
+```
+
+---
+
+# .blue[**Argumentos *default* **] 
+
+* Uma função pode ter valores padrão (.red[*default*]) - na ausência de uma determinação do usuário, ele vai assumir que tudo deve ser feito utilizando o valor padrão:&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+# vamos dar um valor padrão para um dos tratamentos
+razao &lt;- function(valor1, valor2 = 100){
+  print(valor1/valor2)
+  }
+
+# se não especificarmos o argumento valor2
+razao(valor1 = 10)
+```
+
+```
+## [1] 0.1
+```
+
+```r
+# e se especificarmos o argumento valor2?
+razao(valor1 = 10, valor2 = 5)
+```
+
+```
+## [1] 2
+```
+
+
+???
+Exemplo de argumento default numérico. Mas eles também podem ser `NULL`, lógicos ou categóricos. Veremos exemplos em breve.
+
+---
+
+# .blue[**Objetos dentro da função**]
+
+* Também podemos criar .red[objetos dentro da função]&lt;br/&gt;
+&lt;BR/&gt;
+* Estes .red[objetos só existirão dentro da função] que estamos criando&lt;br/&gt; 
+&lt;BR/&gt;
+* Lembrem-se que ao criar um objeto, o padrão do R é .red[não mostrar o resultado]&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+# salvando resultado do cálculo em um objeto dentro da função
+razao &lt;- function(valor1, valor2 = 100){
+  resposta &lt;- valor1/valor2
+}
+
+# usando a função - cade o resultado?
+razao(valor1 = 10)
+
+# obrigando o R a mostrar o resultado
+(razao(valor1 = 10, valor2 = 5))
+```
+
+```
+## [1] 2
+```
+
+???
+Introduzir regras de scopo.
+
+---
+
+# .blue[**Outra forma de obter o resultado**] 
+
+&lt;BR/&gt;
+
+- Podemos .red[salvar] o resultado da execução da função em um .red[novo objeto] para então acessar o resultado nele armazenado&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+razao &lt;- function(valor1, valor2){
+  resposta &lt;- valor1/valor2
+}
+
+# outra forma de obter o resultado
+cade &lt;- razao(valor1 = 10, valor2 = 5)
+cade
+```
+
+```
+## [1] 2
+```
+
+---
+
+# .blue[**Forma adequada de obter o resultado**]
+
+&lt;BR/&gt;
+
+* Forma mais adequada para contornar este problema é o uso da função .red[`print()`]:&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+# adicionando a função print
+razao &lt;- function(valor1, valor2){
+  resposta &lt;- valor1/valor2
+  print(resposta)
+}
+
+# usando função
+razao(valor1 = 10, valor2 = 5)
+```
+
+```
+## [1] 2
+```
+
+---
+
+# .blue[**Forma adequada de obter o resultado** ]
+
+&lt;BR/&gt;
+
+- Ou o controlador de fluxo .red[`return()`]&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+# adicionando o controlador de fluxo return
+razao &lt;- function(valor1, valor2){
+  resposta &lt;- valor1/valor2
+  return(resposta)
+}
+
+# usando função
+razao(valor1 = 10, valor2 = 5)
+```
+
+```
+## [1] 2
+```
+
+---
+
+# .blue[**Função `erro_padrao()`**]
+
+O R não possui uma função capaz de calcular o erro padrão da média de um vetor. Mas com suas novas habilidades você resolverá esse problema criando a função .red[`erro_padrão()`]
+- Dica: a fórmula para o erro padrão da média é `\(\frac{dev.\ pad.}{\sqrt{n}}\)`   
+    1. Calcular o .red[desvio padrão]. Você pode usar, por exemplo a coluna `area` do data frame `df` dentro da função `sd()`; 
+    2. Determinar o .red[comprimento] de `area` usando a função `length()` e calcular a sua raiz quadrada usando a função `sqrt()`;  
+    3. Dividir o resultado do passo 1 pelo passo 2;  
+    4. Insira as linhas de código que você gerou, seu algorítmo para calcular o erro padrão, dentro do corpo da sua nova função:
+
+
+```r
+erro_padrao &lt;- function(valor){
+      insira seu código aqui
+    }
+```
+    
+.center[Lembre-se de utilizar as funções `print()` ou `return()` para que a função retorne o resultado!]
+
+???
+Exercício do notebook 03
+
+---
+
+# .blue[**Convertendo scripts em funções**]
+
+&lt;BR/&gt;
+
+1. Prepare um .red["modelo"]&lt;br/&gt;
+&lt;BR/&gt;
+2. .red[Cole] o script no interior do "modelo"&lt;br/&gt;
+&lt;BR/&gt;
+3. Escolha os .red[argumentos]&lt;br/&gt;
+&lt;BR/&gt;
+4. .red[Substitua] os objetos internos pelos .red[argumentos equivalentes]&lt;br/&gt;
+&lt;BR/&gt; 
+5. Use .red[nomes generalistas] para as variáveis internas a função&lt;br/&gt;
+&lt;BR/&gt; 
+6. .red[Teste] a função!
+
+???
+
+
+---
+
+# .blue[**Funções mais complexas: arremessos de dado**]
+
+* Podemos avançar um pouco mais e tentar trabalhar uma ideia um pouco mais complexa de função: .red[arremessar um dado]!
+
+* O primeiro passo para criar uma função para arremessar um dado será .red[criar] nosso dado: 
+
+
+```r
+dado &lt;- 1:6
+```
+
+* Vamos simular um arremesso usando a função .red[`sample()`]:
+
+
+```r
+# como é uma aleatorização, precisamos usar o set.seed
+set.seed(0)
+
+# queremos apenas um arremeso da moeda
+numero_de_arremessos &lt;- 1
+sample(x = dado, size = numero_de_arremessos)
+```
+
+```
+## [1] 6
+```
+
+---
+
+# .blue[**Arremessos de dado**]
+
+* Já temos o formato que a função `sample()` deve assumir no corpo da função. Agora, vamos .red[testá-la] com 10 arremessos:
+
+
+```r
+numero_de_arremessos &lt;- 10
+sample(x = dado, size = numero_de_arremessos)
+```
+Error in sample.int(length(x), size, replace, prob) : impossível tomar uma amostra maior que a população quando 'replace = FALSE'
+
+--
+count: false
+
+- A função `sample()` pode realizar amostragens com ou sem reposição. No nosso exemplo da moeda precisamos informar a `sample()` que desejamos uma .red[amostragem com reposição] adicionando o argumento .red[`replace = TRUE`]
+
+
+```r
+numero_de_arremessos &lt;- 10
+sample(x = dado, size = numero_de_arremessos, replace = TRUE)
+```
+
+```
+##  [1] 1 4 1 2 5 3 6 2 3 3
+```
+
+???
+
+
+---
+
+# .blue[**Arremessos de dado**]
+
+* Assim, fica mais fácil desenhar a função, pois .red[sabemos quais os argumentos] da função que estamos criando que deverão ser manipulados!
+
+
+```r
+# criando função
+arremecar_dado &lt;- function(numero_de_arremessos) {
+  dado &lt;- 1:6
+  resultado &lt;- sample(x = dado, size = numero_de_arremessos,
+         replace = TRUE)
+  return(resultado)
+}
+# lancando dado 33 vezes
+set.seed(0)
+arremecar_dado(numero_de_arremessos = 33)
+```
+
+```
+##  [1] 6 1 4 1 2 5 3 6 2 3 3 1 5 5 2 6 6 2 1 5 5 1 1 6 5 5 2 2 6 1 4 1 4
+```
+
+
+???
+Introduzir a função `table()` para mostrar o resultado em formato de tabela de frequencias
+
+---
+
+# .blue[**Arremessos de dado viciado**]
+
+* Podemos .red[viciar] o dado, utilizando mais um argumento da função `sample()`: .red[`prob = `]&lt;br/&gt;
+&lt;BR/&gt;
+* O argumento `prob =` deve ser um .red[vetor de comprimento igual ao número de categorias] no objeto que alimenta o argumento `x = ` (no nosso caso, o vetor `dado`); este vetor deve conter .red[probabilidades entre 0 e 1] para cada categoria, de forma que o .red[somatório final seja 1]!
+
+
+```r
+dado &lt;- 1:6
+n_de_arremessos &lt;- 10
+probabilidades &lt;- c(0.29, 0.29, 0.22, 0.11, 0.05, 0.04)
+sum(probabilidades)
+```
+
+```
+## [1] 1
+```
+
+```r
+table(sample(x = dado, size = n_de_arremessos, replace = TRUE, prob = probabilidades))
+```
+
+```
+## 
+## 1 2 3 4 
+## 3 2 4 1
+```
+
+---
+
+# .blue[**Arremessos de dado viciado**]
+
+&lt;BR/&gt;
+
+- Agora podemos reescrever a função para tornar possível viciar os arremessos do dado 
+
+- Podemos incluir a função .red[`table()`] para que a função retorne tanto os .red[valores brutos], quanto a sua .red[frequência de ocorrência]
+
+- Para isso, precisamos armazenar os resutlado em dois objetos diferentes e transformá-los em uma .red[lista]
+
+
+```r
+# nossa função
+arremecar_dado &lt;- function(numero_de_arremessos) {
+  dado &lt;- 1:6
+  resultado &lt;- sample(x = dado, size = numero_de_arremessos,
+                      replace = TRUE)
+  return(resultado)
+}
+```
+
+---
+
+# .blue[**Arremessos de dado viciado**]
+
+
+
+```r
+# arremesso de dado viciado
+ arremecar_dado &lt;- function(numero_de_arremessos, probabilidades) {
+  dado &lt;- 1:6
+  resultado1 &lt;- sample(x = dado, size = numero_de_arremessos,
+                      replace = TRUE, probabilidades)
+  resultado2 &lt;- table(sample(x = dado, size = numero_de_arremessos,
+                      replace = TRUE, probabilidades))
+  return(list(Bruto = resultado1, Frequencias = resultado2))
+}
+
+# testar a função
+set.seed(100)
+arremecar_dado(numero_de_arremessos = 33, probabilidades = probabilidades)
+```
+
+```
+## $Bruto
+##  [1] 1 2 1 2 1 1 4 1 1 2 3 4 2 1 3 3 2 1 1 3 1 3 1 3 1 2 3 4 1 2 1 5 1
+## 
+## $Frequencias
+## 
+##  1  2  3  4  5  6 
+##  7 10  9  4  1  2
+```
+
+
+
+???
+
+
+# .blue[**Arremessos de dado - argumentos default**]
+
+- É interessante que o nosso dado seja .red[honesto] .red[a priore] 
+
+- Para isso podemos determinar um valor seja .red[*default*] para o argumento .red[`probabilidades`]
+
+
+```r
+# arremesso de dado viciado
+ arremecar_dado &lt;- function(numero_de_arremessos, probabilidades = c(1/6, 1/6, 1/6, 1/6, 1/6, 1/6)) {
+  dado &lt;- 1:6
+  resultado1 &lt;- sample(x = dado, size = numero_de_arremessos,
+                      replace = TRUE, probabilidades)
+  resultado2 &lt;- table(sample(x = dado, size = numero_de_arremessos,
+                      replace = TRUE, probabilidades))
+  return(list(Bruto = resultado1, Frequencias = resultado2))
+}
+
+# testar a função
+set.seed(100)
+arremecar_dado(numero_de_arremessos = 33)
+```
+
+```
+## $Bruto
+##  [1] 3 3 5 2 4 4 6 4 5 3 5 1 3 4 6 6 3 4 4 6 5 6 5 6 4 3 6 1 5 3 4 1 4
+## 
+## $Frequencias
+## 
+##  1  2  3  4  5  6 
+##  6  2 11  4  5  5
+```
+
+???
+
+
+---
+
+# .blue[**Analisando diferentes planilhas**]
+
+&lt;BR/&gt;
+
+
+```r
+df1_bruto &lt;- read.table("df1.txt", header = TRUE)
+```
+
+
+```r
+df_limpo1 &lt;- df_bruto1[, c('n_sp', 'area', 'isolamento')]
+```
+
+???
+Imagine que você precisa analisar uma planilha com dados de número de de espécies, área e isolamento.
+
+---
+
+# .blue[**Analisando diferentes planilhas**]
+
+
+```r
+df_bruto1 &lt;- read.table("df1.txt", header = TRUE)
+df_limpo1 &lt;- df_bruto1[, c('n_sp', 'area', 'isolamento')]
+```
+--
+
+```r
+df_bruto2 &lt;- read.table("df2.txt", header = TRUE)
+df_limpo2 &lt;- df_bruto2[, c('n_sp', 'area', 'isolamento')]
+
+df_bruto3 &lt;- read.table("df3.txt", header = TRUE)
+df_limpo3 &lt;- df_bruto3[, c('n_sp', 'area', 'isolamento')]
+
+df_bruto4 &lt;- read.table("df4.txt", header = TRUE)
+df_limpo4 &lt;- df_bruto4[, c('n_sp', 'area', 'isolamento')]
+```
+
+???
+
+---
+
+# .blue[**Analisando diferentes planilhas**]
+
+
+```r
+df_bruto1 &lt;- read.table("df1.txt", header = TRUE)
+df_limpo1 &lt;- df_bruto1[, c('n_sp', 'area', 'isolamento')]
+df_limpo1$isolamento &lt;- as.factor(isolamento)
+```
+--
+
+```r
+df_bruto2 &lt;- read.table("df2.txt", header = TRUE)
+df_limpo2 &lt;- df_bruto2[, c('n_sp', 'area', 'isolamento')]
+df_limpo2$isolamento &lt;- as.factor(df_limpo3$isolamento)
+
+df_bruto3 &lt;- read.table("df3.txt", header = TRUE)
+df_limpo3 &lt;- df_bruto3[, c('n_sp', 'area', 'isolamento')]
+df_limpo3$isolamento &lt;- as.factor(df_limpo3$isolamento)
+
+df_bruto4 &lt;- read.table("df4.txt", header = TRUE)
+df_limpo4 &lt;- df_bruto4[, c('n_sp', 'area', 'isolamento')]
+df_limpo4$isolamento &lt;- as.factor(df_limpo4$isolamento)
+```
+
+???
+
+---
+
+# .blue[**Analisando diferentes planilhas**]
+
+
+```r
+df_bruto1 &lt;- read.table("df1.txt", header = TRUE)
+df_limpo1 &lt;- df_bruto1[, c('n_sp', 'area', 'isolamento')]
+df_limpo1$isolamento &lt;- as.factor(isolamento)
+df_limpo1 &lt;- df_bruto1[!is.na(n_sp), ]
+```
+--
+
+```r
+df_bruto2 &lt;- read.table("df2.txt", header = TRUE)
+df_limpo2 &lt;- df_bruto2[, c('n_sp', 'area', 'isolamento')]
+df_limpo2$isolamento &lt;- as.factor(df_limpo3$isolamento)
+df_limpo2 &lt;- df_bruto2[is.na(n_sp), ]
+
+df_bruto3 &lt;- read.table("df3.txt", header = TRUE)
+df_limpo3 &lt;- df_bruto3[, c('n_sp', 'area', 'isolamento')]
+df_limpo3$isolamento &lt;- as.factor(df_limpo3$isolamento) 
+df_limpo3 &lt;- df_bruto3[!is.na(n_sp), ]
+
+df_bruto4 &lt;- read.table("df4.txt", header = TRUE)
+df_limpo4 &lt;- df_bruto4[, c('n_sp', 'area', 'isolamento')]
+df_limpo4$isolamento &lt;- as.factor(df_limpo4$isolamento)
+df_limpo4 &lt;- df_bruto4[!is.na(n_sp), ]
+```
+
+???
+
+---
+
+# .blue[**Analisando diferentes planilhas**]
+
+
+```r
+df_bruto1 &lt;- read.table("df1.txt", header = TRUE)
+df_limpo1 &lt;- df_bruto1[, c('n_sp', 'area', 'isolamento')]
+df_limpo1$isolamento &lt;- as.factor(isolamento)
+df_limpo1 &lt;- df_bruto1[!is.na(n_sp), ]
+
+df_bruto2 &lt;- read.table("df2.txt", header = TRUE)
+df_limpo2 &lt;- df_bruto2[, c('n_sp', 'area', 'isolamento')]
+df_limpo2$isolamento &lt;- as.factor(df_limpo3$isolamento)
+*df_limpo2 &lt;- df_bruto2[is.na(n_sp), ]
+
+df_bruto3 &lt;- read.table("df3.txt", header = TRUE)
+df_limpo3 &lt;- df_bruto3[, c('n_sp', 'area', 'isolamento')]
+df_limpo3$isolamento &lt;- as.factor(df_limpo3$isolamento) 
+df_limpo3 &lt;- df_bruto3[!is.na(n_sp), ]
+
+df_bruto4 &lt;- read.table("df4.txt", header = TRUE)
+df_limpo4 &lt;- df_bruto4[, c('n_sp', 'area', 'isolamento')]
+df_limpo4$isolamento &lt;- as.factor(df_limpo4$isolamento)
+df_limpo4 &lt;- df_bruto4[!is.na(n_sp), ]
+```
+
+???
+
+---
+
+# .blue[**Convertendo scripts em funções**]
+
+
+```r
+df_bruto1 &lt;- read.table("df1.txt", header = TRUE)
+df_limpo1 &lt;- df_bruto1[, c('n_sp', 'area', 'isolamento')]
+df_limpo1$isolamento &lt;- as.factor(isolamento)
+df_limpo1 &lt;- df_bruto1[!is.na(n_sp), ]
+
+df_bruto2 &lt;- read.table("df2.txt", header = TRUE)
+df_limpo2 &lt;- df_bruto2[, c('n_sp', 'area', 'isolamento')]
+df_limpo2$isolamento &lt;- as.factor(df_limpo3$isolamento)
+*df_limpo2 &lt;- df_bruto2[is.na(n_sp), ]
+
+df_bruto3 &lt;- read.table("df3.txt", header = TRUE)
+df_limpo3 &lt;- df_bruto3[, c('n_sp', 'area', 'isolamento')]
+df_limpo3$isolamento &lt;- as.factor(df_limpo3$isolamento) 
+df_limpo3 &lt;- df_bruto3[!is.na(n_sp), ]
+
+df_bruto4 &lt;- read.table("df4.txt", header = TRUE)
+df_limpo4 &lt;- df_bruto4[, c('n_sp', 'area', 'isolamento')]
+df_limpo4$isolamento &lt;- as.factor(df_limpo4$isolamento)
+df_limpo4 &lt;- df_bruto4[!is.na(n_sp), ]
+```
+
+???
+
+---
+
+# .blue[**Convertendo scripts em funções**]
+
+&lt;BR/&gt;
+
+1. Prepare um .red["modelo"]&lt;br/&gt;
+&lt;BR/&gt;
+2. .red[Cole] o script no interior do "modelo"&lt;br/&gt;
+&lt;BR/&gt;
+3. Escolha os .red[argumentos]&lt;br/&gt;
+&lt;BR/&gt;
+4. .red[Substitua] os objetos internos pelos .red[argumentos equivalentes]&lt;br/&gt;
+&lt;BR/&gt; 
+5. Use .red[nomes generalistas] para as variáveis internas a função&lt;br/&gt;
+&lt;BR/&gt; 
+6. .red[Teste] a função!
+
+???
+
+
+---
+
+
+# .blue[**Prepare um "modelo"**]
+
+
+```r
+importar_dados &lt;- function() {
+  
+  
+  
+  
+
+}
+```
+
+???
+
+
+---
+
+# .blue[**Cole o script**]
+
+
+```r
+importar_dados &lt;- function() {
+df_bruto1 &lt;- read.table("df1.txt", header = TRUE)
+df_limpo1 &lt;- df_bruto1[, c('n_sp', 'area', 'isolamento')]
+df_limpo1$isolamento &lt;- as.factor(isolamento)
+df_limpo1 &lt;- df_bruto1[!is.na(n_sp), ]
+}
+```
+
+???
+
+
+---
+
+# .blue[**Escolha os argumentos**]
+
+
+```r
+*importar_dados &lt;- function(nome_do_arquivo) { # somente 1 argumento
+df_bruto1 &lt;- read.table("df1.txt", header = TRUE)
+df_limpo1 &lt;- df_bruto1[, c('n_sp', 'area', 'isolamento')]
+df_limpo1$isolamento &lt;- as.factor(isolamento)
+df_limpo1 &lt;- df_bruto1[!is.na(n_sp), ]
+}
+```
+
+???
+
+
+---
+
+# .blue[**Substitua pelos argumentos equivalentes**]
+
+
+```r
+importar_dados &lt;- function(nome_do_arquivo) { 
+*df_bruto1 &lt;- read.table(nome_do_arquivo, header = TRUE) # substituir
+# pelo argumento equivalente
+df_limpo1 &lt;- df_bruto1[, c('n_sp', 'area', 'isolamento')]
+df_limpo1$isolamento &lt;- as.factor(isolamento)
+df_limpo1 &lt;- df_bruto1[!is.na(n_sp), ]
+}
+```
+
+???
+
+
+---
+
+# .blue[**Use nomes generalistas para as variáveis**]
+
+
+```r
+importar_dados &lt;- function(nome_do_arquivo) { 
+*df_bruto &lt;- read.table(nome_do_arquivo, header = TRUE) # nome
+# generalista
+*df_limpo &lt;- df_bruto[, c('n_sp', 'area', 'isolamento')] # nome
+# generalista
+df_limpo$isolamento &lt;- as.factor(isolamento)
+df_limpo &lt;- df_bruto[!is.na(n_sp), ]
+}
+```
+
+# .blue[**Teste da função**]
+
+
+```r
+df1 &lt;- importar_dados("df1.txt")
+df2 &lt;- importar_dados("df2.txt")
+df3 &lt;- importar_dados("df3.txt")
+df4 &lt;- importar_dados("df4.txt")
+```
+
+???
+
+
+---
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png")
+background-position: 0% 100%
+background-size: 20%
+class: center, middle
+
+# .blue[**Agora é sua vez de criar uma função para arremessar moedas**]
+
+---
+layout: true
+name: basic
+background-image: url("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Analise-de-Dados-Ecologicos/libs/images/AnalisaR_teste1.png")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+
+---
+
+# .blue[**Controladores de Fluxo**]
+
+&lt;BR/&gt;
+
+* São .red[funções] usadas especialmente para .red[controlar o fluxo] de computação de certas tarefas. &lt;br/&gt;
+&lt;BR/&gt;
+* Fornecem mais .red[flexibilidade] ao programarmos uma tarefa, especialmente tarefas .red[repetitivas]. &lt;br/&gt;
+&lt;BR/&gt;
+* Os principais .red[controladores de fluxo] para funções são:&lt;br/&gt;
+&lt;BR/&gt;
+
+---
+
+# .blue[**Controladores de Fluxo**]
+
+&lt;table&gt;
+&lt;caption&gt;Controladores de fluxo e seus usos no R&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Controlador.de.Fluxo &lt;/th&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Uso &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; if, else &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; testa uma condição para 
+executar uma ação &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; for &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; executa uma tarefa repetitivamente por um 
+número determinado de vezes &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; while &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; executa um loop enquanto uma
+condição for verdadeira &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; repeat &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; executa uma ação 
+infinitamente &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; break &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; interrompe a execução de 
+um loop &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; next &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; pula a iteração de um
+loop &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; return &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; fornecer o output que ela
+deve retornar &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+## .blue[**`if() {}`, `else() {}`**]
+
+&lt;BR/&gt;
+
+* Esta função executa uma ação se uma .red[condição] for atendida, caso contrário, ela realizará uma outra ação.&lt;br/&gt;
+&lt;BR/&gt;  
+* Funcionamento básico desta função é:&lt;br/&gt;  
+&lt;BR/&gt;
+
+```r
+if(condição) {
+        &lt;ação&gt;
+        } else {
+        &lt;outra ação&gt;        
+        }
+```
+--
+count: false
+&lt;BR/&gt;
+- OBS: Não confundir com a função .red[`ifelse()`]!
+
+???
+Explicar a função `ifelse()`
+
+---
+
+## .blue[**`if() {}`, `else() {}`**]
+
+&lt;BR/&gt;
+
+* Podemos utilizar o exemplo abaixo para entender a funcionalidade desta função:&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+# vamos criar um objeto com o número 5
+x &lt;- 5
+# e vamos usar a estrutura de controle if, else
+teste_condicional &lt;- if(x &lt; 10){
+  "número menor que 10"
+} else {
+  "número é maior que 10"
+}
+
+teste_condicional
+```
+
+---
+
+## .blue[**`if() {}`, `else() {}`**]
+
+&lt;BR/&gt;
+
+* Vamos testar com outro valor de .red[`x`]:&lt;br/&gt;
+&lt;BR/&gt;
+
+
+```r
+# vamos criar um objeto com o número 20
+x &lt;- 20
+# e vamos usar a estrutura de controle if, else
+teste_condicional &lt;- if(x &lt; 10){
+  "número menor que 10"
+} else {
+  "número é maior que 10"
+}
+teste_condicional
+```
+
+---
+
+## .blue[**`if() {}`, `else() {}`**]
+
+&lt;BR/&gt;
+
+* .red[IMPORTANTE]: este controlador de fluxo não está restrito à uma única condição, podendo ser incluídas .red[múltiplas condições].&lt;br/&gt;
+&lt;BR/&gt;
+
+
+```r
+# vamos criar um objeto com o número 10
+x &lt;- 10
+# e vamos usar a estrutura de controle if, else
+teste_condicional &lt;- if(x &lt; 10){
+  "número menor que 10"
+} else if(x == 10) {
+  "número é igual a 10"
+} else {
+  "número é maior que 10"
+}
+teste_condicional
+```
+
+```
+## [1] "número é igual a 10"
+```
+
+---
+
+# .blue[**Aplicação - Argumento default lógico**]
+
+&lt;BR/&gt;
+
+- Podemos utilizar o controlador de fluxo condicional para .red[determinar] como o .red[resultado] da função .red[`arremessar_dado()`] será .red[apresentado]: na .red[forma bruta], na forma de .red[frequência], ou os .red[dois resultados] ao mesmo tempo
+
+---
+
+# .blue[**Aplicação - Argumento default lógico**]
+
+
+```r
+# arremesso de dado honesto com controle parcial de resultados
+arremecar_dado &lt;- function(numero_de_arremessos, 
+                           probabilidades = c(1/6, 1/6, 1/6, 1/6, 1/6, 1/6), 
+                           resu = TRUE) {
+  dado &lt;- 1:6
+  resultado1 &lt;- sample(x = dado, size = numero_de_arremessos,
+                       replace = TRUE, probabilidades)
+  resultado2 &lt;- table(sample(x = dado, size = numero_de_arremessos,
+                             replace = TRUE, probabilidades))
+  resultados &lt;- list(Bruto = resultado1, Frequencias = resultado2)
+  if(resu == TRUE) {
+    return(resultados$Frequencias)
+  } else {
+    return(resultados$Bruto)
+  }
+}
+
+# testar a função
+set.seed(100)
+arremecar_dado(numero_de_arremessos = 33)
+```
+
+---
+
+# .blue[**Aplicação - Argumento default categórico**]
+
+
+```r
+# arremesso de dado honesto com controle total de resultados
+arremecar_dado &lt;- function(numero_de_arremessos, 
+                           probabilidades = c(1/6, 1/6, 1/6, 1/6, 1/6, 1/6), 
+                           resu = c("Bruto", "Frequencias", "Ambos")) {
+  dado &lt;- 1:6
+  resultado1 &lt;- sample(x = dado, size = numero_de_arremessos,
+                       replace = TRUE, probabilidades)
+  resultado2 &lt;- table(sample(x = dado, size = numero_de_arremessos,
+                             replace = TRUE, probabilidades))
+  resultados &lt;- list(Bruto = resultado1, Frequencias = resultado2)
+  resu &lt;- match.arg(resu)
+  if(resu == "Frequencias") {
+    return(resultados$Frequencias)
+  } else if(resu == "Bruto") {
+    return(resultados$Bruto)
+  } else {
+    return(resultados)
+  }
+}
+
+# testar a função
+set.seed(100)
+arremecar_dado(numero_de_arremessos = 33)
+```
+---
+
+## .blue[**`if() {}`,  `else {}`**]
+
+&lt;BR/&gt;
+
+1. Transforme o teste condicional do exemplo anterior em uma função.&lt;br/&gt;
+&lt;BR/&gt;
+2. Usando o controlador de fluxo `if`, `else` construa um teste lógico que permita optar pela apresentação do resultado da função arremecar_moeda em uma tabela, sem estar tabelado, ou os dois resultados ao mesmo tempo.&lt;br/&gt;
+
+---
+
+## .blue[**`for() {}`**]
+
+&lt;BR/&gt;
+* O .red[`for` executa uma tarefa repetidamente] por um número determinado de vezes&lt;br/&gt;
+&lt;BR/&gt;
+* Este é o controlador de fluxo mais útil e um dos mais usados ao programarmos funções&lt;br/&gt;
+&lt;BR/&gt;
+* Sua estrutura básica é a seguinte:&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+for(i in quantidade_de_vezes) { # onde i 
+        # é cada uma das vezes
+        &lt;ação&gt;
+}
+```
+
+---
+
+# .blue[**`for() {}`**]
+
+&lt;BR/&gt;
+
+* Um exemplo do uso desse controlador de fluxo é:&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+for (i in 1:10) { # para cada i de 1 a 10
+  print(i) # imprima o valor de i
+  Sys.sleep(time = 1) # aguarde 1 segundo antes de
+  # prosseguir
+  # repita a operaçao
+}
+```
+
+
+???
+* O poder do `for() {}` está na sua capacidade em realizar uma tarefa repetitiva, de forma que a cada vez que essa tarefa é realizada, o seu resultado seja **armazenado** em algum objeto do R.&lt;br/&gt;
+&lt;BR/&gt;
+* Exemplos desta aplicação são:&lt;br/&gt;
+&lt;BR/&gt;
+  * Juntar conjuntos de dados que estejam separados em diferentes arquivos em um único arquivo;  
+  * Realizar testes de aleatorização;  
+  * Usar a informação em uma célula de um conjunto de dados para buscar uma determina informação e adicionar a um vetor/conjunto de dados (e.g., verificar se os nomes de uma espécie batem com a base do GBIF, extrair informações de coordenadas de um mapa,...); 
+  * ... (toda e qualquer tarefa que envolva o uso de um mesmo conjunto de ações repetitivas para partes dos dados)
+
+---
+
+## .blue[**`for() {}`**]
+
+&lt;BR/&gt;
+
+* Um exemplo prático: criar uma .red[sequência Fibonacci]&lt;br/&gt;
+&lt;BR/&gt;
+* Os .red[dois primeiros números] da sequência são 1&lt;br/&gt;
+&lt;BR/&gt;
+* A partir do terceiro número, .red[todo número é a soma dos dois números anteriores]&lt;br/&gt;
+&lt;BR/&gt;
+* Exemplo: .red[1, 1, 2, 3, 5, 8, 13, 21,...]&lt;br/&gt;
+&lt;BR/&gt;
+
+---
+
+## .blue[**`for() {}`**]
+
+* Para tentar reproduzir essa sequência, vamos primeiro .red[criar um vetor] com os .red[dois] primeiros números .red[`1`'s]:
+
+```r
+vetor1 &lt;- c(1, 1)
+```
+
+* Este é um vetor de comprimento 2 (teste: `length(vetor1)`) e, se .red[indexarmos] a posição .red[3] deste vetor, obteremos um NA:
+
+```r
+# o que acontece se indexarmos a segunda posição deste
+# vetor?
+vetor1[3]
+```
+
+```
+## [1] NA
+```
+
+* O comprimento de um vetor não é algo fixo após ele ser criado - novos elementos podem ser adicionados de acordo com nossa necessidade
+* Podemos usar o .red[`for() {}`] para que a cada posição adicionada em um vetor seja preenchida pela soma dos valores das duas últimas posições
+
+---
+
+## .blue[**`for() {}`**]
+
+&lt;BR/&gt;
+
+- .red[Some] a .red[primeira] e a .red[segunda] posição do `vetor1` através da indexação.&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+vetor1[1] + vetor1[2]
+```
+
+```
+## [1] 2
+```
+
+---
+
+## .blue[**`for() {}`**]
+
+&lt;BR/&gt;
+
+- Agora que já nos lembramos como usar a indexação para fazer a soma, vamos usar o .red[`for() {}`] para criar a sequência Fibonacci. Neste caso, vamos especificar um .red[tamanho] para a sequência (ex. 10), e usar o .red[`for() {}`] para calcular os valores das posições da sequência da .red[posição 3] até aquela que nós determinamos (10). A cada repetição, vamos dizer para o __loop__ armazenar o resultado da soma na nova posição que será adicionada ao .red[`vetor1`].&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+for(i in 3:10) {
+  vetor1[i] &lt;- vetor1[i-1] + vetor1[i-2]
+}
+vetor1
+```
+
+```
+##  [1]  1  1  2  3  5  8 13 21 34 55
+```
+
+---
+
+## .blue[**`for() {}`**]
+
+&lt;BR/&gt;
+
+- Transforme o seu código em uma função em que possamos .red[escolher o tamanho] da sequência de fibonacci que será gerada.&lt;br/&gt;
+&lt;BR/&gt;
+
+
+---
+
+## .blue[**`for() {}`**]
+
+1. Escreva uma função que calcule a .red[média] de um vetor. Formula da media:
+`$$\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$$`&lt;br/&gt;
+
+2. Escreva uma função que calcule a .red[variância] de um vetor. 
+Fórmula da variância: 
+`$$\sigma^{2} = \frac{\sum_{i=1}^{n} 
+  \left(x_{i} - \bar{x}\right)^{2}}
+  {n-1}$$`
+
+3. Escreva uma função que calcule o .red[desvio padrão] de um vetor. Fórmula do desvio padrão: 
+`$$\sigma = \sqrt{\frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {n-1}}$$`
+
+
+---
+
+## .blue[**`while() {}`**]
+
+&lt;BR/&gt;
+
+* Executa uma .red[ação] (ou não) enquanto uma .red[condição for verdadeira]&lt;br/&gt;
+&lt;BR/&gt;
+* A estrutura geral do uso deste controlador de fluxo é:&lt;br/&gt;
+&lt;BR/&gt;
+
+
+```r
+while(condição) {
+  &lt;ação&gt;
+}
+```
+
+---
+
+## .blue[**`while() {}`**]
+
+&lt;BR/&gt;
+
+* Apesar desta estrutura se parecer com a do controlador de fluxo `if`, `else`, ele permite que as .red[condições] sejam .red[testadas] de forma .red[iterativa]&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+contagem  &lt;- 0
+while (contagem &lt; 10) {
+  print(contagem)
+  Sys.sleep(0.5)
+  contagem &lt;- contagem + 1
+}
+```
+
+---
+
+## .blue[**`while() {}`**]
+
+&lt;BR/&gt;
+
+* Este controlador de fluxo pode ser útil se estivermos trabalhando com .red[processo de otimização] em modelagem, e quisermos que o processamento só pare ao atingir uma determinada condição que caracterize uma boa otimização&lt;br/&gt;
+&lt;BR/&gt;
+
+* Você também pode combinar este controlador de fluxo com os outros.
+
+---
+
+## .blue[**`while() {}`**]
+
+
+
+```r
+# quanto dinheiro tinha na minha conta?
+minha_conta &lt;- 0
+# como ela vai flutuar?
+while(minha_conta &lt; 100 &amp; minha_conta &gt; -100){ 
+  # enquanto o que eu tiver na conta estiver em 100 e -100
+  print(minha_conta) # imprime o saldo
+  
+  destino &lt;- sample(x = c("triste", "feliz"), size = 1) 
+  # ai entra o destino, como sempre
+  if(destino == "feliz") { # se o destino for feliz
+  # deposita 20 na minha conta  
+    minha_conta &lt;- minha_conta + 20 
+  
+    } else { # se o destino for triste
+    # tira 20 da minha conta
+    minha_conta &lt;- minha_conta - 20 
+    }
+  Sys.sleep(0.5)
+}
+```
+
+---
+
+## .blue[**`while() {}`**]
+
+* .red[__Dica__]: você pode .red[interromper] o processamento de uma função à qualquer momento, apertando .red[`Esc`] no seu teclado quando o .red[cursor] está no .red[console] ou o botão .red[`Stop`] no console.&lt;br/&gt;
+&lt;BR/&gt;
+
+---
+
+# .blue[**`repeat()` + `break()`**]
+
+&lt;BR/&gt;
+
+* O controlador de fluxo .red[`repeat()`] vai .red[repetir] um operação infinitamente, até que você .red[interrompa] o processamento de forma artificial ou até que uma .red[condição] seja atingida e haja a presença do controlador .red[`break()`] - que vai interromper o processamento da função &lt;br/&gt;
+&lt;BR/&gt;
+
+
+```r
+x &lt;- 1
+repeat { # aqui está um controlador de fluxo
+        print(x)
+        Sys.sleep(time = 1)
+        x = x+1
+        if (x == 6){
+                break # aqui está o outro controlador de fluxo
+        }
+
+}
+```
+
+---
+
+## .blue[**`next()`**]
+
+&lt;BR/&gt;
+
+* Este controlador de fluxo faz com que uma ação seja .red["pulada"], e é útil quando em combinação com outros controladores de fluxo&lt;br/&gt;
+&lt;BR/&gt;  
+
+
+```r
+x &lt;- 1:10
+for (val in x) {
+    if (val &gt; 3 &amp; val &lt; 6){
+        next # aqui está o controlador de fluxo
+    }
+    print(val)
+    Sys.sleep(time = 1)
+}
+```
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introdução ao R para Ecólogos</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vitor Borges" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/shareon/shareon.min.css" rel="stylesheet" />
+    <script src="libs/shareon/shareon.min.js"></script>
+    <link href="libs/xaringanExtra-shareagain/shareagain.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-shareagain/shareagain.js"></script>
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <script src="libs/peerjs/peerjs.min.js"></script>
+    <script src="libs/tiny.toast/toast.min.js"></script>
+    <link href="libs/xaringanExtra-broadcast/broadcast.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-broadcast/broadcast.js"></script>
+    <script src="libs/fabric/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30}) })</script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+layout: true
+name: basic
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+
+
+---
+name: Title
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse, center, middle, title-slide
+
+# .blue[**Introdução ao R para Ecólogos**]
+
+## .blue[**⚔&lt;br/&gt;Funções Loop**]
+
+### .blue[Vitor Borges-Júnior]
+
+### .blue[PPGBIO - UNIRIO]
+
+### .blue[2021/06/01]
+
+???
+IDEIAS DE MELHORIAS PARA O PRÓXIMO CURSO
+
+---
+
+# .blue[**Indexação por lógica - Vetores**]
+
+&lt;BR/&gt;
+
+a. Crie um vetor de número de 1 a 100 e guarde este vetor
+em um objeto. &lt;br/&gt;
+&lt;BR/&gt;
+b. Crie um segundo vetor do tipo caracter com duas categorias: "impar" e  "par" (nesta ordem), e guarde em um objeto. &lt;br/&gt;
+&lt;BR/&gt;
+c. Faça com que os valores "impar" e "par" sejam repetidos 50 vezes, de forma intercalada ("impar", "par", "impar", "par", ...); guarde isso em um objeto. &lt;br/&gt;
+&lt;BR/&gt;
+d. Indexe o vetor criado no passo "a" de forma que somente os números em posição par sejam apresentados.&lt;br/&gt;
+&lt;BR/&gt;
+
+???
+
+---
+
+# .blue[**Indexação por lógica - Data Frames**]
+
+&lt;BR/&gt;
+
+- Utilizamos o símbolo `$` para obter uma coluna de um data frame&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+df$n_sp # acessa os valores da coluna n_sp
+```
+
+```
+##  [1] 37 45 32 30 34 36 40 28 37 34 38 35 38 38 32 34 35 29 26 33 35 32 40 38 31
+## [26] 30 35 34 35 34 36 38 37 30 30 32 31 35 39 36 38 29 36 40 31 18 26 31 38 29
+## [51] 40 36 34 31 32 36 30 36 29 34 32 43 38 43 35 36 39 31 36 29 35 39 25 43 25
+## [76] 31 21 25 37 35 38 23 33 32 37 39 34 33 38 38 33 33
+```
+
+- Agora podemos acessar os vaolores de uma coluna como se fossem vetores&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+df$n_sp[df$n_sp &gt; 38]
+```
+
+```
+##  [1] 45 40 40 39 40 40 43 43 39 39 43 39
+```
+
+---
+
+# .blue[**Indexação por lógica - Data Frames**]
+
+&lt;BR/&gt;
+
+- Também podemos indexar data frames pelo sistema de coordenadas&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+df[df$cat1 == "B", "area"]
+```
+
+```
+##  [1] 89.85903 52.86657 23.06282 71.95476 79.87540 48.42373 81.92399 52.97644
+##  [9] 76.23205 74.95261 30.55820 54.87433 66.27684 44.53961 10.03735 45.66708
+## [17] 51.52337
+```
+
+
+---
+
+# .blue[**Indexação por lógica - Data Frames**]
+
+&lt;BR/&gt;
+
+- Obtenha o número de espécies (n_sp) pertencentes a categoria A **OU** C&lt;br/&gt;
+&lt;BR/&gt;
+- Obtenha o número de espécies petencentes a áreas maiores ou iguais a 60 **E** menores ou iguais a 70&lt;br/&gt;
+&lt;BR/&gt;
+- Obtenha o número de espécies pertencentes a áreas menores que 30 **OU** maior que 80&lt;br/&gt;
+&lt;BR/&gt;
+- Obtenha os valores de área **diferentes** das categorias (cat1) "A" **OU** "B"&lt;br/&gt;
+&lt;BR/&gt;
+
+???
+
+
+---
+
+# .blue[**Obtendo e alterando o nome de colunas**]
+
+&lt;BR/&gt;
+
+- `names()` fornece o nome das colunas de um data frame&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+names(df)
+```
+
+```
+## [1] "n_sp" "area" "cat1" "cat2" "cat3"
+```
+&lt;BR/&gt;
+- Para alterar o nome de uma coluna:&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+names(df)[4] &lt;- "predador"
+names(df)
+```
+
+```
+## [1] "n_sp"     "area"     "cat1"     "predador" "cat3"
+```
+
+---
+
+# .blue[**Obtendo e alterando o nome de colunas**]
+
+&lt;BR/&gt;
+
+- Altere o nome da coluna `"cat1"` para `"isolamento"`
+
+???
+
+---
+
+# .blue[**Funções Loop**]
+
+&lt;BR/&gt;
+
+- Executar uma mesma tarefa repetidas vezes para diferentes partes de um conjunto dados&lt;br/&gt;
+&lt;BR/&gt;
+- Funções loop da família `apply()`&lt;br/&gt;
+&lt;BR/&gt;
+- Veremos 5 funções loop que podem ser úteis&lt;br/&gt;
+&lt;BR/&gt;
+
+---
+
+# .blue[**Funções Loop**]
+
+&lt;table&gt;
+&lt;caption&gt;Funções loop no R e seus usos&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Função &lt;/th&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Significado &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; apply() &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; aplica função nas linhas ou colunas de 
+uma matriz, retornando um vetor &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; aggregate() &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; aplica uma função a sub-conjuntos de uma coluna em 
+data.frame, retorna um data.frame &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; tapply() &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; aplica uma função a sub-conjuntos de um vetor, 
+retornando um vetor, 
+ou uma tabela de contigência &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; by() &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; aplica uma função a um data.frame ou matriz por sub-conjuntos
+um fator, retorna sempre uma lista &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; lapply() &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; aplica uma função a uma lista, retorna uma lista &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; sapply() &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; identico ao `lapply()`, mas retorna um vetor &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; mapply() &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; aplica uma função a multiplos elementos de diferentes argumentos &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+# .blue[**apply()**]
+
+&lt;table&gt;
+&lt;caption&gt;Uso da função apply&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Argumento &lt;/th&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Significado &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; X &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; uma matriz &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; MARGIN &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; a função deve ser aplicada nas linhas (1),
+colunas (2) ou em ambas? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; FUN &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; a função a ser aplicada &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+```r
+# para usar a função apply, precisaremos criar uma matriz
+matriz &lt;- matrix(data = 1:20, nrow = 5, ncol = 4)
+apply(X = matriz, MARGIN = 1, FUN = mean)
+apply(X = matriz, MARGIN = 2, FUN = mean)
+
+# similar as funções rowMeans e colMeans
+rowMeans(matriz)
+colMeans(matriz)
+```
+
+---
+
+# .blue[**aggregate()**]
+
+&lt;table&gt;
+&lt;caption&gt;Uso da função aggregate&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Argumento &lt;/th&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Significado &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; x &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; um data.frame preferencialmente uma coluna por vez &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; by &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; uma lista de elementos que agrupem observações, de tamanho igual ao de x &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; FUN &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; a função a ser aplicada &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+```r
+aggregate(x = df$area, by = list(df$predacao), 
+          FUN = mean)
+```
+
+---
+
+# .blue[**aggregate()**]
+
+&lt;BR/&gt;
+
+Aplique a função `aggregate()` para determinar o comprimento médio da pétala de todas as espécies, no conjunto de dados `iris`
+
+---
+
+# .blue[**tapply()**]
+
+&lt;table&gt;
+&lt;caption&gt;Uso da função tapply&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Argumento &lt;/th&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Significado &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; X &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; um vetor &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; INDEX &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; uma lista de elementos que agrupem observações, de tamanho igual ao de x &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; FUN &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; a função a ser aplicada &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+```r
+# média de Var2 por nível de fator
+tapply(X = df$area, INDEX = list(df$isolamento), 
+       FUN = mean)
+
+# Para mais de um fator
+tapply(X = df$area, INDEX = list(df$isolamento,
+                                    df$predacao),
+       FUN = mean)
+```
+
+---
+
+# .blue[**tapply()**]
+
+&lt;BR/&gt;
+
+Aplique a função `tapply()` para determinar a concentração média de CO2 no ambiente (conc) para os diferentes tratamentos (Treatment) e para as diferentes origens das plantas (Type), no conjunto de dados `CO2`.
+
+---
+
+# .blue[**by()**]
+
+&lt;table&gt;
+&lt;caption&gt;Uso da função by&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Argumento &lt;/th&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Significado &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; data &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; um `data.frame` ou matriz &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; INDICES &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; uma lista de elementos que agrupem observações de tamanho igual ao de data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; FUN &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; a função a ser aplicada &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+```r
+# média de Var1 por nível de Fator2
+by(data = df$n_sp, INDICES = list(df$isolamento),
+   FUN = mean)
+# média de Var2 por nível de Fator1 e Fator2
+by(data = df$n_sp, 
+   INDICES = list(df$isolamento,
+                  df$predacao), FUN = mean)
+```
+
+---
+
+# .blue[**by()**]
+
+&lt;BR/&gt;
+
+Aplique a função `by()` para determinar a taxa de absorção média de CO2 (uptake) para os diferentes tratamentos (Treatment) e diferentes origens das plantas (Type), no conjunto de dados `CO2`.
+
+---
+
+# .blue[**lapply()**]
+
+&lt;table&gt;
+&lt;caption&gt;Uso da função lapply&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Argumento &lt;/th&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Significado &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; X &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; uma lista &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; FUN &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; a função a ser aplicada &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+- Vamos criar uma lista a partir do data frame `df` usando a função `split()`:
+
+
+```r
+# gerar a lista
+lista_df &lt;- split(x = df$n_sp, f = df$isolamento)
+
+# média de n_sp por nível de isolamento
+lapply(X = lista_df, FUN = mean)
+```
+
+---
+
+## .blue[**sapply()**]
+
+&lt;BR/&gt;
+
+&lt;table&gt;
+&lt;caption&gt;Uso da função sapply&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Argumento &lt;/th&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Significado &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; X &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; uma lista &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; FUN &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; a função a ser aplicada &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+- `s`(implify)`apply()` faz a mesma coisa que o `l`(ist)`apply()`, mas retorna um vetor ou uma matriz se o argumento `simplify = TRUE` (ao em vez de uma lista).
+
+
+```r
+# média de n_sp por nível do fator isolamento
+lista2 &lt;- split(x = df$n_sp, f = df$cat1)
+sapply(X = lista2, FUN = mean)
+```
+
+---
+
+# .blue[**sapply()** e **lapply()** ]
+
+&lt;BR/&gt;
+
+Aplique as funções `lapply()` e `spply()` para determinar a média da massa seca de plantas (weight) de acordo com o tratamento (group) usando o conjunto de dados `PlantGrowth`.
+
+
+---
+
+## .blue[**mapply()**]
+
+&lt;BR/&gt;
+
+&lt;table&gt;
+&lt;caption&gt;Uso da função mapply&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Argumento &lt;/th&gt;
+   &lt;th style="text-align:center;background-color: black !important;"&gt; Significado &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; FUN &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; a função a ser aplicada &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; ARGS &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: black !important;"&gt; argumentos &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;BR/&gt;
+
+
+```r
+mapply(function(x, y) seq_len(x) + y,
+       c(a =  1, b = 2, c = 3),  
+       c(A = 10, B = 0, C = -10))
+```
+
+
+---
+
+# .blue[**Funções loop**]
+
+&lt;BR/&gt;
+
+- Para que usar estas funções loop?&lt;br/&gt;
+&lt;BR/&gt;
+    - Calcular estatísticas descritivas que podem ser usadas para criação de gráficos;&lt;br/&gt;
+&lt;BR/&gt;  
+    - Realizar tarefas repetitivas em um mesmo conjunto de dados de acordo com alguma categorização;&lt;br/&gt;
+&lt;BR/&gt;
+    - Aplicar funções que você mesmo criou a sub-conjuntos de dados.&lt;br/&gt;
+&lt;BR/&gt;  
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

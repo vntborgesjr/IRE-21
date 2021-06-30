@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introdução ao R para Ecólogos</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vitor Borges" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/shareon/shareon.min.css" rel="stylesheet" />
+    <script src="libs/shareon/shareon.min.js"></script>
+    <link href="libs/xaringanExtra-shareagain/shareagain.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-shareagain/shareagain.js"></script>
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <script src="libs/peerjs/peerjs.min.js"></script>
+    <script src="libs/tiny.toast/toast.min.js"></script>
+    <link href="libs/xaringanExtra-broadcast/broadcast.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-broadcast/broadcast.js"></script>
+    <script src="libs/fabric/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30}) })</script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+layout: true
+name: basic
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+
+
+---
+name: Title
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse, center, middle, title-slide
+
+# .blue[**Introdução ao R para Ecólogos**]
+
+## .blue[**⚔&lt;br/&gt;Objetos e Indexação**]
+
+### .blue[Vitor Borges-Júnior]
+
+### .blue[PPGBIO - UNIRIO]
+
+### .blue[2021/05/25]
+
+???
+IDEIAS DE MELHORIAS PARA O PRÓXIMO CURSO
+
+Criar exercícios para esse conteúdo.
+
+Atualizar o layout das tabelas.
+
+Ajeitar o logo do AnalisaR no primeiro slide "Indexação de vetores"
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: center, middle
+
+# .blue[**O que é o R?**]
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[O que é o R?]
+
+&lt;BR/&gt;
+
+- Linguagem e ambiente de programação&lt;br/&gt;
+
+&lt;BR/&gt;
+
+- Análise de dados&lt;br/&gt;
+
+&lt;BR/&gt;
+
+- Construção de gráficos&lt;br/&gt;
+
+&lt;img src="https://cdn.shopify.com/s/files/1/2459/7473/products/R_programmign_a-z_530x@2x.jpg?v=1551399351" width="50%" style="display: block; margin: auto 0 auto auto;" /&gt;
+
+???
+O R é uma linguagem e um ambiente de programação. O R foi idealizado para ser uma liguagem de programação aplicada a estatística para realizar a análise de dados e a construção de gráficos.
+
+---
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Hoje o R é muito mais...**]
+
+&lt;BR/&gt;
+
+&lt;img src="https://www.storybench.org/wp-content/uploads/2017/05/tidyverse.png" width="120%" style="display: block; margin: auto;" /&gt;
+
+???
+O sucesso do R como um projeto e a rápida expansão da sua comunidade o transformaram numa ferramenta ainda mais versátil. O R possui pacotes que atendem a todas as etapas do fluxo de trabalho de um cientista, desde a importação e obtenção dos dados, passando por ferramentas para sua manipulção, ajuste, transfomração, visualização, modelagem, publicação e desenvolvimento de dashboards e aplicações interativas que podem ser disponibilizadas online.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: center, middle
+
+# .blue[**Por que usar o R?**]
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Vantagens do R**]
+
+&lt;BR/&gt;
+
+- É uma plataforma aberta, livre e disponível pra uso em qualquer sistema operacional&lt;br/&gt;
+&lt;BR/&gt;
+- Reprodutibilidade&lt;br/&gt;
+&lt;BR/&gt;
+- Incontáveis pacotes para os mais variados fins&lt;br/&gt;
+&lt;BR/&gt;
+- Ferramentas analíticas de "última geração"&lt;br/&gt;
+&lt;BR/&gt;
+- Ajuda fácil! listas de e-mails, blogs, twitter...&lt;br/&gt;
+&lt;BR/&gt;
+- Fornece ferramentas para apresentação dos resultados na forma de apresentação de slides, pdf, ou html, aplicativos, dashboards&lt;br/&gt;
+&lt;BR/&gt;
+- Customização&lt;br/&gt;
+
+???
+
+---
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: center, middle
+
+&lt;img src="https://logos-download.com/wp-content/uploads/2020/06/RStudio_Logo.png" style="display: block; margin: auto;" /&gt;
+
+???
+O RStudio é uma ambiente de desenvolvimento para programação em R
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Desafios do R**]
+&lt;BR/&gt;
+- Aprender uma nova lingua&lt;br/&gt;
+&lt;BR/&gt;
+&lt;img src="http://2.bp.blogspot.com/-iduKjm_o8D0/TiYtpeoiJfI/AAAAAAAABkU/z3cE7xN61uY/s400/evolution2.jpg" style="display: block; margin: auto;" /&gt;
+
+- Aprender uma nova gramática&lt;br/&gt;
+&lt;BR/&gt;
+- Tudo que exite é um objeto e tudo o que acontece é resultado da ação de uma função!&lt;br/&gt;
+&lt;BR/&gt;
+
+???
+O RStudio é um ambiente de desenvolvimento para programação em R
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: center, middle
+
+# .blue[**Mãos a massa!**]
+&lt;img src="https://logos-download.com/wp-content/uploads/2020/06/RStudio_Logo.png" style="display: block; margin: auto;" /&gt;
+
+???
+- Paineis
+- Atalhos (alt + shift + k)
+- Projetos
+- Git e versionamento
+- Folhas de cola
+- Addins
+- Snippets 
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Tudo que exite no R é um objeto**]
+
+&lt;BR/&gt;
+
+.pull-left[
+- Objetos de armazenamento&lt;br/&gt;
+
+&lt;BR/&gt;
+
+&lt;BR/&gt;
+
+&lt;BR/&gt;
+
+- Objetos execução de tarefas&lt;br/&gt;
+]
+
+.pull-right[
+&lt;img src="https://images-na.ssl-images-amazon.com/images/I/61y8wlIdpPL.png" width="45%" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="https://png.pngtree.com/png-clipart/20190611/original/pngtree-cartoon-hardware-tools-png-image_2787775.jpg" width="45%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Tudo que exite no R é um objeto**]
+
+&lt;BR/&gt;
+
+.pull-left[
+- 5 classes de objetos&lt;br/&gt;
+
+&lt;BR/&gt;
+
+- 4 classes de objetos de armazenamento&lt;br/&gt;
+&lt;BR/&gt;
+  - **VETORES**&lt;br/&gt;
+&lt;BR/&gt;
+  - **LISTAS**&lt;br/&gt;
+&lt;BR/&gt;
+  - **MATRIZES**&lt;br/&gt;
+&lt;BR/&gt;
+  - **DATA FRAMES**&lt;br/&gt;
+&lt;BR/&gt;
+]
+
+.pull-right[
+&lt;img src="https://images-na.ssl-images-amazon.com/images/I/61y8wlIdpPL.png" width="85%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Tudo que exite no R é um objeto**]
+
+&lt;BR/&gt;
+
+.pull-left[
+- 1 objeto de execução de tarefas&lt;br/&gt;
+&lt;BR/&gt;
+  - **FUNNÇÕES**
+]
+
+.pull-right[
+&lt;img src="https://png.pngtree.com/png-clipart/20190611/original/pngtree-cartoon-hardware-tools-png-image_2787775.jpg" width="85%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Características dos objetos de armazenamento**]
+
+&lt;BR/&gt;
+
+- Número de dimensões&lt;br/&gt;
+&lt;BR/&gt;
+- Capacidade de armazenar elementos de diferentes tipos.&lt;br/&gt;
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; &lt;span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: black !important;"&gt;Dimensões&lt;/span&gt; &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; &lt;span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: black !important;"&gt;Homogêneos&lt;/span&gt; &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; &lt;span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: black !important;"&gt;Heterogêneos&lt;/span&gt; &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; 1d &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Vetores &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Listas &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; 2d &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Matrizes &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Data frames &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; nd &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Arrays &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;BR/&gt;
+**Data frames**: estrutura mais importante de 
+armazenamento de dados no R
+
+---
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Mãos a obra!**]
+
+&lt;BR/&gt;
+
+- Carregar arquivos:&lt;br/&gt;
+&lt;BR/&gt;
+  - .txt -&gt; `read.table()`&lt;br/&gt;
+  &lt;BR/&gt;
+  - .csv -&gt; `read.csv()`&lt;br/&gt;
+  &lt;BR/&gt;
+  - .xlsx -&gt; `readxl::read_xlsx()`&lt;br/&gt;
+&lt;BR/&gt;  
+- Lembrem de utilizar o comando `&lt;-` para armazenar o conteúdo dos arquivos em um novo objeto&lt;br/&gt;
+&lt;BR/&gt;
+
+
+```r
+numero_de_especies &lt;- read.table(file = "/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/numero_de_especies.txt")
+```
+
+
+
+???
+Exercício - carregar os arquivos e armazená-los em objetos
+
+---
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Como identificar os novos objetos criados**]
+
+&lt;BR/&gt;
+
+- `class()`&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+class(numero_de_especies)
+```
+
+```
+## [1] "data.frame"
+```
+&lt;BR/&gt;
+- `str()`&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+str(numero_de_especies)
+```
+
+```
+## 'data.frame':	94 obs. of  1 variable:
+##  $ x: int  37 45 32 30 34 36 40 28 37 34 ...
+```
+
+???
+Exercício - Identificar os tipos de objetos criados
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Homogeinizar os tipos de objetos - Vetores**]
+
+&lt;BR/&gt;
+
+- Transformar as colunas dos `data.frame`'s em vetores&lt;br/&gt;
+&lt;BR/&gt;
+- Indexação -&gt; `$`&lt;br/&gt;
+
+```r
+numero_de_especies &lt;- numero_de_especies$x
+```
+&lt;BR/&gt;
+
+```r
+area -&gt; area$x
+```
+
+
+
+???
+Exercício - transformar os objetos em vetores
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Identificar os tipos de Vetores**]
+
+&lt;BR/&gt;
+
+- `class()`&lt;br/&gt;
+&lt;BR/&gt;
+- `typeof()`&lt;br/&gt;
+&lt;BR/&gt;
+- `str()`&lt;br/&gt;
+&lt;BR/&gt;
+
+
+```r
+class(numero_de_especies)
+```
+
+```
+## [1] "integer"
+```
+
+```r
+typeof(numero_de_especies)
+```
+
+```
+## [1] "integer"
+```
+
+???
+Exercício - identificar os tipos de vetores
+
+---
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Identificar os tipos de Vetores - Lógica**]
+
+&lt;BR/&gt;
+
+- `is.double()` -&gt; é um vetor numérico?&lt;br/&gt;
+&lt;BR/&gt;
+- `is.logic()` -&gt; é um vetor lógico?&lt;br/&gt;
+&lt;BR/&gt;
+- `is.integer()` -&gt; é um vetor inteiro?&lt;br/&gt;
+&lt;BR/&gt;
+- `is.character()` -&gt; é um atômico caracter?&lt;br/&gt;
+&lt;BR/&gt;
+
+
+```r
+is.logical(numero_de_especies)
+```
+
+```
+## [1] FALSE
+```
+
+```r
+is.double(numero_de_especies)
+```
+
+```
+## [1] FALSE
+```
+
+???
+Exercício - teste lógico para descobrir os tipos de vetores
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Criar vetores**]
+
+- Utilizamos a função concatenar `c()`&lt;br/&gt;
+&lt;BR/&gt;
+- Juntamente com as funções `as...()`&lt;br/&gt;
+
+
+```r
+caracter &lt;- c("Dark", "side", "of", "the", "moon")
+typeof(caracter)
+```
+
+```
+## [1] "character"
+```
+
+
+```r
+inteiros &lt;- c(1, 2, 3, 4, 5, 6, 7, 8, 9)
+typeof(inteiros)
+```
+
+```
+## [1] "double"
+```
+
+```r
+inteiros &lt;- as.integer(c(1:9))
+typeof(inteiros)
+```
+
+```
+## [1] "integer"
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Regras de coerção**]
+
+&lt;BR/&gt;
+
+- Lembrando das características dos objetos&lt;br/&gt;
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; &lt;span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: black !important;"&gt;Dimensões&lt;/span&gt; &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; &lt;span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: black !important;"&gt;Homogêneos&lt;/span&gt; &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; &lt;span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: black !important;"&gt;Heterogêneos&lt;/span&gt; &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; 1d &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Vetores &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Listas &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; 2d &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Matrizes &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Data frames &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; nd &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Arrays &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+- O que acontece quando concatenamos elementos de diferentes tipos em um mesmo vetor?
+
+* Quando um vetor é criado contendo elementos de diferentes tipos, o R utliza uma regra hierárquica para a coerção dos elementos a um únicos tipo:
+
+.center[**Lógico** -&gt; **Inteiro** -&gt; **Número** -&gt; **Caracter**]
+
+???
+Exercício - particar regras de coerção
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Transformando Vetores em Listas**]
+
+&lt;BR/&gt;
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; &lt;span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: black !important;"&gt;Dimensões&lt;/span&gt; &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; &lt;span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: black !important;"&gt;Homogêneos&lt;/span&gt; &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; &lt;span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: black !important;"&gt;Heterogêneos&lt;/span&gt; &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; 1d &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Vetores &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Listas &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; 2d &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Matrizes &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Data frames &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; nd &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Arrays &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;BR/&gt;
+- Para criar uma lista usamos a função `list()`&lt;br/&gt;
+
+
+```r
+lista1 &lt;- list(area, variavel_categorica1)
+```
+
+- Podemos criar listas nomeadas&lt;br/&gt;
+
+```r
+lista_nomeada &lt;- list(catagorica2 = variavel_categorica2,
+                      categorica3 = variavel_categorica3)
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Identificando listas**]
+
+- `class()`&lt;br/&gt;
+
+- `typeof()`&lt;br/&gt;
+
+- `str()`&lt;br/&gt;
+
+
+```r
+class(lista1)
+```
+
+```
+## [1] "list"
+```
+
+
+```r
+typeof(lista_nomeada)
+```
+
+```
+## [1] "list"
+```
+
+
+```r
+str(lista_nomeada)
+```
+
+```
+## List of 2
+##  $ catagorica2: int [1:94] 1 1 1 1 1 0 1 1 1 1 ...
+##  $ categorica3: logi [1:92] TRUE FALSE FALSE FALSE FALSE TRUE ...
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Salvando e carregando uma lista**]
+
+&lt;BR/&gt;
+
+- `write_rds()` para salvar&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+readr::write_rds(lista_nomeada, "/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/lista_nomeada.rds")
+```
+&lt;BR/&gt;
+- `read_rds()` para carregar&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+lista_nomeada2 &lt;- readr::read_rds("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/lista_nomeada.rds")
+str(lista_nomeada2)
+```
+
+```
+## List of 2
+##  $ catagorica2: int [1:94] 1 1 1 1 1 0 1 1 1 1 ...
+##  $ categorica3: logi [1:92] TRUE FALSE FALSE FALSE FALSE TRUE ...
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Matrizes**]
+
+&lt;BR/&gt;
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; &lt;span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: black !important;"&gt;Dimensões&lt;/span&gt; &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; &lt;span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: black !important;"&gt;Homogêneos&lt;/span&gt; &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; &lt;span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: black !important;"&gt;Heterogêneos&lt;/span&gt; &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; 1d &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Vetores &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Listas &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; 2d &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Matrizes &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Data frames &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; nd &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Arrays &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;BR/&gt;
+- Função `matrix()` para criar uma matriz&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+m1 &lt;- matrix(1:10, nrow = 2, ncol = 5)
+m1
+```
+
+```
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    3    5    7    9
+## [2,]    2    4    6    8   10
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Matrizes**]
+
+- Argumento `byrow = TRUE` preenche a matriz pelas linhas&lt;br/&gt;
+
+
+```r
+m2 &lt;- matrix(1:10, nrow = 2, ncol = 5, byrow = TRUE)
+m2
+```
+
+```
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    2    3    4    5
+## [2,]    6    7    8    9   10
+```
+&lt;BR/&gt;
+- Argumento `byrow = FALSE` preenche a matriz pelas colunas&lt;br/&gt;
+
+
+```r
+m3 &lt;- matrix(1:10, nrow = 2, ncol = 5, byrow = FALSE)
+m3
+```
+
+```
+##      [,1] [,2] [,3] [,4] [,5]
+## [1,]    1    3    5    7    9
+## [2,]    2    4    6    8   10
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Data Frames**]
+
+&lt;BR/&gt;
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; &lt;span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: black !important;"&gt;Dimensões&lt;/span&gt; &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; &lt;span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: black !important;"&gt;Homogêneos&lt;/span&gt; &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; &lt;span style="     border-radius: 4px; padding-right: 4px; padding-left: 4px; background-color: black !important;"&gt;Heterogêneos&lt;/span&gt; &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; 1d &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Vetores &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Listas &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; 2d &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Matrizes &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Data frames &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; nd &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; Arrays &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;BR/&gt;
+- `data.frame()` para criar um data frame&lt;br/&gt;
+&lt;BR/&gt;
+- Data frames podem ser nomeados&lt;br/&gt;
+
+???
+Exercício - criar um data frame `df` a partir dos vetores existentes. Vai dar errado porque os vetores estã ocom comprimentos diferentes. Introduzir a função `length()` para medir o comprimento dos vetores e em seguida deixá-los todos do mesmo tamanho.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Data Frames**]
+
+&lt;BR/&gt;
+
+*Error in data.frame(n_especies = numero_de_especies, area, cat1 = variavel_categorica1,  : 
+  arguments imply differing number of rows: 91, 90*
+&lt;BR/&gt;  
+- Os vetores estão com comprimentos diferentes!!!&lt;br/&gt;
+&lt;BR/&gt;
+- Podemos confirmar isso usando a função `length()`
+
+```r
+length(numero_de_especies)
+```
+
+```
+## [1] 94
+```
+
+???
+Exercício - medir o comprimento de todos os vetores para determinar qual é o menor vetor
+
+```
+## [[1]]
+## [1] 94
+## 
+## [[2]]
+## [1] 3
+## 
+## [[3]]
+## [1] 93
+## 
+## [[4]]
+## [1] 94
+## 
+## [[5]]
+## [1] 92
+```
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Indexação de vetores**]
+
+&lt;BR/&gt;
+
+- Indexar um vetor significa acessar um elemento, ou um conjunto de elementos dentro de um vetor&lt;br/&gt;
+&lt;BR/&gt;
+- Acessamos elementos de um vetor utilizando `[]` e a sua posição dentro do vetor 
+
+```r
+numero_de_especies[10]
+```
+
+```
+## [1] 34
+```
+- Para acessar um intervalo podemos usa `:`
+
+```r
+numero_de_especies[9:11]
+```
+
+```
+## [1] 37 34 38
+```
+- Para acessar elementos em posições específicas usamos `c()`
+
+```r
+numero_de_especies[c(9, 11, 33)]
+```
+
+```
+## [1] 37 38 37
+```
+
+???
+Exercício - corrigir o tamanho dos vetores e gerar o data frame `df`
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Salvando o Data Frame**]
+
+&lt;BR/&gt;
+
+- `write.table()` para salvar o data frame no diretório de trabalho&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+write.table(df, "/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/df.txt")
+```
+
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Conhecendo o Data Frame**]
+
+&lt;BR/&gt;
+
+- Vamos aplicar  `str()` no data frame&lt;br/&gt;
+
+```r
+str(df)
+```
+
+```
+## 'data.frame':	92 obs. of  5 variables:
+##  $ n_sp: int  37 45 32 30 34 36 40 28 37 34 ...
+##  $ area: num  89.9 107.3 38.6 20.9 64.2 ...
+##  $ cat1: chr  "B" "D" "E" "C" ...
+##  $ cat2: int  1 1 1 1 1 0 1 1 1 1 ...
+##  $ cat3: logi  TRUE FALSE FALSE FALSE FALSE TRUE ...
+```
+
+---
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Indexação de Data Frames**]
+
+&lt;BR/&gt;
+
+- Para indexar data frames utilizamos sistema de coordenadas `[i, j]` &lt;br/&gt;
+&lt;BR/&gt;
+- *i* indica o número da linha&lt;br/&gt;
+&lt;BR/&gt;
+- *j* indica o número da coluna&lt;br/&gt;
+&lt;BR/&gt;
+
+```r
+df[10:13, 2:4]
+```
+
+```
+##        area cat1 cat2
+## 10 71.95476    B    1
+## 11 94.01974    C    1
+## 12 58.02777    C    1
+## 13 79.87540    B    1
+```
+
+---
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Indexação de Dta Frames**]
+
+&lt;BR/&gt;
+
+- Obtenha a linha 5 da coluna 3&lt;br/&gt;
+&lt;BR/&gt;
+- Obtenhas as linhas 60 a 70 da coluna 1 e 2&lt;br/&gt;
+&lt;BR/&gt;
+- Obtenha as linhas 15, 33 e 41 das colunas 1, 2 e 4&lt;br/&gt;
+&lt;BR/&gt;
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Indexação por lógica**]
+
+&lt;BR/&gt;
+
+&lt;table&gt;
+&lt;caption&gt;Operadores de lógica no R&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;background-color: black !important;"&gt; Operador &lt;/th&gt;
+   &lt;th style="text-align:left;background-color: black !important;"&gt; Sintaxe &lt;/th&gt;
+   &lt;th style="text-align:left;background-color: black !important;"&gt; Significado &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; &amp;gt; &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a &amp;gt; b &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a é maior que b? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; &amp;gt;= &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a &amp;gt;= b &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a é maior ou igual a b? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; &amp;lt; &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a &amp;lt; b &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a é menor que b? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; &amp;lt;= &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a &amp;lt;= b &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a é menor ou igual a b? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; == &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a == b &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a é igual a b? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; != &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a != b &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a é diferente de b? &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; &amp;amp; &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a &amp;amp; b &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a 'e' b &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; | &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a | b &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a 'ou' b &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; %in% &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a %in% b &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: black !important;"&gt; a pertence a c(a, b, c) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+???
+* Reter ou eliminar posições específicas de um objeto no R
+é algo útil
+
+* Na maior parte das vezes queremos realizar esta 
+tarefa para subconjuntos dos dados que cumpram certos 
+requerimentos 
+
+* Por exemplo, reter apenas as observações referentes uma 
+determinada localidade, espécie, ou período no tempo
+
+* Uma forma de fazer isto é através de testes lógicos.
+
+---
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Indexação por lógica - Vetores**]
+
+&lt;BR/&gt;
+
+- Exemplo com vetores&lt;br/&gt;
+
+```r
+numero_de_especies &gt; 30
+```
+
+```
+##  [1]  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE
+## [13]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [25]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE
+## [37]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE
+## [49]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE
+## [61]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE
+## [73] FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE
+## [85]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Indexação por lógica - Vetores**]
+
+&lt;BR/&gt;
+
+
+```r
+variavel_categorica1 == "B"
+```
+
+```
+##  [1]  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE
+## [13]  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+## [25] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [37] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+## [49] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [61]  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+## [73] FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE
+## [85] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Indexação por lógica - Vetores**]
+
+&lt;BR/&gt;
+
+
+```r
+numero_de_especies[numero_de_especies &gt; 30]
+```
+
+```
+##  [1] 37 45 32 34 36 40 37 34 38 35 38 38 32 34 35 33 35 32 40 38 31 35 34 35 34
+## [26] 36 38 37 32 31 35 39 36 38 36 40 31 31 38 40 36 34 31 32 36 36 34 32 43 38
+## [51] 43 35 36 39 31 36 35 39 43 31 37 35 38 33 32 37 39 34 33 38 38 33 33 31
+```
+&lt;BR/&gt;
+
+```r
+variavel_categorica1[variavel_categorica1 == "B"]
+```
+
+```
+##  [1] "B" "B" "B" "B" "B" "B" "B" "B" "B" "B" "B" "B" "B" "B" "B" "B" "B"
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Indexação por lógica - Vetores**]
+
+&lt;BR/&gt;
+
+- valores de area &gt; 50 **OU** valores de area &lt; 20&lt;br/&gt;
+&lt;BR/&gt;
+- número de espécies &lt;= 40 **E** número de espécies &gt; 30&lt;br/&gt;
+&lt;BR/&gt;
+- número de espécies pertencentes a categoria "C" (variavel_categorica1)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

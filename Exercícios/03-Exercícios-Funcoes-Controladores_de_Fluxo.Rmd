@@ -1,0 +1,236 @@
+---
+title: "03 - Exercícios Funções"
+output:
+  html_notebook:
+    toc: yes
+    number_section: yes
+  html_document:
+    toc: yes
+---
+
+# **Sua primeira função: `erro_padrao()`**
+
+O R não possui uma função capaz de calcular o erro padrão da média de um vetor. Mas com suas novas habilidades você resolverá esse problema criando a função `erro_padrão()`. A fórmula para o erro padrão da média é: 
+$$\frac{dev.\ pad.}{\sqrt{n}}$$
+Você vai criar uma função para calcular o erro padrão da variável `area` que está contida no data frame `df`.
+
+1. Calcule o desvio padrão da coluna `area` usando a função `sd()` e armazene no objeto `desvpad_area`. Lembre-se de usar o `$` para acessa a coluna `area` em `df`.
+
+```{r}
+df <- read.table("___", header = TRUE)
+desvpad_area <- sd(___$___)
+desvpad_area
+```
+
+2. Determine o comprimento da variável `area` usando a função `length()` e aramzene no objeto `n_de_area`.
+
+```{r}
+n_de_area <- ___(___$___)
+n_de_area
+```
+
+3. Calcule a raiz quadrada de `n` usando a função `sqrt()` e armazene no objeto `raiz_de_n_de_area`.
+
+```{r}
+raiz_de_n_de_area <- ___(___)
+raiz_de_n_de_area
+```
+
+4. Divida `desvpad_area` por `raiz_de_n_de_area` e armazene no objeto `ep_area`. Imprima o objeto `ep_area` para obter o valor do erro padrão. 
+
+```{r}
+ep_area <- ___/___
+print(ep_area)
+```
+
+5. Agora, você vai transformar seu código na função `erro_padrao()`. 
+- Primeiro, é necessário criar um modelo que está disponível abaixo.
+- Em seguida, copie todas as linhas de código que você gerou e cole  dentro do corpo da função. 
+- Escolha os argumentos da função. Sua primeira função só precisa de um argumento: aquele que vai receber um vetor de valores numéricos a partir do qual será calculado o erro padrão. Chame-o de `valor`. O argumento vai entre os parênteses.
+- Substitua o objeto interno, `df$area`, pelo seu argumento equivalente, `valor`.
+- Troque os nomes das variáveis internas para nomes generalistas.
+- Teste sua função aplicando ela na coluna `n_sp` do data frame `df`.
+
+```{r}
+erro_padrao <- function(___) {
+  desvpad <- ___(___)
+  n <- ___(___)
+  raiz_de_n <- ___(___)
+  ep <- ___/___
+  return(___)
+}
+```
+
+```{r}
+erro_padrao(___$___)
+```
+    
+# **Funções mais complexas: arremesso de moeda**
+
+Podemos avançar um pouco mais e tentar trabalhar uma ideia um pouco mais complexa de função: arremessar moedas! A partir da construção dessa função iremos trabalhar os tipos de argumentos (numérico, nulo, lógico e caracter) e a ideia de argumento default. Lembre-se de seguir as etapas abaixo:
+
+1. Prepare um "modelo" da função
+2. Cole o script no interior do "modelo"
+3. Escolha os argumentos
+4. Substitua os objetos internos pelos argumentos equivalentes
+5. Use nomes generalistas para as variáveis internas a função
+6. Teste a função!
+
+* O primeiro passo para criar uma função para arremesso de moeda será criar nossa moeda: 
+
+1. Crie um objeto chamado moeda contendo as palavras `"cara"` e `"coroa"`.
+
+```{r}
+modea <- c("___", "___")
+
+```
+
+2. Simule um único arremesso de uma `moeda` utilizando a função `sample()`.
+
+```{r}
+n_arremeso <- ___
+sample(n = ___, size = ___)
+```
+
+3. Simule 10 arremessos de uma `moeda` utilizando a função `sample()`. Lembre-se de configurar o argumento `replace =` de forma adequada.
+
+```{r}
+n_arremeso <- ___
+sample(n = ___, size = ___, replace = ___)
+```
+
+4. Agora, vamos criar a possibilidade de viciar a moeda. Crie um objeto `pesos` que permita atribuir diferentes probabilidades a `"cara"` e `"coroa"`. Faça isso atribuindo a probabilidade `0.8` ao objeto `p_coroa`. Em seguida, arremesse a moeda 10 vezes
+
+```{r}
+p_coroa <- c("___", "___")
+pesos <- 1 - p_coroa
+sample(x = ___, size = ___, replace = ___, prob = ___)
+
+```
+
+5. Escreva a função `arremessar_moeda()` colando o código no interior do modelo e proceda com as demais etapas e teste sua função
+
+```{r}
+arremassar_moeda <- function() {
+  
+}
+
+# testar função
+set.seed(100)
+arremessar_moeda()
+
+```
+
+# **Apresentando mutliplos resultados**
+
+Adeque sua função utilizando as funções `table()`e `list()` para que sejam retornados os os resultados brutos e a frequência de ocorrência de cara e coroa.
+
+```{r}
+arremassar_moeda <- function() {
+  
+}
+
+# testar função
+set.seed(100)
+arremessar_moeda()
+
+```
+
+# **Incluindo argumento default**
+
+Vamos tornar honesta a sua função `arremessar_moeda()` atribuindo o valor `0.5` ao argumento `p_coroa`. Em seguida, teste a função.
+
+```{r}
+arremassar_moeda <- function() {
+  
+}
+
+# testar função
+set.seed(100)
+arremessar_moeda()
+```
+
+# **Testes condicionais `if(){}` `else {}`**
+
+Transforme o teste condicional abaixo em uma função chamada `teste_condicional()`.
+
+```{r}
+x <- 10
+# e vamos usar a estrutura de controle if, else
+teste_condicional <- if(x < 10){
+  "número menor que 10"
+  } else if(x == 10) {
+  "número é igual a 10"
+  } else {
+  "número é maior que 10"
+  }
+```
+
+Lembre-se das estapas para transformar seu script em uma função:
+
+1. Prepare um "modelo" da função
+2. Cole o script no interior do "modelo"
+3. Escolha os argumentos
+4. Substitua os objetos internos pelos argumentos equivalentes
+5. Use nomes generalistas para as variáveis internas a função
+6. Teste a função!
+
+```{r}
+teste_condicional <- function(){
+  # cole aqui o seu script
+}
+```
+
+# **Argumento default categórico**
+
+Usando o controlador de fluxo `if`, `else` construa um teste lógico que permita incluir o argumento `resu = c("Ambos", "Bruto", "Frequencia")` e optar pela apresentação do resultado da função `arremecar_moeda()` em uma tabela de frequencias ("Frequencias"), sem estar tabelado (`"Bruto"`), ou os dois resultados ao mesmo tempo (`"Ambos"`). Você deve utilizar a função do último exercício do notebook sobre funções como base. Lembre-se de utilizar a função `match.arg()` para controlar o tipo de resultado que a função irá mostrar. Configure sua função para apresentar os dois reusltados (ex. `"Ambos"`) caso o argumento não seja alimentado.<br/>
+
+```{r}
+
+```
+
+# **Função `fibonacci()`**
+
+Transforme o código que gera uma sequência de Fibonacci com 10 elementos em uma função em possamos escolher o tamanho da sequência que será gerada.
+
+```{r}
+fibonacci <- function() {
+  # cole o seu código aqui
+}
+```
+
+# **Função `media()`**
+
+Escreva uma função que calcule a média de um vetor. Formula da media:
+$$\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}$$<br/>
+
+```{r}
+media <- funuction() {
+  # cole seu código aqui
+}
+```
+
+# **Função `variancia()`**
+
+Escreva uma função que calcule a variância de um vetor. 
+Fórmula da variância: 
+$$\sigma^{2} = \frac{\sum_{i=1}^{n} 
+  \left(x_{i} - \bar{x}\right)^{2}}
+  {n-1}$$
+
+```{r}
+variancia <- function(){
+  # cole seu código aqui
+}
+```
+
+# **Função `desv_pad()`**
+
+Escreva uma função que calcule o desvio padrão de um vetor. Fórmula do desvio padrão: 
+$$\sigma = \sqrt{\frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {n-1}}$$
+
+```{r}
+desv_pad <- function() {
+  # cole seu código aqui
+}
+```

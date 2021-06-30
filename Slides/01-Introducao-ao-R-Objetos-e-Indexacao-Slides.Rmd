@@ -1,0 +1,914 @@
+---
+title: "Introdução ao R para Ecólogos"
+subtitle: "⚔<br/>Programação para Análise de Dados e Reprodutibilidade na Ciência"
+author: "Vitor Borges"
+institute: "PPGBIO-UNIRIO"
+date: "2021/05/24"
+output:
+  xaringan::moon_reader:
+    seal: false
+    lib_dir: libs
+    nature:
+      slideNumberFormat: ""
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+layout: true
+name: basic
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+xaringanExtra::use_xaringan_extra()
+xaringanExtra::use_clipboard()
+```
+
+---
+name: Title
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse, center, middle, title-slide
+
+# .blue[**Introdução ao R para Ecólogos**]
+
+## .blue[**⚔<br/>Objetos e Indexação**]
+
+### .blue[Vitor Borges-Júnior]
+
+### .blue[PPGBIO - UNIRIO]
+
+### .blue[2021/05/25]
+
+???
+IDEIAS DE MELHORIAS PARA O PRÓXIMO CURSO
+
+Criar exercícios para esse conteúdo.
+
+Atualizar o layout das tabelas.
+
+Ajeitar o logo do AnalisaR no primeiro slide "Indexação de vetores"
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: center, middle
+
+# .blue[**O que é o R?**]
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[O que é o R?]
+
+<BR/>
+
+- Linguagem e ambiente de programação<br/>
+
+<BR/>
+
+- Análise de dados<br/>
+
+<BR/>
+
+- Construção de gráficos<br/>
+
+```{r R, echo = FALSE, fig.align='right', out.width='50%'}
+knitr::include_graphics("https://cdn.shopify.com/s/files/1/2459/7473/products/R_programmign_a-z_530x@2x.jpg?v=1551399351")
+```
+
+???
+O R é uma linguagem e um ambiente de programação. O R foi idealizado para ser uma liguagem de programação aplicada a estatística para realizar a análise de dados e a construção de gráficos.
+
+---
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Hoje o R é muito mais...**]
+
+<BR/>
+
+```{r Tidyverse, echo = FALSE, fig.align='center', out.width= '120%'}
+knitr::include_graphics("https://www.storybench.org/wp-content/uploads/2017/05/tidyverse.png")
+```
+
+???
+O sucesso do R como um projeto e a rápida expansão da sua comunidade o transformaram numa ferramenta ainda mais versátil. O R possui pacotes que atendem a todas as etapas do fluxo de trabalho de um cientista, desde a importação e obtenção dos dados, passando por ferramentas para sua manipulção, ajuste, transfomração, visualização, modelagem, publicação e desenvolvimento de dashboards e aplicações interativas que podem ser disponibilizadas online.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: center, middle
+
+# .blue[**Por que usar o R?**]
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Vantagens do R**]
+
+<BR/>
+
+- É uma plataforma aberta, livre e disponível pra uso em qualquer sistema operacional<br/>
+<BR/>
+- Reprodutibilidade<br/>
+<BR/>
+- Incontáveis pacotes para os mais variados fins<br/>
+<BR/>
+- Ferramentas analíticas de "última geração"<br/>
+<BR/>
+- Ajuda fácil! listas de e-mails, blogs, twitter...<br/>
+<BR/>
+- Fornece ferramentas para apresentação dos resultados na forma de apresentação de slides, pdf, ou html, aplicativos, dashboards<br/>
+<BR/>
+- Customização<br/>
+
+???
+
+---
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: center, middle
+
+```{r RStudio 1, echo = FALSE, fig.align='center'}
+knitr::include_graphics("https://logos-download.com/wp-content/uploads/2020/06/RStudio_Logo.png")
+```
+
+???
+O RStudio é uma ambiente de desenvolvimento para programação em R
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Desafios do R**]
+<BR/>
+- Aprender uma nova lingua<br/>
+<BR/>
+```{r Curva de aprendizado, echo = FALSE, fig.align='center'}
+knitr::include_graphics("http://2.bp.blogspot.com/-iduKjm_o8D0/TiYtpeoiJfI/AAAAAAAABkU/z3cE7xN61uY/s400/evolution2.jpg")
+```
+
+- Aprender uma nova gramática<br/>
+<BR/>
+- Tudo que exite é um objeto e tudo o que acontece é resultado da ação de uma função!<br/>
+<BR/>
+
+???
+O RStudio é um ambiente de desenvolvimento para programação em R
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: center, middle
+
+# .blue[**Mãos a massa!**]
+```{r RStudio 2, echo = FALSE, fig.align='center'}
+knitr::include_graphics("https://logos-download.com/wp-content/uploads/2020/06/RStudio_Logo.png")
+```
+
+???
+- Paineis
+- Atalhos (alt + shift + k)
+- Projetos
+- Git e versionamento
+- Folhas de cola
+- Addins
+- Snippets 
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Tudo que exite no R é um objeto**]
+
+<BR/>
+
+.pull-left[
+- Objetos de armazenamento<br/>
+
+<BR/>
+
+<BR/>
+
+<BR/>
+
+- Objetos execução de tarefas<br/>
+]
+
+.pull-right[
+```{r Caixa 1, echo = FALSE, fig.align='center', out.width='45%'}
+knitr::include_graphics("https://images-na.ssl-images-amazon.com/images/I/61y8wlIdpPL.png")
+```
+
+```{r Ferramentas 1, echo = FALSE, fig.align='center', out.width='45%'}
+knitr::include_graphics("https://png.pngtree.com/png-clipart/20190611/original/pngtree-cartoon-hardware-tools-png-image_2787775.jpg")
+```
+]
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Tudo que exite no R é um objeto**]
+
+<BR/>
+
+.pull-left[
+- 5 classes de objetos<br/>
+
+<BR/>
+
+- 4 classes de objetos de armazenamento<br/>
+<BR/>
+  - **VETORES**<br/>
+<BR/>
+  - **LISTAS**<br/>
+<BR/>
+  - **MATRIZES**<br/>
+<BR/>
+  - **DATA FRAMES**<br/>
+<BR/>
+]
+
+.pull-right[
+```{r Caixa 2, echo = FALSE, fig.align='center', out.width='85%'}
+knitr::include_graphics("https://images-na.ssl-images-amazon.com/images/I/61y8wlIdpPL.png")
+```
+]
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Tudo que exite no R é um objeto**]
+
+<BR/>
+
+.pull-left[
+- 1 objeto de execução de tarefas<br/>
+<BR/>
+  - **FUNNÇÕES**
+]
+
+.pull-right[
+```{r Ferramentas 2, echo = FALSE, fig.align='center', out.width='85%'}
+knitr::include_graphics("https://png.pngtree.com/png-clipart/20190611/original/pngtree-cartoon-hardware-tools-png-image_2787775.jpg")
+```
+]
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Características dos objetos de armazenamento**]
+
+<BR/>
+
+- Número de dimensões<br/>
+<BR/>
+- Capacidade de armazenar elementos de diferentes tipos.<br/>
+
+```{r Características dos objetos, eval = TRUE, echo = FALSE}
+
+Dimensões <- c("1d", "2d", "nd")
+Homogêneos <- c("Vetores", "Matrizes", "Arrays")
+Heterogêneos <- c("Listas", "Data frames", " ")
+
+df <- data.frame(Dimensões = Dimensões, Homogêneos = Homogêneos, Heterogêneos = Heterogêneos)
+names(df)[1:3] <- kableExtra::cell_spec(names(df)[1:3], background = "black")
+
+knitr::kable(df, escape = FALSE, format = "html") |> 
+  kableExtra::column_spec(1:3, background = "black")
+```
+<BR/>
+**Data frames**: estrutura mais importante de 
+armazenamento de dados no R
+
+---
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Mãos a obra!**]
+
+<BR/>
+
+- Carregar arquivos:<br/>
+<BR/>
+  - .txt -> `read.table()`<br/>
+  <BR/>
+  - .csv -> `read.csv()`<br/>
+  <BR/>
+  - .xlsx -> `readxl::read_xlsx()`<br/>
+<BR/>  
+- Lembrem de utilizar o comando `<-` para armazenar o conteúdo dos arquivos em um novo objeto<br/>
+<BR/>
+
+```{r carregar dados 1}
+numero_de_especies <- read.table(file = "/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/numero_de_especies.txt")
+```
+
+```{r carregar dados 2, echo = FALSE}
+area <- read.table(file = "/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/area.csv")
+variavel_categorica1 <- readxl::read_xlsx("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/variavel_categorica1.xlsx")
+
+variavel_categorica2 <- read.table("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/variavel_categorica2.txt")
+
+variavel_categorica3 <- read.table("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/variavel_categorica3.csv",
+                                   sep = ",", 
+                                   header = TRUE)
+```
+
+???
+Exercício - carregar os arquivos e armazená-los em objetos
+
+---
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Como identificar os novos objetos criados**]
+
+<BR/>
+
+- `class()`<br/>
+<BR/>
+```{r}
+class(numero_de_especies)
+```
+<BR/>
+- `str()`<br/>
+<BR/>
+```{r}
+str(numero_de_especies)
+```
+
+???
+Exercício - Identificar os tipos de objetos criados
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Homogeinizar os tipos de objetos - Vetores**]
+
+<BR/>
+
+- Transformar as colunas dos `data.frame`'s em vetores<br/>
+<BR/>
+- Indexação -> `$`<br/>
+```{r gerar vetor 1}
+numero_de_especies <- numero_de_especies$x
+```
+<BR/>
+```{r gerar vetor 2}
+area -> area$x
+```
+
+```{r gerar vetor 3, echo = FALSE}
+variavel_categorica1 <- variavel_categorica1$B
+variavel_categorica2 <- variavel_categorica2$x
+variavel_categorica3 <- variavel_categorica3$x
+```
+
+???
+Exercício - transformar os objetos em vetores
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Identificar os tipos de Vetores**]
+
+<BR/>
+
+- `class()`<br/>
+<BR/>
+- `typeof()`<br/>
+<BR/>
+- `str()`<br/>
+<BR/>
+
+```{r}
+class(numero_de_especies)
+typeof(numero_de_especies)
+```
+
+???
+Exercício - identificar os tipos de vetores
+
+---
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Identificar os tipos de Vetores - Lógica**]
+
+<BR/>
+
+- `is.double()` -> é um vetor numérico?<br/>
+<BR/>
+- `is.logic()` -> é um vetor lógico?<br/>
+<BR/>
+- `is.integer()` -> é um vetor inteiro?<br/>
+<BR/>
+- `is.character()` -> é um atômico caracter?<br/>
+<BR/>
+
+```{r teste logico}
+is.logical(numero_de_especies)
+is.double(numero_de_especies)
+```
+
+???
+Exercício - teste lógico para descobrir os tipos de vetores
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Criar vetores**]
+
+- Utilizamos a função concatenar `c()`<br/>
+<BR/>
+- Juntamente com as funções `as...()`<br/>
+
+```{r criar vetores 1}
+caracter <- c("Dark", "side", "of", "the", "moon")
+typeof(caracter)
+```
+
+```{r funcoes as...() 1}
+inteiros <- c(1, 2, 3, 4, 5, 6, 7, 8, 9)
+typeof(inteiros)
+```
+```{r funcoes as...() 2}
+inteiros <- as.integer(c(1:9))
+typeof(inteiros)
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Regras de coerção**]
+
+<BR/>
+
+- Lembrando das características dos objetos<br/>
+```{r caracteristicas dos objetos 2, echo = FALSE}
+knitr::kable(df, escape = FALSE, format = "html") |> 
+  kableExtra::column_spec(1:3, background = "black")
+```
+
+- O que acontece quando concatenamos elementos de diferentes tipos em um mesmo vetor?
+
+* Quando um vetor é criado contendo elementos de diferentes tipos, o R utliza uma regra hierárquica para a coerção dos elementos a um únicos tipo:
+
+.center[**Lógico** -> **Inteiro** -> **Número** -> **Caracter**]
+
+???
+Exercício - particar regras de coerção
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Transformando Vetores em Listas**]
+
+<BR/>
+
+```{r caracteristicas dos objetos 3, echo = FALSE}
+knitr::kable(df, escape = FALSE, format = "html") |> 
+  kableExtra::column_spec(1:3, background = "black")
+```
+<BR/>
+- Para criar uma lista usamos a função `list()`<br/>
+
+```{r criando lista 1}
+lista1 <- list(area, variavel_categorica1)
+```
+
+- Podemos criar listas nomeadas<br/>
+```{r lista nomeada}
+lista_nomeada <- list(catagorica2 = variavel_categorica2,
+                      categorica3 = variavel_categorica3)
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Identificando listas**]
+
+- `class()`<br/>
+
+- `typeof()`<br/>
+
+- `str()`<br/>
+
+```{r identificando listas 1}
+class(lista1)
+```
+
+```{r identificando listas 2}
+typeof(lista_nomeada)
+```
+
+```{r identificando listas 3}
+str(lista_nomeada)
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Salvando e carregando uma lista**]
+
+<BR/>
+
+- `write_rds()` para salvar<br/>
+<BR/>
+```{r salvar lista}
+readr::write_rds(lista_nomeada, "/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/lista_nomeada.rds")
+```
+<BR/>
+- `read_rds()` para carregar<br/>
+<BR/>
+```{r carregar lista}
+lista_nomeada2 <- readr::read_rds("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/lista_nomeada.rds")
+str(lista_nomeada2)
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Matrizes**]
+
+<BR/>
+
+```{r caracteristicas dos objetos 4, echo = FALSE}
+knitr::kable(df, escape = FALSE, format = "html") |> 
+  kableExtra::column_spec(1:3, background = "black") 
+```
+<BR/>
+- Função `matrix()` para criar uma matriz<br/>
+<BR/>
+```{r matriz 1}
+m1 <- matrix(1:10, nrow = 2, ncol = 5)
+m1
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Matrizes**]
+
+- Argumento `byrow = TRUE` preenche a matriz pelas linhas<br/>
+
+```{r matriz 2}
+m2 <- matrix(1:10, nrow = 2, ncol = 5, byrow = TRUE)
+m2
+```
+<BR/>
+- Argumento `byrow = FALSE` preenche a matriz pelas colunas<br/>
+
+```{r matriz 3}
+m3 <- matrix(1:10, nrow = 2, ncol = 5, byrow = FALSE)
+m3
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Data Frames**]
+
+<BR/>
+
+```{r caracteristicas dos objetos 5, echo = FALSE}
+knitr::kable(df, escape = FALSE, format = "html") |>
+  kableExtra::column_spec(1:3, background = "black") 
+```
+<BR/>
+- `data.frame()` para criar um data frame<br/>
+<BR/>
+- Data frames podem ser nomeados<br/>
+
+???
+Exercício - criar um data frame `df` a partir dos vetores existentes. Vai dar errado porque os vetores estã ocom comprimentos diferentes. Introduzir a função `length()` para medir o comprimento dos vetores e em seguida deixá-los todos do mesmo tamanho.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Data Frames**]
+
+<BR/>
+
+*Error in data.frame(n_especies = numero_de_especies, area, cat1 = variavel_categorica1,  : 
+  arguments imply differing number of rows: 91, 90*
+<BR/>  
+- Os vetores estão com comprimentos diferentes!!!<br/>
+<BR/>
+- Podemos confirmar isso usando a função `length()`
+```{r comprimento do vetor}
+length(numero_de_especies)
+```
+
+???
+Exercício - medir o comprimento de todos os vetores para determinar qual é o menor vetor
+```{r, echo = FALSE}
+lapply(list(numero_de_especies, 
+            area, 
+            variavel_categorica1,
+            variavel_categorica2,
+            variavel_categorica3),
+       length)
+```
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Indexação de vetores**]
+
+<BR/>
+
+- Indexar um vetor significa acessar um elemento, ou um conjunto de elementos dentro de um vetor<br/>
+<BR/>
+- Acessamos elementos de um vetor utilizando `[]` e a sua posição dentro do vetor 
+```{r indexação de vetor 1}
+numero_de_especies[10]
+```
+- Para acessar um intervalo podemos usa `:`
+```{r indexação de vetores 2}
+numero_de_especies[9:11]
+```
+- Para acessar elementos em posições específicas usamos `c()`
+```{r}
+numero_de_especies[c(9, 11, 33)]
+```
+
+???
+Exercício - corrigir o tamanho dos vetores e gerar o data frame `df`
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Salvando o Data Frame**]
+
+<BR/>
+
+- `write.table()` para salvar o data frame no diretório de trabalho<br/>
+<BR/>
+```{r salvar df 1, eval = FALSE}
+write.table(df, "/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/df.txt")
+```
+
+```{r carregar df 1, echo = FALSE}
+df <- read.table("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/df.txt", header = TRUE)
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Conhecendo o Data Frame**]
+
+<BR/>
+
+- Vamos aplicar  `str()` no data frame<br/>
+```{r conhecendo o data frame}
+str(df)
+```
+
+---
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Indexação de Data Frames**]
+
+<BR/>
+
+- Para indexar data frames utilizamos sistema de coordenadas `[i, j]` <br/>
+<BR/>
+- *i* indica o número da linha<br/>
+<BR/>
+- *j* indica o número da coluna<br/>
+<BR/>
+```{r indexacao de data frame}
+df[10:13, 2:4]
+```
+
+---
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Indexação de Dta Frames**]
+
+<BR/>
+
+- Obtenha a linha 5 da coluna 3<br/>
+<BR/>
+- Obtenhas as linhas 60 a 70 da coluna 1 e 2<br/>
+<BR/>
+- Obtenha as linhas 15, 33 e 41 das colunas 1, 2 e 4<br/>
+<BR/>
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Indexação por lógica**]
+
+<BR/>
+
+```{r operadores logicos, echo = FALSE}
+Operador <- c(">", ">=", "<", "<=", "==", "!=", "&", "|", "%in%")
+Sintaxe <- c("a > b", "a >= b", "a < b", "a <= b", "a == b", "a != b", "a & b", "a | b", "a %in% b")
+Significado <- c("a é maior que b?", "a é maior ou igual a b?", "a é menor que b?", "a é menor ou igual a b?", "a é igual a b?", "a é diferente de b?", "a 'e' b", "a 'ou' b", "a pertence a c(a, b, c)")
+
+df2 <- data.frame(`Operador` = Operador, Sintaxe = Sintaxe, Significado = Significado)
+
+knitr::kable(df2, format = "html", caption = "Operadores de lógica no R") |> 
+  kableExtra::column_spec(1:3, background = "black") |>
+  kableExtra::row_spec(0, background = "black")
+
+```
+
+
+???
+* Reter ou eliminar posições específicas de um objeto no R
+é algo útil
+
+* Na maior parte das vezes queremos realizar esta 
+tarefa para subconjuntos dos dados que cumpram certos 
+requerimentos 
+
+* Por exemplo, reter apenas as observações referentes uma 
+determinada localidade, espécie, ou período no tempo
+
+* Uma forma de fazer isto é através de testes lógicos.
+
+---
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Indexação por lógica - Vetores**]
+
+<BR/>
+
+- Exemplo com vetores<br/>
+```{r indexacao por logica 1}
+numero_de_especies > 30
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Indexação por lógica - Vetores**]
+
+<BR/>
+
+```{r indexacao por logica 2}
+variavel_categorica1 == "B"
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Indexação por lógica - Vetores**]
+
+<BR/>
+
+```{r indexacao por logica 3}
+numero_de_especies[numero_de_especies > 30]
+```
+<BR/>
+```{r indexacao por logica 4}
+variavel_categorica1[variavel_categorica1 == "B"]
+```
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+# .blue[**Indexação por lógica - Vetores**]
+
+<BR/>
+
+- valores de area > 50 **OU** valores de area < 20<br/>
+<BR/>
+- número de espécies <= 40 **E** número de espécies > 30<br/>
+<BR/>
+- número de espécies pertencentes a categoria "C" (variavel_categorica1)

@@ -1,0 +1,22 @@
+---
+title: "Introdução ao R para Ecólogos - Programação para Análise de Dados e Reprodutibilidade na Ciência"
+author: "Vitor Borges Jr."
+date: "2021-01"
+output:
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
+---
+
+Este site contem os slides, scripts, dados e exercícios para a disciplina Introdução ao R para Ecólogos - Programação para Análise de Dados e Reprodutibilidade na Ciência ([ementa](Ementa-IRE.html)) minsitrado no Programa de Pós-Graduação em Biodiversidade da UNIRIO no primeiro semestre de 2021.
+
+___
+
+## **Material para a Disciplina**
+
+Data  | Videos | Slides | Scripts | Exercícios |
+------------- |----------- | ------------- | ------------- | -------------
+25 de maio  | [Objetos e Indexação - parte 1](https://drive.google.com/file/d/1lFKxnbpoEG9Yv19YMghfGWNvGF4xMZAC/view?usp=sharing)<br/> [Objetos e Indexação - parte 2](https://drive.google.com/file/d/1evZ3CT6Z5vrnvry8_hWW1snQDTvYtTtI/view?usp=sharing) | [Slides 01](Slides/01-Introducao-ao-R-Objetos-e-Indexacao-Slides.html) | [Script 01](Scripts/01-Introducao-ao-R-parte1.R) | - |
+1 de junho  | [Funções Loop](https://drive.google.com/file/d/1HpYO862-jBfSu_thZmDpzUz1nVnFVeXC/view?usp=sharing) | [Slides 02](Slides/02-Introducao-ao-R-Funcoes-Loop.html) | [Script 02](Scripts/02-Introduçã- ao-R-parte-2) | [Exercícios 02](02-Exercícios-Funções-Loop-e-Funções.Rmd) |           
+8 de junho  | [Funções e Controladores de Fluxo](https://drive.google.com/file/d/1_qmp_OLflgqaKo557jHRURG1-L2Q7zsy/view?usp=sharing) | [Slides 03](Slides/03-Introducao-ao-R-Introducao-Escrita-de-Funcoes-slides.html) | [Script 03](03-Introducao-R-Funcoes-Controladores-de-fluxo.R) | [Exercícios 03](03-Exercícios-Funcoes-Controladores_de_Fluxo.Rmd) | 
+15 de junho  | [Manipulação e Limpeza de Dados - parte 1](https://drive.google.com/file/d/1vte8UQ9Sk9efiPbe7xjzvsu4hoCGcxzZ/view?usp=sharing) | [Slides 04](04-Manipulação-e-Limpeza-de-Dados-slides.html) | [Script 04](Scripts/04-Limpeza-e-Manipulação-de-Dados.R) | [Exercícios 04](Exercícios/04-Exercícios-de-Limpeza-e-Manipulação-de-Dados.Rmd) |

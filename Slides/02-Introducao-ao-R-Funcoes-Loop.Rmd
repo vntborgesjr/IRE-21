@@ -1,0 +1,443 @@
+---
+title: "Introdução ao R para Ecólogos"
+subtitle: "⚔<br/>Programação para Análise de Dados e Reprodutibilidade na Ciência"
+author: "Vitor Borges"
+institute: "PPGBIO-UNIRIO"
+date: "2021/05/24"
+output:
+  xaringan::moon_reader:
+    seal: false
+    lib_dir: libs
+    nature:
+      slideNumberFormat: ""
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+layout: true
+name: basic
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(tidyverse)
+df <- read.table("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/df.txt", header = TRUE)
+xaringanExtra::use_xaringan_extra()
+xaringanExtra::use_clipboard()
+```
+
+---
+name: Title
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse, center, middle, title-slide
+
+# .blue[**Introdução ao R para Ecólogos**]
+
+## .blue[**⚔<br/>Funções Loop**]
+
+### .blue[Vitor Borges-Júnior]
+
+### .blue[PPGBIO - UNIRIO]
+
+### .blue[2021/06/01]
+
+???
+IDEIAS DE MELHORIAS PARA O PRÓXIMO CURSO
+
+---
+
+# .blue[**Indexação por lógica - Vetores**]
+
+<BR/>
+
+a. Crie um vetor de número de 1 a 100 e guarde este vetor
+em um objeto. <br/>
+<BR/>
+b. Crie um segundo vetor do tipo caracter com duas categorias: "impar" e  "par" (nesta ordem), e guarde em um objeto. <br/>
+<BR/>
+c. Faça com que os valores "impar" e "par" sejam repetidos 50 vezes, de forma intercalada ("impar", "par", "impar", "par", ...); guarde isso em um objeto. <br/>
+<BR/>
+d. Indexe o vetor criado no passo "a" de forma que somente os números em posição par sejam apresentados.<br/>
+<BR/>
+
+???
+
+---
+
+# .blue[**Indexação por lógica - Data Frames**]
+
+<BR/>
+
+- Utilizamos o símbolo `$` para obter uma coluna de um data frame<br/>
+<BR/>
+```{r indexacao usando $ 1}
+df$n_sp # acessa os valores da coluna n_sp
+```
+
+- Agora podemos acessar os vaolores de uma coluna como se fossem vetores<br/>
+<BR/>
+```{r indexacao usando $ 2}
+df$n_sp[df$n_sp > 38]
+```
+
+---
+
+# .blue[**Indexação por lógica - Data Frames**]
+
+<BR/>
+
+- Também podemos indexar data frames pelo sistema de coordenadas<br/>
+<BR/>
+```{r}
+df[df$cat1 == "B", "area"]
+```
+
+
+---
+
+# .blue[**Indexação por lógica - Data Frames**]
+
+<BR/>
+
+- Obtenha o número de espécies (n_sp) pertencentes a categoria A **OU** C<br/>
+<BR/>
+- Obtenha o número de espécies petencentes a áreas maiores ou iguais a 60 **E** menores ou iguais a 70<br/>
+<BR/>
+- Obtenha o número de espécies pertencentes a áreas menores que 30 **OU** maior que 80<br/>
+<BR/>
+- Obtenha os valores de área **diferentes** das categorias (cat1) "A" **OU** "B"<br/>
+<BR/>
+
+???
+
+
+---
+
+# .blue[**Obtendo e alterando o nome de colunas**]
+
+<BR/>
+
+- `names()` fornece o nome das colunas de um data frame<br/>
+<BR/>
+```{r obtendo nome das colunas}
+names(df)
+```
+<BR/>
+- Para alterar o nome de uma coluna:<br/>
+<BR/>
+```{r alterar nome de coluna}
+names(df)[4] <- "predador"
+names(df)
+```
+
+---
+
+# .blue[**Obtendo e alterando o nome de colunas**]
+
+<BR/>
+
+- Altere o nome da coluna `"cat1"` para `"isolamento"`
+
+???
+
+---
+
+# .blue[**Funções Loop**]
+
+<BR/>
+
+- Executar uma mesma tarefa repetidas vezes para diferentes partes de um conjunto dados<br/>
+<BR/>
+- Funções loop da família `apply()`<br/>
+<BR/>
+- Veremos 5 funções loop que podem ser úteis<br/>
+<BR/>
+
+---
+
+# .blue[**Funções Loop**]
+
+```{r tabela funções loop, eval = TRUE, echo = FALSE}
+
+Função <- c("apply()", 
+            "aggregate()", 
+            "tapply()", "by()", 
+            "lapply()", 
+            "sapply()",
+            "mapply()")
+Significado <- c("aplica função nas linhas ou colunas de 
+uma matriz, retornando um vetor
+", 
+"aplica uma função a sub-conjuntos de uma coluna em 
+data.frame, retorna um data.frame
+", 
+"aplica uma função a sub-conjuntos de um vetor, 
+retornando um vetor, 
+ou uma tabela de contigência
+", 
+"aplica uma função a um data.frame ou matriz por sub-conjuntos
+um fator, retorna sempre uma lista
+", 
+"aplica uma função a uma lista, retorna uma lista
+", 
+"identico ao `lapply()`, mas retorna um vetor
+",
+"aplica uma função a multiplos elementos de diferentes argumentos")
+
+knitr::kable(data.frame(Função = Função, Significado = Significado), format = "html", align = "c", caption = "Funções loop no R e seus usos")  %>% 
+  kableExtra::column_spec(1:2, background = "black") %>%
+  kableExtra::row_spec(0, background = "black")
+
+```
+
+---
+
+# .blue[**apply()**]
+
+```{r apply(), eval = TRUE, echo = FALSE}
+
+Argumento <- c("X", "MARGIN", "FUN")
+Significado <- c("uma matriz", 
+"a função deve ser aplicada nas linhas (1),
+colunas (2) ou em ambas?
+", 
+"a função a ser aplicada")
+
+knitr::kable(data.frame(Argumento = Argumento, Significado = Significado), format = "html", align = "c", caption = "Uso da função apply") %>% 
+  kableExtra::column_spec(1:2, background = "black") %>%
+  kableExtra::row_spec(0, background = "black")
+
+```
+
+```{r uso apply(), eval = FALSE, echo = TRUE}
+# para usar a função apply, precisaremos criar uma matriz
+matriz <- matrix(data = 1:20, nrow = 5, ncol = 4)
+apply(X = matriz, MARGIN = 1, FUN = mean)
+apply(X = matriz, MARGIN = 2, FUN = mean)
+
+# similar as funções rowMeans e colMeans
+rowMeans(matriz)
+colMeans(matriz)
+
+```
+
+---
+
+# .blue[**aggregate()**]
+
+```{r aggregate(), eval = TRUE, echo = FALSE}
+
+Argumento <- c("x", 
+               "by",
+               "FUN")
+Significado <- c("um data.frame preferencialmente uma coluna por vez", 
+                 "uma lista de elementos que agrupem observações, de tamanho igual ao de x",
+                 "a função a ser aplicada")
+
+knitr::kable(data.frame(Argumento = Argumento, Significado = Significado), format = "html", align = "c", caption = "Uso da função aggregate") %>% 
+  kableExtra::column_spec(1:2, background = "black") %>%
+  kableExtra::row_spec(0, background = "black")
+
+
+```             
+
+```{r uso do aggregate(), eval = FALSE, echo = TRUE}
+aggregate(x = df$area, by = list(df$predacao), 
+          FUN = mean)
+```
+
+---
+
+# .blue[**aggregate()**]
+
+<BR/>
+
+Aplique a função `aggregate()` para determinar o comprimento médio da pétala de todas as espécies, no conjunto de dados `iris`
+
+---
+
+# .blue[**tapply()**]
+
+```{r uso do tapply(), eval = TRUE, echo = FALSE}
+
+Argumento <- c("X", 
+               "INDEX", 
+               "FUN")
+Significado <- c("um vetor", 
+                 "uma lista de elementos que agrupem observações, de tamanho igual ao de x",
+                 "a função a ser aplicada")
+
+knitr::kable(data.frame(Argumento = Argumento, Significado = Significado), format = "html", align = "c", caption = "Uso da função tapply") %>% 
+  kableExtra::column_spec(1:2, background = "black") %>%
+  kableExtra::row_spec(0, background = "black")
+
+
+```
+
+```{r tapply(), eval = FALSE, echo = TRUE}
+# média de Var2 por nível de fator
+tapply(X = df$area, INDEX = list(df$isolamento), 
+       FUN = mean)
+
+# Para mais de um fator
+tapply(X = df$area, INDEX = list(df$isolamento,
+                                    df$predacao),
+       FUN = mean)
+```
+
+---
+
+# .blue[**tapply()**]
+
+<BR/>
+
+Aplique a função `tapply()` para determinar a concentração média de CO2 no ambiente (conc) para os diferentes tratamentos (Treatment) e para as diferentes origens das plantas (Type), no conjunto de dados `CO2`.
+
+---
+
+# .blue[**by()**]
+
+```{r uso do by(), eval = TRUE, echo = FALSE}
+
+Argumento <- c("data", 
+               "INDICES",
+               "FUN") 
+Significado <- c("um `data.frame` ou matriz",
+                 "uma lista de elementos que agrupem observações de tamanho igual ao de data", "a função a ser aplicada")
+
+knitr::kable(data.frame(Argumento = Argumento, Significado = Significado), format = "html", align = "c", caption = "Uso da função by") %>% 
+  kableExtra::column_spec(1:2, background = "black") %>%
+  kableExtra::row_spec(0, background = "black")
+
+```
+
+```{r by(), eval = FALSE, echo = TRUE}
+# média de Var1 por nível de Fator2
+by(data = df$n_sp, INDICES = list(df$isolamento),
+   FUN = mean)
+# média de Var2 por nível de Fator1 e Fator2
+by(data = df$n_sp, 
+   INDICES = list(df$isolamento,
+                  df$predacao), FUN = mean)
+```
+
+---
+
+# .blue[**by()**]
+
+<BR/>
+
+Aplique a função `by()` para determinar a taxa de absorção média de CO2 (uptake) para os diferentes tratamentos (Treatment) e diferentes origens das plantas (Type), no conjunto de dados `CO2`.
+
+---
+
+# .blue[**lapply()**]
+
+```{r uso do lappy(), eval = TRUE, echo = FALSE}
+
+Argumento <- c("X", 
+               "FUN")
+Significado <- c("uma lista", 
+                 "a função a ser aplicada")
+
+knitr::kable(data.frame(Argumento = Argumento, Significado = Significado), format = "html", align = "c", caption = "Uso da função lapply") %>% 
+  kableExtra::column_spec(1:2, background = "black") %>%
+  kableExtra::row_spec(0, background = "black")
+
+```
+
+- Vamos criar uma lista a partir do data frame `df` usando a função `split()`:
+
+```{r lapply(), eval = FALSE, echo = TRUE}
+# gerar a lista
+lista_df <- split(x = df$n_sp, f = df$isolamento)
+
+# média de n_sp por nível de isolamento
+lapply(X = lista_df, FUN = mean)
+```
+
+---
+
+## .blue[**sapply()**]
+
+<BR/>
+
+```{r uso do sapply(), eval = TRUE, echo = FALSE}
+
+Argumento <- c("X", 
+               "FUN")
+Significado <- c("uma lista", 
+                 "a função a ser aplicada")
+
+knitr::kable(data.frame(Argumento = Argumento, Significado = Significado), format = "html", align = "c", caption = "Uso da função sapply") %>% 
+  kableExtra::column_spec(1:2, background = "black") %>%
+  kableExtra::row_spec(0, background = "black")
+
+```
+
+- `s`(implify)`apply()` faz a mesma coisa que o `l`(ist)`apply()`, mas retorna um vetor ou uma matriz se o argumento `simplify = TRUE` (ao em vez de uma lista).
+
+```{r sapply(), eval = FALSE, echo = TRUE}
+# média de n_sp por nível do fator isolamento
+lista2 <- split(x = df$n_sp, f = df$cat1)
+sapply(X = lista2, FUN = mean)
+```
+
+---
+
+# .blue[**sapply()** e **lapply()** ]
+
+<BR/>
+
+Aplique as funções `lapply()` e `spply()` para determinar a média da massa seca de plantas (weight) de acordo com o tratamento (group) usando o conjunto de dados `PlantGrowth`.
+
+
+---
+
+## .blue[**mapply()**]
+
+<BR/>
+
+```{r uso do mapply(), eval = TRUE, echo = FALSE}
+
+Argumento <- c("FUN", 
+               "ARGS")
+Significado <- c("a função a ser aplicada", 
+                 "argumentos")
+
+knitr::kable(data.frame(Argumento = Argumento, Significado = Significado), format = "html", align = "c", caption = "Uso da função mapply") %>% 
+  kableExtra::column_spec(1:2, background = "black") %>%
+  kableExtra::row_spec(0, background = "black")
+
+```
+
+<BR/>
+
+```{r mapply(), eval = FALSE, echo = TRUE}
+mapply(function(x, y) seq_len(x) + y,
+       c(a =  1, b = 2, c = 3),  
+       c(A = 10, B = 0, C = -10))
+```
+
+
+---
+
+# .blue[**Funções loop**]
+
+<BR/>
+
+- Para que usar estas funções loop?<br/>
+<BR/>
+    - Calcular estatísticas descritivas que podem ser usadas para criação de gráficos;<br/>
+<BR/>  
+    - Realizar tarefas repetitivas em um mesmo conjunto de dados de acordo com alguma categorização;<br/>
+<BR/>
+    - Aplicar funções que você mesmo criou a sub-conjuntos de dados.<br/>
+<BR/>  
+
