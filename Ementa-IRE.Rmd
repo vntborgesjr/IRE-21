@@ -21,5 +21,7 @@ Tipo de objetos; indexação e lógica; controladores de fluxo; funções; manip
 ### **Referências**
 
 Crawley M.J. 2007. The R Book. Wiley. Doi: https://doi.org/10.1002/9780470515075
+
 Xie Y., Allaire J.J., Grolemund G. 2021. R Markdown: The Definitive Guide. Chapman & Hall/CRC. https://bookdown.org/yihui/rmarkdown/
+
 Wickham H., Grolemund G. 2017. R for Data Science. Visualize, Model, Tranform, Tidy and Import Data. O’Reilly. https://r4ds.had.co.nz/
