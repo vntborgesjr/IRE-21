@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introdução ao R para Ecólogos</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vitor Borges" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/shareon/shareon.min.css" rel="stylesheet" />
+    <script src="libs/shareon/shareon.min.js"></script>
+    <link href="libs/xaringanExtra-shareagain/shareagain.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-shareagain/shareagain.js"></script>
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <script src="libs/peerjs/peerjs.min.js"></script>
+    <script src="libs/tiny.toast/toast.min.js"></script>
+    <link href="libs/xaringanExtra-broadcast/broadcast.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-broadcast/broadcast.js"></script>
+    <script src="libs/fabric/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30}) })</script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+layout: true
+name: basic
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+
+
+---
+name: Title
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse, center, middle, title-slide
+
+# .blue[**Introdução ao R para Ecólogos**]
+
+## .blue[**⚔&lt;br/&gt;Manipulação e Transformação de Dados**]
+
+### .blue[Vitor Borges-Júnior]
+
+### .blue[PPGBIO - UNIRIO]
+
+### .blue[2021/06/22]
+
+???
+IDEIAS DE MELHORIAS PARA O PRÓXIMO CURSO
+
+- Melhorar as ilustrações dos slides.
+- Substituir as figuras que representam os verbos por exemplos reais de transformação na própria tabela de dados utilizada para os exemplos da aula.
+- Condensar o conteúdo de manipulação, limpeza e transformação dos dados para caber todo na aula 04.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Minha Solução para a Tarefa**]
+
+&lt;BR/&gt; 
+
+.center[.red[Carregar os dados atribuindo os tipos adequados às variáveis]]
+
+```r
+tadpoles_raw &lt;- read_csv(file = "/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/tadpoles_raw.csv", 
+                col_names = TRUE, 
+                na = c("NA"),
+                col_types = cols(Date = col_date(format = "%m/%d/%y"),
+                Stream = col_factor(),
+                Species = col_factor(),
+                `Stage of development` = col_number(),
+                `Depth (cm)` = col_number()))
+```
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Minha Solução para a Tarefa**]
+.center[.red[Filtrar, selecionar, renomear, abreviar espécies]]
+
+```r
+tadpoles_raw &lt;- tadpoles_raw %&gt;% 
+  filter(Method == "Dipnet") %&gt;% 
+  select(date = Date, 
+         stream = Stream, 
+         species = Species,
+         stage = `Stage of development`,
+         total_len = `Total Length (mm)`, 
+         body_len = `Body Length (mm)`) %&gt;% 
+  mutate(species = as.factor(str_replace_all(species, 
+                   c("Aplastodiscus eugenioi" = "Ae", 
+                   "Bokermannohyla circumdata" = "Bc",
+                   "Crossodactylus aeneus" = "Ca",
+                   "Hylodes asper" = "Ha",
+                   "Hylodes charadranaetes" = "Hc",
+                   "Hylodes lateristrigatus" = "Hl",
+                   "Hylodes pipilans" = "Hp",
+                   "Physalaemus signifer" = "Ps",
+                   "Proceratophrys appendiculata" = "Pa",              "Proceratophrys boiei" = "Pb",
+                   "Rhinella ornata" = "Ro", 
+                   "Scinax albicans" = "Sa",
+                   "Scinax flavoguttatus" = "Sf"))))
+```
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Minha Solução para a Tarefa**]
+.center[.red[Criar categorias para a variável `stage`]]
+
+```r
+tadpoles_raw &lt;- tadpoles_raw %&gt;% 
+  mutate(stage = cut(stage, 
+                     breaks = c(25, 30, 35, 40, 42, 46),
+                     labels = c("25-30", "31-35", "36-40", "41-42", "&gt;42"),
+                     include.lowest = TRUE))
+```
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Minha Solução para a Tarefa**]
+
+&lt;BR/&gt; 
+
+.center[.red[Corrigir os valores das observações fora da apmlitude de variação esperada e gerar `tadpoles_clean`]]
+
+```r
+tadpoles_raw$total_len[which(
+  tadpoles_raw$total_len &gt; 100
+  )] &lt;- tadpoles_raw$total_len[which(
+    tadpoles_raw$total_len &gt; 100)] /100
+
+tadpoles_clean &lt;- tadpoles_raw
+```
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Minha Solução para a Tarefa**]
+
+&lt;BR/&gt; 
+
+.center[.red[Transformar o código na função `read_tadpoles_raw()`]]
+
+```r
+read_tadpoles_raw &lt;- function(data) {
+  # carregar pacote
+  library(tidyverse)
+  # carregar dados atribuindo os tipos corretos
+  tadpoles_raw &lt;- read_csv(file = data, 
+                           col_names = TRUE, 
+                           na = c("NA"),
+                           col_types = cols(Date = col_date(format = "%m/%d/%y"),
+                                            Stream = col_factor(),
+                                            Species = col_factor(),
+                                            `Stage of development` = col_number(),
+                                            `Depth (cm)` = col_number()))
+  # manipular e limpar dados
+  tadpoles_raw &lt;- tadpoles_raw %&gt;% 
+    filter(Method == "Dipnet") %&gt;% # filtrar subconjunto de obs de interesse
+    select(date = Date, 
+           stream = Stream, 
+           species = Species,
+           stage = `Stage of development`,
+           total_len = `Total Length (mm)`, 
+           body_len = `Body Length (mm)`) %&gt;% # selecionar ariáveis de interesse
+    mutate(species = as.factor(str_replace_all(species, # Renomear espécies e converter novamente em fator
+                                     coll(c("Aplastodiscus eugenioi" = "Ae", 
+                                       "Bokermannohyla circumdata" = "Bc",
+                                       "Crossodactylus aeneus" = "Ca",
+                                       "Hylodes asper" = "Ha",
+                                       "Hylodes charadranaetes" = "Hc",
+                                       "Hylodes lateristrigatus" = "Hl",
+                                       "Hylodes pipilans" = "Hp",
+                                       "Physalaemus signifer" = "Ps",
+                                       "Proceratophrys appendiculata" = "Pa",              "Proceratophrys boiei" = "Pb",
+                                       "Rhinella ornata" = "Ro", 
+                                       "Scinax albicans" = "Sa",
+                                       "Scinax flavoguttatus" = "Sf")))),
+           stage = cut(stage, 
+                     breaks = c(25, 30, 35, 40, 42, 46),
+                     labels = c("25-30", "31-35", "36-40", "41-42", "&gt;42"),
+                     include.lowest = TRUE))
+  # corrigindo valores fora da amplitude de variação esperada
+  tadpoles_raw$total_len[which(
+    tadpoles_raw$total_len &gt; 100
+  )] &lt;- tadpoles_raw$total_len[which(
+    tadpoles_raw$total_len &gt; 100)] /100
+  # retornar os dados limpos
+  return(tadpoles_raw)
+}
+```
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Minha Solução para a Tarefa**]
+
+&lt;BR/&gt; 
+
+.center[.red[Transformar o código na função `read_tadpoles_raw()`]]
+
+```r
+# carregar dados
+tadpoles_clean &lt;- read_tadpoles_raw("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/tadpoles_raw.csv")
+
+# inspecionar dados
+glimpse(tadpoles_clean)
+```
+
+```
+## Rows: 3,163
+## Columns: 6
+## $ date      &lt;date&gt; 2011-06-09, 2011-06-09, 2011-06-09, 2011-06-09, 2011-07-13,…
+## $ stream    &lt;fct&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+## $ species   &lt;fct&gt; Ae, Ae, Ae, Ae, Ae, Ae, Ae, Ae, Ae, Ae, Ae, Ae, Ae, Ae, Ae, …
+## $ stage     &lt;fct&gt; 25-30, 25-30, 25-30, 25-30, 25-30, 25-30, 25-30, NA, 25-30, …
+## $ total_len &lt;dbl&gt; 29.09, 37.62, 20.10, 18.88, 35.52, 40.05, 25.55, NA, 25.77, …
+## $ body_len  &lt;dbl&gt; 8.89, 11.32, 5.03, 5.32, 8.82, NA, 6.53, NA, 6.20, 5.90, 6.6…
+```
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Na Aula Passada...**]
+
+&lt;BR/&gt;
+
+.pull-left[
+- .red[`tidyverse`] 
+
+- .red[Carregar], .red[limpar], .red[manipular] e .red[sumarizar] os dados
+
+- Verbos .red[`dplyr`]
+
+- Selecionar com .red[`select()`]
+
+- Filtrar com .red[`filter()`]
+
+- Ordenar com .red[`arrange()`]
+]
+
+.pull-right[
+- Agrupar e sumarizar com .red[`group_by()`], .red[`count()`] e .red[`summarise()`]
+
+- Corrigir o .red[tipo] dos dados com .red[`readr()`] e .red[`lubridate`]
+
+- Corrigir nome de observações com .red[`stringr`]
+
+- Identificar valores fora da amplitude de variação com .red[`assertive`]
+]
+
+???
+Iniciamos a caminhada no fluxo de trabalho de análise e a etapa de pré-processamento de dados.
+
+Vamos prosseguir realizando algumas transformações úteis para preparar os dados para gera gráficos, sumários estatísticos e deixar os dados prontos para análises subsequentes.
+
+---
+
+# .blue[**Tópicos da Aula**]
+
+&lt;BR/&gt;
+.center[.red[**Transformação, Sumarização e Visualização de Dados**]]
+.pull-left[
+- Dados .red[Tidy] x .red[Untidy] 
+
+- Pacote .red[tidyr]
+
+- Alterar o formato do *data frame*: .red[longo] x .red[largo]
+
+- .red[Separar] e .red[unir] uma coluna
+
+- .red[Unir] dois *data frame*'s com .red[dplyr]
+]
+
+
+.pull-right[
+- Gramática gráfica em R .red[`ggplot2`]
+
+- Conhecer as .red[camadas] essenciais 
+
+- .red[Dados], elementos .red[estéticos] e .red[geométricos]
+]
+
+???
+- Entender os conceitos de tidy e untidy data e porque é necessário deixar os dados no formato tidy para...
+
+- Gera novos data frames para visualizações, sumários e análises subsequentes. 
+
+- Aplicação do pacote tidyr para alterar o formato do data frame e colunas
+
+- Unir dois data frames a partir de colunas em comum com dplyr 
+
+- Introdução ao ggplot2
+
+- 
+
+---
+
+# .blue[**Fluxo de Trabalho para Análise de Dados**]
+
+&lt;BR/&gt;
+
+&lt;BR/&gt;
+
+&lt;img src="https://d33wubrfki0l68.cloudfront.net/795c039ba2520455d833b4034befc8cf360a70ba/558a5/diagrams/data-science-explore.png" style="display: block; margin: auto;" /&gt;
+
+
+
+???
+Vamos cobrir a terceira e quarta estapas, transformar e visualizar. 
+
+Crédito da imagem: [R for Data Science](https://d33wubrfki0l68.cloudfront.net/795c039ba2520455d833b4034befc8cf360a70ba/558a5/diagrams/data-science-explore.png)
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Tame Data**]
+
+&lt;BR/&gt;
+
+- Formato .red[retangular]&lt;br/&gt;
+&lt;BR/&gt;
+
+- Os .red[nomes das variáveis] são .red[fáceis] de se trabalhar&lt;br/&gt;
+&lt;BR/&gt;
+
+- Cada .red[coluna] contem apenas .red[uma variável]&lt;br/&gt;
+&lt;BR/&gt;
+
+- Os .red[tipos das variáveis] estão atribuídos corretamente&lt;br/&gt;
+&lt;BR/&gt;
+
+???
+**Tame data**
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Tidy Data**]
+
+&lt;BR/&gt;
+
+&lt;img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.7jjzhy4KknPz9hJVnC_w7wHaCU%26pid%3DApi&amp;f=1" width="180%" style="display: block; margin: auto;" /&gt;
+
+???
+**Tidy data**
+
+Cada linha é uma observação, cada coluna é uma variável.
+
+O formato é importante para gerar:
+- sumários estatísticos
+- novas tabelas para análises subsequentes
+- visualizações
+
+Crédito da imagem: [Storybench](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.7jjzhy4KknPz9hJVnC_w7wHaCU%26pid%3DApi&amp;f=1)
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Tidy Data**]
+
+&lt;BR/&gt;
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; species &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; stage &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; total_len &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; body_len &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2011-06-09 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ae &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25-30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 29.09 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8.89 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2011-12-22 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ca &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25-30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 36.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.60 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2011-05-24 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Sa &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25-30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21.03 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.08 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2011-12-21 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Pb &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 41-42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 32.70 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11.70 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2012-08-21 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Sa &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.80 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.70 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2012-09-22 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ps &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25-30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8.30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2011-06-11 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Hp &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25-30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 23.42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.91 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+???
+**Tidy data**
+
+Cada linha é uma observação, cada coluna é uma variável. Tidy data tende a ser longo.
+
+O formato é importante para gerar:
+
+- novas tabelas para análises subsequentes
+- sumários estatísticos
+- visualizações
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Novos *Data Frame*'s para Análises Subsequentes**]
+.center[.red[**Frequência Absoluta e Relativa de Girinos**]]
+
+```r
+tadpoles_freq &lt;- tadpoles_clean %&gt;%  
+  count(species) %&gt;% 
+  mutate(freq_rel = round(n/sum(n), 3)) %&gt;% 
+  drop_na()
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; species &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; n &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; freq_rel &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Ae &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 186 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.059 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Bc &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 122 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.039 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Ca &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 965 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.305 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Ha &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.003 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Hc &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 124 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.039 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+  
+???
+Frequência absoluta de girinos de cada espécie permite responder:
+- Quais são as espécies mais comuns?
+- Quais são as espécies mais raras?
+
+Frequência relativa permite a comparação com assembleias de girinos oriundas de outras amostras.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Novos *Data Frame*'s para Análises Subsequentes**]
+.center[.red[**Frequência Absoluta e Relativa de Girinos por Riacho**]]
+
+```r
+tadpoles_freq_stream &lt;- tadpoles_clean %&gt;% 
+  group_by(stream, species) %&gt;% 
+  summarise(n = n()) %&gt;% 
+  mutate(freq_rel = round(n/sum(n), 3)) %&gt;% 
+  drop_na() 
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; species &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; n &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; freq_rel &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ae &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 63 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ae &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.190 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Bc &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.276 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ca &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.534 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+  
+???
+Frequência absoluta de girinos por riacho permite responder:
+- quais riachos apresentaram maior número de girinos
+- quais espécies ocorreram em um maior número de riachos
+- espécies numericamente dominantes em um riacho também eram dominates nos outros 
+
+Frequência relativa de girinos por riacho permite comparações entre riachos
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Novos *Data Frame*'s para Análises Subsequentes**]
+.center[.red[**Frequência Absoluta e Relativa de Girinos por Riacho e por Mês**]]
+
+```r
+tadpoles_freq_date_stream &lt;- tadpoles_clean %&gt;% 
+  group_by(date = zoo::as.yearmon(date), stream, species) %&gt;% 
+  summarise(n = n()) %&gt;% 
+  mutate(freq_rel = round(n/sum(n), 3)) %&gt;% 
+  drop_na() 
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; species &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; n &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; freq_rel &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mar 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ca &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.182 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mar 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Hp &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.364 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mar 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Pb &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.455 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ae &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.024 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+???
+Frequência absoluta de girinos por espécie, por riacho e por mês permite responder:
+- Quais espécies ocorreram extensivamente ao longo do período de amostragem
+- Quais espécies ocorreram em períodos específicos ao longo da amostragem
+
+Frequência absoluta de girinos por espécie, por riacho e por mês permite realizar comparações sobre a variação temporal entre espécies e riachos 
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Novos *Data Frame*'s para Análises Subsequentes**]
+.center[.red[**Número de espécies por Riacho**]]
+
+```r
+tadpoles_rich_stream &lt;- tadpoles_freq_stream %&gt;% 
+  mutate(dummy = rep(1, length(species))) %&gt;% 
+  group_by(stream) %&gt;% 
+  summarise(n_sp = sum(dummy))
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; n_sp &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+???
+Qual riacho apresentou o maior número de espécies?
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Novos *Data Frame*'s para Análises Subsequentes**]
+.center[.red[**Número de espécies por Mês e por Riacho**]]
+
+```r
+tadpoles_rich_date_stream &lt;- tadpoles_freq_date_stream %&gt;% 
+  mutate(dummy = rep(1, length(species))) %&gt;% 
+  group_by(date, stream) %&gt;% 
+  summarise(n_sp = sum(dummy))
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; n_sp &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mar 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+???
+Como o número de espécies variou ao longo do tempo em cada riacho?
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Novos *Data Frame*'s para Análises Subsequentes**]
+.center[.red[**Número de Girinos por Estágio e por Espécie**]]
+
+```r
+tadpoles_stage_sp &lt;- tadpoles_clean %&gt;% 
+  group_by(species, stage) %&gt;% 
+  count(species) %&gt;% 
+  drop_na() 
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; species &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; stage &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; n &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Ae &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25-30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 158 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Ae &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 31-35 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Ae &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 36-40 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Ae &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 41-42 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Bc &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25-30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 109 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+???
+Como o número de girinos variou entre os estágios de desenvolvimento em cada espécie?
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Novos *Data Frame*'s para Análises Subsequentes**]
+.center[.red[**Tamanho do Corpo, Total, Razão Corpo:Total e Estágio dos Girinos por Espécie**]]
+
+
+
+```r
+tadpoles_len_sp &lt;- tadpoles_clean %&gt;% 
+  select(date, species, stage, body_len, total_len) %&gt;% 
+  mutate(date = zoo::as.yearmon(date),
+         ratio = body_len/total_len)
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; species &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; stage &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; body_len &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; total_len &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; ratio &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; jun 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ae &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25-30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8.89 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 29.09 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.3056033 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; jun 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ae &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25-30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11.32 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 37.62 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.3009038 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; jun 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ae &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25-30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.03 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20.10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2502488 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; jun 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ae &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25-30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.32 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.88 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2817797 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; jul 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ae &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25-30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8.82 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 35.52 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2483108 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+???
+Qual é a relação entre o tamanho corporal, total e estágio de desenvolvimento dos girinos?
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Sumários Estatísticos para Descrição dos Dados**]
+.center[.red[**Estatística Descritiva do Tamanho do Corpo dos Girinos**]]
+
+```r
+body_len_decription &lt;- tadpoles_clean %&gt;% 
+  group_by(species) %&gt;% 
+  summarise(media = mean(body_len, na.rm = TRUE),
+            desvpad = sd(body_len, na.rm = TRUE),
+            min = quantile(body_len, na.rm = TRUE)[1],
+            qrt2 = quantile(body_len, na.rm = TRUE)[2],
+            mediana = quantile(body_len, na.rm = TRUE)[3],
+            qrt4 = quantile(body_len, na.rm = TRUE)[4],
+            maximo = quantile(body_len, na.rm = TRUE)[5], 
+            n = n()) %&gt;% 
+  drop_na()
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; species &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; media &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; desvpad &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; min &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; qrt2 &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; mediana &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; qrt4 &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; maximo &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; n &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Ae &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8.662176 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.859654 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.5000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8.370 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.200 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.09 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 186 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Bc &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.175085 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.331649 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.98 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.3575 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9.865 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12.795 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20.03 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 122 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+???
+Estatística descritiva do tamanho corporal dos girinos de cada espécies
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Sumários Estatísticos para Descrição dos Dados**]
+.center[.red[**Estatística Descritiva do Tamanho Total dos Girinos**]]
+
+```r
+total_len_decription &lt;- tadpoles_clean %&gt;% 
+  group_by(species) %&gt;% 
+  summarise(media = mean(total_len, na.rm = TRUE),
+            desvpad = sd(total_len, na.rm = TRUE),
+            min = quantile(total_len, na.rm = TRUE)[1],
+            qrt2 = quantile(total_len, na.rm = TRUE)[2],
+            mediana = quantile(total_len, na.rm = TRUE)[3],
+            qrt4 = quantile(total_len, na.rm = TRUE)[4],
+            maximo = quantile(total_len, na.rm = TRUE)[5], 
+            n = n()) %&gt;% 
+  drop_na()
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; species &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; media &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; desvpad &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; min &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; qrt2 &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; mediana &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; qrt4 &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; maximo &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; n &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Ae &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31.10417 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.39112 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13.21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 23.385 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 29.76 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 36.055 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 64.60 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 186 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Bc &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 32.63546 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10.88790 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 24.150 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31.41 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 38.975 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 68.27 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 122 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+???
+Estatística descritiva do tamanho total dos girinos de cada espécies
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Sumários Estatísticos para Descrição dos Dados**]
+.center[.red[**Estatística Descritiva da Frequência de Girinos por Espécie**]]
+
+```r
+freq_abs_decription &lt;- tadpoles_freq_stream %&gt;% 
+  group_by(species) %&gt;% 
+  summarise(media = mean(n),
+            desvpad = sd(n),
+            min = quantile(n)[1],
+            qrt2 = quantile(n)[2],
+            mediana = quantile(n)[3],
+            qrt4 = quantile(n)[4],
+            maximo = quantile(n)[5], 
+            n = n())
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; species &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; media &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; desvpad &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; min &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; qrt2 &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; mediana &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; qrt4 &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; maximo &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; n &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Ae &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 20.66667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 23.75395 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 63 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Bc &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 61.00000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 63.63961 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 38.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 61 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 83.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 106 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+???
+Estatística descritiva da frequência absoluta dos girinos de cada espécies
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Sumários Estatísticos para Descrição dos Dados**]
+.center[.red[**Estatística Descritiva do Número Total de Espécies**]]
+
+```r
+tadpoles_rich_decription &lt;- tadpoles_rich_stream %&gt;% 
+  summarise(media = mean(n_sp),
+            desvpad = sd(n_sp),
+            min = quantile(n_sp)[1],
+            qrt2 = quantile(n_sp)[2],
+            mediana = quantile(n_sp)[3],
+            qrt4 = quantile(n_sp)[4],
+            maximo = quantile(n_sp)[5], 
+            n = n())
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; media &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; desvpad &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; min &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; qrt2 &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; mediana &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; qrt4 &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; maximo &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; n &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3.25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.602555 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+???
+Estatística descritiva riqueza de espécies
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Sumários Estatísticos para Descrição dos Dados**]
+.center[.red[**Estatística Descritiva do Número de Espécies por Riacho**]]
+
+```r
+tadpoles_rich_stream_decription &lt;- tadpoles_rich_date_stream %&gt;%   
+  group_by(stream) %&gt;% 
+  summarise(media = mean(n_sp),
+            desvpad = sd(n_sp),
+            min = quantile(n_sp)[1],
+            qrt2 = quantile(n_sp)[2],
+            mediana = quantile(n_sp)[3],
+            qrt4 = quantile(n_sp)[4],
+            maximo = quantile(n_sp)[5], 
+            n = n())
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; media &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; desvpad &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; min &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; qrt2 &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; mediana &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; qrt4 &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; maximo &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; n &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.000000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.909091 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.7006490 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.875000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.9574271 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+???
+Estatística descritiva riqueza de espécies por riacho.
+
+Só conseguimos isso se os dados estiverem no formato tidy. Caso contrário não é possível gerar sumários com facilidade.
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
