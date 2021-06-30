@@ -1,0 +1,3662 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introdução ao R para Ecólogos</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Vitor Borges" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/shareon/shareon.min.css" rel="stylesheet" />
+    <script src="libs/shareon/shareon.min.js"></script>
+    <link href="libs/xaringanExtra-shareagain/shareagain.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-shareagain/shareagain.js"></script>
+    <script src="libs/js-cookie/js.cookie.js"></script>
+    <script src="libs/peerjs/peerjs.min.js"></script>
+    <script src="libs/tiny.toast/toast.min.js"></script>
+    <link href="libs/xaringanExtra-broadcast/broadcast.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-broadcast/broadcast.js"></script>
+    <script src="libs/fabric/fabric.min.js"></script>
+    <link href="libs/xaringanExtra-scribble/scribble.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-scribble/scribble.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30}) })</script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+layout: true
+name: basic
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+
+
+---
+name: Title
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse, center, middle, title-slide
+
+# .blue[**Introdução ao R para Ecólogos**]
+
+## .blue[**⚔&lt;br/&gt;Transformação e Visualização de Dados**]
+
+### .blue[Vitor Borges-Júnior]
+
+### .blue[PPGBIO - UNIRIO]
+
+### .blue[2021/07/06]
+
+???
+IDEIAS DE MELHORIAS PARA O PRÓXIMO CURSO
+
+- Melhorar as ilustrações dos slides.
+- Substituir as figuras que representam os verbos por exemplos reais de transformação na própria tabela de dados utilizada para os exemplos da aula.
+- Condensar o conteúdo de manipulação, limpeza e transformação dos dados para caber todo na aula 04.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Untidy Data**]
+
+&lt;BR/&gt;
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; Data &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Stream &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; Width.1 &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; Width.2 &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; Depth.1 &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; Depth.2 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2011-05-24 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2011-08-17 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 32.7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2.08 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2011-09-20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 167.6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 4.09 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2011-11-21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 144.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.82 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2012-01-12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 90 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 65 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2.8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2012-04-29 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 330 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1.6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2012-08-21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+???
+**Untidy data**
+
+Cada linha não é uma única observação, cada coluna não é uma única variável:
+- Temos uma coluna para cada medida de largura e profundidade
+- Há valores nos títulos das colunas e não variáveis 
+- Largura e profundidade deveriam ser colunas únicas
+- Cada linha é um riacho e não uma observação (deveria repetir o riacho até que todas as observações para aquele riacho terminassem).
+
+Untidy date tende a ser largo.
+
+Com esse formato não é possível gerar:
+- sumários estatísticos
+- novas tabelas para análises subsequentes
+- visualizações
+
+Felizmente, o `tidyverse` também fornece ferramentas para transformarmos *data frame*'s que se encontram no formato largo para o formato longo. Essas ferramentas encontram-se no pacote `tidyr`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Pacote tidyr**]
+
+&lt;BR/&gt;
+
+- Função .red[`gather()`]
+
+&lt;img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.suFnb30E23UW0Q5pNBzWywHaDi%26pid%3DApi&amp;f=1" style="display: block; margin: auto;" /&gt;
+
+  
+???
+A função gather() colapsa multiplas colunas em duas colunas, tranformando os dados de formato largo para o formato longo.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Pacote tidyr - gather()**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Formato Largo para Longo**]]
+
+
+```r
+gather(data = streams_raw, 
+       key = "original_width", 
+       value = "width", 
+       Width.1:Width.5)
+```
+
+&lt;BR/&gt;
+
+
+```r
+gather(data = streams_raw, 
+       key = "original_depth", 
+       value = "depth", 
+       Depth.1:Depth.25)
+```
+
+???
+Explicar os argumentos.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Pacote tidyr - gather()**]
+.center[.red[**Formato Largo para Longo**]]
+
+```r
+streams_raw %&gt;% 
+  select(date = Data, stream = Stream, Width.1:Width.5) %&gt;% 
+  gather(key = "original_width", value = "width", Width.1:Width.5) 
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; original_width &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; width &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+???
+A função gather() colapsa multiplas colunas em duas colunas, tranformando os dados de formato largo para o formato longo.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Pacote tidyr - gather()**]
+.center[.red[**Formato Largo para Longo**]]
+
+```r
+streams_raw %&gt;% 
+  select(date = Data, stream = Stream, Depth.1:Depth.25) %&gt;% 
+  gather(key = "original_depth", value = "depth", Depth.1:Depth.25)
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; original_depth &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; depth &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 17 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 23 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.10 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.11 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.12 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 26 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.13 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.14 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 22 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.15 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.16 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.17 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 6.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.18 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.19 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.20 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 7.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.21 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.22 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.23 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.24 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.25 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+???
+A função gather() colapsa multiplas colunas em duas colunas, tranformando os dados de formato largo para o formato longo.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Pacote tidyr - gather()**]
+.center[.red[**Formato Largo para Longo**]]
+
+```r
+streams_raw %&gt;% 
+  select(date = Data, stream = Stream, 
+         Width.1:Width.5,
+         Depth.1:Depth.25) %&gt;% 
+  gather(key = "original_width", 
+         value = "width",
+         Width.1:Width.5) %&gt;% 
+  gather(key = "original_depth", 
+         value = "depth", 
+         Depth.1:Depth.25) 
+```
+
+
+
+
+
+???
+A função gather() colapsa multiplas colunas em duas colunas, tranformando os dados de formato largo para o formato longo.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Pacote tidyr - gather()**]
+.center[.red[**Formato Largo para Longo**]]
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; original_width &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; width &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; original_depth &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; depth &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.6 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 17 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 17 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 17 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 17 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 17 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.8 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 23 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 23 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 23 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 23 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.9 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 23 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.10 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.10 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.10 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.10 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.10 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.11 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.11 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.11 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.11 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.11 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.12 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 26 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.12 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 26 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.12 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 26 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.12 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 26 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.12 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 26 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.13 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.13 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.13 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.13 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.13 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.14 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 22 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.14 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 22 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.14 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 22 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.14 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 22 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.14 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 22 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.15 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.15 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.15 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.15 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.15 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 20 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.16 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.16 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.16 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.16 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.16 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.17 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 6.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.17 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 6.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.17 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 6.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.17 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 6.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.17 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 6.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.18 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.18 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.18 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.18 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.18 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.19 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.19 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.19 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.19 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.19 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.20 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 7.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.20 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 7.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.20 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 7.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.20 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 7.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.20 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 7.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.21 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.21 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.21 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.21 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.21 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.22 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.22 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.22 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.22 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.22 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.23 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.23 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.23 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.23 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.23 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.24 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.24 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.24 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.24 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.24 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.25 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 80 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.25 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 100 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.25 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.4 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 150 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.25 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 125 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.25 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3.5 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+???
+A função gather() colapsa multiplas colunas em duas colunas, tranformando os dados de formato largo para o formato longo.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Pacote tidyr - separate()**]
+
+&lt;BR/&gt;
+
+
+&lt;img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.rforfinance.com%2Fimg%2Fseparate.png&amp;f=1&amp;nofb=1" style="display: block; margin: auto;" /&gt;
+
+
+???
+A função separate() separa uma coluna em duas colunas, gerando duas nova variável.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Pacote tidyr - separate()**]
+.center[.red[**Separar uma Coluna em Duas**]]
+
+```r
+streams_raw2 %&gt;% 
+  separate(col = original_width, 
+           into = c("original_width", "width_obs"))
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; original_width &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; width_obs &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; width &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; original_depth &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; depth &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 160 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 50 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 131 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 229 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9.08 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+???
+A função separate() separa uma coluna em duas colunas, gerando uma nova variável.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Pacote tidyr - separate()**]
+.center[.red[**Separar uma Coluna em Duas**]]
+
+```r
+streams_raw2 %&gt;% 
+  separate(col = "original_depth", 
+           into = c("original_depth", "depth_obs"))
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; original_width &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; width &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; original_depth &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; depth_obs &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; depth &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 160 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 50 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 131 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 229 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9.08 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+???
+A função separate() separa uma coluna em duas colunas, gerando uma nova variável.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Pacote tidyr - separate()**]
+.center[.red[**Separar uma Coluna em Duas**]]
+
+```r
+streams_raw2 %&gt;% 
+  separate(col = "original_width", 
+           into = c("original_width", "width_obs")) %&gt;% 
+  separate(col = "original_depth", 
+           into = c("original_depth", "depth_obs"))
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; original_width &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; width_obs &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; width &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; original_depth &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; depth_obs &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; depth &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 160 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 50 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 131 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+???
+A função separate() separa uma coluna em duas colunas, gerando uma nova variável.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Pacote tidyr - spread()**]
+
+&lt;BR/&gt;
+
+
+&lt;img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flearn.r-journalism.com%2Fwrangling%2Ftidyr_joins%2Fimages%2Fspread.png&amp;f=1&amp;nofb=1" style="display: block; margin: auto;" /&gt;
+
+
+???
+A função spread() transforma os dados do formato longo para o formato largo, reduzindo o número de linhas e aumentando o número de colunas. 
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Pacote tidyr - spread()**]
+.center[.red[**Formato Longo para Largo**]]
+
+```r
+tadpoles_freq_stream %&gt;%
+  select(stream, species, n) %&gt;% 
+  group_by(stream) %&gt;% 
+  spread(key = species, 
+         value =  n,
+         fill = 0)
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Ae &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Bc &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Ca &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Ha &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Hc &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Hl &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Hp &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Pa &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Pb &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Ps &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Ro &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Sa &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Sf &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 63 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 31 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 168 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 160 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 553 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 348 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 165 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+???
+Explicar argumentos. 
+key = é a coluna que vai se transformar em variável.
+value = é a coluna que vai se transformar em observação.
+fill = o valor que vai substituir valores ausentes (NA)
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Pacote tidyr - spread()**]
+.center[.red[**Formato Longo para Largo**]]
+
+```r
+tadpoles_freq_date_stream %&gt;%
+  select(date, stream, species, n) %&gt;% 
+  group_by(date, stream) %&gt;% 
+  spread(key = species, 
+         value =  n,
+         fill = 0)
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Ae &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Bc &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Ca &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Ha &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Hc &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Hl &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Hp &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Pa &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Pb &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Ps &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Ro &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Sa &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; Sf &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mar 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 41 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+???
+Explicar argumentos. 
+key = é a coluna que vai se transformar em variável.
+value = é a coluna que vai se transformar em observação.
+fill = o valor que vai substituir valores ausentes (NA)
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Unindo Dois *Data Frame*'s com inner_join() - Pacote dplyr**]
+
+&lt;BR/&gt;
+
+
+
+```r
+tadpoles_rich_stream %&gt;% 
+  inner_join(streams_variables, 
+             by = c("stream" = "stream"))
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; n_sp &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; width &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; depth &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; cond &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; diss_oxg &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; ph &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; temp &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 68.38310 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9.651064 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30.44000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 14.776000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15.068235 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27.86957 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 56.91222 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.527773 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22.08475 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.890571 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9.847308 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 23.56950 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 150.10227 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13.474491 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 32.55946 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15.225000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 16.226552 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 28.11143 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 102.78671 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9.476327 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 34.19451 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15.335556 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15.751471 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 25.62549 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+???
+Realiza a união entre dois data frames incluindo todas as linhas de x e y.
+by = nome da coluna pela qual a combinação entre os dois data frames será realizada.
+
+Obs: aqui precisa adicionar ao script da aula o comando para carregar os dados dos riachos.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Unindo Dois *Data Frame*'s com inner_join() - Pacote dplyr**]
+
+&lt;BR/&gt;
+
+
+
+```r
+tadpoles_rich_date_stream %&gt;% 
+  inner_join(streams_date_variables,
+             by = c("date" = "date", "stream" = "stream"))
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; n_sp &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; width &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; depth &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; cond &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; diss_oxg &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; ph &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; temp &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 141.33333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15.840000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.76667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.733333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.586667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.63333 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 131.86667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.173333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 22.33333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.866667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.296667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.03333 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 86.33333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.870000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13.06667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.900000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.916667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19.00000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 147.66667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 8.690000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.63333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.833333 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.926667 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 18.86667 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+???
+Realiza a união entre dois data frames incluindo todas as linhas de x e y.
+by = nome da coluna pela qual a combinação entre os dois data frames será realizada. Note que é possível realizar a união de dois data frames informando mais de uma coluna como referência.
+
+Existem outras funções que realizam a união entre dois data frames:
+- left_join() - toma o data frame da esquerda como referência (primeiro data frame informado) e inclui todas as suas linhas 
+- right_join() - toma o data frame da direita como referência (segundo data frame informado) e inclui todas as suas linhas  
+
+IMPORTANTE: é necessário que as colunas utilizadas como referência para unir os dois data frames sejam do mesmo tipo, caso contrário você não conseguirá realizar a união.
+
+Obs: aqui precisa adicionar ao script da aula o comando para carregar os dados dos riachos.
+
+---
+
+# .blue[**Fluxo de Trabalho para Análise de Dados - Visualização**]
+
+&lt;img src="https://d33wubrfki0l68.cloudfront.net/795c039ba2520455d833b4034befc8cf360a70ba/558a5/diagrams/data-science-explore.png" style="display: block; margin: auto;" /&gt;
+- Ferramenta .red[indispensável] à análise de dados&lt;br/&gt;
+&lt;BR/&gt;
+- .red[Representação visual] de dados brutos e processados&lt;br/&gt;
+&lt;BR/&gt;
+- .red[Análise exploratória]&lt;br/&gt;
+&lt;BR/&gt;
+- .red[Interpretação] e .red[comunicação] de resultados
+
+
+???
+Cheagamos a quarta estapa, visualizar. 
+
+Crédito da imagem: [R for Data Science](https://d33wubrfki0l68.cloudfront.net/795c039ba2520455d833b4034befc8cf360a70ba/558a5/diagrams/data-science-explore.png)
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**ggplot2 - Gramática Gráfica em R**]
+
+&lt;BR/&gt;
+
+- Diferentes .red[camadas] de elementos "gramaticais"&lt;br/&gt;
+&lt;BR/&gt;
+- Mapeamento de elementos .red[estéticos]&lt;br/&gt;
+&lt;BR/&gt;
+- Mapeamento de elementos .red[geométricos]&lt;br/&gt;
+&lt;BR/&gt;
+- Camadas = substantivos e adjetivos&lt;br/&gt;
+&lt;BR/&gt;
+- Mapeamento estético = regras gramaticais
+
+???
+O pacote ggplot2 foi escrito com base na ideia de que um gráfico é construído a partir de diferentes camadas de elementos gramaticais e do mapeamento de elementos estéticos.
+
+Segundo a analogia com a gramática escrita, as camadas são como os substantivos e adjetivos e o mapeamento estético é como as regras gramaticais que determinam como operar esse vocabulário.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**ggplot2 - Gramática Gráfica em R**]
+
+&lt;BR/&gt;
+
+.center[.red[**Três Elementos Essenciais da Gramática Gráfica**]]
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; Elemento &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; Descrição &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Dados &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Os dados que estão sendo plotados &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Estéticos &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A escala em que estamos mapeando nossos dados &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Geometrias &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; O elementos visuais utilizados para representar os dados &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+???
+Existem três elementos gramaticais essenciais: os dados, os (elementos) estéticos e os (elementos) geométricos.
+
+A camada de dados se referem naturalmente aos dados 
+
+A camada de estéticos se referem a escala a qual mapearemos os dados 
+
+A camada gemoétrica se refere a forma que os dados assumirão no gráfico.
+
+Essas são as camadas obrigatórias que precisamos alimentar com informações para gerar o gráfico
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**ggplot2 - Gramática Gráfica em R**]
+.center[.red[**Elementos Essenciais e Não Essenciais da Gramática Gráfica**]]
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; Elemento &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; Descrição &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Dados &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Os dados que estão sendo plotados &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Estéticos &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; A escala em que estamos mapeando nossos dados &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Geometrias &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; O elementos visuais utilizados para representar os dados &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Temas &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Aparência do gráfico &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Estatística &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Representações que melhoram a compreensão &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Coordenadas &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; O espaço em que os dados são plotados &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Facetas &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Gera múltiplos gráficos &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+???
+Essas são as camadas não obrigatórias.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**ggplot2 - Gramática Gráfica em R**]
+.center[.red[**Elementos e Argumentos Correspondentes**]]
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; Elemento &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; Args1 &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; Args2 &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; Args3 &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; Args4 &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; Args5 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Data &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Aesthetics &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; x-axis/y-axis &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; colour/fill &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; size/labels &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; alpha/shape &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; line width/line type &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Geometries &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; point &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; line &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; histogram &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; bar &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; boxplot &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Themes &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; to many... &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Statistics &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; binning &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; smoothing &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; descriptive &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; inferential &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Coordinates &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; cartesian &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; fixed &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; polar &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; limits &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Facets &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; columns &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; rows &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+???
+Essas são as camadas não obrigatórias.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**ggplot2 - Gramática Gráfica em R**]&lt;br/&gt;
+&lt;BR/&gt;
+
+
+.center[.red[**Sobreposição de Camadas**]]
+
+.pull-left[
+&lt;img src="https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+* tadpoles_len_sp %&gt;%  
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             y = body_len)) +
+  geom_point()
+```
+]
+
+.center[.red[**Dados**]]
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+
+# .blue[**ggplot2 - Gramática Gráfica em R**]&lt;br/&gt;
+&lt;BR/&gt;
+
+
+.center[.red[**Sobreposição de Camadas**]]
+
+.pull-left[
+&lt;img src="https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+ tadpoles_len_sp %&gt;%  
+  drop_na() %&gt;% 
+*  ggplot(aes(x = species, 
+*             y = body_len)) + 
+  geom_point()
+```
+]
+
+.center[.red[**Dados + Estéticos**]]
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**ggplot2 - Gramática Gráfica em R**]&lt;br/&gt;
+&lt;BR/&gt;
+
+
+.center[.red[**Sobreposição de Camadas**]]
+
+.pull-left[
+&lt;img src="https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+ tadpoles_len_sp %&gt;%  
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             y = body_len)) + 
+*  geom_point() 
+```
+]
+
+.center[.red[**Dados + Estéticos + Geométricos**]]
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Visualizando relações - gráficos de pontos**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie**]]
+.pull-left[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 slide 1-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+tadpoles_len_sp %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             y = body_len)) +
+  geom_point() 
+```
+
+]
+???
+Gráfico útil para detectar valores fora da amplitude esperada. É necessário investigar esses valores.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Visualizando relações - gráficos de pontos**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Localizando o Erro**]]
+
+```r
+tadpoles_len_sp %&gt;% 
+  filter(species == "Ca" | species == "Hc", body_len &gt; 30)  
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; species &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; stage &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; body_len &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; total_len &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; ratio &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; abr 2012 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ca &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 31 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 40.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 55.00 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.7272727 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; out 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Hc &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 32.64 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 9.31 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.5059076 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Visualizando relações - gráficos de pontos**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Corrigindo o Erro**]]
+
+
+```r
+# Resolvendo valores trocados em HC
+tadpoles_len_sp$total_len[which(
+  tadpoles_len_sp$species == "Hc" &amp;
+    tadpoles_len_sp$total_len == 9.31
+  )] &lt;- 32.64
+tadpoles_len_sp$body_len[which(
+  tadpoles_len_sp$species == "Hc" &amp;
+    tadpoles_len_sp$body_len == 32.64
+  )] &lt;- 9.31
+```
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Visualizando relações - gráficos de pontos**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Localizando o Erro**]]
+
+
+```r
+tadpoles_len_sp %&gt;% 
+  filter(species == "Sf", body_len &gt; 15) 
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; species &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; stage &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; body_len &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; total_len &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; ratio &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; ago 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Sf &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 17.73 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.52 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.211956 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; set 2011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Sf &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 25 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 15.97 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.534921 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Visualizando relações - gráficos de pontos**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Corrigindo o Erro**]]
+
+```r
+# Resolvendo valores trocados em Sf
+tadpoles_len_sp$total_len[which(
+  tadpoles_len_sp$species == "Sf" &amp;
+    tadpoles_len_sp$total_len == 5.52 |
+    tadpoles_len_sp$total_len == 6.30
+  )] &lt;- c(17.73, 15.97)
+
+tadpoles_len_sp$body_len[which(
+  tadpoles_len_sp$species == "Sf" &amp;
+    tadpoles_len_sp$body_len == 17.73 |
+    tadpoles_len_sp$body_len == 15.97
+  )] &lt;- c(5.52, 6.30)
+```
+
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Visualizando relações - gráficos de pontos**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie**]]
+
+.pull-left[
+![](06-Transformação-e-Visualização-de-Dados_files/figure-html/pontos x categorias slide 2-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+
+```r
+tadpoles_len_sp %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             y = body_len)) +
+  geom_point()
+```
+]
+
+???
+Agora está tudo ok com os valores de tamanho corporal.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Visualizando relações - gráficos de pontos**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho Total x Espécie**]]
+
+.pull-left[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 pontos x categorias 3-1.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+tadpoles_len_sp %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             y = total_len)) +
+  geom_point()
+```
+]
+
+???
+E tudo ok também com os valores de tamanho total.
+
+Daqui para frente utilizaremos apenas os dados de tamanho do corpo para visualização para evitar redundância.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Mapeamento Estético - color**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+.pull-left[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 pontos x categorias 5-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+tadpoles_len_sp %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             y = body_len, 
+*             color = stage)) + 
+  geom_point()
+```
+]
+
+
+???
+Adicionando um mapeamento estético: `color = stage`
+O mapeamento estético `color = ` funciona tanto com variáveis discretas (inteiros ou fatores) quanto com variáveis contínuas (gera um gradiente de cor).
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Atributo Geométrico - position**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Ajuste para Dados Sobrepostos**]]
+
+- idnetity
+
+- dodge
+
+- stack
+
+- fill
+
+- .red[**jitter**]
+
+- jitterdodge
+
+- nudge
+
+???
+Adicionando um atributo `position = "jitter"` adiciona uma variação aleatória ao redor de cada observação para reduzir a sobreposição dos pontos.
+
+ATENÇÃO!!!
+Não confundir estéticos com atributos. Atributos serão sempre chamados na camada gemoétrica `geom_()`. Estéticos são chamados na camada de estéticos `aes()`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Atributo Geométrico - position**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+.pull-left[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 pontos x categorias 9-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+tadpoles_len_sp %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             y = body_len, 
+             color = stage)) +
+* geom_point(position = "jitter") 
+```
+]
+???
+Adicionando um mapeamento estético: `color = stage`
+
+Adicionando um atributo `position = "jitter"` adiciona uma variação aleatória ao redor de cada observação para reduzir a sobreposição dos pontos.
+
+ATENÇÃO!!!
+Não confundir estéticos com atributos. Atributos serão sempre chamados na camada gemoétrica `geom_()`. Estéticos são chamados na camada de estéticos `aes()`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Mapeamento Estético - alpha**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+.pull-left[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 pontos x categorias 13-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+tadpoles_len_sp %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             y = body_len, 
+             color = stage, 
+*           alpha = 0.7)) + 
+  geom_point(position = "jitter")
+```
+]
+???
+Adicionando um segundo mapeamento estético: `alpha = 0.5` (atribui um grau de transparência aos pontos)
+
+Adicionando um atributo `position = "jitter"` adiciona uma variação aleatória ao redor de cada observação para reduzir a sobreposição dos pontos.
+
+ATENÇÃO!!!
+Não confundir estéticos com atributos. Atributos serão sempre chamados na camada gemoétrica `geom_()`. Estéticos são chamados na camada de estéticos `aes()`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Mapeamento Estético - shape**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+.pull-left[
+
+```
+## Warning: The shape palette can deal with a maximum of 6 discrete values because
+## more than 6 becomes difficult to discriminate; you have 20. Consider
+## specifying shapes manually if you must have them.
+```
+
+```
+## Warning: Removed 455 rows containing missing values (geom_point).
+```
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 pontos x categorias 17-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+tadpoles_len_sp %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             y = body_len, 
+             color = stage, 
+             alpha = 0.7,
+*           shape = stage)) + 
+  geom_point(position = "jitter")
+```
+]
+
+???
+Adicionando um mapeamento estético: `shape = stage`
+
+Adicionando um atributo `position = "jitter"` adiciona uma variação aleatória ao redor de cada observação para reduzir a sobreposição dos pontos.
+
+ATENÇÃO!!!
+Não confundir estéticos com atributos. Atributos serão sempre chamados na camada gemoétrica `geom_()`. Estéticos são chamados na camada de estéticos `aes()`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Mapeamento Estético - size**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+.pull-left[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 pontos x categorias 21-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+tadpoles_len_sp %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             y = body_len, 
+             color = stage, 
+             alpha = 0.7,
+            shape = stage,
+*          size = stage)) + 
+  geom_point(position = "jitter")
+```
+]
+
+???
+Adicionando um terceiro mapeamento estético: `size = stage`
+
+Adicionando um atributo `position = "jitter"` adiciona uma variação aleatória ao redor de cada observação para reduzir a sobreposição dos pontos.
+
+ATENÇÃO!!!
+Não confundir estéticos com atributos. Atributos serão sempre chamados na camada gemoétrica `geom_()`. Estéticos são chamados na camada de estéticos `aes()`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Visualizando Relações - Gráfico de Pontos**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 melhor visualização 1-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+???
+Por enquanto, essa é a melhor representação para esses dados.
+
+Já podemos fazer um brief sobre o que se pode extrair de informação do gráfico.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Visualizando Relações - Gráfico de Pontos**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+.pull-left[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 melhor visualização 2-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+tadpoles_len_sp %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             y = body_len, 
+             color = stage, 
+             alpha = 0.7)) +
+  geom_point(
+    position = 
+*  position_jitter(0.25, 
+*              seed = 136)) 
+```
+]
+
+???
+Esse é o código do gráfico. Agora vamos aprender a alterar características importantes como o título dos eixos, suas escalas de variação, título e valores das legendas.
+
+Faremos isso a partir da modificação da família de estéticos `scale_*_*()`
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Modificando Estético - scale_*_*()**]&lt;br/&gt;
+&lt;BR/&gt;
+
+- .red[`scale_x_continuous()`]
+
+- .red[`scale_y_*()`]
+
+- .red[`scale_color_discrete()`]
+  - ou .red[`scale_coulor_*()`]
+
+- .red[`scale_fill_*()`]
+
+- .red[`scale_shape_()`]
+
+- .red[`scale_linetype_*()`]
+
+- .red[`scale_size_*()`]
+
+???
+Para escolher corretamente a função necessária para alterar um estético, é necessário conhecer o tipo de dado com o qual se está trabalhando.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Modificando Estético - scale_*_*()**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+
+
+```r
+tadpoles_len_sp %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             y = body_len, 
+             color = stage, 
+             alpha = 0.7)) +
+  geom_point(position = 
+  position_jitter(0.25,
+            seed = 136)) +
+* scale_x_discrete("Species") + 
+* scale_y_continuous("Body Length (mm)") + 
+* scale_color_discrete("Stage")  
+```
+
+
+
+
+
+???
+O eixo x é formado por uma variável discreta, espécies. Podemos controlar características como o título do eixo utilizando `scale_x_discrete()`.
+
+O eixo y é formado por uma variável contínua, tamanho do corpo. Podemos controlar características como o título do eixo utilizando `scale_x_continuous()`.
+
+A legenda é controlada pelo estético `color` e é uma variável discreta, estágio de desenvolvimento. Podemos controlar suas características utilizando `sclae_color_discrete()`. 
+
+O primeiro argumento será sempre o nome do estético. Nesse exemplo, `Species`, `Body Length (mm)` e `Stage`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Modificando Estético - scale_*_*()**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 funções scale 2-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+
+???
+O eixo x é formado por uma variável discreta, espécies. Podemos controlar características como o título do eixo utilizando `scale_x_discrete()`.
+
+O eixo y é formado por uma variável contínua, tamanho do corpo. Podemos controlar características como o título do eixo utilizando `scale_x_continuous()`.
+
+A legenda é controlada pelo estético `color` e é uma variável discreta, estágio de desenvolvimento. Podemos controlar suas características utilizando `sclae_color_discrete()`. 
+
+O primeiro argumento será sempre o nome do estético. Nesse exemplo, `Species`, `Body Length (mm)` e `Stage`.
+
+Os argumentos mais comumente utilizados, depois do título do eixo, são `limits`, `breaks`, `expand` e `labels`
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Modificando Estético - scale_*_*()**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+
+
+```r
+tadpoles_len_sp %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             y = body_len, 
+             color = stage, 
+             alpha = 0.7)) +
+  geom_point(position = 
+  position_jitter(0.25,
+            seed = 136)) +
+  scale_x_discrete("Species") + 
+  scale_y_continuous("Body Length (mm)",
+*                    limits = c(0, 30)) +
+  scale_color_discrete("Stage") 
+```
+
+
+???
+`limits`determina a amplitude da escala, ou seja, seus valores mínimos e máximos.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Modificando Estético - scale_*_*()**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 funções scale 4-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+???
+`limits`determina a amplitude da escala, ou seja, seus valores mínimos e máximos.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Modificando Estético - scale_*_*()**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+
+
+```r
+tadpoles_len_sp %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             y = body_len, 
+             color = stage, 
+             alpha = 0.7)) +
+  geom_point(position = 
+  position_jitter(0.25,
+            seed = 136)) +
+  scale_x_discrete("Species") + 
+  scale_y_continuous("Body Length (mm)",
+                     limits = c(0, 30),
+*                    breaks = seq(0, 30, 5)) +
+  scale_color_discrete("Stage") 
+```
+
+
+???
+`breaks` controla o intervalo entre os valores do eixo.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Modificando Estético - scale_*_*()**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 funções scale 6-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+???
+`breaks` controla o intervalo entre os valores do eixo.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Modificando Estético - scale_*_*()**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+
+
+```r
+tadpoles_len_sp %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             y = body_len, 
+             color = stage, 
+             alpha = 0.7)) +
+  geom_point(position = 
+  position_jitter(0.25,
+            seed = 136)) +
+  scale_x_discrete("Species") + 
+  scale_y_continuous("Body Length (mm)",
+                     limits = c(0, 30),
+                     breaks = seq(0, 30, 5),
+*                    expand = c(0, 0)) +
+  scale_color_discrete("Stage") 
+```
+
+
+???
+`expand` é um vetor numérico de comprimento 2 que informa uma constante multiplicativa e outra aditiva usados para expandir a apmlitude das escalas e diminuir o espaço entre os dados e os eixos.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Modificando Estético - scale_*_*()**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 funções scale 8-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+???
+`expand` é um vetor numérico de comprimento 2 que informa uma constante multiplicativa e outra aditiva usados para expandir a apmlitude das escalas e diminuir o espaço entre os dados e os eixos.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Modificando Estético - scale_*_*()**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+
+
+```r
+tadpoles_len_sp %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             y = body_len, 
+             color = stage, 
+             alpha = 0.7)) +
+  geom_point(position = 
+  position_jitter(0.25,
+            seed = 136)) +
+  scale_x_discrete("Species") + 
+  scale_y_continuous("Body Length (mm)",
+                     limits = c(0, 30),
+                     breaks = seq(0, 30, 5),
+                     expand = c(0, 0)) +
+* scale_color_discrete("Development \nClass",
+*                    labels = c("I", "II", "III", "IV", "V"))
+```
+
+
+???
+`labels` altera os nomes de variáveis catagóricas.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Modificando Estético - scale_*_*()**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 funções scale 10-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+???
+`labels` altera os nomes de variáveis catagóricas.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Modificando Estético - labs()**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+
+
+```r
+tadpoles_len_sp %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             y = body_len, 
+             color = stage, 
+             alpha = 0.7)) +
+  geom_point(position = 
+  position_jitter(0.25,
+            seed = 136), 
+* show.legend = c(alpha = FALSE)) +
+* labs(x = "Species",
+*      y = "Body Length (mm)",
+*      color = "Development \nClass") +
+  scale_color_discrete(labels = c("I", "II", "III", "IV", "V"))
+```
+
+
+???
+`labs` altera os títulos dos eixos e da legenda.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Visualizando Relações - Gráficos de Pontos**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Espécie x Estágio**]]
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 funções scale 12-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+???
+`labs` altera os títulos dos eixos e da legenda.
+
+Também permite adicionar título, subtítulo, legenda e um tag.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Modificando Geométricos - geom_*()**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Substituir pelo número de geoms disponíveis**]]
+
+Listar os geoms disponíveis
+
+???
+A camada geométrica é a terceira camada essencial.
+
+Ela determina o tipo do gráfico que será gerado.
+
+Cerca de 50 funções geom_*()
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Relação entre Variáveis - geom_point()**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Gráfico de Pontos&lt;BR/&gt;Tamanho do Corpo x Tamanho total**]]
+
+.pull-left[
+
+```r
+tadpoles_len_sp %&gt;% 
+  drop_na() %&gt;% 
+* ggplot(aes(x = total_len,
+*            y = body_len)) +
+  geom_point()
+```
+
+&lt;img src="https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 funções scale 15-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+Cada geom_*() está associado a estéticos específicos, alguns dos quais são essenciais.
+
+X e Y são estéticos essenciais em geom_point()
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Modificando Geométricos - geom_point()**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Tamanho Total x Espécie**]]
+
+.pull-left[
+
+```r
+tadpoles_len_sp %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+*            color = species)) +
+  geom_point()
+```
+
+&lt;img src="https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 funções scale 17-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+Cada geom_*() está associado a estéticos específicos, alguns dos quais são essenciais.
+
+X e Y são estéticos essenciais em geom_point()
+
+alpha, color, fill, shape, size e stroke são opicionais.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Sobrepondo Geométricos - geom_point()**]&lt;br/&gt;
+&lt;BR/&gt;
+
+.center[.red[**Tamanho do Corpo x Tamanho Total x Espécie**]]
+
+
+.pull-left[
+
+```r
+tadpoles_len_sp %&gt;% 
+  filter(species %in% c("Hp", "Pb", "Sa")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) + 
+  geom_point() + 
+* geom_point(data = tadpoles_media,
+*            shape = 15,
+*            size = 8,
+*            fill = "black",
+*            stroke = 2)
+```
+
+&lt;img src="https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 funções scale 19-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+```
+## List of 1
+##  $ text:List of 11
+##   ..$ family       : NULL
+##   ..$ face         : NULL
+##   ..$ colour       : NULL
+##   ..$ size         : num 24
+##   ..$ hjust        : NULL
+##   ..$ vjust        : NULL
+##   ..$ angle        : NULL
+##   ..$ lineheight   : NULL
+##   ..$ margin       : NULL
+##   ..$ debug        : NULL
+##   ..$ inherit.blank: logi FALSE
+##   ..- attr(*, "class")= chr [1:2] "element_text" "element"
+##  - attr(*, "class")= chr [1:2] "theme" "gg"
+##  - attr(*, "complete")= logi FALSE
+##  - attr(*, "validate")= logi TRUE
+```
+]
+
+???
+Cada geom_*() está associado a estéticos específicos, alguns dos quais são essenciais.
+
+X e Y são estéticos essenciais em geom_point()
+
+alpha, color, fill, shape, size e stroke são opicionais.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
