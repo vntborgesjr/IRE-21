@@ -1,5 +1,5 @@
 ---
-title: "Introdução ao R para Ecólogos - Programação para Análise de Dados e Reprodutibilidade na Ciência"
+title: "Introdução ao R para Ecólogos"
 author: "Vitor Borges Jr."
 date: "2021-01"
 output:
