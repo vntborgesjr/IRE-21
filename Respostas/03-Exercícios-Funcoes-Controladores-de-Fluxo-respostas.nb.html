@@ -216,9 +216,15 @@ pre code {
 <div id="TOC">
 <ul>
 <li><a href="#sua-primeira-função-erro_padrao"><span class="toc-section-number">1</span> <strong>Sua primeira função: <code>erro_padrao()</code></strong></a></li>
-<li><a href="#função-media"><span class="toc-section-number">2</span> <strong>Função <code>media()</code></strong></a></li>
-<li><a href="#função-variancia"><span class="toc-section-number">3</span> <strong>Função <code>variancia()</code></strong></a></li>
-<li><a href="#função-desv_pad"><span class="toc-section-number">4</span> <strong>Função <code>desv_pad()</code></strong></a></li>
+<li><a href="#funções-mais-complexas-arremeço-de-moeda"><span class="toc-section-number">2</span> <strong>Funções mais complexas: arremeço de moeda</strong></a></li>
+<li><a href="#apresentando-mutliplos-resultados"><span class="toc-section-number">3</span> <strong>Apresentando mutliplos resultados</strong></a></li>
+<li><a href="#incluindo-argumento-default"><span class="toc-section-number">4</span> <strong>Incluindo argumento default</strong></a></li>
+<li><a href="#testes-condicionais-if-else"><span class="toc-section-number">5</span> <strong>Testes condicionais <code>if(){}</code> <code>else {}</code></strong></a></li>
+<li><a href="#argumento-default-categórico"><span class="toc-section-number">6</span> <strong>Argumento default categórico</strong></a></li>
+<li><a href="#função-fibonacci"><span class="toc-section-number">7</span> <strong>Função <code>fibonacci()</code></strong></a></li>
+<li><a href="#função-media"><span class="toc-section-number">8</span> <strong>Função <code>media()</code></strong></a></li>
+<li><a href="#função-variancia"><span class="toc-section-number">9</span> <strong>Função <code>variancia()</code></strong></a></li>
+<li><a href="#função-desv_pad"><span class="toc-section-number">10</span> <strong>Função <code>desv_pad()</code></strong></a></li>
 </ul>
 </div>
 
@@ -232,9 +238,10 @@ pre code {
 </ol>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGVzdnBhZF9hcmVhXG5cbmBgYCJ9 -->
-<pre class="r"><code>desvpad_area
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGYgPC0gcmVhZC50YWJsZShcImRmLnR4dFwiLCBoZWFkZXIgPSBUUlVFKVxuZGVzdnBhZF9hcmVhIDwtIHNkKGRmJGFyZWEpXG5kZXN2cGFkX2FyZWFcbmBgYCJ9 -->
+<pre class="r"><code>df &lt;- read.table(&quot;df.txt&quot;, header = TRUE)
+desvpad_area &lt;- sd(df$area)
+desvpad_area</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIDI5LjE3MDA5XG4ifQ== -->
 <pre><code>[1] 29.17009</code></pre>
@@ -246,323 +253,159 @@ pre code {
 </ol>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubl9kZV9hcmVhIDwtIGxlbmd0aChkZiRhcmVhKVxubl9kZV9hcmVhXG5gYGBcbmBgYCJ9 -->
-<pre class="r"><code>```r
-n_de_area &lt;- length(df$area)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubl9kZV9hcmVhIDwtIGxlbmd0aChkZiRhcmVhKVxubl9kZV9hcmVhXG5gYGAifQ== -->
+<pre class="r"><code>n_de_area &lt;- length(df$area)
 n_de_area</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIDkyXG4ifQ== --&gt;
-</code></pre>
-<p>[1] 92</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-3. Calcule a raiz quadrada de `n` usando a função `sqrt()` e armazene no objeto `raiz_de_n_de_area`.
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxucmFpel9kZV9uX2RlX2FyZWEgPC0gc3FydChuX2RlX2FyZWEpXG5yYWl6X2RlX25fZGVfYXJlYVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-raiz_de_n_de_area &lt;- sqrt(n_de_area)
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDkyXG4ifQ== -->
+<pre><code>[1] 92</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="3" style="list-style-type: decimal">
+<li>Calcule a raiz quadrada de <code>n</code> usando a função <code>sqrt()</code> e armazene no objeto <code>raiz_de_n_de_area</code>.</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucmFpel9kZV9uX2RlX2FyZWEgPC0gc3FydChuX2RlX2FyZWEpXG5yYWl6X2RlX25fZGVfYXJlYVxuYGBgIn0= -->
+<pre class="r"><code>raiz_de_n_de_area &lt;- sqrt(n_de_area)
 raiz_de_n_de_area</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIDkuNTkxNjYzXG4ifQ== --&gt;
-</code></pre>
-<p>[1] 9.591663</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-4. Divida `desvpad_area` por `raiz_de_n_de_area` e armazene no objeto `ep_area`. Imprima o objeto `ep_area` para obter o valor do erro padrão. 
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZXBfYXJlYSA8LSBkZXN2cGFkX2FyZWEvcmFpel9kZV9uX2RlX2FyZWFcbnByaW50KGVwX2FyZWEpXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-ep_area &lt;- desvpad_area/raiz_de_n_de_area
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDkuNTkxNjYzXG4ifQ== -->
+<pre><code>[1] 9.591663</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="4" style="list-style-type: decimal">
+<li>Divida <code>desvpad_area</code> por <code>raiz_de_n_de_area</code> e armazene no objeto <code>ep_area</code>. Imprima o objeto <code>ep_area</code> para obter o valor do erro padrão.</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZXBfYXJlYSA8LSBkZXN2cGFkX2FyZWEvcmFpel9kZV9uX2RlX2FyZWFcbnByaW50KGVwX2FyZWEpXG5gYGAifQ== -->
+<pre class="r"><code>ep_area &lt;- desvpad_area/raiz_de_n_de_area
 print(ep_area)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIDMuMDQxMTkyXG4ifQ== --&gt;
-</code></pre>
-<p>[1] 3.041192</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-5. Agora, você vai transformar seu código na função `erro_padrao()`. 
-- Primeiro, é necessário criar um modelo que está disponível abaixo.
-- Em seguida, copie todas as linhas de código que você gerou e cole  dentro do corpo da função. 
-- Escolha os argumentos da função. Sua primeira função só precisa de um argumento: aquele que vai receber um vetor de valores numéricos a partir do qual será calculado o erro padrão. Chame-o de `valor`. O argumento vai entre os parênteses.
-- Substitua o objeto interno, `df$area`, pelo seu argumento equivalente, `valor`.
-- Troque os nomes das variáveis internas para nomes generalistas.
-- Teste sua função aplicando ela na coluna `n_sp` do data frame `df`.
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZXJyb19wYWRyYW8gPC0gZnVuY3Rpb24odmFsb3IpIHtcbiAgZGVzdnBhZCA8LSBzZCh2YWxvcilcbiAgbiA8LSBsZW5ndGgodmFsb3IpXG4gIHJhaXpfZGVfbiA8LSBzcXJ0KG4pXG4gIGVwIDwtIGRlc3ZwYWQvcmFpel9kZV9uXG4gIHJldHVybihlcClcbn1cbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-erro_padrao &lt;- function(valor) {
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDMuMDQxMTkyXG4ifQ== -->
+<pre><code>[1] 3.041192</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="5" style="list-style-type: decimal">
+<li>Agora, você vai transformar seu código na função <code>erro_padrao()</code>.</li>
+</ol>
+<ul>
+<li>Primeiro, é necessário criar um modelo que está disponível abaixo.</li>
+<li>Em seguida, copie todas as linhas de código que você gerou e cole dentro do corpo da função.</li>
+<li>Escolha os argumentos da função. Sua primeira função só precisa de um argumento: aquele que vai receber um vetor de valores numéricos a partir do qual será calculado o erro padrão. Chame-o de <code>valor</code>. O argumento vai entre os parênteses.</li>
+<li>Substitua o objeto interno, <code>df$area</code>, pelo seu argumento equivalente, <code>valor</code>.</li>
+<li>Troque os nomes das variáveis internas para nomes generalistas.</li>
+<li>Teste sua função aplicando ela na coluna <code>n_sp</code> do data frame <code>df</code>.</li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZXJyb19wYWRyYW8gPC0gZnVuY3Rpb24odmFsb3IpIHtcbiAgZGVzdnBhZCA8LSBzZCh2YWxvcilcbiAgbiA8LSBsZW5ndGgodmFsb3IpXG4gIHJhaXpfZGVfbiA8LSBzcXJ0KG4pXG4gIGVwIDwtIGRlc3ZwYWQvcmFpel9kZV9uXG4gIHJldHVybihlcClcbn1cbmBgYCJ9 -->
+<pre class="r"><code>erro_padrao &lt;- function(valor) {
   desvpad &lt;- sd(valor)
   n &lt;- length(valor)
   raiz_de_n &lt;- sqrt(n)
   ep &lt;- desvpad/raiz_de_n
   return(ep)
 }</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZXJyb19wYWRyYW8oZGYkbl9zcClcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-erro_padrao(df$n_sp)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIDAuNTA0MTE2OVxuIn0= --&gt;
-</code></pre>
-<p>[1] 0.5041169</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-    
-# **Funções mais complexas: arremeço de moeda**
-
-Podemos avançar um pouco mais e tentar trabalhar uma ideia um pouco mais complexa de função: arremessar moedas! A partir da construção dessa função iremos trabalhar os tipos de argumentos (numérico, nulo, lógico e caracter) e a ideia de argumento default. Lembre-se de seguir as etapas abaixo:
-
-1. Prepare um &quot;modelo&quot; da função&lt;br/&gt;
-&lt;BR/&gt;
-2. Cole o script no interior do &quot;modelo&quot;&lt;br/&gt;
-&lt;BR/&gt;
-3. Escolha os argumentos&lt;br/&gt;
-&lt;BR/&gt;
-4. Substitua os objetos internos pelos argumentos equivalentes&lt;br/&gt;
-&lt;BR/&gt; 
-5. Use nomes generalistas para as variáveis internas a função&lt;br/&gt;
-&lt;BR/&gt; 
-6. Teste a função!
-
-
-* O primeiro passo para criar uma função para arremesso de moeda será criar nossa moeda: 
-
-1. Crie um objeto chamado moeda contendo as palavras `&quot;cara&quot;` e `&quot;coroa&quot;`.
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubW9lZGEgPC0gYyhcXGNvcm9hXFwsIFxcY2FyYVxcKVxubW9lZGFcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-moeda &lt;- c(\coroa\, \cara\)
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZXJyb19wYWRyYW8oZGYkbl9zcClcbmBgYCJ9 -->
+<pre class="r"><code>erro_padrao(df$n_sp)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDAuNTA0MTE2OVxuIn0= -->
+<pre><code>[1] 0.5041169</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="funções-mais-complexas-arremeço-de-moeda" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> <strong>Funções mais complexas: arremeço de moeda</strong></h1>
+<p>Podemos avançar um pouco mais e tentar trabalhar uma ideia um pouco mais complexa de função: arremessar moedas! A partir da construção dessa função iremos trabalhar os tipos de argumentos (numérico, nulo, lógico e caracter) e a ideia de argumento default. Lembre-se de seguir as etapas abaixo:</p>
+<ol style="list-style-type: decimal">
+<li>Prepare um “modelo” da função<br /> <BR /></li>
+<li>Cole o script no interior do “modelo”<br /> <BR /></li>
+<li>Escolha os argumentos<br /> <BR /></li>
+<li>Substitua os objetos internos pelos argumentos equivalentes<br /> <BR /></li>
+<li>Use nomes generalistas para as variáveis internas a função<br /> <BR /></li>
+<li>Teste a função!</li>
+</ol>
+<ul>
+<li>O primeiro passo para criar uma função para arremesso de moeda será criar nossa moeda:</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>Crie um objeto chamado moeda contendo as palavras <code>&quot;cara&quot;</code> e <code>&quot;coroa&quot;</code>.</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubW9lZGEgPC0gYyhcImNvcm9hXCIsIFwiY2FyYVwiKVxubW9lZGFcbmBgYCJ9 -->
+<pre class="r"><code>moeda &lt;- c(&quot;coroa&quot;, &quot;cara&quot;)
 moeda</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIFxcY29yb2FcXCBcXGNhcmFcXCBcbiJ9 --&gt;
-</code></pre>
-<p>[1]   </p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-2. Simule um único arremesso de uma `moeda` utilizando a função `sample()`.
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubl9hcnJlbWVzc28gPC0gMVxuc2FtcGxlKHggPSBtb2VkYSwgc2l6ZSA9IG5fYXJyZW1lc3NvKVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-n_arremesso &lt;- 1
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiY29yb2FcIiBcImNhcmFcIiBcbiJ9 -->
+<pre><code>[1] &quot;coroa&quot; &quot;cara&quot; </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="2" style="list-style-type: decimal">
+<li>Simule um único arremesso de uma <code>moeda</code> utilizando a função <code>sample()</code>.</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubl9hcnJlbWVzc28gPC0gMVxuc2FtcGxlKHggPSBtb2VkYSwgc2l6ZSA9IG5fYXJyZW1lc3NvKVxuYGBgIn0= -->
+<pre class="r"><code>n_arremesso &lt;- 1
 sample(x = moeda, size = n_arremesso)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIFxcY29yb2FcXFxuIn0= --&gt;
-</code></pre>
-<p>[1] <br />
-</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-3. Simule 10 arremessos de uma `moeda` utilizando a função `sample()`. Lembre-se de configurar o argumento `replace =` de forma adequada.
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxubl9hcnJlbWVzc28gPC0gMTBcbnNhbXBsZSh4ID0gbW9lZGEsIHNpemUgPSBuX2FycmVtZXNzbywgcmVwbGFjZSA9IFRSVUUpXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-n_arremesso &lt;- 10
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiY2FyYVwiXG4ifQ== -->
+<pre><code>[1] &quot;cara&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="3" style="list-style-type: decimal">
+<li>Simule 10 arremessos de uma <code>moeda</code> utilizando a função <code>sample()</code>. Lembre-se de configurar o argumento <code>replace =</code> de forma adequada.</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubl9hcnJlbWVzc28gPC0gMTBcbnNhbXBsZSh4ID0gbW9lZGEsIHNpemUgPSBuX2FycmVtZXNzbywgcmVwbGFjZSA9IFRSVUUpXG5gYGAifQ== -->
+<pre class="r"><code>n_arremesso &lt;- 10
 sample(x = moeda, size = n_arremesso, replace = TRUE)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcXGNvcm9hXFwgXFxjb3JvYVxcIFxcY29yb2FcXCBcXGNhcmFcXCAgXFxjb3JvYVxcIFxcY2FyYVxcIFxuIFs3XSBcXGNhcmFcXCAgXFxjYXJhXFwgIFxcY29yb2FcXCBcXGNvcm9hXFxcbiJ9 --&gt;
-</code></pre>
-<p>[1]         [7]      <br />
-</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-4. Agora, vamos criar a possibilidade de viciar a moeda. Crie um objeto `pesos` que permita atribuir diferentes probabilidades a `&quot;cara&quot;` e `&quot;coroa&quot;`. Faça isso atribuindo a probabilidade `0.8` ao objeto `p_coroa`. Em seguida, arremesse a moeda 10 vezes
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxucF9jb3JvYSA8LSAwLjhcbnBlc29zIDwtIGMocF9jb3JvYSwgMSAtIHBfY29yb2EpXG5zYW1wbGUoeCA9IG1vZWRhLCBzaXplID0gbl9hcnJlbWVzc28sIHJlcGxhY2UgPSBUUlVFLCBwcm9iID0gcGVzb3MpXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-p_coroa &lt;- 0.8
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcImNvcm9hXCIgXCJjYXJhXCIgIFwiY2FyYVwiICBcImNvcm9hXCIgXCJjYXJhXCIgIFwiY29yb2FcIiBcImNvcm9hXCIgXCJjb3JvYVwiXG4gWzldIFwiY29yb2FcIiBcImNhcmFcIiBcbiJ9 -->
+<pre><code> [1] &quot;coroa&quot; &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot; &quot;cara&quot;  &quot;coroa&quot; &quot;coroa&quot; &quot;coroa&quot;
+ [9] &quot;coroa&quot; &quot;cara&quot; </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="4" style="list-style-type: decimal">
+<li>Agora, vamos criar a possibilidade de viciar a moeda. Crie um objeto <code>pesos</code> que permita atribuir diferentes probabilidades a <code>&quot;cara&quot;</code> e <code>&quot;coroa&quot;</code>. Faça isso atribuindo a probabilidade <code>0.8</code> ao objeto <code>p_coroa</code>. Em seguida, arremesse a moeda 10 vezes</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucF9jb3JvYSA8LSAwLjhcbnBlc29zIDwtIGMocF9jb3JvYSwgMSAtIHBfY29yb2EpXG5zYW1wbGUoeCA9IG1vZWRhLCBzaXplID0gbl9hcnJlbWVzc28sIHJlcGxhY2UgPSBUUlVFLCBwcm9iID0gcGVzb3MpXG5gYGAifQ== -->
+<pre class="r"><code>p_coroa &lt;- 0.8
 pesos &lt;- c(p_coroa, 1 - p_coroa)
 sample(x = moeda, size = n_arremesso, replace = TRUE, prob = pesos)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcXGNhcmFcXCAgXFxjb3JvYVxcIFxcY29yb2FcXCBcXGNvcm9hXFwgXFxjb3JvYVxcIFxcY29yb2FcXFxuIFs3XSBcXGNvcm9hXFwgXFxjYXJhXFwgIFxcY29yb2FcXCBcXGNvcm9hXFxcbiJ9 --&gt;
-</code></pre>
-<p>[1]       <br />
-[7]     <br />
-</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-5. Escreva a função `arremessar_moeda()` colando o código no interior do modelo e proceda com as demais etapas e teste sua função
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYXJyZW1lc3Nhcl9tb2VkYSA8LSBmdW5jdGlvbihuX2FycmVtZXNzbywgcF9jb3JvYSkge1xuICBtb2VkYSA8LSBjKFxcY29yb2FcXCwgXFxjYXJhXFwpXG4gIHBlc29zIDwtIGMocF9jb3JvYSwgMSAtIHBfY29yb2EpXG4gIHJlc3VsdGFkbyA8LSBzYW1wbGUoeCA9IG1vZWRhLCBzaXplID0gbl9hcnJlbWVzc28sIHJlcGxhY2UgPSBUUlVFLCBwcm9iID0gcGVzb3MpXG4gIHJldHVybihyZXN1bHRhZG8pXG59XG5cbiMgdGVzdGFyIGZ1bsOnw6NvXG5zZXQuc2VlZCgxMDApXG5hcnJlbWVzc2FyX21vZWRhKDEwLCBwX2Nvcm9hID0gMC44KVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-arremessar_moeda &lt;- function(n_arremesso, p_coroa) {
-  moeda &lt;- c(\coroa\, \cara\)
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcImNvcm9hXCIgXCJjb3JvYVwiIFwiY2FyYVwiICBcImNvcm9hXCIgXCJjb3JvYVwiIFwiY2FyYVwiICBcImNvcm9hXCIgXCJjb3JvYVwiXG4gWzldIFwiY29yb2FcIiBcImNhcmFcIiBcbiJ9 -->
+<pre><code> [1] &quot;coroa&quot; &quot;coroa&quot; &quot;cara&quot;  &quot;coroa&quot; &quot;coroa&quot; &quot;cara&quot;  &quot;coroa&quot; &quot;coroa&quot;
+ [9] &quot;coroa&quot; &quot;cara&quot; </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<ol start="5" style="list-style-type: decimal">
+<li>Escreva a função <code>arremessar_moeda()</code> colando o código no interior do modelo e proceda com as demais etapas e teste sua função</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXJyZW1lc3Nhcl9tb2VkYSA8LSBmdW5jdGlvbihuX2FycmVtZXNzbywgcF9jb3JvYSkge1xuICBtb2VkYSA8LSBjKFwiY29yb2FcIiwgXCJjYXJhXCIpXG4gIHBlc29zIDwtIGMocF9jb3JvYSwgMSAtIHBfY29yb2EpXG4gIHJlc3VsdGFkbyA8LSBzYW1wbGUoeCA9IG1vZWRhLCBzaXplID0gbl9hcnJlbWVzc28sIHJlcGxhY2UgPSBUUlVFLCBwcm9iID0gcGVzb3MpXG4gIHJldHVybihyZXN1bHRhZG8pXG59XG5cbiMgdGVzdGFyIGZ1bsOnw6NvXG5zZXQuc2VlZCgxMDApXG5hcnJlbWVzc2FyX21vZWRhKDEwLCBwX2Nvcm9hID0gMC44KVxuYGBgIn0= -->
+<pre class="r"><code>arremessar_moeda &lt;- function(n_arremesso, p_coroa) {
+  moeda &lt;- c(&quot;coroa&quot;, &quot;cara&quot;)
   pesos &lt;- c(p_coroa, 1 - p_coroa)
   resultado &lt;- sample(x = moeda, size = n_arremesso, replace = TRUE, prob = pesos)
   return(resultado)
@@ -571,42 +414,22 @@ arremessar_moeda &lt;- function(n_arremesso, p_coroa) {
 # testar função
 set.seed(100)
 arremessar_moeda(10, p_coroa = 0.8)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcXGNvcm9hXFwgXFxjb3JvYVxcIFxcY29yb2FcXCBcXGNvcm9hXFwgXFxjb3JvYVxcIFxcY29yb2FcXFxuIFs3XSBcXGNhcmFcXCAgXFxjb3JvYVxcIFxcY29yb2FcXCBcXGNvcm9hXFxcbiJ9 --&gt;
-</code></pre>
-<p>[1]      <br />
-[7]     <br />
-</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-# **Apresentando mutliplos resultados**
-
-Adeque sua função utilizando as funções `table()`e `list()` para que sejam retornados os os resultados brutos e a frequência de ocorrência de cara e coroa.
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYXJyZW1lc3Nhcl9tb2VkYSA8LSBmdW5jdGlvbihuX2FycmVtZXNzb3MsIHBfY29yb2EgPSBjKDAuNSkpIHtcbiAgbW9lZGEgPC0gYyhcXGNvcm9hXFwsIFxcY2FyYVxcKVxuICBwZXNvcyA8LSBjKHBfY29yb2EsIDEgLSBwX2Nvcm9hKVxuICByZXN1bHRhZG8xIDwtIHNhbXBsZSh4ID0gbW9lZGEsIHNpemUgPSBuX2FycmVtZXNzbywgcmVwbGFjZSA9IFRSVUUsIHByb2IgPSBwZXNvcylcbiAgcmVzdWx0YWRvMiA8LSB0YWJsZShzYW1wbGUoeCA9IG1vZWRhLCBzaXplID0gbl9hcnJlbWVzc28sIHJlcGxhY2UgPSBUUlVFLCBwcm9iID0gcGVzb3MpKVxuICByZXR1cm4obGlzdChCcnV0byA9IHJlc3VsdGFkbzEsIEZyZXF1ZW5jaWEgPSByZXN1bHRhZG8yKSlcbn1cblxuIyB0ZXN0YXIgZnVuw6fDo29cbnNldC5zZWVkKDEwMClcbmFycmVtZXNzYXJfbW9lZGEoMTApXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-arremessar_moeda &lt;- function(n_arremessos, p_coroa = c(0.5)) {
-  moeda &lt;- c(\coroa\, \cara\)
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcImNvcm9hXCIgXCJjb3JvYVwiIFwiY29yb2FcIiBcImNvcm9hXCIgXCJjb3JvYVwiIFwiY29yb2FcIiBcImNhcmFcIiAgXCJjb3JvYVwiXG4gWzldIFwiY29yb2FcIiBcImNvcm9hXCJcbiJ9 -->
+<pre><code> [1] &quot;coroa&quot; &quot;coroa&quot; &quot;coroa&quot; &quot;coroa&quot; &quot;coroa&quot; &quot;coroa&quot; &quot;cara&quot;  &quot;coroa&quot;
+ [9] &quot;coroa&quot; &quot;coroa&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="apresentando-mutliplos-resultados" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> <strong>Apresentando mutliplos resultados</strong></h1>
+<p>Adeque sua função utilizando as funções <code>table()</code>e <code>list()</code> para que sejam retornados os os resultados brutos e a frequência de ocorrência de cara e coroa.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXJyZW1lc3Nhcl9tb2VkYSA8LSBmdW5jdGlvbihuX2FycmVtZXNzb3MsIHBfY29yb2EgPSBjKDAuNSkpIHtcbiAgbW9lZGEgPC0gYyhcImNvcm9hXCIsIFwiY2FyYVwiKVxuICBwZXNvcyA8LSBjKHBfY29yb2EsIDEgLSBwX2Nvcm9hKVxuICByZXN1bHRhZG8xIDwtIHNhbXBsZSh4ID0gbW9lZGEsIHNpemUgPSBuX2FycmVtZXNzbywgcmVwbGFjZSA9IFRSVUUsIHByb2IgPSBwZXNvcylcbiAgcmVzdWx0YWRvMiA8LSB0YWJsZShzYW1wbGUoeCA9IG1vZWRhLCBzaXplID0gbl9hcnJlbWVzc28sIHJlcGxhY2UgPSBUUlVFLCBwcm9iID0gcGVzb3MpKVxuICByZXR1cm4obGlzdChCcnV0byA9IHJlc3VsdGFkbzEsIEZyZXF1ZW5jaWEgPSByZXN1bHRhZG8yKSlcbn1cblxuIyB0ZXN0YXIgZnVuw6fDo29cbnNldC5zZWVkKDEwMClcbmFycmVtZXNzYXJfbW9lZGEoMTApXG5gYGAifQ== -->
+<pre class="r"><code>arremessar_moeda &lt;- function(n_arremessos, p_coroa = c(0.5)) {
+  moeda &lt;- c(&quot;coroa&quot;, &quot;cara&quot;)
   pesos &lt;- c(p_coroa, 1 - p_coroa)
   resultado1 &lt;- sample(x = moeda, size = n_arremesso, replace = TRUE, prob = pesos)
   resultado2 &lt;- table(sample(x = moeda, size = n_arremesso, replace = TRUE, prob = pesos))
@@ -616,42 +439,28 @@ arremessar_moeda &lt;- function(n_arremessos, p_coroa = c(0.5)) {
 # testar função
 set.seed(100)
 arremessar_moeda(10)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiJEJydXRvXG4gWzFdIFwiY2FyYVwiICBcImNhcmFcIiAgXCJjb3JvYVwiIFwiY2FyYVwiICBcImNhcmFcIiAgXCJjYXJhXCIgIFwiY29yb2FcIiBcImNhcmFcIiBcbiBbOV0gXCJjb3JvYVwiIFwiY2FyYVwiIFxuXG4kRnJlcXVlbmNpYVxuXG4gY2FyYSBjb3JvYSBcbiAgICA1ICAgICA1IFxuIn0= -->
+<pre><code>$Bruto
+ [1] &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot; &quot;cara&quot;  &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot; &quot;cara&quot; 
+ [9] &quot;coroa&quot; &quot;cara&quot; 
 
-&lt;!-- rnb-output-begin eyJkYXRhIjoiJEJydXRvXG4gWzFdIFxcY2FyYVxcICBcXGNhcmFcXCAgXFxjb3JvYVxcIFxcY2FyYVxcICBcXGNhcmFcXCAgXFxjYXJhXFwgXG4gWzddIFxcY29yb2FcXCBcXGNhcmFcXCAgXFxjb3JvYVxcIFxcY2FyYVxcIFxuXG4kRnJlcXVlbmNpYVxuXG4gY2FyYSBjb3JvYSBcbiAgICA1ICAgICA1IFxuIn0= --&gt;
-</code></pre>
-<p>$Bruto [1]            [7]      </p>
-<p>$Frequencia</p>
-<p>cara coroa 5 5</p>
-<pre><code>
+$Frequencia
 
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-# **Incluindo argumento default**
-
-Vamos tornar honesta a sua função `arremessar_moeda()` atribuindo o valor `0.5` ao argumento `p_coroa`. Em seguida, teste a função.
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYXJyZW1hc3Nhcl9tb2VkYSA8LSBmdW5jdGlvbihuX2FycmVtZXNzb3MsIHBfY29yb2EgPSAwLjUpIHtcbiAgbW9lZGEgPC0gYyhcXGNvcm9hXFwsIFxcY2FyYVxcKVxuICBwZXNvcyA8LSBjKHBfY29yb2EsIDEgLSBwX2Nvcm9hKVxuICByZXN1bHRhZG8xIDwtIHNhbXBsZSh4ID0gbW9lZGEsIHNpemUgPSBuX2FycmVtZXNzbywgcmVwbGFjZSA9IFRSVUUsIHByb2IgPSBwZXNvcylcbiAgcmVzdWx0YWRvMiA8LSB0YWJsZShzYW1wbGUoeCA9IG1vZWRhLCBzaXplID0gbl9hcnJlbWVzc28sIHJlcGxhY2UgPSBUUlVFLCBwcm9iID0gcGVzb3MpKVxuICByZXR1cm4obGlzdChCcnV0byA9IHJlc3VsdGFkbzEsIEZyZXF1ZW5jaWEgPSByZXN1bHRhZG8yKSlcbn1cblxuIyB0ZXN0YXIgZnVuw6fDo29cbnNldC5zZWVkKDEwMClcbmFycmVtYXNzYXJfbW9lZGEobl9hcnJlbWVzc29zID0gMTApXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-arremassar_moeda &lt;- function(n_arremessos, p_coroa = 0.5) {
-  moeda &lt;- c(\coroa\, \cara\)
+ cara coroa 
+    5     5 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="incluindo-argumento-default" class="section level1" number="4">
+<h1 number="4"><span class="header-section-number">4</span> <strong>Incluindo argumento default</strong></h1>
+<p>Vamos tornar honesta a sua função <code>arremessar_moeda()</code> atribuindo o valor <code>0.5</code> ao argumento <code>p_coroa</code>. Em seguida, teste a função.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXJyZW1hc3Nhcl9tb2VkYSA8LSBmdW5jdGlvbihuX2FycmVtZXNzb3MsIHBfY29yb2EgPSAwLjUpIHtcbiAgbW9lZGEgPC0gYyhcImNvcm9hXCIsIFwiY2FyYVwiKVxuICBwZXNvcyA8LSBjKHBfY29yb2EsIDEgLSBwX2Nvcm9hKVxuICByZXN1bHRhZG8xIDwtIHNhbXBsZSh4ID0gbW9lZGEsIHNpemUgPSBuX2FycmVtZXNzbywgcmVwbGFjZSA9IFRSVUUsIHByb2IgPSBwZXNvcylcbiAgcmVzdWx0YWRvMiA8LSB0YWJsZShzYW1wbGUoeCA9IG1vZWRhLCBzaXplID0gbl9hcnJlbWVzc28sIHJlcGxhY2UgPSBUUlVFLCBwcm9iID0gcGVzb3MpKVxuICByZXR1cm4obGlzdChCcnV0byA9IHJlc3VsdGFkbzEsIEZyZXF1ZW5jaWEgPSByZXN1bHRhZG8yKSlcbn1cblxuIyB0ZXN0YXIgZnVuw6fDo29cbnNldC5zZWVkKDEwMClcbmFycmVtYXNzYXJfbW9lZGEobl9hcnJlbWVzc29zID0gMTApXG5gYGAifQ== -->
+<pre class="r"><code>arremassar_moeda &lt;- function(n_arremessos, p_coroa = 0.5) {
+  moeda &lt;- c(&quot;coroa&quot;, &quot;cara&quot;)
   pesos &lt;- c(p_coroa, 1 - p_coroa)
   resultado1 &lt;- sample(x = moeda, size = n_arremesso, replace = TRUE, prob = pesos)
   resultado2 &lt;- table(sample(x = moeda, size = n_arremesso, replace = TRUE, prob = pesos))
@@ -661,175 +470,100 @@ arremassar_moeda &lt;- function(n_arremessos, p_coroa = 0.5) {
 # testar função
 set.seed(100)
 arremassar_moeda(n_arremessos = 10)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiJEJydXRvXG4gWzFdIFwiY2FyYVwiICBcImNhcmFcIiAgXCJjb3JvYVwiIFwiY2FyYVwiICBcImNhcmFcIiAgXCJjYXJhXCIgIFwiY29yb2FcIiBcImNhcmFcIiBcbiBbOV0gXCJjb3JvYVwiIFwiY2FyYVwiIFxuXG4kRnJlcXVlbmNpYVxuXG4gY2FyYSBjb3JvYSBcbiAgICA1ICAgICA1IFxuIn0= -->
+<pre><code>$Bruto
+ [1] &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot; &quot;cara&quot;  &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot; &quot;cara&quot; 
+ [9] &quot;coroa&quot; &quot;cara&quot; 
 
-&lt;!-- rnb-output-begin eyJkYXRhIjoiJEJydXRvXG4gWzFdIFxcY2FyYVxcICBcXGNhcmFcXCAgXFxjb3JvYVxcIFxcY2FyYVxcICBcXGNhcmFcXCAgXFxjYXJhXFwgXG4gWzddIFxcY29yb2FcXCBcXGNhcmFcXCAgXFxjb3JvYVxcIFxcY2FyYVxcIFxuXG4kRnJlcXVlbmNpYVxuXG4gY2FyYSBjb3JvYSBcbiAgICA1ICAgICA1IFxuIn0= --&gt;
-</code></pre>
-<p>$Bruto [1]            [7]      </p>
-<p>$Frequencia</p>
-<p>cara coroa 5 5</p>
-<pre><code>
+$Frequencia
 
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-# **Testes condicionais `if(){}` `else {}`**
-
-Transforme o teste condicional abaixo em uma função chamada `teste_condicional()`.
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxueCA8LSAxMFxuIyBlIHZhbW9zIHVzYXIgYSBlc3RydXR1cmEgZGUgY29udHJvbGUgaWYsIGVsc2VcbnRlc3RlX2NvbmRpY2lvbmFsIDwtIGlmKHggPCAxMCl7XG4gIFxcbsO6bWVybyBtZW5vciBxdWUgMTBcXFxufSBlbHNlIGlmKHggPT0gMTApIHtcbiAgXFxuw7ptZXJvIMOpIGlndWFsIGEgMTBcXFxufSBlbHNlIHtcbiAgXFxuw7ptZXJvIMOpIG1haW9yIHF1ZSAxMFxcXG59XG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-x &lt;- 10
+ cara coroa 
+    5     5 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="testes-condicionais-if-else" class="section level1" number="5">
+<h1 number="5"><span class="header-section-number">5</span> <strong>Testes condicionais <code>if(){}</code> <code>else {}</code></strong></h1>
+<p>Transforme o teste condicional abaixo em uma função chamada <code>teste_condicional()</code>.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSAxMFxuIyBlIHZhbW9zIHVzYXIgYSBlc3RydXR1cmEgZGUgY29udHJvbGUgaWYsIGVsc2VcbnRlc3RlX2NvbmRpY2lvbmFsIDwtIGlmKHggPCAxMCl7XG4gIFwibsO6bWVybyBtZW5vciBxdWUgMTBcIlxufSBlbHNlIGlmKHggPT0gMTApIHtcbiAgXCJuw7ptZXJvIMOpIGlndWFsIGEgMTBcIlxufSBlbHNlIHtcbiAgXCJuw7ptZXJvIMOpIG1haW9yIHF1ZSAxMFwiXG59XG5gYGAifQ== -->
+<pre class="r"><code>x &lt;- 10
 # e vamos usar a estrutura de controle if, else
 teste_condicional &lt;- if(x &lt; 10){
-  \número menor que 10\
+  &quot;número menor que 10&quot;
 } else if(x == 10) {
-  \número é igual a 10\
+  &quot;número é igual a 10&quot;
 } else {
-  \número é maior que 10\
+  &quot;número é maior que 10&quot;
 }</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-Lembre-se das estapas para transformar seu script em uma função:
-
-1. Prepare um &quot;modelo&quot; da função&lt;br/&gt;
-&lt;BR/&gt;
-2. Cole o script no interior do &quot;modelo&quot;&lt;br/&gt;
-&lt;BR/&gt;
-3. Escolha os argumentos&lt;br/&gt;
-&lt;BR/&gt;
-4. Substitua os objetos internos pelos argumentos equivalentes&lt;br/&gt;
-&lt;BR/&gt; 
-5. Use nomes generalistas para as variáveis internas a função&lt;br/&gt;
-&lt;BR/&gt; 
-6. Teste a função!
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxueCA8LSA1XG50ZXN0ZV9jb25kaWNpb25hbCA8LSBmdW5jdGlvbih4KXtcbiAgdGVzdGVfY29uZGljaW9uYWwgPC0gaWYoeCA8IDEwKXtcbiAgXFxuw7ptZXJvIG1lbm9yIHF1ZSAxMFxcXG59IGVsc2UgaWYoeCA9PSAxMCkge1xuICBcXG7Dum1lcm8gw6kgaWd1YWwgYSAxMFxcXG59IGVsc2Uge1xuICBcXG7Dum1lcm8gw6kgbWFpb3IgcXVlIDEwXFxcbn1cbiAgcmV0dXJuKHRlc3RlX2NvbmRpY2lvbmFsKVxufVxuXG54IDwtIDVcbnRlc3RlX2NvbmRpY2lvbmFsKHgpXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-x &lt;- 5
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Lembre-se das estapas para transformar seu script em uma função:</p>
+<ol style="list-style-type: decimal">
+<li>Prepare um “modelo” da função<br /> <BR /></li>
+<li>Cole o script no interior do “modelo”<br /> <BR /></li>
+<li>Escolha os argumentos<br /> <BR /></li>
+<li>Substitua os objetos internos pelos argumentos equivalentes<br /> <BR /></li>
+<li>Use nomes generalistas para as variáveis internas a função<br /> <BR /></li>
+<li>Teste a função!</li>
+</ol>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSA1XG50ZXN0ZV9jb25kaWNpb25hbCA8LSBmdW5jdGlvbih4KXtcbiAgdGVzdGVfY29uZGljaW9uYWwgPC0gaWYoeCA8IDEwKXtcbiAgXCJuw7ptZXJvIG1lbm9yIHF1ZSAxMFwiXG59IGVsc2UgaWYoeCA9PSAxMCkge1xuICBcIm7Dum1lcm8gw6kgaWd1YWwgYSAxMFwiXG59IGVsc2Uge1xuICBcIm7Dum1lcm8gw6kgbWFpb3IgcXVlIDEwXCJcbn1cbiAgcmV0dXJuKHRlc3RlX2NvbmRpY2lvbmFsKVxufVxuXG54IDwtIDVcbnRlc3RlX2NvbmRpY2lvbmFsKHgpXG5gYGAifQ== -->
+<pre class="r"><code>x &lt;- 5
 teste_condicional &lt;- function(x){
   teste_condicional &lt;- if(x &lt; 10){
-  \número menor que 10\
+  &quot;número menor que 10&quot;
 } else if(x == 10) {
-  \número é igual a 10\
+  &quot;número é igual a 10&quot;
 } else {
-  \número é maior que 10\
+  &quot;número é maior que 10&quot;
 }
   return(teste_condicional)
 }
 
 x &lt;- 5
 teste_condicional(x)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIFxcbsO6bWVybyBtZW5vciBxdWUgMTBcXFxuIn0= --&gt;
-</code></pre>
-<p>[1] menor que 10<br />
-</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxueCA8LSAxMFxudGVzdGVfY29uZGljaW9uYWwoeClcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-x &lt;- 10
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwibsO6bWVybyBtZW5vciBxdWUgMTBcIlxuIn0= -->
+<pre><code>[1] &quot;número menor que 10&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSAxMFxudGVzdGVfY29uZGljaW9uYWwoeClcbmBgYCJ9 -->
+<pre class="r"><code>x &lt;- 10
 teste_condicional(x)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIFxcbsO6bWVybyDDqSBpZ3VhbCBhIDEwXFxcbiJ9 --&gt;
-</code></pre>
-<p>[1] é igual a 10<br />
-</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxueCA8LSAxNVxudGVzdGVfY29uZGljaW9uYWwoeClcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-x &lt;- 15
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwibsO6bWVybyDDqSBpZ3VhbCBhIDEwXCJcbiJ9 -->
+<pre><code>[1] &quot;número é igual a 10&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxueCA8LSAxNVxudGVzdGVfY29uZGljaW9uYWwoeClcbmBgYCJ9 -->
+<pre class="r"><code>x &lt;- 15
 teste_condicional(x)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiWzFdIFxcbsO6bWVybyDDqSBtYWlvciBxdWUgMTBcXFxuIn0= --&gt;
-</code></pre>
-<p>[1] é maior que 10<br />
-</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-# **Argumento default categórico**
-
-Usando o controlador de fluxo `if`, `else` construa um teste lógico que permita incluir o argumento `resu = c(&quot;Ambos&quot;, &quot;Bruto&quot;, &quot;Frequencia&quot;)` e optar pela apresentação do resultado da função `arremecar_moeda()` em uma tabela de frequencias (&quot;Frequencias&quot;), sem estar tabelado (`&quot;Bruto&quot;`), ou os dois resultados ao mesmo tempo (`&quot;Ambos&quot;`). Você deve utilizar a função do último exercício do notebook sobre funções como base. Lembre-se de utilizar a função `match.arg()` para controlar o tipo de resultado que a função irá mostrar. Configure sua função para apresentar os dois reusltados (ex. `&quot;Ambos&quot;`) caso o argumento não seja alimentado.&lt;br/&gt;
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYXJyZW1lc3Nhcl9tb2VkYSA8LSBmdW5jdGlvbihuX2FycmVtZXNzbywgcF9jb3JvYSA9IDAuNSwgcmVzdSA9IGMoXFxBbWJvc1xcLCBcXEJydXRvXFwsIFxcRnJlcXVlbmNpYVxcKSkge1xuICBtb2VkYSA8LSBjKFxcY29yb2FcXCwgXFxjYXJhXFwpXG4gIHBlc29zIDwtIGMocF9jb3JvYSwgMSAtIHBfY29yb2EpXG4gIHJlc3VsdGFkbzEgPC0gc2FtcGxlKHggPSBtb2VkYSwgc2l6ZSA9IG5fYXJyZW1lc3NvLCByZXBsYWNlID0gVFJVRSwgcHJvYiA9IHBlc29zKVxuICByZXN1bHRhZG8yIDwtIHRhYmxlKHNhbXBsZSh4ID0gbW9lZGEsIHNpemUgPSBuX2FycmVtZXNzbywgcmVwbGFjZSA9IFRSVUUsIHByb2IgPSBwZXNvcykpXG4gIHJlc3UgPC0gbWF0Y2guYXJnKHJlc3UpXG4gIGlmKHJlc3UgPT0gXFxCcnV0b1xcKSB7XG4gICAgcmV0dXJuKHJlc3VsdGFkbzEpXG4gIH0gZWxzZSBpZihyZXN1ID09IFxcRnJlcXVlbmNpYVxcKSB7XG4gICAgcmV0dXJuKHJlc3VsdGFkbzIpXG4gIH0gZWxzZSB7XG4gICAgcmV0dXJuKGxpc3QoQnJ1dG8gPSByZXN1bHRhZG8xLCBGcmVxdWVuY2lhID0gcmVzdWx0YWRvMikpXG4gIH1cbiAgXG59XG5cbmFycmVtZXNzYXJfbW9lZGEoNTApXG5gYGBcbmBgYCJ9 --&gt;
-
-```r
-```r
-arremessar_moeda &lt;- function(n_arremesso, p_coroa = 0.5, resu = c(\Ambos\, \Bruto\, \Frequencia\)) {
-  moeda &lt;- c(\coroa\, \cara\)
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwibsO6bWVybyDDqSBtYWlvciBxdWUgMTBcIlxuIn0= -->
+<pre><code>[1] &quot;número é maior que 10&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="argumento-default-categórico" class="section level1" number="6">
+<h1 number="6"><span class="header-section-number">6</span> <strong>Argumento default categórico</strong></h1>
+<p>Usando o controlador de fluxo <code>if</code>, <code>else</code> construa um teste lógico que permita incluir o argumento <code>resu = c(&quot;Ambos&quot;, &quot;Bruto&quot;, &quot;Frequencia&quot;)</code> e optar pela apresentação do resultado da função <code>arremecar_moeda()</code> em uma tabela de frequencias (“Frequencias”), sem estar tabelado (<code>&quot;Bruto&quot;</code>), ou os dois resultados ao mesmo tempo (<code>&quot;Ambos&quot;</code>). Você deve utilizar a função do último exercício do notebook sobre funções como base. Lembre-se de utilizar a função <code>match.arg()</code> para controlar o tipo de resultado que a função irá mostrar. Configure sua função para apresentar os dois reusltados (ex. <code>&quot;Ambos&quot;</code>) caso o argumento não seja alimentado.<br /></p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXJyZW1lc3Nhcl9tb2VkYSA8LSBmdW5jdGlvbihuX2FycmVtZXNzbywgcF9jb3JvYSA9IDAuNSwgcmVzdSA9IGMoXCJBbWJvc1wiLCBcIkJydXRvXCIsIFwiRnJlcXVlbmNpYVwiKSkge1xuICBtb2VkYSA8LSBjKFwiY29yb2FcIiwgXCJjYXJhXCIpXG4gIHBlc29zIDwtIGMocF9jb3JvYSwgMSAtIHBfY29yb2EpXG4gIHJlc3VsdGFkbzEgPC0gc2FtcGxlKHggPSBtb2VkYSwgc2l6ZSA9IG5fYXJyZW1lc3NvLCByZXBsYWNlID0gVFJVRSwgcHJvYiA9IHBlc29zKVxuICByZXN1bHRhZG8yIDwtIHRhYmxlKHNhbXBsZSh4ID0gbW9lZGEsIHNpemUgPSBuX2FycmVtZXNzbywgcmVwbGFjZSA9IFRSVUUsIHByb2IgPSBwZXNvcykpXG4gIHJlc3UgPC0gbWF0Y2guYXJnKHJlc3UpXG4gIGlmKHJlc3UgPT0gXCJCcnV0b1wiKSB7XG4gICAgcmV0dXJuKHJlc3VsdGFkbzEpXG4gIH0gZWxzZSBpZihyZXN1ID09IFwiRnJlcXVlbmNpYVwiKSB7XG4gICAgcmV0dXJuKHJlc3VsdGFkbzIpXG4gIH0gZWxzZSB7XG4gICAgcmV0dXJuKGxpc3QoQnJ1dG8gPSByZXN1bHRhZG8xLCBGcmVxdWVuY2lhID0gcmVzdWx0YWRvMikpXG4gIH1cbiAgXG59XG5cbmFycmVtZXNzYXJfbW9lZGEoNTApXG5gYGAifQ== -->
+<pre class="r"><code>arremessar_moeda &lt;- function(n_arremesso, p_coroa = 0.5, resu = c(&quot;Ambos&quot;, &quot;Bruto&quot;, &quot;Frequencia&quot;)) {
+  moeda &lt;- c(&quot;coroa&quot;, &quot;cara&quot;)
   pesos &lt;- c(p_coroa, 1 - p_coroa)
   resultado1 &lt;- sample(x = moeda, size = n_arremesso, replace = TRUE, prob = pesos)
   resultado2 &lt;- table(sample(x = moeda, size = n_arremesso, replace = TRUE, prob = pesos))
   resu &lt;- match.arg(resu)
-  if(resu == \Bruto\) {
+  if(resu == &quot;Bruto&quot;) {
     return(resultado1)
-  } else if(resu == \Frequencia\) {
+  } else if(resu == &quot;Frequencia&quot;) {
     return(resultado2)
   } else {
     return(list(Bruto = resultado1, Frequencia = resultado2))
@@ -838,88 +572,57 @@ arremessar_moeda &lt;- function(n_arremesso, p_coroa = 0.5, resu = c(\Ambos\, \B
 }
 
 arremessar_moeda(50)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiJEJydXRvXG4gWzFdIFwiY29yb2FcIiBcImNvcm9hXCIgXCJjb3JvYVwiIFwiY29yb2FcIiBcImNhcmFcIiAgXCJjYXJhXCIgIFwiY29yb2FcIiBcImNvcm9hXCJcbiBbOV0gXCJjb3JvYVwiIFwiY2FyYVwiICBcImNhcmFcIiAgXCJjb3JvYVwiIFwiY2FyYVwiICBcImNvcm9hXCIgXCJjb3JvYVwiIFwiY29yb2FcIlxuWzE3XSBcImNhcmFcIiAgXCJjb3JvYVwiIFwiY29yb2FcIiBcImNhcmFcIiAgXCJjYXJhXCIgIFwiY29yb2FcIiBcImNvcm9hXCIgXCJjb3JvYVwiXG5bMjVdIFwiY29yb2FcIiBcImNhcmFcIiAgXCJjb3JvYVwiIFwiY29yb2FcIiBcImNhcmFcIiAgXCJjYXJhXCIgIFwiY2FyYVwiICBcImNhcmFcIiBcblszM10gXCJjYXJhXCIgIFwiY2FyYVwiICBcImNvcm9hXCIgXCJjYXJhXCIgIFwiY2FyYVwiICBcImNhcmFcIiAgXCJjb3JvYVwiIFwiY2FyYVwiIFxuWzQxXSBcImNhcmFcIiAgXCJjb3JvYVwiIFwiY29yb2FcIiBcImNvcm9hXCIgXCJjYXJhXCIgIFwiY2FyYVwiICBcImNhcmFcIiAgXCJjYXJhXCIgXG5bNDldIFwiY2FyYVwiICBcImNvcm9hXCJcblxuJEZyZXF1ZW5jaWFcblxuIGNhcmEgY29yb2EgXG4gICAyMiAgICAyOCBcbiJ9 -->
+<pre><code>$Bruto
+ [1] &quot;coroa&quot; &quot;coroa&quot; &quot;coroa&quot; &quot;coroa&quot; &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot; &quot;coroa&quot;
+ [9] &quot;coroa&quot; &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot; &quot;cara&quot;  &quot;coroa&quot; &quot;coroa&quot; &quot;coroa&quot;
+[17] &quot;cara&quot;  &quot;coroa&quot; &quot;coroa&quot; &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot; &quot;coroa&quot; &quot;coroa&quot;
+[25] &quot;coroa&quot; &quot;cara&quot;  &quot;coroa&quot; &quot;coroa&quot; &quot;cara&quot;  &quot;cara&quot;  &quot;cara&quot;  &quot;cara&quot; 
+[33] &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot; &quot;cara&quot;  &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot; &quot;cara&quot; 
+[41] &quot;cara&quot;  &quot;coroa&quot; &quot;coroa&quot; &quot;coroa&quot; &quot;cara&quot;  &quot;cara&quot;  &quot;cara&quot;  &quot;cara&quot; 
+[49] &quot;cara&quot;  &quot;coroa&quot;
+
+$Frequencia
+
+ cara coroa 
+   22    28 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXJyZW1lc3Nhcl9tb2VkYSg1MCwgcmVzdSA9IFwiQnJ1dG9cIilcbmBgYCJ9 -->
+<pre class="r"><code>arremessar_moeda(50, resu = &quot;Bruto&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcImNhcmFcIiAgXCJjYXJhXCIgIFwiY2FyYVwiICBcImNvcm9hXCIgXCJjYXJhXCIgIFwiY2FyYVwiICBcImNvcm9hXCIgXCJjb3JvYVwiXG4gWzldIFwiY29yb2FcIiBcImNhcmFcIiAgXCJjYXJhXCIgIFwiY29yb2FcIiBcImNvcm9hXCIgXCJjYXJhXCIgIFwiY29yb2FcIiBcImNhcmFcIiBcblsxN10gXCJjYXJhXCIgIFwiY2FyYVwiICBcImNhcmFcIiAgXCJjb3JvYVwiIFwiY29yb2FcIiBcImNhcmFcIiAgXCJjYXJhXCIgIFwiY29yb2FcIlxuWzI1XSBcImNhcmFcIiAgXCJjb3JvYVwiIFwiY29yb2FcIiBcImNhcmFcIiAgXCJjYXJhXCIgIFwiY2FyYVwiICBcImNvcm9hXCIgXCJjb3JvYVwiXG5bMzNdIFwiY2FyYVwiICBcImNhcmFcIiAgXCJjb3JvYVwiIFwiY29yb2FcIiBcImNvcm9hXCIgXCJjb3JvYVwiIFwiY2FyYVwiICBcImNvcm9hXCJcbls0MV0gXCJjb3JvYVwiIFwiY29yb2FcIiBcImNhcmFcIiAgXCJjYXJhXCIgIFwiY2FyYVwiICBcImNhcmFcIiAgXCJjYXJhXCIgIFwiY29yb2FcIlxuWzQ5XSBcImNvcm9hXCIgXCJjb3JvYVwiXG4ifQ== -->
+<pre><code> [1] &quot;cara&quot;  &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot; &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot; &quot;coroa&quot;
+ [9] &quot;coroa&quot; &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot; &quot;coroa&quot; &quot;cara&quot;  &quot;coroa&quot; &quot;cara&quot; 
+[17] &quot;cara&quot;  &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot; &quot;coroa&quot; &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot;
+[25] &quot;cara&quot;  &quot;coroa&quot; &quot;coroa&quot; &quot;cara&quot;  &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot; &quot;coroa&quot;
+[33] &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot; &quot;coroa&quot; &quot;coroa&quot; &quot;coroa&quot; &quot;cara&quot;  &quot;coroa&quot;
+[41] &quot;coroa&quot; &quot;coroa&quot; &quot;cara&quot;  &quot;cara&quot;  &quot;cara&quot;  &quot;cara&quot;  &quot;cara&quot;  &quot;coroa&quot;
+[49] &quot;coroa&quot; &quot;coroa&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXJyZW1lc3Nhcl9tb2VkYSg1MCwgcmVzdSA9IFwiRnJlcXVlbmNpYVwiKVxuYGBgIn0= -->
+<pre class="r"><code>arremessar_moeda(50, resu = &quot;Frequencia&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG4gY2FyYSBjb3JvYSBcbiAgIDIxICAgIDI5IFxuIn0= -->
 <pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiJEJydXRvXG4gWzFdIFxcY29yb2FcXCBcXGNvcm9hXFwgXFxjb3JvYVxcIFxcY29yb2FcXCBcXGNhcmFcXCAgXFxjYXJhXFwgXG4gWzddIFxcY29yb2FcXCBcXGNvcm9hXFwgXFxjb3JvYVxcIFxcY2FyYVxcICBcXGNhcmFcXCAgXFxjb3JvYVxcXG5bMTNdIFxcY2FyYVxcICBcXGNvcm9hXFwgXFxjb3JvYVxcIFxcY29yb2FcXCBcXGNhcmFcXCAgXFxjb3JvYVxcXG5bMTldIFxcY29yb2FcXCBcXGNhcmFcXCAgXFxjYXJhXFwgIFxcY29yb2FcXCBcXGNvcm9hXFwgXFxjb3JvYVxcXG5bMjVdIFxcY29yb2FcXCBcXGNhcmFcXCAgXFxjb3JvYVxcIFxcY29yb2FcXCBcXGNhcmFcXCAgXFxjYXJhXFwgXG5bMzFdIFxcY2FyYVxcICBcXGNhcmFcXCAgXFxjYXJhXFwgIFxcY2FyYVxcICBcXGNvcm9hXFwgXFxjYXJhXFwgXG5bMzddIFxcY2FyYVxcICBcXGNhcmFcXCAgXFxjb3JvYVxcIFxcY2FyYVxcICBcXGNhcmFcXCAgXFxjb3JvYVxcXG5bNDNdIFxcY29yb2FcXCBcXGNvcm9hXFwgXFxjYXJhXFwgIFxcY2FyYVxcICBcXGNhcmFcXCAgXFxjYXJhXFwgXG5bNDldIFxcY2FyYVxcICBcXGNvcm9hXFxcblxuJEZyZXF1ZW5jaWFcblxuIGNhcmEgY29yb2EgXG4gICAyMiAgICAyOCBcbiJ9 --&gt;
-</code></pre>
-<p>$Bruto [1]         [7]        <br />
-[13]        <br />
-[19]        <br />
-[25]          [31]            [37]          <br />
-[43]           [49]   <br />
-</p>
-<p>$Frequencia</p>
-<p>cara coroa 22 28</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYXJyZW1lc3Nhcl9tb2VkYSg1MCwgcmVzdSA9IFxcQnJ1dG9cXClcbmBgYFxuYGBgIn0= --&gt;
-
-```r
-```r
-arremessar_moeda(50, resu = \Bruto\)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcXGNhcmFcXCAgXFxjYXJhXFwgIFxcY2FyYVxcICBcXGNvcm9hXFwgXFxjYXJhXFwgIFxcY2FyYVxcIFxuIFs3XSBcXGNvcm9hXFwgXFxjb3JvYVxcIFxcY29yb2FcXCBcXGNhcmFcXCAgXFxjYXJhXFwgIFxcY29yb2FcXFxuWzEzXSBcXGNvcm9hXFwgXFxjYXJhXFwgIFxcY29yb2FcXCBcXGNhcmFcXCAgXFxjYXJhXFwgIFxcY2FyYVxcIFxuWzE5XSBcXGNhcmFcXCAgXFxjb3JvYVxcIFxcY29yb2FcXCBcXGNhcmFcXCAgXFxjYXJhXFwgIFxcY29yb2FcXFxuWzI1XSBcXGNhcmFcXCAgXFxjb3JvYVxcIFxcY29yb2FcXCBcXGNhcmFcXCAgXFxjYXJhXFwgIFxcY2FyYVxcIFxuWzMxXSBcXGNvcm9hXFwgXFxjb3JvYVxcIFxcY2FyYVxcICBcXGNhcmFcXCAgXFxjb3JvYVxcIFxcY29yb2FcXFxuWzM3XSBcXGNvcm9hXFwgXFxjb3JvYVxcIFxcY2FyYVxcICBcXGNvcm9hXFwgXFxjb3JvYVxcIFxcY29yb2FcXFxuWzQzXSBcXGNhcmFcXCAgXFxjYXJhXFwgIFxcY2FyYVxcICBcXGNhcmFcXCAgXFxjYXJhXFwgIFxcY29yb2FcXFxuWzQ5XSBcXGNvcm9hXFwgXFxjb3JvYVxcXG4ifQ== --&gt;
-</code></pre>
-<p>[1]            [7]        <br />
-[13]           [19]         <br />
-[25]           [31]        <br />
-[37]       <br />
-[43]           <br />
-[49]  <br />
-</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuYXJyZW1lc3Nhcl9tb2VkYSg1MCwgcmVzdSA9IFxcRnJlcXVlbmNpYVxcKVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-arremessar_moeda(50, resu = \Frequencia\)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiXG4gY2FyYSBjb3JvYSBcbiAgIDIxICAgIDI5IFxuIn0= --&gt;
-</code></pre>
-<p>cara coroa 21 29</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-# **Função `fibonacci()`**
-
-Transforme o código que gera uma sequência de Fibonacci com 10 elementos em uma função em possamos escolher o tamanho da sequência que será gerada.
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZmlib25hY2NpIDwtIGZ1bmN0aW9uKG4pIHtcbiAgIyBnZXJhIHVtIHZldG9yIGNvbSBvcyBkb2lzIHByaW1laXJvcyB2YWxvcmVzIGRhIHNlcXXDqm5jaWEgZGUgZmlib25hY2NpXG4gIHZldG9yMSA8LSBjKDEsIDEpXG4gIFxuICAjIGNhbGN1bGEgb3MgdmFsb3JlcyBkYSBzZXF1w6puY2lhIGF0w6kgbyBlbGVtZW50byBuXG4gIGZvcihpIGluIDM6bikge1xuICB2ZXRvcjFbaV0gPC0gdmV0b3IxW2ktMV0gKyB2ZXRvcjFbaS0yXVxuICB9XG4gIFxuICAjIHJldG9ybmEgb3MgdmFsb3JlcyBjYWxjdWxhZG9zXG4gIHJldHVybih2ZXRvcjEpXG59XG5cbmZpYm9uYWNjaSgxMClcbmBgYCJ9 --&gt;
-
-```r
-fibonacci &lt;- function(n) {
+ cara coroa 
+   21    29 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="função-fibonacci" class="section level1" number="7">
+<h1 number="7"><span class="header-section-number">7</span> <strong>Função <code>fibonacci()</code></strong></h1>
+<p>Transforme o código que gera uma sequência de Fibonacci com 10 elementos em uma função em possamos escolher o tamanho da sequência que será gerada.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZmlib25hY2NpIDwtIGZ1bmN0aW9uKG4pIHsgIyBuIMOpIG8gdGFtYW5obyBkYSBzZXF1w6puY2lhIHF1ZSBhIGZ1bsOnw6NvIGlyw6EgcHJvZHV6aXJcbiAgIyBnZXJhIHVtIHZldG9yIGNvbSBvcyBkb2lzIHByaW1laXJvcyB2YWxvcmVzIGRhIHNlcXXDqm5jaWEgZGUgZmlib25hY2NpXG4gIHZldG9yMSA8LSBjKDEsIDEpXG4gIFxuICAjIGNhbGN1bGEgb3MgdmFsb3JlcyBkYSBzZXF1w6puY2lhIGF0w6kgbyBlbGVtZW50byBuXG4gIGZvcihpIGluIDM6bikgeyAjIG4gZGV0ZXJtaW5hIG8gdGFtYW5obyBkYSBzZXF1w6puY2lhXG4gIHZldG9yMVtpXSA8LSB2ZXRvcjFbaS0xXSArIHZldG9yMVtpLTJdXG4gIH1cbiAgXG4gICMgcmV0b3JuYSBvcyB2YWxvcmVzIGNhbGN1bGFkb3NcbiAgcmV0dXJuKHZldG9yMSlcbn1cblxuZmlib25hY2NpKDEwKSAjIHByb2R1eiBvcyAxMCBwcmltZWlyb3MgdmFsb3JlcyBkYSBzZXF1w6puY2lhIGRlIGZpYm9uYWNjaVxuYGBgIn0= -->
+<pre class="r"><code>fibonacci &lt;- function(n) { # n é o tamanho da sequência que a função irá produzir
   # gera um vetor com os dois primeiros valores da sequência de fibonacci
   vetor1 &lt;- c(1, 1)
   
   # calcula os valores da sequência até o elemento n
-  for(i in 3:n) {
+  for(i in 3:n) { # n determina o tamanho da sequência
   vetor1[i] &lt;- vetor1[i-1] + vetor1[i-2]
   }
   
@@ -927,13 +630,13 @@ fibonacci &lt;- function(n) {
   return(vetor1)
 }
 
-fibonacci(10)</code></pre>
+fibonacci(10) # produz os 10 primeiros valores da sequência de fibonacci</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiIFsxXSAgMSAgMSAgMiAgMyAgNSAgOCAxMyAyMSAzNCA1NVxuIn0= -->
 <pre><code> [1]  1  1  2  3  5  8 13 21 34 55</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZmlib25hY2NpKDIwKVxuYGBgIn0= -->
-<pre class="r"><code>fibonacci(20)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZmlib25hY2NpKDIwKSAjIHByb2R1eiBvcyAyMCBwcmltZWlyb3MgdmFsb3JlcyBkYSBzZXF1w6puY2lhIGRlIGZpYm9uYWNjaVxuYGBgIn0= -->
+<pre class="r"><code>fibonacci(20) # produz os 20 primeiros valores da sequência de fibonacci</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiIFsxXSAgICAxICAgIDEgICAgMiAgICAzICAgIDUgICAgOCAgIDEzICAgMjEgICAzNCAgIDU1ICAgODkgIDE0NCAgMjMzICAzNzdcblsxNV0gIDYxMCAgOTg3IDE1OTcgMjU4NCA0MTgxIDY3NjVcbiJ9 -->
 <pre><code> [1]    1    1    2    3    5    8   13   21   34   55   89  144  233  377
@@ -942,13 +645,13 @@ fibonacci(10)</code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="função-media" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> <strong>Função <code>media()</code></strong></h1>
+<div id="função-media" class="section level1" number="8">
+<h1 number="8"><span class="header-section-number">8</span> <strong>Função <code>media()</code></strong></h1>
 <p>Escreva uma função que calcule a média de um vetor. Formula da media: <span class="math display">\[\bar{x} = \frac{1}{n} \sum_{i=1}^{n}x_{i}\]</span><br /></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVkaWEgPC0gZnVuY3Rpb24oeCkgeyAjIFxuICAjIGdlcmFyIHVtIHZldG9yIGNvbSB2YWxvciB6ZXJvIHBhcmEgYXJtYXplbmFyIGEgc29tYSBkb3MgZWxlbWVudG9zIGRlIHhcbiAgeSA8LSAwXG4gICMgcmVhbGl6YXIgYSBzb21hIGRvcyB2YWxvcmVzIGRlIHggZSBhcm1hemVuYXIgZW0geVxuICBmb3IgKGkgaW4gc2VxX2Fsb25nKHgpKSB7XG4gIHkgPC0geSArIHhbaV1cbiAgfVxuICAjIGNhbGN1bGFyIGEgbcOpZGlhXG4gIG1lZGlhIDwtIHkvbGVuZ3RoKHgpXG4gICMgcmV0b3JuYXIgYW3DqWRpYVxuICByZXR1cm4obWVkaWEpXG59XG5cbm1lZGlhKGRmJGFyZWEpXG5gYGAifQ== -->
-<pre class="r"><code>media &lt;- function(x) { # 
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubWVkaWEgPC0gZnVuY3Rpb24oeCkgeyAjIHggw6kgdmV0b3IgZGUgdmFsb3JlcyBkbyBxdWFsIHNlcsOhIGNhbGN1bGFkYSBhIG3DqWRpYSBcbiAgIyBnZXJhciB1bSB2ZXRvciBjb20gdmFsb3IgemVybyBwYXJhIGFybWF6ZW5hciBhIHNvbWEgZG9zIGVsZW1lbnRvcyBkZSB4XG4gIHkgPC0gMFxuICAjIHJlYWxpemFyIGEgc29tYSBkb3MgdmFsb3JlcyBkZSB4IGUgYXJtYXplbmFyIGVtIHlcbiAgZm9yIChpIGluIHNlcV9hbG9uZyh4KSkge1xuICB5IDwtIHkgKyB4W2ldXG4gIH1cbiAgIyBjYWxjdWxhciBhIG3DqWRpYVxuICBtZWRpYSA8LSB5L2xlbmd0aCh4KVxuICAjIHJldG9ybmFyIGEgbcOpZGlhXG4gIHJldHVybihtZWRpYSlcbn1cblxubWVkaWEoZGYkYXJlYSlcbmBgYCJ9 -->
+<pre class="r"><code>media &lt;- function(x) { # x é vetor de valores do qual será calculada a média 
   # gerar um vetor com valor zero para armazenar a soma dos elementos de x
   y &lt;- 0
   # realizar a soma dos valores de x e armazenar em y
@@ -957,7 +660,7 @@ fibonacci(10)</code></pre>
   }
   # calcular a média
   media &lt;- y/length(x)
-  # retornar amédia
+  # retornar a média
   return(media)
 }
 
@@ -966,8 +669,8 @@ media(df$area)</code></pre>
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIDU4LjgwMzc2XG4ifQ== -->
 <pre><code>[1] 58.80376</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjYWxjdWxvIGRhIG1lZGlhIGNvbSBhIGZ1bsOnw6NvIGRhIGJnYXNlIGRvIFIgcGFyYSB0ZXN0YXIgYSBmdW7Dp8OjbyBcbm1lYW4oZGYkYXJlYSlcbmBgYCJ9 -->
-<pre class="r"><code># calculo da media com a função da bgase do R para testar a função 
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjYWxjdWxvIGRhIG1lZGlhIGNvbSBhIGZ1bsOnw6NvIGRhIGJhc2UgZG8gUiBwYXJhIHRlc3RhciBhIGZ1bsOnw6NvIFxubWVhbihkZiRhcmVhKVxuYGBgIn0= -->
+<pre class="r"><code># calculo da media com a função da base do R para testar a função 
 mean(df$area)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIDU4LjgwMzc2XG4ifQ== -->
@@ -976,24 +679,24 @@ mean(df$area)</code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="função-variancia" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> <strong>Função <code>variancia()</code></strong></h1>
+<div id="função-variancia" class="section level1" number="9">
+<h1 number="9"><span class="header-section-number">9</span> <strong>Função <code>variancia()</code></strong></h1>
 <p>Escreva uma função que calcule a variância de um vetor. Fórmula da variância: <span class="math display">\[\sigma^{2} = \frac{\sum_{i=1}^{n} 
   \left(x_{i} - \bar{x}\right)^{2}}
   {n-1}\]</span></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudmFyaWFuY2lhIDwtIGZ1bmN0aW9uKHgpe1xuICAjIGdlcmFyIHVtIHZldG9yIGNvbSB2YWxvciB6ZXJvIHBhcmEgYXJtYXplbmFyIGEgc29tYSBkb3MgZWxlbWVudG9zIGRlIHhcbiAgeSA8LSAwXG4gICMgcmVhbGl6YXIgYSBzb21hIGRvIHF1YWRyYWRvIGRhIGRzaXTDom5jaWEgZW50cmUgY2FkYSBvYnNlcnZhw6fDo28geFtpXSBlIGEgbcOpZGlhIGRlIHggZSBhcm1hemVuYXIgZW0geVxuICBmb3IgKGkgaW4gc2VxX2Fsb25nKHgpKSB7XG4gIHkgPC0geSArICh4W2ldIC0gbWVkaWEoeCkpXjJcbiAgfVxuICAjIGNhbGN1bGFyIGEgbcOpZGlhXG4gIHZhcmlhbmNpYSA8LSB5LyhsZW5ndGgoeCkgLSAxKVxuICAjIHJldG9ybmFyIGFtw6lkaWFcbiAgcmV0dXJuKHZhcmlhbmNpYSlcbn1cblxudmFyaWFuY2lhKGRmJGFyZWEpXG5gYGAifQ== -->
-<pre class="r"><code>variancia &lt;- function(x){
-  # gerar um vetor com valor zero para armazenar a soma dos elementos de x
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudmFyaWFuY2lhIDwtIGZ1bmN0aW9uKHgpeyAjIHggw6kgdmV0b3IgZGUgdmFsb3JlcyBkbyBxdWFsIHNlcsOhIGNhbGN1bGFkYSBhIHZhcmnDom5jaWFcbiAgIyBnZXJhciB1bSB2ZXRvciBjb20gdmFsb3IgemVybyBwYXJhIGFybWF6ZW5hciBhIHNvbWEgZG9zIHF1YWRyYWRvc1xuICB5IDwtIDBcbiAgIyByZWFsaXphciBhIHNvbWEgZG8gcXVhZHJhZG8gZGEgZGlzdMOibmNpYSBlbnRyZSBjYWRhIG9ic2VydmHDp8OjbyB4W2ldIGUgYSBtw6lkaWEgZGUgeCBlIGFybWF6ZW5hciBlbSB5XG4gIGZvciAoaSBpbiBzZXFfYWxvbmcoeCkpIHsgXG4gIHkgPC0geSArICh4W2ldIC0gbWVkaWEoeCkpXjJcbiAgfVxuICAjIGNhbGN1bGFyIGEgdmFyacOibmNpYVxuICB2YXJpYW5jaWEgPC0geS8obGVuZ3RoKHgpIC0gMSlcbiAgIyByZXRvcm5hciBhIHZhcmnDom5jaWFcbiAgcmV0dXJuKHZhcmlhbmNpYSlcbn1cblxudmFyaWFuY2lhKGRmJGFyZWEpXG5gYGAifQ== -->
+<pre class="r"><code>variancia &lt;- function(x){ # x é vetor de valores do qual será calculada a variância
+  # gerar um vetor com valor zero para armazenar a soma dos quadrados
   y &lt;- 0
-  # realizar a soma do quadrado da dsitância entre cada observação x[i] e a média de x e armazenar em y
-  for (i in seq_along(x)) {
+  # realizar a soma do quadrado da distância entre cada observação x[i] e a média de x e armazenar em y
+  for (i in seq_along(x)) { 
   y &lt;- y + (x[i] - media(x))^2
   }
-  # calcular a média
+  # calcular a variância
   variancia &lt;- y/(length(x) - 1)
-  # retornar amédia
+  # retornar a variância
   return(variancia)
 }
 
@@ -1002,8 +705,8 @@ variancia(df$area)</code></pre>
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIDg1MC44OTQzXG4ifQ== -->
 <pre><code>[1] 850.8943</code></pre>
 <!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBcbnZhcihkZiRhcmVhKVxuYGBgIn0= -->
-<pre class="r"><code># 
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBjYWxjdWxvIGRhIHZhcmnDom5jaWEgY29tIGEgZnVuw6fDo28gZGEgYmFzZSBkbyBSIHBhcmEgdGVzdGFyIGEgZnVuw6fDo28gdmFyaWFuY2lhKClcbnZhcihkZiRhcmVhKVxuYGBgIn0= -->
+<pre class="r"><code># calculo da variância com a função da base do R para testar a função variancia()
 var(df$area)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiWzFdIDg1MC44OTQzXG4ifQ== -->
@@ -1012,8 +715,8 @@ var(df$area)</code></pre>
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="função-desv_pad" class="section level1" number="4">
-<h1 number="4"><span class="header-section-number">4</span> <strong>Função <code>desv_pad()</code></strong></h1>
+<div id="função-desv_pad" class="section level1" number="10">
+<h1 number="10"><span class="header-section-number">10</span> <strong>Função <code>desv_pad()</code></strong></h1>
 <p>Escreva uma função que calcule o desvio padrão de um vetor. Fórmula do desvio padrão: <span class="math display">\[\sigma = \sqrt{\frac{\sum\limits_{i=1}^{n} \left(x_{i} - \bar{x}\right)^{2}} {n-1}}\]</span></p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
