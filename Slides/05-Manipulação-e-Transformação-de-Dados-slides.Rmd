@@ -1,0 +1,831 @@
+---
+title: "Introdução ao R para Ecólogos"
+subtitle: "⚔<br/>Manipulação e Transformação de Dados"
+author: "Vitor Borges"
+institute: "PPGBIO-UNIRIO"
+date: "2021/05/24 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    seal: false
+    lib_dir: libs
+    nature:
+      slideNumberFormat: ""
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+layout: true
+name: basic
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(kableExtra)
+options(htmltools.dir.version = FALSE)
+xaringanExtra::use_xaringan_extra()
+xaringanExtra::use_clipboard()
+tadpoles_raw <- read_csv(file = "/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/tadpoles_raw.csv", 
+                             col_names = TRUE, 
+                             na = c("NA"))
+streams_raw <- readxl::read_xlsx("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/streams.xlsx")
+streams_variables <- read_csv("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/streams_variables.csv",
+                               col_types = cols(
+                                 stream = col_factor()
+                               ))
+streams_date_variables <- read_csv("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/streams_date_variables.csv",
+                               col_types = cols(
+                                 stream = col_factor()
+                               ))
+```
+
+---
+name: Title
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
+background-position: 0% 100%
+background-size: 20%
+class: inverse, center, middle, title-slide
+
+# .blue[**Introdução ao R para Ecólogos**]
+
+## .blue[**⚔<br/>Manipulação e Transformação de Dados**]
+
+### .blue[Vitor Borges-Júnior]
+
+### .blue[PPGBIO - UNIRIO]
+
+### .blue[2021/06/22]
+
+???
+IDEIAS DE MELHORIAS PARA O PRÓXIMO CURSO
+
+- Melhorar as ilustrações dos slides.
+- Substituir as figuras que representam os verbos por exemplos reais de transformação na própria tabela de dados utilizada para os exemplos da aula.
+- Condensar o conteúdo de manipulação, limpeza e transformação dos dados para caber todo na aula 04.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Minha Solução para a Tarefa**]
+
+<BR/> 
+
+.center[.red[Carregar os dados atribuindo os tipos adequados às variáveis]]
+```{r carregar tadpoles_raw 1, eval = TRUE, warning=FALSE, message=FALSE}
+tadpoles_raw <- read_csv(file = "/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/tadpoles_raw.csv", 
+                col_names = TRUE, 
+                na = c("NA"),
+                col_types = cols(Date = col_date(format = "%m/%d/%y"),
+                Stream = col_factor(),
+                Species = col_factor(),
+                `Stage of development` = col_number(),
+                `Depth (cm)` = col_number()))
+```
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Minha Solução para a Tarefa**]
+.center[.red[Filtrar, selecionar, renomear, abreviar espécies]]
+```{r tadpoles_raw 2}
+tadpoles_raw <- tadpoles_raw %>% 
+  filter(Method == "Dipnet") %>% 
+  select(date = Date, 
+         stream = Stream, 
+         species = Species,
+         stage = `Stage of development`,
+         total_len = `Total Length (mm)`, 
+         body_len = `Body Length (mm)`) %>% 
+  mutate(species = as.factor(str_replace_all(species, 
+                   c("Aplastodiscus eugenioi" = "Ae", 
+                   "Bokermannohyla circumdata" = "Bc",
+                   "Crossodactylus aeneus" = "Ca",
+                   "Hylodes asper" = "Ha",
+                   "Hylodes charadranaetes" = "Hc",
+                   "Hylodes lateristrigatus" = "Hl",
+                   "Hylodes pipilans" = "Hp",
+                   "Physalaemus signifer" = "Ps",
+                   "Proceratophrys appendiculata" = "Pa",              "Proceratophrys boiei" = "Pb",
+                   "Rhinella ornata" = "Ro", 
+                   "Scinax albicans" = "Sa",
+                   "Scinax flavoguttatus" = "Sf"))))
+```
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Minha Solução para a Tarefa**]
+.center[.red[Criar categorias para a variável `stage`]]
+```{r tadpoles_raw}
+tadpoles_raw <- tadpoles_raw %>% 
+  mutate(stage = cut(stage, 
+                     breaks = c(25, 30, 35, 40, 42, 46),
+                     labels = c("25-30", "31-35", "36-40", "41-42", ">42"),
+                     include.lowest = TRUE))
+```
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Minha Solução para a Tarefa**]
+
+<BR/> 
+
+.center[.red[Corrigir os valores das observações fora da apmlitude de variação esperada e gerar `tadpoles_clean`]]
+```{r tadpoles_clean}
+tadpoles_raw$total_len[which(
+  tadpoles_raw$total_len > 100
+  )] <- tadpoles_raw$total_len[which(
+    tadpoles_raw$total_len > 100)] /100
+
+tadpoles_clean <- tadpoles_raw
+```
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Minha Solução para a Tarefa**]
+
+<BR/> 
+
+.center[.red[Transformar o código na função `read_tadpoles_raw()`]]
+```{r função read_tadpoles_raw() 1, message=FALSE, warning=FALSE}
+read_tadpoles_raw <- function(data) {
+  # carregar pacote
+  library(tidyverse)
+  # carregar dados atribuindo os tipos corretos
+  tadpoles_raw <- read_csv(file = data, 
+                           col_names = TRUE, 
+                           na = c("NA"),
+                           col_types = cols(Date = col_date(format = "%m/%d/%y"),
+                                            Stream = col_factor(),
+                                            Species = col_factor(),
+                                            `Stage of development` = col_number(),
+                                            `Depth (cm)` = col_number()))
+  # manipular e limpar dados
+  tadpoles_raw <- tadpoles_raw %>% 
+    filter(Method == "Dipnet") %>% # filtrar subconjunto de obs de interesse
+    select(date = Date, 
+           stream = Stream, 
+           species = Species,
+           stage = `Stage of development`,
+           total_len = `Total Length (mm)`, 
+           body_len = `Body Length (mm)`) %>% # selecionar ariáveis de interesse
+    mutate(species = as.factor(str_replace_all(species, # Renomear espécies e converter novamente em fator
+                                     coll(c("Aplastodiscus eugenioi" = "Ae", 
+                                       "Bokermannohyla circumdata" = "Bc",
+                                       "Crossodactylus aeneus" = "Ca",
+                                       "Hylodes asper" = "Ha",
+                                       "Hylodes charadranaetes" = "Hc",
+                                       "Hylodes lateristrigatus" = "Hl",
+                                       "Hylodes pipilans" = "Hp",
+                                       "Physalaemus signifer" = "Ps",
+                                       "Proceratophrys appendiculata" = "Pa",              "Proceratophrys boiei" = "Pb",
+                                       "Rhinella ornata" = "Ro", 
+                                       "Scinax albicans" = "Sa",
+                                       "Scinax flavoguttatus" = "Sf")))),
+           stage = cut(stage, 
+                     breaks = c(25, 30, 35, 40, 42, 46),
+                     labels = c("25-30", "31-35", "36-40", "41-42", ">42"),
+                     include.lowest = TRUE))
+  # corrigindo valores fora da amplitude de variação esperada
+  tadpoles_raw$total_len[which(
+    tadpoles_raw$total_len > 100
+  )] <- tadpoles_raw$total_len[which(
+    tadpoles_raw$total_len > 100)] /100
+  # retornar os dados limpos
+  return(tadpoles_raw)
+}
+```
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Minha Solução para a Tarefa**]
+
+<BR/> 
+
+.center[.red[Transformar o código na função `read_tadpoles_raw()`]]
+```{r função read_tadpoles_raw() 2, message=FALSE, warning=FALSE}
+# carregar dados
+tadpoles_clean <- read_tadpoles_raw("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/tadpoles_raw.csv")
+
+# inspecionar dados
+glimpse(tadpoles_clean)
+```
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Na Aula Passada...**]
+
+<BR/>
+
+.pull-left[
+- .red[`tidyverse`] 
+
+- .red[Carregar], .red[limpar], .red[manipular] e .red[sumarizar] os dados
+
+- Verbos .red[`dplyr`]
+
+- Selecionar com .red[`select()`]
+
+- Filtrar com .red[`filter()`]
+
+- Ordenar com .red[`arrange()`]
+]
+
+.pull-right[
+- Agrupar e sumarizar com .red[`group_by()`], .red[`count()`] e .red[`summarise()`]
+
+- Corrigir o .red[tipo] dos dados com .red[`readr()`] e .red[`lubridate`]
+
+- Corrigir nome de observações com .red[`stringr`]
+
+- Identificar valores fora da amplitude de variação com .red[`assertive`]
+]
+
+???
+Iniciamos a caminhada no fluxo de trabalho de análise e a etapa de pré-processamento de dados.
+
+Vamos prosseguir realizando algumas transformações úteis para preparar os dados para gera gráficos, sumários estatísticos e deixar os dados prontos para análises subsequentes.
+
+---
+
+# .blue[**Tópicos da Aula**]
+
+<BR/>
+.center[.red[**Transformação, Sumarização e Visualização de Dados**]]
+.pull-left[
+- Dados .red[Tidy] x .red[Untidy] 
+
+- Pacote .red[tidyr]
+
+- Alterar o formato do *data frame*: .red[longo] x .red[largo]
+
+- .red[Separar] e .red[unir] uma coluna
+
+- .red[Unir] dois *data frame*'s com .red[dplyr]
+]
+
+
+.pull-right[
+- Gramática gráfica em R .red[`ggplot2`]
+
+- Conhecer as .red[camadas] essenciais 
+
+- .red[Dados], elementos .red[estéticos] e .red[geométricos]
+]
+
+???
+- Entender os conceitos de tidy e untidy data e porque é necessário deixar os dados no formato tidy para...
+
+- Gera novos data frames para visualizações, sumários e análises subsequentes. 
+
+- Aplicação do pacote tidyr para alterar o formato do data frame e colunas
+
+- Unir dois data frames a partir de colunas em comum com dplyr 
+
+- Introdução ao ggplot2
+
+- 
+
+---
+
+# .blue[**Fluxo de Trabalho para Análise de Dados**]
+
+<BR/>
+
+<BR/>
+
+```{r data analysis pipeline, echo = FALSE, fig.align='center'}
+knitr::include_graphics("https://d33wubrfki0l68.cloudfront.net/795c039ba2520455d833b4034befc8cf360a70ba/558a5/diagrams/data-science-explore.png")
+```
+
+
+
+???
+Vamos cobrir a terceira e quarta estapas, transformar e visualizar. 
+
+Crédito da imagem: [R for Data Science](https://d33wubrfki0l68.cloudfront.net/795c039ba2520455d833b4034befc8cf360a70ba/558a5/diagrams/data-science-explore.png)
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Tame Data**]
+
+<BR/>
+
+- Formato .red[retangular]<br/>
+<BR/>
+
+- Os .red[nomes das variáveis] são .red[fáceis] de se trabalhar<br/>
+<BR/>
+
+- Cada .red[coluna] contem apenas .red[uma variável]<br/>
+<BR/>
+
+- Os .red[tipos das variáveis] estão atribuídos corretamente<br/>
+<BR/>
+
+???
+**Tame data**
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Tidy Data**]
+
+<BR/>
+
+```{r tidy data 1, echo = FALSE, fig.align='center', out.width= '180%'}
+knitr::include_graphics("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.7jjzhy4KknPz9hJVnC_w7wHaCU%26pid%3DApi&f=1")
+```
+
+???
+**Tidy data**
+
+Cada linha é uma observação, cada coluna é uma variável.
+
+O formato é importante para gerar:
+- sumários estatísticos
+- novas tabelas para análises subsequentes
+- visualizações
+
+Crédito da imagem: [Storybench](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.7jjzhy4KknPz9hJVnC_w7wHaCU%26pid%3DApi&f=1)
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://tidyverse.tidyverse.org/articles/tidyverse-logo.png")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+# .blue[**Tidy Data**]
+
+<BR/>
+
+```{r tidy data 2, echo = FALSE, warning = FALSE}
+tadpoles_clean[c(1, 101, 151, 501, 851, 1001, 1051), ] %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif")
+```
+
+???
+**Tidy data**
+
+Cada linha é uma observação, cada coluna é uma variável. Tidy data tende a ser longo.
+
+O formato é importante para gerar:
+
+- novas tabelas para análises subsequentes
+- sumários estatísticos
+- visualizações
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Novos *Data Frame*'s para Análises Subsequentes**]
+.center[.red[**Frequência Absoluta e Relativa de Girinos**]]
+```{r tabela freq absoluta e relativa total 1}
+tadpoles_freq <- tadpoles_clean %>%  
+  count(species) %>% 
+  mutate(freq_rel = round(n/sum(n), 3)) %>% 
+  drop_na()
+```
+
+```{r tabela freq absoluta e relativa total 2, echo = FALSE}
+head(tadpoles_freq, n = 5) %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif")
+```
+  
+???
+Frequência absoluta de girinos de cada espécie permite responder:
+- Quais são as espécies mais comuns?
+- Quais são as espécies mais raras?
+
+Frequência relativa permite a comparação com assembleias de girinos oriundas de outras amostras.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Novos *Data Frame*'s para Análises Subsequentes**]
+.center[.red[**Frequência Absoluta e Relativa de Girinos por Riacho**]]
+```{r tabela freq absoluta e relativa por riacho 1, message=FALSE}
+tadpoles_freq_stream <- tadpoles_clean %>% 
+  group_by(stream, species) %>% 
+  summarise(n = n()) %>% 
+  mutate(freq_rel = round(n/sum(n), 3)) %>% 
+  drop_na() 
+```
+
+```{r tabela freq absoluta e relativa por riacho 2, echo = FALSE}
+head(tadpoles_freq_stream, n = 4) %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif")
+```
+  
+???
+Frequência absoluta de girinos por riacho permite responder:
+- quais riachos apresentaram maior número de girinos
+- quais espécies ocorreram em um maior número de riachos
+- espécies numericamente dominantes em um riacho também eram dominates nos outros 
+
+Frequência relativa de girinos por riacho permite comparações entre riachos
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Novos *Data Frame*'s para Análises Subsequentes**]
+.center[.red[**Frequência Absoluta e Relativa de Girinos por Riacho e por Mês**]]
+```{r tabela abundância por riacho por mês 1, message=FALSE, message=FALSE}
+tadpoles_freq_date_stream <- tadpoles_clean %>% 
+  group_by(date = zoo::as.yearmon(date), stream, species) %>% 
+  summarise(n = n()) %>% 
+  mutate(freq_rel = round(n/sum(n), 3)) %>% 
+  drop_na() 
+```
+
+```{r tabela abundância por riacho por mês 2, echo = FALSE}
+head(tadpoles_freq_date_stream, n = 4) %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif")
+```  
+???
+Frequência absoluta de girinos por espécie, por riacho e por mês permite responder:
+- Quais espécies ocorreram extensivamente ao longo do período de amostragem
+- Quais espécies ocorreram em períodos específicos ao longo da amostragem
+
+Frequência absoluta de girinos por espécie, por riacho e por mês permite realizar comparações sobre a variação temporal entre espécies e riachos 
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Novos *Data Frame*'s para Análises Subsequentes**]
+.center[.red[**Número de espécies por Riacho**]]
+```{r tabela riqueza por riacho 1, message=FALSE, warning=FALSE}
+tadpoles_rich_stream <- tadpoles_freq_stream %>% 
+  count(stream, name = "n_sp")
+```
+
+```{r tabela riqueza por riacho 2, echo = FALSE}
+head(tadpoles_rich_stream, n = 5) %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif")
+```  
+
+???
+Qual riacho apresentou o maior número de espécies?
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Novos *Data Frame*'s para Análises Subsequentes**]
+.center[.red[**Número de espécies por Mês e por Riacho**]]
+```{r tabela riqueza por mês por riacho 1, message=FALSE, warning=FALSE}
+tadpoles_rich_date_stream <- tadpoles_freq_date_stream %>%
+  group_by(date) %>% 
+  count(stream, name = "n_sp")
+```
+
+```{r tabela riqueza por mês por riacho 2, echo = FALSE}
+head(tadpoles_rich_date_stream, n = 5) %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif")
+```  
+???
+Como o número de espécies variou ao longo do tempo em cada riacho?
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Novos *Data Frame*'s para Análises Subsequentes**]
+.center[.red[**Número de Girinos por Estágio e por Espécie**]]
+```{r tabela número de girinos por estágio e por espécie 1, message=FALSE, warning=FALSE}
+tadpoles_stage_sp <- tadpoles_clean %>% 
+  group_by(species, stage) %>% 
+  count(species) %>% 
+  drop_na() 
+```
+
+```{r tabela número de girinos por estágio e por espécie 2, echo = FALSE}
+head(tadpoles_stage_sp, n = 5) %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif")
+```  
+???
+Como o número de girinos variou entre os estágios de desenvolvimento em cada espécie?
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Novos *Data Frame*'s para Análises Subsequentes**]
+.center[.red[**Tamanho do Corpo, Total, Razão Corpo:Total e Estágio dos Girinos por Espécie**]]
+```{r corrigindo valores trocados de tamanho total e corporal 3, echo = FALSE}
+tadpoles_clean <- tadpoles_clean %>%
+  mutate(ratio = body_len/total_len) 
+
+new_body_len <- tadpoles_clean$total_len[which(tadpoles_clean$ratio > 1)]
+
+new_total_len <- tadpoles_clean$body_len[which(tadpoles_clean$ratio > 1)]
+
+new_body_len[2] <- NA
+
+new_total_len[2] <- NA
+
+tadpoles_clean$total_len[which(tadpoles_clean$ratio > 1)] <- new_total_len
+
+tadpoles_clean$body_len[which(tadpoles_clean$ratio > 1)]  <- new_body_len
+
+tadpoles_clean <- tadpoles_clean %>%
+  mutate(ratio = body_len/total_len) 
+```
+
+```{r tabela tamanho do corpo, total e estágio e por espécie 1, message=FALSE, warning=FALSE}
+tadpoles_len_sp <- tadpoles_clean %>% 
+  select(date, species, stage, body_len, total_len) %>% 
+  mutate(date = zoo::as.yearmon(date),
+         ratio = body_len/total_len)
+```
+
+```{r tabela tamanho do corpo, total e estágio e por espécie 2, echo = FALSE}
+head(tadpoles_len_sp, n = 5) %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif")
+```  
+???
+Qual é a relação entre o tamanho corporal, total e estágio de desenvolvimento dos girinos?
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Sumários Estatísticos para Descrição dos Dados**]
+.center[.red[**Estatística Descritiva do Tamanho do Corpo dos Girinos**]]
+```{r sumário tamanho do corpo 1, message=FALSE, warning=FALSE}
+body_len_decription <- tadpoles_clean %>% 
+  group_by(species) %>% 
+  summarise(media = mean(body_len, na.rm = TRUE),
+            desvpad = sd(body_len, na.rm = TRUE),
+            min = quantile(body_len, na.rm = TRUE)[1],
+            qrt2 = quantile(body_len, na.rm = TRUE)[2],
+            mediana = quantile(body_len, na.rm = TRUE)[3],
+            qrt4 = quantile(body_len, na.rm = TRUE)[4],
+            maximo = quantile(body_len, na.rm = TRUE)[5], 
+            n = n()) %>% 
+  drop_na()
+```
+
+```{r sumário tamanho do corpo 2, echo = FALSE}
+head(body_len_decription, n = 2) %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif")
+```  
+???
+Estatística descritiva do tamanho corporal dos girinos de cada espécies
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Sumários Estatísticos para Descrição dos Dados**]
+.center[.red[**Estatística Descritiva do Tamanho Total dos Girinos**]]
+```{r sumário tamanho total 1, message=FALSE, warning=FALSE}
+total_len_decription <- tadpoles_clean %>% 
+  group_by(species) %>% 
+  summarise(media = mean(total_len, na.rm = TRUE),
+            desvpad = sd(total_len, na.rm = TRUE),
+            min = quantile(total_len, na.rm = TRUE)[1],
+            qrt2 = quantile(total_len, na.rm = TRUE)[2],
+            mediana = quantile(total_len, na.rm = TRUE)[3],
+            qrt4 = quantile(total_len, na.rm = TRUE)[4],
+            maximo = quantile(total_len, na.rm = TRUE)[5], 
+            n = n()) %>% 
+  drop_na()
+```
+
+```{r sumário tamanho total 2, echo = FALSE}
+head(total_len_decription, n = 2) %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif")
+```  
+???
+Estatística descritiva do tamanho total dos girinos de cada espécies
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Sumários Estatísticos para Descrição dos Dados**]
+.center[.red[**Estatística Descritiva da Frequência de Girinos por Espécie**]]
+```{r sumário frequencia absoluta por especie 1, message=FALSE, warning=FALSE}
+freq_abs_decription <- tadpoles_freq_stream %>% 
+  group_by(species) %>% 
+  summarise(media = mean(n),
+            desvpad = sd(n),
+            min = quantile(n)[1],
+            qrt2 = quantile(n)[2],
+            mediana = quantile(n)[3],
+            qrt4 = quantile(n)[4],
+            maximo = quantile(n)[5], 
+            n = n())
+```
+
+```{r sumário frequencia absoluta por especie 2, echo = FALSE}
+head(freq_abs_decription, n = 2) %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif")
+```  
+???
+Estatística descritiva da frequência absoluta dos girinos de cada espécies
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Sumários Estatísticos para Descrição dos Dados**]
+.center[.red[**Estatística Descritiva do Número Total de Espécies**]]
+```{r sumário riqueza 1, message=FALSE, warning=FALSE}
+tadpoles_rich_decription <- tadpoles_rich_stream %>% 
+  summarise(media = mean(n_sp),
+            desvpad = sd(n_sp),
+            min = quantile(n_sp)[1],
+            qrt2 = quantile(n_sp)[2],
+            mediana = quantile(n_sp)[3],
+            qrt4 = quantile(n_sp)[4],
+            maximo = quantile(n_sp)[5], 
+            n = n())
+```
+
+```{r sumário riqueza 2, echo = FALSE}
+tadpoles_rich_decription %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif")
+```  
+???
+Estatística descritiva riqueza de espécies
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.tidyverse.org%2Fblog%2F2020%2F06%2Fdplyr-1-0-0%2Fdplyr.png&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 20%, 15%
+
+## .blue[**Sumários Estatísticos para Descrição dos Dados**]
+.center[.red[**Estatística Descritiva do Número de Espécies por Riacho**]]
+```{r sumário riqueza por riacho 1, message=FALSE, warning=FALSE}
+tadpoles_rich_stream_decription <- tadpoles_rich_date_stream %>%   
+  group_by(stream) %>% 
+  summarise(media = mean(n_sp),
+            desvpad = sd(n_sp),
+            min = quantile(n_sp)[1],
+            qrt2 = quantile(n_sp)[2],
+            mediana = quantile(n_sp)[3],
+            qrt4 = quantile(n_sp)[4],
+            maximo = quantile(n_sp)[5], 
+            n = n())
+```
+
+```{r sumário riqueza por riacho 2, echo = FALSE}
+head(tadpoles_rich_stream_decription, n = 3) %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif")
+```  
+???
+Estatística descritiva riqueza de espécies por riacho.
+
+Só conseguimos isso se os dados estiverem no formato tidy. Caso contrário não é possível gerar sumários com facilidade.
+
