@@ -1,0 +1,404 @@
+---
+title: "02-Exercícios Funções Loop e Funções"
+output: 
+    html_notebook:
+      toc: true
+      number_section: true
+---
+
+# **Usando `lapply()` para manipular caracteres (*strings*)**
+
+O uso do `lapply()` consiste em alimentar o primeiro argumento com uma lista e o segundo argumento com uma função. Potenciais argumentos adicionais da função aplicada podem ser especificados ao final da função (`...`):
+
+```{r, eval = FALSE}
+lapply(X, FUN, ...)
+```
+
+
+Utilize as funções `strsplit()`, `tolower()` e `lapply()` para realizar algumas manipulações de caracteres contidos no vetor `estatistica_descritiva`. O vetor `estatistica_descritiva` contem o nome de algumas estatísticas e sua aplicação. Para criar o vetor `estatistica_descritiva`, rode o bloco de código abaixo: 
+
+```{r}
+# O vetor estatistica_descritiva já foi redigido para você. Rode esse bloco de código para criar o objeto
+estatistica_descritiva <- c("MÉDIA:MEDIDA DE POSIÇÃO", "MEDIANA:MEDIDA DE POISÇÃO", "MODA:MEDIDA DE POSIÇÃO", "AMPLITUDE:MEDIDA DE VARIAÇÃO", "VARIÂNCIA:MEDIDA DE VARIAÇÃO", "DESVIO PADRÃO:MEDIDA DE VARIAÇÃO", "COEFICIENTE DE VARIAÇÃO:MEDIDA DE VARIAÇÃO", "INTERVALO INTER-QUARTIL:MEDIDA DE VARIAÇÃO", "ASSIMETRIA:MEDIDADE DE SIMETRIA", "CURTOSE:MEDIDA DE SIMETRIA", "COVARÂNCIA:MEDIDA DE RELAÇÃO", "CORRELAÇÃO:MEDIDA DE RELAÇÃO", "MATRIZ DE VARIÂNCIA-COVARIÂNCIA:MEDIDA DE VARIAÇÃO-RELAÇÃO MULTIVARIADA")
+```
+
+- Primeiramente, consulte o arquivo de ajuda dessas funções para compreender o seu funcionamento.
+
+```{r, eval = FALSE}
+# Consulte o arquivo de ajuda de cada função
+help("strsplit")
+help("tolower")
+help("lapply")
+```
+
+- Agora, vamos utilizar a função `strsplit()` para separar os nomes das estatísticas de sua aplicação e armazená-los em uma lista chamada `estatistica_aplicacao`. Consulte o objeto criado utilizando a função `str()`.
+
+```{r}
+# Separe os nomes dos anos de nascimento
+estatistica_aplicacao <- strsplit(estatistica_descritiva, split = ":")
+
+# Consutle o objeto criado
+str(estatistica_aplicacao)
+```
+
+- Use `lapply()` para converter os vetores de caracteres contidos em `estatistica_aplicacao` que estão em letras maiúsculas para letras minúsculas: utilize a função `tolower()` em cada elemento do objeto `estatistica_aplicacao` e armazene no objeto `estatistica_aplicacao_minusculo`.
+
+```{r}
+estatistica_aplicacao_minusculo <- lapply(estatistica_aplicacao, tolower)
+```
+
+- Consulte o conteúdo de `nome_ano_minusculo` usando novamente `str()`.
+
+```{r}
+str(estatistica_aplicacao_minusculo)
+```
+
+# **Usando `lapply()` com suas próprias funções**
+
+Escreva duas funções, `selecionar_primeiro_elemento()` e `selecionar_segundo_elemento()`, e use-as juntamente com `lapply()` para obter os primeiros e segundos elementos contidos na lista `estatistica_aplicacao_minusculo`.
+
+- Escreva a função `selecionar_primeiro_elemento()`. A função recebe apenas um argumento. O mesmo argumento fornecido na chamada da função entre os parênteses (`function(__)`) dever ser fornecido no corpo da função entre as chaves (`{__[__]}`). Entre os colchetes (`[__]`) você deve informar a posição que deseja obter quando aplicar a função. 
+
+```{r}
+# Complete o código para finalizar a função
+selecionar_primeiro_elemento <- function(x) {
+  return(x[1])
+}
+```
+
+- Aplique a função `selecionar_primeiro_elemento()` nos elementos contidos em `estatistica_aplicacao_minusculo` e armazene os reusltados em um novo objeto chamdo `estatistica`.
+
+```{r}
+# Aplique a função selecionar_primeiro_elemento() sobre estatistica_aplicacao_minusculo
+estatistica <- lapply(estatistica_aplicacao_minusculo, selecionar_primeiro_elemento)
+
+# Consulte a estrutura do objeto criado
+str(estatistica)
+```
+
+
+- Escreva a função `selecionar_segundo_elemento()` que fará examente a mesma coisa para o segundo elemento. 
+
+```{r}
+# Complete o código para finalizar a função
+selecionar_segundo_elemento <- function(x) {
+  return(x[2])
+}
+```
+
+- Aplique a função `selecionar_segundo_elemento()` nos elementos contidos em `estatistica_aplicacao_minusculo` e armazene o resultado no objeto `aplicacao`.
+
+```{r}
+# Aplique a função selecionar_segundo_elemento() sobre estatistica_aplicacao_minusculo
+aplicacao <- lapply(estatistica_aplicacao_minusculo, selecionar_segundo_elemento)
+
+# Consulte a estrutura do objeto criado
+str(aplicacao)
+```
+
+# **`lapply()` e funções anônimas**
+
+Escrever suas próprias funções e utilizá-las junto com `lapply()` pode ser bastante útil. Porém, gastar digitação para definir uma função que será utilizada somente uma vez pode se tornar uma perda de tempo. Nesse contexto, em que utilizaremos a função criada apenas uma vez, podemos lançar mão de um recurso conhecido como funções anônimas. Funções anônimas são funções que são utilizadas sem atribuirmos um nome à elas. Funções anônimas exsitem somente no momento em que são utilizadas, uma vez que elas não possuem um nome e logo não se tornam um objeto no ambiente global do R. Abaixo temos um exemplo de uma função definida com um nome, outro de função anônima e uma aplicação de função anônima junto com a função `lapply()`:
+
+```{r}
+# Função com nome
+triplicar <- function(x) {
+  return(3 * x)
+}
+
+x <- c(1, 2, 3)
+triplicar(x)
+
+# Função anônima
+function(x) {3 * x}
+
+# Uso de uma função anônima com lapply()
+lapply(list(1, 2, 3), function(x) {3 * x})
+```
+
+Agora é sua vez de escrever funções anônimas. 
+
+- Reutilize a chamada e o algoritmo da função `selecionar_primeiro_elemento()` para aplicá-la como uma função anônima sobre os elementos contidos em `estatistica_aplicacao_minusculo` e armazene os resultados em um novo objeto chamado `estatistica`.
+
+```{r}
+# Aplique a sua função anônima sobre estatistica_aplicacao_minusculo
+estatistica <- lapply(estatistica_aplicacao_minusculo, function(x) {x[1]})
+
+# Consulte o objeto criado
+print(estatistica)
+```
+
+- Reutilize a chamada e o algoritmo da função `selecionar_segundo_elemento()` para aplicá-la como uma função anônima sobre os elementos contidos em `estatistica_aplicacao_minusculo` e armazene os reusltados em um novo objeto chamdo `aplicacao`.
+
+```{r}
+# Aplique a sua função anônima sobre estatistica_aplicacao_minusculo
+aplicacao <- lapply(estatistica_aplicacao_minusculo, function(x) {x[2]})
+
+# Consulte o objeto criado
+print(aplicacao)
+```
+
+# **Uso do `lapply()` com uma função com mais de um argumento**
+
+Podemos tornar a função `triplicar()` mais versátil, por exemplo, permintido que ela multiplique o valor de entrada `x` por qualquer outro valor. Para isso, basta acrescentar um novo argumento `fator` a função. Quando temos mais de um argumento a ser espcificado na função utilizada juntamente com `lapply()` basta informar o(s) argumento(s) ao final da chamada da função:
+
+```{r}
+multiplicar <- function(x, fator) {
+  return(fator * x)
+}
+
+lapply(list(1, 2, 3), multiplicar, fator = 3)
+```
+
+- Transforme a função `selecionar_primeiro_elemento()` em uma função que selecione o enésimo elemento de um objeto. Acrescente à função o argumento `posicao`. Salve esss função com o nome de `selecionar_enesimo_elemento()`. Em seguida, aplique-a sobre os elementos de `estatistica_aplicacao_minusculo` para obter o nome da estatística (`estatistica`) e sua aplicação (`aplicacao`). 
+
+```{r}
+# Reescreva a função adicionando um argumento que permita controlar a posição do elemento que será retornado
+selecionar_enesimo_elemento <- function(x, posicao) {
+  return(x[posicao])
+}
+
+# Selecione os primeiros elementos da lista estatistica_aplicacao_minusculo
+estatistica <- lapply(estatistica_aplicacao_minusculo, 
+                      selecionar_enesimo_elemento, 
+                      posicao = 1)
+
+# Selecione os segundaos elementos da lista estatistica_aplicacao_minusculo
+aplicacao <- lapply(estatistica_aplicacao_minusculo,
+                    selecionar_enesimo_elemento, 
+                    posicao = 2)
+
+# Consulte os objetos gerados
+print(estatistica)
+print(aplicacao)
+```
+
+# **Usando `sapply()`**
+
+O uso do `sapply()` é similar ao do `lapply()`. O primeiro argumento é uma lista ou um vetor `X` sobre o qual uma função `FUN` é aplicada. Potenciais argumentos adicionais a função são especificados ao final (`...`):
+
+```{r, eval = FALSE}
+sapply(X, FUN, ...)
+```
+
+Nos próximos exercícios você irá trabalhar com a lista `umidade` que está definida abaixo e contem medidas hipotéticas de umidade relativa do ar realizadas ao longo de 7 dias. 
+
+```{r}
+set.seed(20)
+umidade <- list(round(runif(7, 0, 100), 2), round(runif(7, 0, 100), 2), round(runif(7, 0, 100), 2), round(runif(7, 0, 100), 2), round(runif(7, 0, 100), 2), round(runif(7, 0, 100), 2), round(runif(7, 0, 100), 2))
+```
+
+- Verifique o conteúdo do objeto utiliando a função `str()`
+
+```{r}
+str(umidade)
+```
+
+- Use a função `lapply()` para obter o valor mínimo de umidade de cada dia de medição. Para obter o valor mínimo utilize a função `min()`.
+
+```{r}
+lapply(umidade, min)
+```
+
+- Repita essa operação, mas agora utilize a função `sapply()`. Repare na diferença entre a apresentação dos resultados.
+
+```{r}
+sapply(umidade, min)
+```
+
+- Use o `lapply()` para obter o valor máximo de umidade para cada dia de medição. Utilize a função `max()` para obter o valor máximo.
+
+```{r}
+lapply(umidade, max)
+```
+
+- Repita a operação anterior utilizando a função `sapply()`.
+
+```{r}
+sapply(umidade, max)
+```
+
+# **Usando `sapply()` com suas próprias funções**
+
+Da mesma forma que você usou uma função de sua autoria com `lapply()` você também pode fazê-lo com `sapply()`.
+
+- Termine a definição da função `amplitude()` que calcula a distância entre os valores máximo e mínimo de um vetor. Utilize as funções `max()` e `min()` no corpo da função.
+
+```{r}
+amplitude <- function(x) {
+  return(max(x) - min(x))
+}
+```
+
+- Aplique sua função `amplitude()` sobre a lista `umidade` usando a função `sapply()`.
+
+```{r}
+sapply(umidade, amplitude)
+```
+
+- Repita a operação usando `lapply()` e repare na diferença entre a apresentação dos resultados.
+
+```{r}
+lapply(umidade, amplitude)
+```
+
+# **Usando `aggregate()` para gerar estatísticas descritivas**
+
+O uso da função `aggregate()` consiste em alimentar o primeiro argumento com um *data frame*, ou uma coluna de *data frame*, o segundo argumento com uma variável agrupadora em formato de lista e uma função a ser aplicada sobre o *data frame*. Potenciais argumentos adicioinais da função aplicada podem ser especificados ao final da função (`...`):  
+
+```{r, eval = FALSE}
+aggregate(x, by, FUN, ...)
+```
+
+Você vai usar a função `aggregate()` para gerar um sumário estatístico de variáveis da tabela de dados `penguins`. Para acessar a tabela de dados `penguins` é necessário instalar e carregar o pacote `palmerpenguins`:
+
+```{r}
+# Instale o pacote
+install.packages("palmerpenguins")
+
+# Carregue o pacote
+library(palmerpenguins)
+```
+
+O *data frame* `penguins` traz dados de comprimento e largura de bico, comprimento da nadadeira, massa corporal e sexo de três espécies de pinguins oriundos de colônias de três ilhas diferentes entre os anos de 2007 e 2009:
+
+```{r}
+str(penguins)
+```
+
+- Utilize a função `mean()` para obter a massa corporal média das três espécies de pinguins usando a função `aggregate()`. As espécies encontram-se na coluna `species` e a massa corporal encontra-se na coluna `body_mass_g`. Lembre-se de utilizar `$` para acessar a coluna desejada do *data frame*. Utilize o argumento adicional `na.rm = TRUE` para eliminar os valores ausentes. Armazene o resultado no objeto `media_massa_piguins`
+
+```{r}
+# Calcule a massa corporal média de cada espécie de pinguim
+media_massa_piguins <- aggregate(penguins$body_mass_g, 
+          list(Especie = penguins$species),
+          mean, na.rm = TRUE)
+```
+
+- Repita esse procedimento para calcular para cada espécie o desvio padrão, usando a função `sd()`, o valor mínimo usando a função `min()` e o valor máximo usando a função `max()`. Lembre-se de usar o argumento `na.rm = TRUE` ao final da função `aggregate()` para remover os valores ausentes dos cálculos. Armazene os resutlados nos objetos `dp_massa_pinguins`, `min_massa_pinguins` e `max_massa_pinguins`.
+
+```{r}
+# Calcule o desvio padrão da massa corporal de cada espécie de pinguim
+dp_massa_pinguins <- aggregate(penguins$body_mass_g, 
+          list(Especie = penguins$species),
+          sd, na.rm = TRUE)
+
+# Obtenha o valor máximo da massa corporal de cada espécie de pinguim
+max_massa_pinguins <- aggregate(penguins$body_mass_g, 
+          list(Especie = penguins$species),
+          max, na.rm = TRUE)
+
+# Obtenha o valor mínimo da massa corporal de cada espécie de pinguim
+min_massa_pinguins <- aggregate(penguins$body_mass_g, 
+          list(Especie = penguins$species),
+          min, na.rm = TRUE)
+```
+
+- Para uma estatística descritiva mais completa sobre a massa dos pinguins, falta obter o número de indivíduos que foram pesados de cada espécie. Para isso, aplique a função `!is.na()` sobre a coluna `body_mass_g` e aplique a função `sum()` usando a função `aggregate()`. A função `!is.na()` irá transfomar a coluna com valores de massa em um vetor lógico com valores `TRUE` para valores numéricos e valores `FALSE` para valores `NA`. Tirando vantagem das [regras de coerção](https://www.oreilly.com/library/view/r-in-a/9781449358204/ch05s08.html) do [R](https://rstudio-education.github.io/hopr/images/hopr_0301.png), ao somar o vetor lógico usando a função `aggregate()` você obterá o número de pinguins medidos de cada espécie. Armazene o resultado no objeto `n_massa_pinguins`. A linha de comando foi fornecida abaixo para você.  
+
+```{r}
+# Obtenha o número de cada espécie de pinguim que teve sua massa corporal medida
+n_massa_pinguins <- aggregate(!is.na(penguins$body_mass_g), list(Especie = penguins$species), sum)
+```
+
+# **Gerando uma tabela de estatística descritiva única**
+
+Você gerou uma estatística descritiva bastente completa para a massa de três espécies de pinguins, mas cada estatística encontra-se em um *data frame* distinto. Sua tarefa agora é gerar uma única tabela contendo todas as estatísticas descritivas da massa das três espécies de pinguins. 
+
+- Você precisa saber o nome das colunas que contém as variáveis de interesse. Aplique a função `str()`sobre os objetos gerados no exercício anterior para descobrir o nome das colunas de interesse.
+
+```{r}
+str(media_massa_piguins)
+str(dp_massa_pinguins)
+str(max_massa_pinguins)
+str(min_massa_pinguins)
+str(n_massa_pinguins)
+```
+
+- Agora, gere a tabela com as estatísticas descritivas usando a função `data.frame()` e os objetos contendo as estatísticas descritivas para as três espécies: `media_massa_piguins`, `dp_massa_piguins`, `max_massa_piguins`, `min_massa_piguins` e `n_massa_piguins`.
+
+```{r}
+# Gere a tabela contendo a estatística descritiva da massa das três espécies de pinguins
+estatistica_descritiva_massa <- data.frame(Especie = media_massa_piguins$Especie, 
+                                           Media = media_massa_piguins$x,
+                                           Desv_Pad = dp_massa_pinguins$x,
+                                           Max = max_massa_pinguins$x,
+                                           Min = min_massa_pinguins$x,
+                                           N = n_massa_pinguins$x)
+
+# Consulte o data frame gerado
+estatistica_descritiva_massa
+```
+
+# **Trasformando linhas de comando em uma função**
+
+A rotina que você acabou de criar foi bastante útil para gerar uma tabela de estatísticas descritivas da massa de três espécies de pinguins contida no *data frame* `penguins`. Mas e se você quiser obter as estatísitcas descritivas das outras variáveis contidas nesse *data frame*? Você pode digitar todo o código novamente, pode copiar e colar o código, alterando apenas o nome da variável que você deseja sumarizar, ou você pode criar uma função e resolver seu problema com o menor esforço possível!
+
+O seu desafio agora é transformar as linha comando do exercício anterior em uma função capaz de calcular e produzir as estatísticas descritivas, agrupadas por uma coluna, para uma varável oriunda de qualquer tabela de dados. Utilize o modelo abaixo, e lembre-se das 6 etapas para transformar suas linhas de comando em uma função:
+
+1. Prepare um "modelo" da função<br/>
+<BR/>
+2. Cole o script no interior do "modelo"<br/>
+<BR/>
+3. Escolha os argumentos<br/>
+<BR/>
+4. Substitua os objetos internos pelos argumentos equivalentes<br/>
+<BR/> 
+5. Use nomes generalistas para as variáveis internas a função<br/>
+<BR/> 
+6. Teste a função!
+
+```{r}
+estatistica_descritiva <- function(variavel, grupo, na.rm = TRUE) {
+  # Calcule a massa corporal média de cada espécie de pinguim
+  media <- aggregate(variavel, 
+          list(Especie = grupo),
+          mean, na.rm = na.rm)
+  # Calcule o desvio padrão da massa corporal de cada espécie de pinguim
+  dp <- aggregate(variavel, 
+          list(Especie = grupo),
+          sd, na.rm = na.rm)
+  # Obtenha o valor máximo da massa corporal de cada espécie de pinguim
+  max <- aggregate(variavel, 
+          list(Especie = grupo),
+          max, na.rm = na.rm)
+  # Obtenha o valor mínimo da massa corporal de cada espécie de pinguim
+  min <- aggregate(variavel, 
+          list(Especie = grupo),
+          min, na.rm = na.rm)
+  # Obtenha o número de cada espécie de pinguim que teve sua massa corporal medida
+  n <- aggregate(!is.na(variavel), 
+                 list(Especie = grupo), 
+                 sum)
+  # Gere a tabela contendo a estatística descritiva da variável para cada nível do grupo
+  estatistica_descritiva <- data.frame(Especie = media$Especie, 
+                                           Media = media$x,
+                                           Desv_Pad = dp$x,
+                                           Max = max$x,
+                                           Min = min$x,
+                                           N = n$x)
+  # Retornando a tabela de estatística descritiva
+  return(estatistica_descritiva)
+}
+
+```
+
+- Teste sua função com a mesma variável do exercício anterior, `body_mass_g` e compare os resultados.
+
+```{r}
+# Teste sua função sobre a coluna body_mass_g
+estatistica_descritiva(penguins$body_mass_g, penguins$species)
+```
+
+- Agora teste a sua função com uma nova variável, `bill_length_mm`.
+
+```{r}
+# Teste sua função sobre a coluna bill_length_mm
+estatistica_descritiva(penguins$bill_length_mm, penguins$species)
+```
+
+- Para se certificar de que sua função pode ser utilizada com ourtas tabelas de dados, vamos obter as estatísticas descritivas para a variável `Sepal.Length` para as diferentes espécies (`Species`) do *data frame* `iris`.
+
+```{r}
+estatistica_descritiva(iris$Sepal.Length, iris$Species)
+```
