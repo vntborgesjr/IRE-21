@@ -1,0 +1,27 @@
+---
+title: "04 - Exercícios de Limpeza e Manipulação de Dados"
+output: 
+  html_notebook:
+    toc: true
+    number_section: true
+---
+
+- Exercícios de visualização de variáveis discretas a partir de gráfico de barras. 
+- Visualizar a número de indivíduos de uma espécie (Ca) por riacho (fill)
+- Visualizar o número de indivíduos de Ca por estágio de desenvolvimento (fill)
+- Alterar os atrbutos geométricos (position, color, fill)
+- Alterar cor da barra (scale_fill_brewer(palette = )) alterando o argumento palette. Tentar com 8 Consultar help(scale_fill_brewer) e brincar com as possibilidades de cores
+
+- Exercício de visualização de media + ou - desvio padrão geom_col() + geom_errorbar().
+
+- Exercícios com aplicação dos estéticos (ver capítulo 2 - Aesthetics - do curso Introduction to Data Visualization with ggplot2):
+  - color
+  - 
+
+- Exercícios com aplicação dos atributos (ver capítulo 3 - Geometries - do curso Introduction to Data Visualization with ggplot2):
+  - alpha
+  - shape
+  - position = "jitter"/ position_jitterdodge()
+  - ou geométrico geom_jitter(width = ) substituindo geom_point()
+  
+- Exerciícios com aplicação do
