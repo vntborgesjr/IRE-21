@@ -21,3 +21,17 @@ Data  | Videos | Slides | Scripts | Exercícios | Respostas
 8 de junho  | [Funções e Controladores de Fluxo](https://drive.google.com/file/d/1_qmp_OLflgqaKo557jHRURG1-L2Q7zsy/view?usp=sharing) | [Slides 03](Slides/03-Introducao-ao-R-Introducao-Escrita-de-Funcoes-slides.html) | [Script 03](Scripts/03-Introducao-R-Funcoes-Controladores-de-fluxo.R) | [Exercícios 03](Exercícios/03-Exercícios-Funcoes-Controladores_de_Fluxo.Rmd) | [Respostas 03](Respostas/03-Exercícios-Funcoes-Controladores-de-Fluxo-respostas.nb.html)
 15 de junho  | [Manipulação e Limpeza de Dados ](https://drive.google.com/file/d/1vte8UQ9Sk9efiPbe7xjzvsu4hoCGcxzZ/view?usp=sharing) | [Slides 04](Slides/04-Manipulação-e-Limpeza-de-Dados-slides.html) | [Script 04](Scripts/04-Limpeza-e-Manipulação-de-Dados.R) | [Exercícios 04](Exercícios/04-Exercícios-de-Limpeza-e-Manipulação-de-Dados.Rmd) | [Respostas 04](Respostas/04-Exercícios-de-Limpeza-e-Manipulação-de-Dados-respostas.nb.html)
 22 de junho | [Manipulação e Transformação de Dados](https://drive.google.com/file/d/1SoovW58cGxEys1XFRQ7tcq-f1PiF54cl/view) | [Slides 05](Slides/05-Manipulação-e-Transformação-de-Dados-slides.html) | [Scripts 05](Scripts/05-Manipulação-e-Transformação-de-Dados.R) | - 
+6 de julho | [Transformação e Visualização de Dados]() | [Slides 06](Slides/06-Transformação-e-Visualização-de-Dados.html) | [Scripts 06](Scripts/06 -Transformação-e-Visualização-de-Dados.R) | - 
+
+### Arquivos de Dados 
+
+[numero_de_especies.txt](Dados/numero_de_especies.txt)
+[area.csv](Dados/area.csv)
+[variavel_categorica1.xlsx](Dados/variavel_categorica1.xlsx)
+[variavel_categorica2.txt](Dados/variavel_categorica2.txt)
+[variavel_categorica3.csv](Dados/variavel_categorica3.csv)
+[tadpoles_raw.csv](Dados/tadpoles_raw.csv)
+[tadpoles_raw.xlsx](Dados/tadpoles_raw.xlsx)
+[streams.xlsx](Dados/streams.xlsx)
+[streams_variables.csv](Dados/streams_variables.csv)
+[streams_date_variables.csv](Dados/streams_date_variables.csv)
