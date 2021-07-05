@@ -6,12 +6,23 @@
 #
 # Carregar pacotes  -------------------------------------------
 library(tidyverse)
+source("IRE_functions.R")
+tadpoles_clean <- read_tadpoles_raw("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/tadpoles_raw.csv")
 
 # OBS: ANTES DE COMEÇAR A EXECUTAR ESSE SCRIPT, ABRA E EXECUTE O SCRIPT DA
 # AULA 05 PARA GERAR OS OBJETOS NECESSÁRIOS PARA A EXECUÇÃO DESSE SCRIPT
 
 # Untidy data - carregar dados  -------------------------------------------
 streams_raw <- readxl::read_xlsx("streams.xlsx")
+streams_raw <- readxl::read_xlsx("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/streams.xlsx")
+streams_variables <- read_csv("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/streams_variables.csv",
+                              col_types = cols(
+                                stream = col_factor()
+                              ))
+streams_date_variables <- read_csv("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/streams_date_variables.csv",
+                                   col_types = cols(
+                                     stream = col_factor()
+                                   ))
 
 # Formato largo para longo - gather()  -------------------------------------------
 gather(data = streams_raw, 
@@ -132,196 +143,493 @@ tadpoles_len_sp %>%
              y = body_len)) +
   geom_point()
 
-# Localizando e corrigindo os erros  -------------------------------------------
-# Lcalizando erros em Ca e Hc
-tadpoles_len_sp %>% 
-  filter(species == "Ca" | species == "Hc", body_len > 30)
+# Gráfico de barras - geom_bar()  -------------------------------------------
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species)) +
+  geom_bar()
+# Gráfico de barras - geom_col()  -------------------------------------------
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  count(species) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, y = n)) +
+  geom_col()
 
-# Corrigindo erros
-# Resolvendo valores trocados em HC
-tadpoles_len_sp$total_len[which(
-  tadpoles_len_sp$species == "Hc" &
-    tadpoles_len_sp$total_len == 9.31
-)] <- 32.64
-tadpoles_len_sp$body_len[which(
-  tadpoles_len_sp$species == "Hc" &
-    tadpoles_len_sp$body_len == 32.64
-)] <- 9.31
+# continuaremos apenas com geom_bar()
+# Atributo geométrico fill  -------------------------------------------
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species)) +
+  geom_bar(fill = "red") # altera a cor das barras
 
-# Localizando erros em Sf
-tadpoles_len_sp %>% 
-  filter(species == "Sf", body_len > 15)
+# Atributo geométrico color  -------------------------------------------
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species)) +
+  geom_bar(fill = "red", 
+           color = "black") # altera o contorno das barras
 
-# Corrigindo erro em Sf
-# Resolvendo valores trocados em Sf
-tadpoles_len_sp$total_len[which(
-  tadpoles_len_sp$species == "Sf" &
-    tadpoles_len_sp$total_len == 5.52 |
-    tadpoles_len_sp$total_len == 6.30
-)] <- c(17.73, 15.97)
-tadpoles_len_sp$body_len[which(
-  tadpoles_len_sp$species == "Sf" &
-    tadpoles_len_sp$body_len == 17.73 |
-    tadpoles_len_sp$body_len == 15.97
-)] <- c(5.52, 6.30)
-
-# Nova inspeção visual  -------------------------------------------
-tadpoles_len_sp %>% 
+# Mapeamento estético fill  -------------------------------------------
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species, stream) %>% 
   drop_na() %>% 
   ggplot(aes(x = species, 
+             fill = stream)) + # gera baras empilhadas 
+  geom_bar(color = "black") # position = "stack" (default, não precisa especificar)
+
+# Atributo geométrico position  -------------------------------------------
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species, stream) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             fill = stream)) +
+  geom_bar(color = "black", 
+           position = "dodge") # gera barras lado a lado
+
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species, stream) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             fill = stream)) +
+  geom_bar(color = "black",
+           position = position_dodge()) # gera o mesmo resultado, mas permite maio controle
+
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species, stream) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             fill = stream)) +
+  geom_bar(color = "black",
+           position = position_dodge(width = 0.2),
+           alpha = 0.5)
+
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species, stream) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             fill = stream)) +
+  geom_bar(color = "black", 
+           position = "fill") # gera barras empilhadas representando proporções
+
+# Atributo geométrico width  -------------------------------------------
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species, stream) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             fill = stream)) +
+  geom_bar(color = "black",
+           width = 0.7, # controla a largura de barras 
+           position = "fill")
+
+# Modificando estéticos scale_*_*()  -------------------------------------------
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species, stream) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             fill = stream)) +
+  geom_bar(color = "black", 
+           position = "dodge",
+           width = 0.7) +
+  scale_x_discrete("Species") + # altera caracterísicas do eixo x
+  scale_y_continuous("Number of tadpoles") # altera características do eixo y
+
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species, stream) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             fill = stream)) +
+  geom_bar(color = "black", 
+           position = "dodge",
+           width = 0.7) +
+  scale_x_discrete("Species") + 
+  scale_y_continuous("Number of tadpoles",
+                     breaks = seq(0, 175, 25)) # controla o intervalo entre valores do eixo
+
+minhas_cores <- c("black", "white", "blue", "green", "yellow", "red", "purple")
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species, stream) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, fill = stream)) +
+  geom_bar(color = "black", 
+           position = "dodge",
+           width = 0.7) +
+  scale_x_discrete("Species") +
+  scale_y_continuous("Number of tadpoles", 
+                     breaks = seq(0, 175, 25)) +
+  scale_fill_discrete("Stream", type = minhas_cores) # controla as cores das barras
+
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species, stream) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, fill = stream)) +
+  geom_bar(color = "black", 
+           position = "dodge",
+           width = 0.7) +
+  scale_x_discrete("Species") +
+  scale_y_continuous("Number of tadpoles", 
+                     breaks = seq(0, 175, 25)) +
+  scale_fill_brewer("Stream") # gera conres sequênciais
+
+# Histograma geom_hist()  -------------------------------------------
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>%
+  drop_na() %>% 
+  ggplot(aes(x = body_len)) +  
+  geom_histogram()
+
+# Atributo geométrico binwidth  -------------------------------------------
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>%
+  drop_na() %>% 
+  ggplot(aes(x = body_len)) +  
+  geom_histogram(binwidth = 5) # controla a largura da barra
+
+# Atributo geométrico center  -------------------------------------------
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>%
+  drop_na() %>% 
+  ggplot(aes(x = body_len)) +  
+  geom_histogram(binwidth = 1,
+                 center = 0.5) # controla local do rótulo no eixo x
+
+# Mapeamento estético fill  -------------------------------------------
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>%
+  drop_na() %>% 
+  ggplot(aes(x = body_len,
+             fill = species)) + # gera histogramas com diferentes cores a partir de uma variável categórica
+  geom_histogram(binwidth = 1,
+                 center = 0.5)
+
+# Histograma de proporções  -------------------------------------------
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>%
+  drop_na() %>% 
+  ggplot(aes(x = body_len, 
+             y = ..density.., # plota proporções ao em vez de contagens
+             fill = species)) +   
+  geom_histogram(binwidth = 1,
+                 center = 0.5)
+
+# Mapeamento estético scal_*_*()  -------------------------------------------
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>%
+  drop_na() %>% 
+  ggplot(aes(x = body_len, 
+             y = ..density.., 
+             fill = species)) +   
+  geom_histogram(binwidth = 1,
+                 center = 0.5, 
+                 alpha = 0.5) +
+  scale_x_continuous("Species") + # controla características do eixo x
+  scale_y_continuous("Relative frequency") + # controla características do eixo y
+  scale_fill_brewer("Species") # controla as cores do estético fill
+ 
+# Gráfico de pontos com uma variável - geom_point()  -------------------------------------------
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = 0, 
              y = body_len)) +
-  geom_point() # tudo ok
-
-tadpoles_len_sp %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             y = total_len)) +
-  geom_point() # tudo ok
-
-# Adicionando estético color  -------------------------------------------
-tadpoles_len_sp %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             y = body_len, 
-             color = stage)) + 
   geom_point()
 
-# Adicionando atributo geométrico position  -------------------------------------------
+# Mapeamento estético color  -------------------------------------------
 tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
-  ggplot(aes(x = species, 
+  ggplot(aes(x = 0, 
              y = body_len, 
-             color = stage)) +
+             color = species)) + # atribui diferentes cores a partir de uma variável categórica
+  geom_point()
+
+# Atributo geométrico position  -------------------------------------------
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = 0, 
+             y = body_len, 
+             color = species)) +
+  geom_point(position = "jitter") # adiciona variação aleatória ao pontos sobrepostos
+
+# Mapeamento estético alpha  -------------------------------------------
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = 0, 
+             y = body_len, 
+             color = species, 
+             alpha = 0.3)) + # atribui transparência aos pontos
   geom_point(position = "jitter")
 
-# Adicionando estético alpha  -------------------------------------------
+# Mapeamento estético shape  -------------------------------------------
 tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
-  ggplot(aes(x = species, 
+  ggplot(aes(x = 0, 
              y = body_len, 
-             color = stage, 
-             alpha = 0.7)) + 
+             color = species, 
+             alpha = 0.3, 
+             shape = species)) + # atribui diferentes formas aos pontos de acordo com uma variável categórica
   geom_point(position = "jitter")
 
-# Adicionando estético shape  -------------------------------------------
+# Mapeamento estético size  -------------------------------------------
 tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
-  ggplot(aes(x = species, 
+  ggplot(aes(x = 0, 
              y = body_len, 
-             color = stage, 
-             alpha = 0.7,
-             shape = stage)) + 
+             color = species, 
+             alpha = 0.3,
+             shape = species,
+             size = stage)) + # atribui diferentes tamanhos de acordo com uma variável preferencialmente contínua
   geom_point(position = "jitter")
 
-# Adicionando estético size  -------------------------------------------
+# Modificando esteticos com scale_*_*()  -------------------------------------------
 tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
-  ggplot(aes(x = species, 
+  ggplot(aes(x = 0, 
              y = body_len, 
-             color = stage, 
-             alpha = 0.7,
-             shape = stage,
-             size = stage)) + 
-  geom_point(position = "jitter")
-
-# Gráfico razoável  -------------------------------------------
-tadpoles_len_sp %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, y = body_len, 
-             color = stage, alpha = 0.7)) +
-  geom_point(position = position_jitter(0.25,
-                                        seed = 136))
-
-# Modificando estético scale_*_*()  -------------------------------------------
-tadpoles_len_sp %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             y = body_len, 
-             color = stage, 
-             alpha = 0.7)) +
+             color = species, 
+             alpha = 0.3,
+             shape = species)) +
   geom_point(position = 
                position_jitter(0.25,
                                seed = 136)) +
-  scale_x_discrete("Species") + 
-  scale_y_continuous("Body Length (mm)") + 
-  scale_color_discrete("Stage")
+  scale_x_discrete("") +
+  scale_y_continuous("Body Length (mm)") +
+  scale_color_discrete("Species")
 
-# limits
 tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
-  ggplot(aes(x = species, 
+  ggplot(aes(x = 0, 
              y = body_len, 
-             color = stage, 
-             alpha = 0.7)) +
+             color = species, 
+             alpha = 0.3,
+             shape = species)) +
   geom_point(position = 
                position_jitter(0.25,
                                seed = 136)) +
-  scale_x_discrete("Species") + 
+  scale_x_discrete("") + 
   scale_y_continuous("Body Length (mm)",
-                     limits = c(0, 30)) +
-  scale_color_discrete("Stage")
+                     limits = c(0, 30)) + # atribui limites ao eixo y
+  scale_color_discrete("Species")
 
-# breaks
 tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
-  ggplot(aes(x = species, 
+  ggplot(aes(x = 0, 
              y = body_len, 
-             color = stage, 
-             alpha = 0.7)) +
+             color = species, 
+             alpha = 0.3,
+             shape = species)) +
   geom_point(position = 
                position_jitter(0.25,
                                seed = 136)) +
-  scale_x_discrete("Species") + 
-  scale_y_continuous("Body Length (mm)",
-                     limits = c(0, 30),
-                     breaks = seq(0, 30, 5)) +
-  scale_color_discrete("Stage")
-
-# expand
-tadpoles_len_sp %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             y = body_len, 
-             color = stage, 
-             alpha = 0.7)) +
-  geom_point(position = 
-               position_jitter(0.25,
-                               seed = 136)) +
-  scale_x_discrete("Species") + 
+  scale_x_discrete("") + 
   scale_y_continuous("Body Length (mm)",
                      limits = c(0, 30),
-                     breaks = seq(0, 30, 5),
-                     expand = c(0, 0)) +
-  scale_color_discrete("Stage")
+                     breaks = seq(0, 30, 5)) + # determina intervalo entre valores no eixo y
+  scale_color_discrete("Species")
 
-# scale_color_discrete()
 tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
-  ggplot(aes(x = species, 
+  ggplot(aes(x = 0, 
              y = body_len, 
-             color = stage, 
-             alpha = 0.7)) +
+             color = species, 
+             alpha = 0.3,
+             shape = species)) +
   geom_point(position = 
                position_jitter(0.25,
                                seed = 136)) +
-  scale_x_discrete("Species") + 
+  scale_x_discrete("") + 
   scale_y_continuous("Body Length (mm)",
                      limits = c(0, 30),
                      breaks = seq(0, 30, 5),
                      expand = c(0, 0)) +
-  scale_color_discrete("Development \nClass",
-                       labels = c("I", "II", "III", "IV", "V"))
+  scale_color_discrete("Species",
+                       labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus"))
+# controla características relacionadas ao estético color
 
-# usando labs() para renomear estéticos
 tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
-  ggplot(aes(x = species, 
+  ggplot(aes(x = 0, 
              y = body_len, 
-             color = stage, 
-             alpha = 0.7)) +
+             color = species, 
+             alpha = 0.3,
+             shape = species)) +
   geom_point(position = 
                position_jitter(0.25,
-                               seed = 136)) +
-  labs(x = "Species",
+                               seed = 136), 
+             show.legend = c(alpha = FALSE, shape = FALSE)) +
+  labs(x = "", # também pode ser utilizado para controlar características dos eixos
        y = "Body Length (mm)",
-       color = "Stage")
+       color = "Species") +
+  scale_color_discrete(labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus"))
+
+# Relação entre variáveis geom_point() -------------------------------------------
+tadpoles_len_sp %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len,
+             y = body_len)) +
+  geom_point()
+
+# Modificando estéticos  -------------------------------------------
+tadpoles_len_sp %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) + # atribui diferentes cores de acordo com os níveis de uma variável categórica
+  geom_point()
+
+# Sobrepondo geométricos  -------------------------------------------
+# gera tabela com as médias de tamanho total e corporal para as três espécies
+tadpoles_media <- tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  group_by(species) %>% 
+  summarise_all(mean, na.rm = TRUE)
+
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) + 
+  geom_point() + 
+  geom_point(data = tadpoles_media, # sobrepondo mais uma camada de pontos
+             shape = 15,
+             size = 8,
+             stroke = 2)
+
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) + 
+  geom_point() + 
+  geom_point(data = tadpoles_media,
+             shape = 21,
+             size = 8,
+             fill = "black", # aterando a aparência dos pontos para gerar destaque
+             stroke = 2)
+
+# Atributo geométrico alpha  -------------------------------------------
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) + 
+  geom_point(alpha = 0.5,
+             show.legend = c(alpha = FALSE)) # atribuindo transparência aos pontos
+
+# Atributo geométrico shape  -------------------------------------------
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) + 
+  geom_point(shape = 1) # altera a forma dos pontos
+
+# Mapeamento estético scale_*_*()  -------------------------------------------
+
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) + 
+  geom_point(shape = 1,
+             alpha = 0.5) +
+  scale_x_continuous("Total length (mm)",
+                     breaks = seq(0, round(max(tadpoles_len_sp$total_len,   na.rm = TRUE)), 10)) +
+  scale_y_continuous("Body length (mm)",
+                     breaks = seq(0, round(max(tadpoles_len_sp$body_len, na.rm = TRUE)), 5)) +
+  scale_color_discrete("Species",
+                       labels = c("Hylodes \npipilans", "Proceratophrys\nappendiculata", "Scinax \nflavoguttatus"))
+
+# Variação temporal geom_line()  -------------------------------------------
+tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  count(time = date, species) %>% 
+  group_by(time) %>% 
+  summarize(n = sum(n)) %>% 
+  ggplot(aes(x = time,
+             y = n)) +
+  geom_line()
+
+# Mapeamento estético color  -------------------------------------------
+tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  count(time = date, species) %>% 
+  ggplot(aes(x = time, 
+             y = n,
+             color = species)) + # gerar diferentes linhas atribuindo diferentes cores de acordo com os níveis de uma variável categórica
+  geom_line()
+
+# Mapeamento estético linetype  -------------------------------------------
+tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  count(time = date, species) %>% 
+  ggplot(aes(x = time, 
+             y = n,
+             linetype = species)) + # gerar diferentes tipos de linhas de acordo com os níveis de uma variável categórica
+  geom_line()
+
+# Mapeamento estético color e linetype  -------------------------------------------
+tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  count(time = date, species) %>% 
+  ggplot(aes(x = time, 
+             y = n,
+             color = species, # diferentes cores
+             linetype = species)) + # diferentes tipos de linhas
+  geom_line()
+
+# Sobrepondo camadas geom_point() e geom_line()  -------------------------------------------
+tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  count(time = date, species) %>% 
+  ggplot(aes(x = time, 
+             y = n,
+             color = species,
+             linetype = species)) +
+  geom_line() +
+  geom_point(aes(shape = species)) # adiciona pontos com diferentes formas de acordo com os níveis de uma variável categórica
+
+# Mapeamento estético scale_*_*()  -------------------------------------------
+tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  count(time = date, species) %>% 
+  ggplot(aes(x = time, 
+             y = n,
+             color = species,
+             linetype = species)) +  
+  geom_line() +
+  geom_point(aes(shape = species)) + 
+  scale_x_continuous("Time") + # controla características do eixo x
+  scale_y_continuous("Number of tadpoles",
+                     breaks = seq(0, 40, 5)) # controla caracteristicas do eixo y
+
