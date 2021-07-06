@@ -633,3 +633,161 @@ tadpoles_clean %>%
   scale_y_continuous("Number of tadpoles",
                      breaks = seq(0, 40, 5)) # controla caracteristicas do eixo y
 
+# Camada themes()  -------------------------------------------
+# Gráfico base para alterações
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus"))
+
+# Alterando características do texto  -------------------------------------------
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)",
+       y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(axis.title = element_text(size = 24, #<< altera o tamaanho da fonte do título dos eixos
+                                  color = "blue")) #<< altera a cor da fonte
+
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus")) +
+  theme(axis.title = element_text(size = 24,
+                                  color = "blue"),
+        axis.text = element_text(size = 20)) #<< altera o tamanho da fonte dos rótulos dos eixos
+
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus")) +
+  theme(axis.title = element_text(size = 24,
+                                  color = "blue"),
+        axis.text = element_text(size = 20), 
+        legend.title = element_text(size = 24, #<< altara o tamanho da fonte do título da legenda
+                                    color = "blue"),
+        legend.text = element_text(size = 20, #<< altera o tamanho da fonte do texto da legenda
+                                   face = "italic")) #<< transforma o texto da legenda em itálico
+
+# Elementos de linha  -------------------------------------------
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus")) +
+  theme(axis.title = element_text(size = 24,
+                                  color = "blue"),
+        axis.text = element_text(size = 20), 
+        legend.title = element_text("Species", #<<
+                                    size = 24, #<<
+                                    color = "blue"),
+        legend.text = element_text(size = 20,
+                                   face = "italic"),
+        axis.line = element_line()) #<< gera as linhas dos eixos x e y
+
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus")) +
+  theme(axis.title = element_text(size = 24,
+                                  color = "blue"),
+        axis.text = element_text(size = 20), 
+        legend.title = element_text("Species", #<<
+                                    size = 24, #<<
+                                    color = "blue"),
+        legend.text = element_text(size = 20,
+                                   face = "italic"),
+        axis.line = element_line(),
+        panel.grid = element_blank()) #<< oculta as linhas de grid verticais e horizontais na área de plotagem
+
+# Elementos de retângulo  -------------------------------------------
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus")) +
+  theme(axis.title = element_text(size = 24,
+                                  color = "blue"),
+        axis.text = element_text(size = 20), 
+        legend.title = element_text("Species", #<<
+                                    size = 24, #<<
+                                    color = "blue"),
+        legend.text = element_text(size = 20,
+                                   face = "italic"),
+        axis.line = element_line(),
+        panel.grid = element_blank(),
+        panel.background = element_blank()) #<< remove o fundo cinza da área de plotagem
+
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus")) +
+  theme(axis.title = element_text(size = 24,
+                                  color = "blue"),
+        axis.text = element_text(size = 20), 
+        legend.title = element_text("Species", #<<
+                                    size = 24, #<<
+                                    color = "blue"),
+        legend.text = element_text(size = 20,
+                                   face = "italic"),
+        axis.line = element_line(),
+        panel.grid = element_blank(),
+        panel.background = element_blank(),
+        legend.key = element_blank()) #<< remove o fundo cinza das chaves da legenda
+
+# Desativando elementos   -------------------------------------------
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(line = element_blank(), #<< desativa todos os elementos de linha
+        rect = element_blank(), #<< desativa todos os elementos de retangulo
+        text = element_blank()) #<< desativa todos os elementos de texto
