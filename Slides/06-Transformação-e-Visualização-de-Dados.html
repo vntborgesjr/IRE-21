@@ -4377,7 +4377,8 @@ tadpoles_len_sp %&gt;%
   labs(x = "Total length (mm)",
        y = "Body length (mm)") +
   scale_color_discrete("Species") +
-* theme(axis.title = element_text(size = 24,
+* theme(text = element_text(family = "Serif"),
+*       axis.title = element_text(size = 24,
 *                                 color = "blue"))
 ```
 ]
@@ -4409,7 +4410,8 @@ tadpoles_len_sp %&gt;%
   labs(x = "Total length (mm)",
        y = "Body length (mm)") +
   scale_color_discrete("Species") +
-  theme(axis.title = element_text(size = 24, 
+  theme(text = element_text(family = "Serif"), 
+        axis.title = element_text(size = 24, 
                                   color = "blue"),
 *       axis.text = element_text(size = 20))
 ```
@@ -4442,7 +4444,8 @@ tadpoles_len_sp %&gt;%
   labs(x = "Total length (mm)",
        y = "Body length (mm)") +
   scale_color_discrete("Species") +
-  theme(axis.title = element_text(size = 24, 
+  theme(text = element_text(family = "Serif"), 
+        axis.title = element_text(size = 24, 
                                   color = "blue"),
         axis.text = element_text(size = 20), 
 *       legend.title = element_text(size = 24,
@@ -4675,6 +4678,418 @@ tadpoles_len_sp %&gt;%
 ???
 Agora, o que resta de parâmetros não relacionados aos dados são apenas retângulos.
 
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Salvando e Reutilizando Camada de Temas**]
+.pull-left[
+
+```r
+bd_tl &lt;- tadpoles_len_sp %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus"))
+meu_tema &lt;- theme(text = element_text(family = "Serif"), 
+        axis.title = element_text(size = 24,
+                                  color = "blue"),
+        axis.text = element_text(size = 20), 
+        legend.title = element_text("Species", 
+                                    size = 24, 
+                                    color = "blue"),
+        legend.text = element_text(size = 20,
+                                   face = "italic"),
+        axis.line = element_line(),
+        panel.grid = element_blank(),
+        panel.background = element_blank(),
+        legend.key = element_blank())
+```
+]
+
+.pull-right[
+
+```r
+bd_tl +
+* meu_tema
+```
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/salvando e reutiliznaod tema 2-1.png" width="80%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Reutilizando Camada de Temas**]
+.pull-left[
+
+```r
+tadpoles_clean %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  select(species, stream) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+             fill = stream)) +
+  geom_bar(color = "black", 
+           position = "dodge",
+           width = 0.7) +
+  scale_x_discrete("Species") + 
+  scale_y_continuous("Number of tadpoles",
+                     breaks = seq(0, 175, 25)) +
+  scale_color_discrete("Species") +
+*  meu_tema
+```
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/reutilizando tema 2-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Reutilizando Camada de Temas**]
+.pull-left[
+
+```r
+tadpoles_len_sp %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;%
+  drop_na() %&gt;% 
+  ggplot(aes(x = body_len, 
+             y = ..density.., 
+             fill = species)) +   
+  geom_histogram(binwidth = 1,
+                 center = 0.5, 
+                 alpha = 0.5) +
+  scale_x_continuous("Species") + 
+  scale_y_continuous("Relative frequency") + 
+  scale_fill_discrete("Species",
+                       labels = c("Hylodes \npipilans",
+                                  "Proceratophrys\nappendiculata",
+                                  "Scinax \nflavoguttatus"))+
+*  meu_tema
+```
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/reutilizando tema 4-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Reutilizando Camada de Temas**]
+.pull-left[
+
+```r
+tadpoles_len_sp %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = 0, 
+             y = body_len, 
+             color = species)) +
+  geom_point(shape = 0,
+             position = 
+               position_jitter(0.25,
+                               seed = 136)) +
+  scale_x_discrete("") + 
+  scale_y_continuous("Body Length (mm)",
+                     limits = c(0, 30),
+                     breaks = seq(0, 30, 5)) +
+  scale_color_discrete("Species",
+                       labels = c("Hylodes \npipilans", 
+                                  "Proceratophrys \nappendiculata", 
+                                  "Scinax \nflavoguttatus")) +
+* meu_tema
+```
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/reutilizando tema 6-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Reutilizando Camada de Temas**]
+.pull-left[
+
+```r
+tadpoles_len_sp %&gt;% 
+  filter(species %in% c("Hp", "Pb", "Sa")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) + 
+  geom_point(shape = 1,
+             alpha = 0.5) +
+  scale_x_continuous("Total length (mm)",
+                     breaks = seq(0, round(max(tadpoles_len_sp$total_len,   na.rm = TRUE)), 10)) +
+  scale_y_continuous("Body length (mm)",
+                     breaks = seq(0, round(max(tadpoles_len_sp$body_len, na.rm = TRUE)), 5)) +
+  scale_color_discrete("Species",
+                       labels = c("Hylodes \npipilans",
+                                  "Proceratophrys\nappendiculata",
+                                  "Scinax \nflavoguttatus")) +
+*  meu_tema
+```
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/reutilizando tema 8-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Reutilizando Camada de Temas**]
+.pull-left[
+
+```r
+tadpoles_clean %&gt;%
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  count(time = date, species) %&gt;% 
+  ggplot(aes(x = time, 
+             y = n,
+             color = species,
+             linetype = species)) +  
+  geom_line(show.legend = c(linetype = FALSE)) +
+  geom_point(aes(shape = species),
+             show.legend = c(shape = FALSE)) + 
+  scale_x_continuous("Time") + 
+  scale_y_continuous("Number of tadpoles",
+                     breaks = seq(0, 40, 5)) +
+  scale_color_discrete("Species",
+                       labels = c("Hylodes \npipilans",
+                                  "Proceratophrys\nappendiculata",
+                                  "Scinax \nflavoguttatus")) +
+* meu_tema
+```
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/reutilizando tema 10-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas Pré-Construídas**]
+.pull-left[
+
+```r
+bd_tl +
+* theme_classic()
+```
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/built-in themes 1-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+bd_tl +
+* theme_classic(base_size = 22,
+*               base_family = "serif")
+```
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/built-in themes 2-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas Pré-Construídas**]
+.pull-left[
+
+```r
+bd_tl +
+* theme_grey()
+```
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/built-in themes 3-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+bd_tl +
+* theme_dark()
+```
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/built-in themes 4-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas Pré-Construídas - ggthemes**]
+.pull-left[
+
+```r
+library(ggthemes)
+bd_tl +
+* theme_tufte()
+```
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/built-in themes 5-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+bd_tl +
+* theme_dark()
+```
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/built-in themes 6-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas Pré-Construídas - ggthemes**]
+.pull-left[
+
+```r
+bd_tl +
+* theme_excel()
+```
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/built-in themes 7-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+bd_tl +
+* theme_gdocs()
+```
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/built-in themes 8-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Alterando Temas Existentes - theme_update()**]
+.pull-left[
+
+```r
+original &lt;- theme_update(text = element_text(family = "Serif"), 
+                         axis.title = element_text(size = 24,
+                                                   color = "blue"),
+                         axis.text = element_text(size = 20), 
+                         legend.title = element_text("Species", 
+                                                     size = 24, 
+                                                     color = "blue"),
+                         legend.text = element_text(size = 20,
+                                                    face = "italic"),
+                         axis.line = element_line(),
+                         panel.grid = element_blank(),
+                         panel.background = element_blank(),
+                         legend.key = element_blank())
+
+bd_tl 
+```
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/alterando temas existentes 2-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+Este comando atualiza o tema default e salva no objeto `original`
+Agora todos os plots terão o mesmo tema automaticamente
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Retornar ao Tema original - theme_set()**]
+.pull-left[
+
+```r
+theme_set(theme_grey()) 
+bd_tl
+```
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/retornar tema original 1-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+theme_set(theme_classic(base_size = 24,
+                        base_family = "serif")) 
+bd_tl
+```
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/retornar tema original 2-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+Para retornar ao defaul original `theme_set(theme_grey())`
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

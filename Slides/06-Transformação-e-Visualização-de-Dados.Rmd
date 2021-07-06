@@ -3219,7 +3219,8 @@ tadpoles_len_sp %>%
   labs(x = "Total length (mm)",
        y = "Body length (mm)") +
   scale_color_discrete("Species") +
-  theme(axis.title = element_text(size = 24, #<<
+  theme(text = element_text(family = "Serif"), #<<
+        axis.title = element_text(size = 24, #<<
                                   color = "blue")) #<<
 ```
 ]
@@ -3236,7 +3237,8 @@ tadpoles_len_sp %>%
                        labels = c(Hp = "Hylodes \npipilans",
                                   Pa = "Proceratophrys \nappendiculata",
                                   Sf = "Scinax \nflavoguttatus")) +
-  theme(axis.title = element_text(size = 24,
+  theme(text = element_text(family = "Serif"), 
+        axis.title = element_text(size = 24,
                                   color = "blue"))
 ```
 ]
@@ -3263,7 +3265,8 @@ tadpoles_len_sp %>%
   labs(x = "Total length (mm)",
        y = "Body length (mm)") +
   scale_color_discrete("Species") +
-  theme(axis.title = element_text(size = 24, 
+  theme(text = element_text(family = "Serif"), 
+        axis.title = element_text(size = 24, 
                                   color = "blue"),
         axis.text = element_text(size = 20)) #<<
 ```
@@ -3281,7 +3284,8 @@ tadpoles_len_sp %>%
                        labels = c(Hp = "Hylodes \npipilans",
                                   Pa = "Proceratophrys \nappendiculata",
                                   Sf = "Scinax \nflavoguttatus")) +
-  theme(axis.title = element_text(size = 24,
+  theme(text = element_text(family = "Serif"), 
+        axis.title = element_text(size = 24,
                                   color = "blue"),
         axis.text = element_text(size = 20))
 ```
@@ -3309,7 +3313,8 @@ tadpoles_len_sp %>%
   labs(x = "Total length (mm)",
        y = "Body length (mm)") +
   scale_color_discrete("Species") +
-  theme(axis.title = element_text(size = 24, 
+  theme(text = element_text(family = "Serif"), 
+        axis.title = element_text(size = 24, 
                                   color = "blue"),
         axis.text = element_text(size = 20), 
         legend.title = element_text(size = 24, #<<
@@ -3331,7 +3336,8 @@ tadpoles_len_sp %>%
                        labels = c(Hp = "Hylodes \npipilans",
                                   Pa = "Proceratophrys \nappendiculata",
                                   Sf = "Scinax \nflavoguttatus")) +
-  theme(axis.title = element_text(size = 24,
+  theme(text = element_text(family = "Serif"), #<<
+        axis.title = element_text(size = 24,
                                   color = "blue"),
         axis.text = element_text(size = 20), 
         legend.title = element_text(size = 24, #<<
@@ -3439,7 +3445,8 @@ tadpoles_len_sp %>%
                        labels = c(Hp = "Hylodes \npipilans",
                                   Pa = "Proceratophrys \nappendiculata",
                                   Sf = "Scinax \nflavoguttatus")) +
-  theme(axis.title = element_text(size = 24,
+  theme(text = element_text(family = "Serif"), #<<
+        axis.title = element_text(size = 24,
                                   color = "blue"),
         axis.text = element_text(size = 20), 
         legend.title = element_text("Species", #<<
@@ -3489,7 +3496,8 @@ tadpoles_len_sp %>%
                        labels = c(Hp = "Hylodes \npipilans",
                                   Pa = "Proceratophrys \nappendiculata",
                                   Sf = "Scinax \nflavoguttatus")) +
-  theme(axis.title = element_text(size = 24,
+  theme(text = element_text(family = "Serif"), #<<
+        axis.title = element_text(size = 24,
                                   color = "blue"),
         axis.text = element_text(size = 20), 
         legend.title = element_text("Species", #<<
@@ -3585,7 +3593,8 @@ tadpoles_len_sp %>%
                        labels = c(Hp = "Hylodes \npipilans",
                                   Pa = "Proceratophrys \nappendiculata",
                                   Sf = "Scinax \nflavoguttatus")) +
-  theme(axis.title = element_text(size = 24,
+  theme(text = element_text(family = "Serif"), #<<
+        axis.title = element_text(size = 24,
                                   color = "blue"),
         axis.text = element_text(size = 20), 
         legend.title = element_text("Species", #<<
@@ -3635,7 +3644,8 @@ tadpoles_len_sp %>%
                        labels = c(Hp = "Hylodes \npipilans",
                                   Pa = "Proceratophrys \nappendiculata",
                                   Sf = "Scinax \nflavoguttatus")) +
-  theme(axis.title = element_text(size = 24,
+  theme(text = element_text(family = "Serif"), #<<
+        axis.title = element_text(size = 24,
                                   color = "blue"),
         axis.text = element_text(size = 20), 
         legend.title = element_text("Species", #<<
@@ -3693,3 +3703,482 @@ tadpoles_len_sp %>%
 ???
 Agora, o que resta de parâmetros não relacionados aos dados são apenas retângulos.
 
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Salvando e Reutilizando Camada de Temas**]
+.pull-left[
+```{r salvando e reutiliznaod tema 1, eval = TRUE, fig.align='center'}
+bd_tl <- tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus"))
+meu_tema <- theme(text = element_text(family = "Serif"), 
+        axis.title = element_text(size = 24,
+                                  color = "blue"),
+        axis.text = element_text(size = 20), 
+        legend.title = element_text("Species", 
+                                    size = 24, 
+                                    color = "blue"),
+        legend.text = element_text(size = 20,
+                                   face = "italic"),
+        axis.line = element_line(),
+        panel.grid = element_blank(),
+        panel.background = element_blank(),
+        legend.key = element_blank())
+```
+]
+
+.pull-right[
+```{r salvando e reutiliznaod tema 2, echo = TRUE, fig.align='center', out.width="80%"}
+bd_tl +
+  meu_tema #<<
+```
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Reutilizando Camada de Temas**]
+.pull-left[
+```{r reutilizando tema 1, eval = FALSE, fig.align='center'}
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species, stream) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             fill = stream)) +
+  geom_bar(color = "black", 
+           position = "dodge",
+           width = 0.7) +
+  scale_x_discrete("Species") + 
+  scale_y_continuous("Number of tadpoles",
+                     breaks = seq(0, 175, 25)) +
+  scale_color_discrete("Species") +
+   meu_tema #<<
+```
+]
+
+.pull-right[
+```{r reutilizando tema 2, echo = FALSE, fig.align='center', out.width="90%"}
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species, stream) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             fill = stream)) +
+  geom_bar(color = "black", 
+           position = "dodge",
+           width = 0.7) +
+  scale_x_discrete("Species") + 
+  scale_y_continuous("Number of tadpoles",
+                     breaks = seq(0, 175, 25)) +
+  scale_color_discrete("Species") +
+  meu_tema 
+```
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Reutilizando Camada de Temas**]
+.pull-left[
+```{r reutilizando tema 3, eval = FALSE, fig.align='center'}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>%
+  drop_na() %>% 
+  ggplot(aes(x = body_len, 
+             y = ..density.., 
+             fill = species)) +   
+  geom_histogram(binwidth = 1,
+                 center = 0.5, 
+                 alpha = 0.5) +
+  scale_x_continuous("Species") + 
+  scale_y_continuous("Relative frequency") + 
+  scale_fill_discrete("Species",
+                       labels = c("Hylodes \npipilans",
+                                  "Proceratophrys\nappendiculata",
+                                  "Scinax \nflavoguttatus"))+
+   meu_tema #<<
+```
+]
+
+.pull-right[
+```{r reutilizando tema 4, echo = FALSE, fig.align='center', out.width="90%"}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>%
+  drop_na() %>% 
+  ggplot(aes(x = body_len, 
+             y = ..density.., 
+             fill = species)) +   
+  geom_histogram(binwidth = 1,
+                 center = 0.5, 
+                 alpha = 0.5) +
+  scale_x_continuous("Species") + 
+  scale_y_continuous("Relative frequency") + 
+  scale_fill_discrete("Species",
+                       labels = c("Hylodes \npipilans",
+                                  "Proceratophrys\nappendiculata",
+                                  "Scinax \nflavoguttatus")) +
+   meu_tema #<< 
+```
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Reutilizando Camada de Temas**]
+.pull-left[
+```{r reutilizando tema 5, eval = FALSE, fig.align='center'}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = 0, 
+             y = body_len, 
+             color = species)) +
+  geom_point(shape = 0,
+             position = 
+               position_jitter(0.25,
+                               seed = 136)) +
+  scale_x_discrete("") + 
+  scale_y_continuous("Body Length (mm)",
+                     limits = c(0, 30),
+                     breaks = seq(0, 30, 5)) +
+  scale_color_discrete("Species",
+                       labels = c("Hylodes \npipilans", 
+                                  "Proceratophrys \nappendiculata", 
+                                  "Scinax \nflavoguttatus")) +
+  meu_tema #<<
+```
+]
+
+.pull-right[
+```{r reutilizando tema 6, echo = FALSE, fig.align='center', out.width="90%"}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = 0, 
+             y = body_len, 
+             color = species)) +
+  geom_point(shape = 0,
+             position = 
+               position_jitter(0.25,
+                               seed = 136)) +
+  scale_x_discrete("") + 
+  scale_y_continuous("Body Length (mm)",
+                     limits = c(0, 30),
+                     breaks = seq(0, 30, 5)) +
+  scale_color_discrete("Species",
+                       labels = c("Hylodes \npipilans", 
+                                  "Proceratophrys \nappendiculata", 
+                                  "Scinax \nflavoguttatus")) +
+  meu_tema
+
+```
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Reutilizando Camada de Temas**]
+.pull-left[
+```{r reutilizando tema 7, eval = FALSE, fig.align='center'}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) + 
+  geom_point(shape = 1,
+             alpha = 0.5) +
+  scale_x_continuous("Total length (mm)",
+                     breaks = seq(0, round(max(tadpoles_len_sp$total_len,   na.rm = TRUE)), 10)) +
+  scale_y_continuous("Body length (mm)",
+                     breaks = seq(0, round(max(tadpoles_len_sp$body_len, na.rm = TRUE)), 5)) +
+  scale_color_discrete("Species",
+                       labels = c("Hylodes \npipilans",
+                                  "Proceratophrys\nappendiculata",
+                                  "Scinax \nflavoguttatus")) +
+   meu_tema #<<
+```
+]
+
+.pull-right[
+```{r reutilizando tema 8, echo = FALSE, fig.align='center', out.width="90%"}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) + 
+  geom_point(shape = 1,
+             alpha = 0.5) +
+  scale_x_continuous("Total length (mm)",
+                     breaks = seq(0, round(max(tadpoles_len_sp$total_len,   na.rm = TRUE)), 10)) +
+  scale_y_continuous("Body length (mm)",
+                     breaks = seq(0, round(max(tadpoles_len_sp$body_len, na.rm = TRUE)), 5)) +
+  scale_color_discrete("Species",
+                       labels = c("Hylodes \npipilans",
+                                  "Proceratophrys\nappendiculata",
+                                  "Scinax \nflavoguttatus")) +
+   meu_tema #<<
+
+```
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Reutilizando Camada de Temas**]
+.pull-left[
+```{r reutilizando tema 9, eval = FALSE, fig.align='center'}
+tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  count(time = date, species) %>% 
+  ggplot(aes(x = time, 
+             y = n,
+             color = species,
+             linetype = species)) +  
+  geom_line(show.legend = c(linetype = FALSE)) +
+  geom_point(aes(shape = species),
+             show.legend = c(shape = FALSE)) + 
+  scale_x_continuous("Time") + 
+  scale_y_continuous("Number of tadpoles",
+                     breaks = seq(0, 40, 5)) +
+  scale_color_discrete("Species",
+                       labels = c("Hylodes \npipilans",
+                                  "Proceratophrys\nappendiculata",
+                                  "Scinax \nflavoguttatus")) +
+  meu_tema #<<
+```
+]
+
+.pull-right[
+```{r reutilizando tema 10, echo = FALSE, fig.align='center', out.width="90%"}
+tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  count(time = date, species) %>% 
+  ggplot(aes(x = time, 
+             y = n,
+             color = species,
+             linetype = species)) +  
+  geom_line(show.legend = c(linetype = FALSE)) +
+  geom_point(aes(shape = species),
+             show.legend = c(shape = FALSE)) + 
+  scale_x_continuous("Time") + 
+  scale_y_continuous("Number of tadpoles",
+                     breaks = seq(0, 40, 5)) +
+  scale_color_discrete("Species",
+                       labels = c("Hylodes \npipilans",
+                                  "Proceratophrys\nappendiculata",
+                                  "Scinax \nflavoguttatus")) +
+  meu_tema
+```
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas Pré-Construídas**]
+.pull-left[
+```{r built-in themes 1, eval = TRUE, fig.align='center', out.width="70%"}
+bd_tl +
+  theme_classic() #<< 
+```
+]
+
+.pull-right[
+```{r built-in themes 2, echo = TRUE, fig.align='center', out.width="70%"}
+bd_tl +
+  theme_classic(base_size = 22, #<< 
+                base_family = "serif") #<<  
+```
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas Pré-Construídas**]
+.pull-left[
+```{r built-in themes 3, eval = TRUE, fig.align='center', out.width="70%"}
+bd_tl +
+  theme_grey() #<< 
+```
+]
+
+.pull-right[
+```{r built-in themes 4, echo = TRUE, fig.align='center', out.width="70%"}
+bd_tl +
+  theme_dark() #<<  
+```
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas Pré-Construídas - ggthemes**]
+.pull-left[
+```{r built-in themes 5, eval = TRUE, fig.align='center', out.width="70%"}
+library(ggthemes)
+bd_tl +
+  theme_tufte() #<< 
+```
+]
+
+.pull-right[
+```{r built-in themes 6, echo = TRUE, fig.align='center', out.width="70%"}
+bd_tl +
+  theme_dark() #<<  
+```
+]
+
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas Pré-Construídas - ggthemes**]
+.pull-left[
+```{r built-in themes 7, eval = TRUE, fig.align='center', out.width="70%"}
+bd_tl +
+  theme_excel() #<< 
+```
+]
+
+.pull-right[
+```{r built-in themes 8, echo = TRUE, fig.align='center', out.width="70%"}
+bd_tl +
+  theme_gdocs() #<<  
+```
+]
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Alterando Temas Existentes - theme_update()**]
+.pull-left[
+```{r alterando temas existentes 1, eval = FALSE, fig.align='center'}
+original <- theme_update(text = element_text(family = "Serif"), 
+                         axis.title = element_text(size = 24,
+                                                   color = "blue"),
+                         axis.text = element_text(size = 20), 
+                         legend.title = element_text("Species", 
+                                                     size = 24, 
+                                                     color = "blue"),
+                         legend.text = element_text(size = 20,
+                                                    face = "italic"),
+                         axis.line = element_line(),
+                         panel.grid = element_blank(),
+                         panel.background = element_blank(),
+                         legend.key = element_blank())
+
+bd_tl 
+```
+]
+
+.pull-right[
+```{r alterando temas existentes 2, echo = FALSE, fig.align='center', out.width="90%"}
+original <- theme_update(text = element_text(family = "Serif"), 
+                         axis.title = element_text(size = 24,
+                                                   color = "blue"),
+                         axis.text = element_text(size = 20), 
+                         legend.title = element_text("Species", 
+                                                     size = 24, 
+                                                     color = "blue"),
+                         legend.text = element_text(size = 20,
+                                                    face = "italic"),
+                         axis.line = element_line(),
+                         panel.grid = element_blank(),
+                         panel.background = element_blank(),
+                         legend.key = element_blank())
+
+bd_tl
+```
+]
+
+???
+Este comando atualiza o tema default e salva no objeto `original`
+Agora todos os plots terão o mesmo tema automaticamente
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Retornar ao Tema original - theme_set()**]
+.pull-left[
+```{r retornar tema original 1, eval = TRUE, fig.align='center', out.width="70%"}
+theme_set(theme_grey()) 
+bd_tl
+```
+]
+
+.pull-right[
+```{r retornar tema original 2, eval = TRUE, fig.align='center', out.width="70%"}
+theme_set(theme_classic(base_size = 24,
+                        base_family = "serif")) 
+bd_tl
+```
+]
+
+???
+Para retornar ao defaul original `theme_set(theme_grey())`
