@@ -25,6 +25,7 @@ Data  | Videos | Slides | Scripts | Exercícios | Respostas
 
 ### Arquivos de Dados 
 
+[IRE_functions.R](Slides/IRE_functions.R)\
 [numero_de_especies.txt](Dados/numero_de_especies.txt)\
 [area.csv](Dados/area.csv)\
 [variavel_categorica1.xlsx](Dados/variavel_categorica1.xlsx)\
