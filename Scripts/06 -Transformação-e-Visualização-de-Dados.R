@@ -657,7 +657,8 @@ tadpoles_len_sp %>%
   labs(x = "Total length (mm)",
        y = "Body length (mm)") +
   scale_color_discrete("Species") +
-  theme(axis.title = element_text(size = 24, #<< altera o tamaanho da fonte do título dos eixos
+  theme(text = element_text(family = "Serif"), #<< altera a fonte de todo o texto presente no gráfico
+        axis.title = element_text(size = 24, #<< altera o tamaanho da fonte do título dos eixos
                                   color = "blue")) #<< altera a cor da fonte
 
 tadpoles_len_sp %>% 
@@ -670,7 +671,8 @@ tadpoles_len_sp %>%
                        labels = c(Hp = "Hylodes \npipilans",
                                   Pa = "Proceratophrys \nappendiculata",
                                   Sf = "Scinax \nflavoguttatus")) +
-  theme(axis.title = element_text(size = 24,
+  theme(text = element_text(family = "Serif"), 
+        axis.title = element_text(size = 24,
                                   color = "blue"),
         axis.text = element_text(size = 20)) #<< altera o tamanho da fonte dos rótulos dos eixos
 
@@ -684,7 +686,8 @@ tadpoles_len_sp %>%
                        labels = c(Hp = "Hylodes \npipilans",
                                   Pa = "Proceratophrys \nappendiculata",
                                   Sf = "Scinax \nflavoguttatus")) +
-  theme(axis.title = element_text(size = 24,
+  theme(text = element_text(family = "Serif"), 
+        axis.title = element_text(size = 24,
                                   color = "blue"),
         axis.text = element_text(size = 20), 
         legend.title = element_text(size = 24, #<< altara o tamanho da fonte do título da legenda
@@ -703,7 +706,8 @@ tadpoles_len_sp %>%
                        labels = c(Hp = "Hylodes \npipilans",
                                   Pa = "Proceratophrys \nappendiculata",
                                   Sf = "Scinax \nflavoguttatus")) +
-  theme(axis.title = element_text(size = 24,
+  theme(text = element_text(family = "Serif"), 
+        axis.title = element_text(size = 24,
                                   color = "blue"),
         axis.text = element_text(size = 20), 
         legend.title = element_text("Species", #<<
@@ -723,7 +727,8 @@ tadpoles_len_sp %>%
                        labels = c(Hp = "Hylodes \npipilans",
                                   Pa = "Proceratophrys \nappendiculata",
                                   Sf = "Scinax \nflavoguttatus")) +
-  theme(axis.title = element_text(size = 24,
+  theme(text = element_text(family = "Serif"), 
+        axis.title = element_text(size = 24,
                                   color = "blue"),
         axis.text = element_text(size = 20), 
         legend.title = element_text("Species", #<<
@@ -745,7 +750,8 @@ tadpoles_len_sp %>%
                        labels = c(Hp = "Hylodes \npipilans",
                                   Pa = "Proceratophrys \nappendiculata",
                                   Sf = "Scinax \nflavoguttatus")) +
-  theme(axis.title = element_text(size = 24,
+  theme(text = element_text(family = "Serif"), 
+        axis.title = element_text(size = 24,
                                   color = "blue"),
         axis.text = element_text(size = 20), 
         legend.title = element_text("Species", #<<
@@ -767,7 +773,8 @@ tadpoles_len_sp %>%
                        labels = c(Hp = "Hylodes \npipilans",
                                   Pa = "Proceratophrys \nappendiculata",
                                   Sf = "Scinax \nflavoguttatus")) +
-  theme(axis.title = element_text(size = 24,
+  theme(text = element_text(family = "Serif"), 
+        axis.title = element_text(size = 24,
                                   color = "blue"),
         axis.text = element_text(size = 20), 
         legend.title = element_text("Species", #<<
@@ -791,3 +798,173 @@ tadpoles_len_sp %>%
   theme(line = element_blank(), #<< desativa todos os elementos de linha
         rect = element_blank(), #<< desativa todos os elementos de retangulo
         text = element_blank()) #<< desativa todos os elementos de texto
+
+# Salvando e reutilizando camada de tema  -------------------------------------------
+bd_tl <- tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus"))
+
+meu_tema <- theme(text = element_text(family = "Serif"), #<<
+                  axis.title = element_text(size = 24,
+                                            color = "blue"),
+                  axis.text = element_text(size = 20), 
+                  legend.title = element_text("Species", #<<
+                                              size = 24, #<<
+                                              color = "blue"),
+                  legend.text = element_text(size = 20,
+                                             face = "italic"),
+                  axis.line = element_line(),
+                  panel.grid = element_blank(),
+                  panel.background = element_blank(),
+                  legend.key = element_blank())
+
+bd_tl +
+  meu_tema
+
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species, stream) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             fill = stream)) +
+  geom_bar(color = "black", 
+           position = "dodge",
+           width = 0.7) +
+  scale_x_discrete("Species",
+                   labels = c("Hylodes \npipilans",
+                              "Proceratophrys\nappendiculata",
+                              "Scinax \nflavoguttatus")) + 
+  scale_y_continuous("Number of tadpoles",
+                     breaks = seq(0, 175, 25)) +
+  scale_color_discrete("Species") +
+  meu_tema 
+
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>%
+  drop_na() %>% 
+  ggplot(aes(x = body_len, 
+             y = ..density.., 
+             fill = species)) +   
+  geom_histogram(binwidth = 1,
+                 center = 0.5, 
+                 alpha = 0.5) +
+  scale_x_continuous("Species",
+                     labels = c("Hylodes \npipilans",
+                                "Proceratophrys\nappendiculata",
+                                "Scinax \nflavoguttatus")) + 
+  scale_y_continuous("Relative frequency") + 
+  scale_fill_discrete("Species") +
+  meu_tema #<<
+
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = 0, 
+             y = body_len, 
+             color = species)) +
+  geom_point(shape = 0,
+             position = 
+               position_jitter(0.25,
+                               seed = 136)) +
+  scale_x_discrete("") + 
+  scale_y_continuous("Body Length (mm)",
+                     limits = c(0, 30),
+                     breaks = seq(0, 30, 5)) +
+  scale_color_discrete("Species",
+                       labels = c("Hylodes \npipilans", 
+                                  "Proceratophrys \nappendiculata", 
+                                  "Scinax \nflavoguttatus")) +
+  meu_tema
+
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) + 
+  geom_point(shape = 1,
+             alpha = 0.5) +
+  scale_x_continuous("Total length (mm)",
+                     breaks = seq(0, round(max(tadpoles_len_sp$total_len,   na.rm = TRUE)), 10)) +
+  scale_y_continuous("Body length (mm)",
+                     breaks = seq(0, round(max(tadpoles_len_sp$body_len, na.rm = TRUE)), 5)) +
+  scale_color_discrete("Species",
+                       labels = c("Hylodes \npipilans",
+                                  "Proceratophrys\nappendiculata",
+                                  "Scinax \nflavoguttatus")) +
+  meu_tema #<<
+
+tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  count(time = date, species) %>% 
+  ggplot(aes(x = time, 
+             y = n,
+             color = species,
+             linetype = species)) +  
+  geom_line(show.legend = c(linetype = FALSE)) +
+  geom_point(aes(shape = species),
+             show.legend = c(shape = FALSE)) + 
+  scale_x_continuous("Time") + 
+  scale_y_continuous("Number of tadpoles",
+                     breaks = seq(0, 40, 5)) +
+  scale_color_discrete("Species",
+                       labels = c("Hylodes \npipilans",
+                                  "Proceratophrys\nappendiculata",
+                                  "Scinax \nflavoguttatus")) +
+  meu_tema
+
+# Camadas de tema pré-construídas  -------------------------------------------
+bd_tl +
+  theme_classic() #<< 
+
+bd_tl +
+  theme_classic(base_size = 22, #<< controla o tamanho da fonte
+                base_family = "serif") #<<  controla o tipo da fonte
+
+bd_tl +
+  theme_minimal() #<< 
+
+bd_tl +
+  theme_dark() #<<  
+
+library(ggthemes)
+bd_tl +
+  theme_tufte()
+
+bd_tl +
+  theme_excel()
+
+bd_tl +
+  theme_gdocs()
+
+original <- theme_update(text = element_text(family = "Serif"), #<< torna este tema default para todos os gráficos
+                         axis.title = element_text(size = 24,
+                                                   color = "blue"),
+                         axis.text = element_text(size = 20), 
+                         legend.title = element_text("Species", 
+                                                     size = 24, 
+                                                     color = "blue"),
+                         legend.text = element_text(size = 20,
+                                                    face = "italic"),
+                         axis.line = element_line(),
+                         panel.grid = element_blank(),
+                         panel.background = element_blank(),
+                         legend.key = element_blank())
+
+bd_tl 
+
+theme_set(theme_grey()) # retorna ao tema original como default...
+
+bd_tl 
+
+theme_set(theme_classic()) # ou qualquer outro tema 
+
+bd_tl 
+
