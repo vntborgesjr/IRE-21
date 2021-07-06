@@ -2825,7 +2825,7 @@ tadpoles_len_sp %>%
 ---
 
 background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
+background-position: 0% 99%, 100% 0%
 background-size: 15%, 10%
 
 # .blue[**Variação Temporal - geom_line()**]
@@ -3081,4 +3081,615 @@ tadpoles_clean %>%
 ]
 
 ???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+
+
+.center[.red[**Controla elementos visuais que não fazem parte dos dados<BR/><br/>Classificados em 3 tipos**]] 
+
+```{r temas 1, echo = FALSE}
+tibble(Tipo = c("texto", "linha", "retângulo"),
+           `Modificado usando` = c("element_text()", "element_line()", "element_rect()")) %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif") 
+```
+  
+  
+???
+A camada theme() controla tudo que não é dado.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+
+```{r alteramndo tema 1, eval = FALSE, fig.align='center', out.width="30%"}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5)
+```
+
+```{r alteramndo tema 2, echo = FALSE, fig.align='center', out.width="30%"}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus"))
+```
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 98%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Elementos de Texto - element_text()**]
+
+.pull-left[
+```{r alteramndo tema texto 3, echo = FALSE, fig.align='center', out.width= "90%"}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len, 
+             color = species)) +
+  geom_point(alpha = 0.5) + 
+  labs(x = "Total length (mm)", 
+       y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(line = element_blank(),
+        rect = element_blank())
+```
+]
+
+.pull-rigth[
+```
+text
+  axis.title
+    axis.title.x
+      axis.title.x.top
+      axis.title.x.bottom
+    axis.title.y
+      axis.title.y.left
+      axis.title.y.right
+  title
+    legend.title
+    plot.title
+    plot.subtitle
+    plot.cpation
+    plot.tag
+  axis.text
+    axis.text.x
+      axis.text.x.top
+      axis.text.x.botom
+    axis.text.y
+      axis.text.y.left
+      axis.text.y.right
+  legend.text
+  strip.text
+    strip.text.x
+    strip.text.y
+```
+]
+
+???
+Cada argumento permite um controle fino das características textuais do gráfico.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+.pull-left[
+```{r alteramndo tema 4, eval = FALSE, fig.align='center'}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)",
+       y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(axis.title = element_text(size = 24, #<<
+                                  color = "blue")) #<<
+```
+]
+
+.pull-right[
+```{r alteramndo tema 5, echo = FALSE, fig.align='center', out.width="90%"}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus")) +
+  theme(axis.title = element_text(size = 24,
+                                  color = "blue"))
+```
+]
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+.pull-left[
+```{r alteramndo tema 6, eval = FALSE, fig.align='center'}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)",
+       y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(axis.title = element_text(size = 24, 
+                                  color = "blue"),
+        axis.text = element_text(size = 20)) #<<
+```
+]
+
+.pull-right[
+```{r alteramndo tema 7, echo = FALSE, fig.align='center', out.width="90%"}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus")) +
+  theme(axis.title = element_text(size = 24,
+                                  color = "blue"),
+        axis.text = element_text(size = 20))
+```
+]
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+.pull-left[
+```{r alteramndo tema 8, eval = FALSE, fig.align='center'}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)",
+       y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(axis.title = element_text(size = 24, 
+                                  color = "blue"),
+        axis.text = element_text(size = 20), 
+        legend.title = element_text(size = 24, #<<
+                                    color = "blue"),
+        legend.text = element_text(size = 20, 
+                                   face = "italic")) #<<
+```
+]
+
+.pull-right[
+```{r alteramndo tema 9, echo = FALSE, fig.align='center', out.width="90%"}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus")) +
+  theme(axis.title = element_text(size = 24,
+                                  color = "blue"),
+        axis.text = element_text(size = 20), 
+        legend.title = element_text(size = 24, #<<
+                                    color = "blue"),
+        legend.text = element_text(size = 20, #<<
+                                   face = "italic")) #<<
+```
+]
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 98%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Elementos de Linhas - element_line()**]
+
+.pull-left[
+```{r alterando tema linha 1, echo = FALSE, fig.align='center', out.width= "90%"}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len, 
+             color = species)) +
+  geom_point(alpha = 0.5) + 
+  labs(x = "Total length (mm)", 
+       y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(text = element_blank(),
+        rect = element_blank(),
+        line = element_line(color = "blue"),
+        panel.grid.major = element_line(colour = "blue"),
+        panel.grid.minor = element_line(color = "light grey"),
+        axis.line.x.top = element_line(color = "blue", ),
+        axis.line.x.bottom = element_line(colour = "blue"),
+        axis.line.y.right = element_line(colour = "blue"),
+        axis.line.y.left = element_line(colour = "blue"))
+```
+]
+
+.pull-rigth[
+```
+line
+  axis.ticks
+    axis.ticks.x
+      axis.ticks.x.top
+      axis.ticks.x.bottom
+    axis.ticks.y
+      axis.ticks.y.left
+      axis.ticks.y.right
+  axis.line
+    axis.line.x
+      axis.line.x.top
+      axis.line.x.botom
+    axis.line.y
+      axis.line.y.left
+      axis.line.y.right
+  panel.grid
+    panel.grid.major
+      panel.grid.major.x
+      panel.grid.major.y
+    panel.grid.minor
+      panel.grid.minor.x
+      panel.grid.minor.y
+```
+]
+
+???
+Cada argumento permite um controle fino das características textuais do gráfico.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+.pull-left[
+```{r alteramndo tema linha 2, eval = FALSE, fig.align='center'}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(axis.line = (element_line())) #<<
+
+```
+]
+
+.pull-right[
+```{r alteramndo tema linha 3, echo = FALSE, fig.align='center', out.width="90%"}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus")) +
+  theme(axis.title = element_text(size = 24,
+                                  color = "blue"),
+        axis.text = element_text(size = 20), 
+        legend.title = element_text("Species", #<<
+                                    size = 24, #<<
+                                    color = "blue"),
+        legend.text = element_text(size = 20,
+                                   face = "italic"),
+        axis.line = element_line())
+  #<<
+
+```
+]
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+.pull-left[
+```{r alterando tema linha 4, eval = FALSE, fig.align='center'}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(axis.line = (element_line()),
+        panel.grid = element_blank()) #<<
+```
+]
+
+.pull-right[
+```{r alteramndo tema linha 5, echo = FALSE, fig.align='center', out.width="90%"}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus")) +
+  theme(axis.title = element_text(size = 24,
+                                  color = "blue"),
+        axis.text = element_text(size = 20), 
+        legend.title = element_text("Species", #<<
+                                    size = 24, #<<
+                                    color = "blue"),
+        legend.text = element_text(size = 20,
+                                   face = "italic"),
+        axis.line = element_line(),
+        panel.grid = element_blank())
+```
+]
+
+???
+Agora, o que resta de parâmetros não relacionados aos dados são apenas retângulos.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 98%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Elementos de Retângulos - element_rect()**]
+
+.pull-left[
+```{r alterando tema retângulos 1, echo = FALSE, fig.align='center', out.width= "90%"}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len, 
+             color = species)) +
+  geom_point(alpha = 0.5) + 
+  labs(x = "Total length (mm)", 
+       y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(text = element_blank(),
+        line = element_blank(),
+        plot.background = element_rect(fill = "light blue"),
+        panel.background = element_rect(fill = "blue"),
+        legend.background = element_rect(fill = "blue"),
+        legend.key = element_rect(fill = "light blue"))
+```
+]
+
+.pull-rigth[
+```
+rect
+  legend.background
+  legend.key
+  legend.box.background
+  panel.background
+  panel.border
+  plot.background
+  strip.background
+    strip.background.x
+    strip.background.y
+```
+]
+
+???
+Cada argumento permite um controle fino das características textuais do gráfico.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+.pull-left[
+```{r alteramndo tema retangulo 2, eval = FALSE, fig.align='center'}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(panel.background = element_blank()) #<<
+
+```
+]
+
+.pull-right[
+```{r alteramndo tema retangulo 3, echo = FALSE, fig.align='center', out.width="90%"}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus")) +
+  theme(axis.title = element_text(size = 24,
+                                  color = "blue"),
+        axis.text = element_text(size = 20), 
+        legend.title = element_text("Species", #<<
+                                    size = 24, #<<
+                                    color = "blue"),
+        legend.text = element_text(size = 20,
+                                   face = "italic"),
+        axis.line = element_line(),
+        panel.grid = element_blank(),
+        panel.background = element_blank())
+```
+]
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+.pull-left[
+```{r alterando tema retangulo 4, eval = FALSE, fig.align='center'}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(panel.background = element_blank(),
+        legend.key = element_blank()) #<<
+```
+]
+
+.pull-right[
+```{r alteramndo tema retangulo 5, echo = FALSE, fig.align='center', out.width="90%"}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species",
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus")) +
+  theme(axis.title = element_text(size = 24,
+                                  color = "blue"),
+        axis.text = element_text(size = 20), 
+        legend.title = element_text("Species", #<<
+                                    size = 24, #<<
+                                    color = "blue"),
+        legend.text = element_text(size = 20,
+                                   face = "italic"),
+        axis.line = element_line(),
+        panel.grid = element_blank(),
+        panel.background = element_blank(),
+        legend.key = element_blank())
+```
+]
+
+???
+Agora, o que resta de parâmetros não relacionados aos dados são apenas retângulos.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Desativando elementos - element_blank()**]
+.pull-left[
+```{r desativando elementos 1, eval = FALSE, fig.align='center'}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(line = element_blank(), #<<
+        rect = element_blank(), #<<
+        text = element_blank()) #<<
+```
+]
+
+.pull-right[
+```{r desativando elementos 2, echo = FALSE, fig.align='center', out.width="90%"}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(line = element_blank(), #<<
+        rect = element_blank(), #<<
+        text = element_blank()) #<<
+```
+]
+
+???
+Agora, o que resta de parâmetros não relacionados aos dados são apenas retângulos.
 

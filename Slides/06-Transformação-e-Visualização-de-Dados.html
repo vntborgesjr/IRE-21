@@ -4051,7 +4051,7 @@ tadpoles_len_sp %&gt;%
 ---
 
 background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
-background-position: 0% 100%, 100% 0%
+background-position: 0% 99%, 100% 0%
 background-size: 15%, 10%
 
 # .blue[**Variação Temporal - geom_line()**]
@@ -4249,6 +4249,431 @@ tadpoles_clean %&gt;%
 ]
 
 ???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+
+
+.center[.red[**Controla elementos visuais que não fazem parte dos dados&lt;BR/&gt;&lt;br/&gt;Classificados em 3 tipos**]] 
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; Tipo &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; Modificado usando &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; texto &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; element_text() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; linha &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; element_line() &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; retângulo &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; element_rect() &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+  
+  
+???
+A camada theme() controla tudo que não é dado.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+
+
+```r
+tadpoles_len_sp %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5)
+```
+
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/alteramndo tema 2-1.png" width="30%" style="display: block; margin: auto;" /&gt;
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 98%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Elementos de Texto - element_text()**]
+
+.pull-left[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/alteramndo tema texto 3-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-rigth[
+```
+text
+  axis.title
+    axis.title.x
+      axis.title.x.top
+      axis.title.x.bottom
+    axis.title.y
+      axis.title.y.left
+      axis.title.y.right
+  title
+    legend.title
+    plot.title
+    plot.subtitle
+    plot.cpation
+    plot.tag
+  axis.text
+    axis.text.x
+      axis.text.x.top
+      axis.text.x.botom
+    axis.text.y
+      axis.text.y.left
+      axis.text.y.right
+  legend.text
+  strip.text
+    strip.text.x
+    strip.text.y
+```
+]
+
+???
+Cada argumento permite um controle fino das características textuais do gráfico.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+.pull-left[
+
+```r
+tadpoles_len_sp %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)",
+       y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+* theme(axis.title = element_text(size = 24,
+*                                 color = "blue"))
+```
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/alteramndo tema 5-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+.pull-left[
+
+```r
+tadpoles_len_sp %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)",
+       y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(axis.title = element_text(size = 24, 
+                                  color = "blue"),
+*       axis.text = element_text(size = 20))
+```
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/alteramndo tema 7-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+.pull-left[
+
+```r
+tadpoles_len_sp %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)",
+       y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(axis.title = element_text(size = 24, 
+                                  color = "blue"),
+        axis.text = element_text(size = 20), 
+*       legend.title = element_text(size = 24,
+                                    color = "blue"),
+        legend.text = element_text(size = 20, 
+*                                  face = "italic"))
+```
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/alteramndo tema 9-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 98%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Elementos de Linhas - element_line()**]
+
+.pull-left[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/alterando tema linha 1-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-rigth[
+```
+line
+  axis.ticks
+    axis.ticks.x
+      axis.ticks.x.top
+      axis.ticks.x.bottom
+    axis.ticks.y
+      axis.ticks.y.left
+      axis.ticks.y.right
+  axis.line
+    axis.line.x
+      axis.line.x.top
+      axis.line.x.botom
+    axis.line.y
+      axis.line.y.left
+      axis.line.y.right
+  panel.grid
+    panel.grid.major
+      panel.grid.major.x
+      panel.grid.major.y
+    panel.grid.minor
+      panel.grid.minor.x
+      panel.grid.minor.y
+```
+]
+
+???
+Cada argumento permite um controle fino das características textuais do gráfico.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+.pull-left[
+
+```r
+tadpoles_len_sp %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+* theme(axis.line = (element_line()))
+```
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/alteramndo tema linha 3-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+.pull-left[
+
+```r
+tadpoles_len_sp %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(axis.line = (element_line()),
+*       panel.grid = element_blank())
+```
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/alteramndo tema linha 5-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+Agora, o que resta de parâmetros não relacionados aos dados são apenas retângulos.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 98%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Elementos de Retângulos - element_rect()**]
+
+.pull-left[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/alterando tema retângulos 1-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-rigth[
+```
+rect
+  legend.background
+  legend.key
+  legend.box.background
+  panel.background
+  panel.border
+  plot.background
+  strip.background
+    strip.background.x
+    strip.background.y
+```
+]
+
+???
+Cada argumento permite um controle fino das características textuais do gráfico.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+.pull-left[
+
+```r
+tadpoles_len_sp %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+* theme(panel.background = element_blank())
+```
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/alteramndo tema retangulo 3-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Temas - theme()**]
+.pull-left[
+
+```r
+tadpoles_len_sp %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+  theme(panel.background = element_blank(),
+*       legend.key = element_blank())
+```
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/alteramndo tema retangulo 5-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+Agora, o que resta de parâmetros não relacionados aos dados são apenas retângulos.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Desativando elementos - element_blank()**]
+.pull-left[
+
+```r
+tadpoles_len_sp %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_discrete("Species") +
+* theme(line = element_blank(),
+*       rect = element_blank(),
+*       text = element_blank())
+```
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/desativando elementos 2-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+Agora, o que resta de parâmetros não relacionados aos dados são apenas retângulos.
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
