@@ -1717,7 +1717,7 @@ streams_raw2 %&gt;%
   separate(col = "original_width", 
            into = c("original_width", "width_obs")) %&gt;% 
   separate(col = "original_depth", 
-           into = c("original_depth", "depth_obs"))
+           into = c("original_depth", "depth_obs")) 
 ```
 
 &lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
@@ -1772,6 +1772,260 @@ streams_raw2 %&gt;%
    &lt;td style="text-align:left;"&gt; 131 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Depth &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+???
+A função separate() separa uma coluna em duas colunas, gerando uma nova variável.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Pacote tidyr - unite()**]
+
+&lt;BR/&gt;
+
+
+&lt;img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Frstudio-conf-2020.github.io%2Fr-for-excel%2Fimg%2Frstudio-cheatsheet-unite.png&amp;f=1&amp;nofb=1" style="display: block; margin: auto;" /&gt;
+
+
+???
+A função unite() une duas ou mais coluna em uma coluna, gerando uma nova variável.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Pacote tidyr - unite()**]
+.center[.red[**Juntar Duas Coluna em Uma**]]
+
+
+
+```r
+streams_raw3 %&gt;% 
+  unite(original_width, width_obs, 
+        col = "width_obs", 
+        sep = ".")
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; width_obs &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; width &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; original_depth &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; depth_obs &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; depth &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 160 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 50 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 131 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 229 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9.08 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Pacote tidyr - unite()**]
+.center[.red[**Juntar Duas Coluna em Uma**]]
+
+```r
+streams_raw3 %&gt;% 
+  unite(original_depth, depth_obs, 
+        col = "depth_obs", 
+        sep = ".")
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; original_width &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; width_obs &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; width &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; depth_obs &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; depth &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 160 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 50 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 131 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 229 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 9.08 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+???
+A função separate() separa uma coluna em duas colunas, gerando uma nova variável.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Pacote tidyr - unite()**]
+.center[.red[**Juntar Duas Coluna em Uma**]]
+
+```r
+streams_raw3 %&gt;% 
+  unite(original_width, width_obs, 
+        col = "width_obs", 
+        sep = ".") %&gt;% 
+  unite(original_depth, depth_obs, 
+        col = "depth_obs", 
+        sep = ".")
+```
+
+&lt;table class=" lightable-material-dark lightable-striped" style="font-family: Serif; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: purple;"&gt; stream &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; width_obs &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; width &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; depth_obs &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: purple;"&gt; depth &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 70 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 12 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 160 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 13 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 50 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 24 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mai 2011 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Width.1 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; 131 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Depth.1 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; NA &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
@@ -3043,9 +3297,9 @@ tadpoles_clean %&gt;%
   geom_bar(color = "black", 
            position = "dodge",
            width = 0.7) +
-*  scale_x_discrete("Species") +
+   scale_x_discrete("Species") + 
    scale_y_continuous("Number of tadpoles", 
-*                  breaks = seq(0, 175, 25)) +
+                   breaks = seq(0, 175, 25)) +
 *  scale_fill_discrete("Stream", type = minhas_cores)
 ```
 ]
@@ -3079,9 +3333,9 @@ tadpoles_clean %&gt;%
   geom_bar(color = "black", 
            position = "dodge",
            width = 0.7) +
-*  scale_x_discrete("Species") +
+   scale_x_discrete("Species") + 
    scale_y_continuous("Number of tadpoles", 
-*                  breaks = seq(0, 175, 25)) +
+                   breaks = seq(0, 175, 25)) + 
 *  scale_fill_brewer("Stream")
 ```
 ]
@@ -3305,8 +3559,6 @@ tadpoles_len_sp %&gt;%
                  center = 0.5, 
 *                alpha = 0.5)
 ```
-
-&lt;img src="https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
@@ -3339,7 +3591,8 @@ tadpoles_len_sp %&gt;%
                  alpha = 0.5) +
 *  scale_x_continuous("Species") +
 *  scale_y_continuous("Relative frequency") +
-*  scale_fill_brewer("Species")
+   scale_fill_brewer("Species",
+*                    palette = 8)
 ```
 ]
 
@@ -3482,7 +3735,42 @@ background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/image
 background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
-# .blue[**Mapeamento Estético - alpha**]
+# .blue[**Atributo Geométrico - position**]
+
+.center[.red[**Gráfico de Pontos&lt;br/&gt;&lt;BR/&gt;Tamanho do Corpo x Espécie**]]
+.pull-left[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 pontos x categorias extra 1-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+tadpoles_len_sp %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = 0, 
+             y = body_len, 
+             color = species)) +
+* geom_point(position = position_jitter(0.25,
+*                       seed = 136))
+```
+]
+
+???
+Adicionando um mapeamento estético: `color = species`
+
+Adicionando um atributo `position = "jitter"` adiciona uma variação aleatória ao redor de cada observação para reduzir a sobreposição dos pontos.
+
+ATENÇÃO!!!
+Não confundir estéticos com atributos. Atributos serão sempre chamados na camada gemoétrica `geom_()`. Estéticos são chamados na camada de estéticos `aes()`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Atributo Geométrico - alpha**]
 
 .center[.red[**Gráfico de Pontos&lt;br/&gt;&lt;BR/&gt;Tamanho do Corpo x Espécie**]]
 .pull-left[
@@ -3497,9 +3785,10 @@ tadpoles_len_sp %&gt;%
   drop_na() %&gt;% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-*            alpha = 0.3)) +
-  geom_point(position = "jitter")
+             color = species) + 
+  geom_point(position = position_jitter(0.25, 
+            seed = 136), 
+*            alpha = 0.3))
 ```
 ]
 
@@ -3532,10 +3821,11 @@ tadpoles_len_sp %&gt;%
   drop_na() %&gt;% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
 *            shape = species)) +
-  geom_point(position = "jitter")
+  geom_point(position = position_jitter(0.25, 
+            seed = 136), 
+             alpha = 0.3)
 ```
 ]
 
@@ -3568,11 +3858,12 @@ tadpoles_len_sp %&gt;%
   drop_na() %&gt;% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species,
 *            size = stage)) +
-  geom_point(position = "jitter")
+  geom_point(position = position_jitter(0.25, 
+            seed = 136), 
+             alpha = 0.3)
 ```
 ]
 
@@ -3605,15 +3896,14 @@ tadpoles_len_sp %&gt;%
   drop_na() %&gt;% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
-  geom_point(position = 
-  position_jitter(0.25,
-            seed = 136)) +
+  geom_point(position = position_jitter(0.25,
+            seed = 136), 
+             alpha = 0.3, 
+             size = 3) +
 *  scale_x_discrete("") +
-*  scale_y_continuous("Body Length (mm)") +
-*  scale_color_discrete("Species")
+*  scale_y_continuous("Body Length (mm)")
 ```
 ]
 
@@ -3649,16 +3939,15 @@ tadpoles_len_sp %&gt;%
   drop_na() %&gt;% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
-  geom_point(position = 
-  position_jitter(0.25,
-            seed = 136)) +
+  geom_point(position = position_jitter(0.25,
+            seed = 136), 
+             alpha = 0.3, 
+             size = 3) +
   scale_x_discrete("") + 
-  scale_y_continuous("Body Length (mm)",
-*                    limits = c(0, 30)) +
-  scale_color_discrete("Species") 
+  scale_y_continuous("Body Length (mm)", 
+*                    limits = c(0, 30))
 ```
 ]
 
@@ -3686,17 +3975,15 @@ tadpoles_len_sp %&gt;%
   drop_na() %&gt;% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
-  geom_point(position = 
-  position_jitter(0.25,
-            seed = 136)) +
+  geom_point(position = position_jitter(0.25,
+            seed = 136), 
+             alpha = 0.3) +
   scale_x_discrete("") + 
   scale_y_continuous("Body Length (mm)",
                      limits = c(0, 30),
-*                    breaks = seq(0, 30, 5)) +
-  scale_color_discrete("Species") 
+*                    breaks = seq(0, 30, 5))
 ```
 ]
 
@@ -3725,19 +4012,18 @@ tadpoles_len_sp %&gt;%
   drop_na() %&gt;% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
   geom_point(position = 
-  position_jitter(0.25,
-            seed = 136)) +
+               position_jitter(0.25,
+                               seed = 136), 
+             alpha = 0.3) +
   scale_x_discrete("") + 
   scale_y_continuous("Body Length (mm)",
                      limits = c(0, 30),
-                     breaks = seq(0, 30, 5),
-                     expand = c(0, 0)) +
-* scale_color_discrete("Species",
-*                    labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus"))
+                     breaks = seq(0, 30, 5)) +
+* scale_color_discrete("Species", labels = c("Hylodes \npipilans",  "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
+* scale_shape_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus"))
 ```
 ]
 
@@ -3766,17 +4052,18 @@ tadpoles_len_sp %&gt;%
   drop_na() %&gt;% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
   geom_point(position = 
-  position_jitter(0.25,
-            seed = 136), 
-* show.legend = c(alpha = FALSE, shape = FALSE)) +
+               position_jitter(0.25,
+                               seed = 136), 
+             alpha = 0.3) +
 * labs(x = "",
 *      y = "Body Length (mm)",
-*      color = "Species") +
-  scale_color_discrete(labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) 
+*      color = "Species",
+*      shape = "Species") +
+  scale_color_discrete(labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
+  scale_shape_discrete(labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus"))
 ```
 ]
 
@@ -3788,6 +4075,44 @@ tadpoles_len_sp %&gt;%
 `labs` altera os títulos dos eixos e da legenda.
 
 Também permite adicionar título, subtítulo, legenda e um tag.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Relação entre Variáveis - geom_point()**]
+
+.center[.red[**Gráfico de Pontos&lt;BR/&gt;&lt;br/&gt;Tamanho do Corpo x Espécie**]]
+
+.pull-left[
+
+```r
+tadpoles_len_sp %&gt;%
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = species, 
+*            y = body_len,
+*            color = stage)) +
+  geom_point(position = 
+               position_jitter(0.25,
+                               seed = 136), 
+             alpha = 0.3) +
+* labs(x = "Species",
+       y = "Body Length (mm)",
+*      color = "Development \nClass")
+```
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 relações variavel continua x discreta 2-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+Cada geom_*() está associado a estéticos específicos, alguns dos quais são essenciais.
+
+X e Y são estéticos essenciais em geom_point()
 
 ---
 
@@ -4091,7 +4416,7 @@ background-size: 15%, 10%
 
 # .blue[**Mapeando Estéticos - color**]
 
-.center[.red[**Gráfico de Linhas&lt;BR/&gt;&lt;br/&gt;Número de Girinos x Tempo** x Espécie**]]
+.center[.red[**Gráfico de Linhas&lt;BR/&gt;&lt;br/&gt;Número de Girinos x Tempo x Espécie**]]
 
 .pull-left[
 
@@ -4125,7 +4450,7 @@ background-size: 15%, 10%
 
 # .blue[**Mapeando Estéticos - linetype**]
 
-.center[.red[**Gráfico de Linhas&lt;BR/&gt;&lt;br/&gt;Número de Girinos x Tempo** x Espécie**]]
+.center[.red[**Gráfico de Linhas&lt;BR/&gt;&lt;br/&gt;Número de Girinos x Tempo x Espécie**]]
 
 .pull-left[
 
@@ -4156,7 +4481,7 @@ background-size: 15%, 10%
 
 # .blue[**Mapeando Estéticos - color e linetype**]
 
-.center[.red[**Gráfico de Linhas&lt;BR/&gt;&lt;br/&gt;Número de Girinos x Tempo** x Espécie**]]
+.center[.red[**Gráfico de Linhas&lt;BR/&gt;&lt;br/&gt;Número de Girinos x Tempo x Espécie**]]
 
 .pull-left[
 
@@ -4188,7 +4513,7 @@ background-size: 15%, 10%
 
 # .blue[**Adicionando Camadas - geom_line() + geom_point()**]
 
-.center[.red[**Gráfico de Linhas&lt;BR/&gt;&lt;br/&gt;Número de Girinos x Tempo** x Espécie**]]
+.center[.red[**Gráfico de Linhas&lt;BR/&gt;&lt;br/&gt;Número de Girinos x Tempo x Espécie**]]
 
 .pull-left[
 
@@ -4199,9 +4524,9 @@ tadpoles_clean %&gt;%
   ggplot(aes(x = time, 
              y = n,
              color = species,
-*            linetype = species)) +
+             linetype = species)) +   
   geom_line() +
-  geom_point(aes(shape = species))
+* geom_point(aes(shape = species))
 ```
 ]
 
@@ -4224,21 +4549,23 @@ background-size: 15%, 10%
 
 # .blue[**Mapeamento Estético - scale_*()**]
 
-.center[.red[**Gráfico de Linhas&lt;BR/&gt;&lt;br/&gt;Número de Girinos x Tempo** x Espécie**]]
+.center[.red[**Gráfico de Linhas&lt;BR/&gt;&lt;br/&gt;Número de Girinos x Tempo x Espécie**]]
 
 .pull-left[
 
 ```r
 tadpoles_clean %&gt;%
   filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
-  count(time = date, species) %&gt;% 
+* count(time = lubridate::as_date(date), species) %&gt;%
   ggplot(aes(x = time, 
              y = n,
              color = species,
              linetype = species)) +  
   geom_line() +
   geom_point(aes(shape = species)) + 
-* scale_x_continuous("Time") +
+* scale_x_date("Time",
+*              date_breaks = "4 months",
+*              date_labels = "%b-%y") +
 * scale_y_continuous("Number of tadpoles",
 *                    breaks = seq(0, 40, 5))
 ```
@@ -4246,6 +4573,46 @@ tadpoles_clean %&gt;%
 
 .pull-right[
 &lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 gráfico de linhas 12-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+]
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Mapeamento Estético - scale_*()**]
+
+.center[.red[**Gráfico de Linhas&lt;BR/&gt;&lt;br/&gt;Número de Girinos x Tempo x Espécie**]]
+
+.pull-left[
+
+```r
+tadpoles_clean %&gt;%
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  count(time = lubridate::as_date(date), species) %&gt;% 
+  ggplot(aes(x = time, 
+             y = n,
+             color = species,
+             linetype = species)) +  
+  geom_line() +
+  geom_point(aes(shape = species)) + 
+  scale_x_date("Time",  
+               date_breaks = "4 months",
+               date_labels = "%b-%y") + 
+  scale_y_continuous("Number of tadpoles", 
+                     breaks = seq(0, 40, 5)) + 
+* scale_color_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
+* scale_linetype_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
+* scale_shape_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus"))
+```
+]
+
+.pull-right[
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/ggplot2 gráfico de linhas 14-1.png" width="70%" style="display: block; margin: auto;" /&gt;
 ]
 
 ???
@@ -4315,7 +4682,7 @@ tadpoles_len_sp %&gt;%
 ---
 
 background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
-background-position: 0% 98%, 100% 0%
+background-position: 0% 96%, 100% 0%
 background-size: 15%, 10%
 
 # .blue[**Elementos de Texto - element_text()**]
@@ -4465,7 +4832,7 @@ tadpoles_len_sp %&gt;%
 ---
 
 background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
-background-position: 0% 98%, 100% 0%
+background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
 # .blue[**Elementos de Linhas - element_line()**]
@@ -4564,7 +4931,7 @@ Agora, o que resta de parâmetros não relacionados aos dados são apenas retân
 ---
 
 background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
-background-position: 0% 98%, 100% 0%
+background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
 # .blue[**Elementos de Retângulos - element_rect()**]
@@ -4681,11 +5048,11 @@ Agora, o que resta de parâmetros não relacionados aos dados são apenas retân
 ---
 
 background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
-background-position: 0% 100%, 100% 0%
+background-position: 0% 98.5%, 100% 0%
 background-size: 15%, 10%
 
 # .blue[**Salvando e Reutilizando Camada de Temas**]
-.pull-left[
+
 
 ```r
 bd_tl &lt;- tadpoles_len_sp %&gt;% 
@@ -4712,17 +5079,26 @@ meu_tema &lt;- theme(text = element_text(family = "Serif"),
         panel.background = element_blank(),
         legend.key = element_blank())
 ```
-]
 
-.pull-right[
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Salvando e Reutilizando Camada de Temas**]
+
+
 
 ```r
 bd_tl +
 * meu_tema
 ```
 
-&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/salvando e reutiliznaod tema 2-1.png" width="80%" style="display: block; margin: auto;" /&gt;
-]
+&lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/salvando e reutiliznaod tema 2-1.png" width="35%" style="display: block; margin: auto;" /&gt;
+
 
 ???
 
@@ -4880,21 +5256,21 @@ background-size: 15%, 10%
 ```r
 tadpoles_clean %&gt;%
   filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
-  count(time = date, species) %&gt;% 
+  count(time = lubridate::as_date(date), species) %&gt;% 
   ggplot(aes(x = time, 
              y = n,
              color = species,
              linetype = species)) +  
-  geom_line(show.legend = c(linetype = FALSE)) +
-  geom_point(aes(shape = species),
-             show.legend = c(shape = FALSE)) + 
-  scale_x_continuous("Time") + 
-  scale_y_continuous("Number of tadpoles",
-                     breaks = seq(0, 40, 5)) +
-  scale_color_discrete("Species",
-                       labels = c("Hylodes \npipilans",
-                                  "Proceratophrys\nappendiculata",
-                                  "Scinax \nflavoguttatus")) +
+  geom_line() +
+  geom_point(aes(shape = species)) + 
+  scale_x_date("Time", 
+               date_breaks = "1 month", 
+               date_labels = "%b-%y") + 
+  scale_y_continuous("Number of tadpoles", 
+                     breaks = seq(0, 40, 5)) + 
+  scale_color_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + 
+  scale_linetype_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
+  scale_shape_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
 * meu_tema
 ```
 ]
@@ -4986,7 +5362,7 @@ bd_tl +
 
 ```r
 bd_tl +
-* theme_dark()
+* theme_economist()
 ```
 
 &lt;img src="06-Transformação-e-Visualização-de-Dados_files/figure-html/built-in themes 6-1.png" width="70%" style="display: block; margin: auto;" /&gt;
@@ -5034,19 +5410,20 @@ background-size: 15%, 10%
 .pull-left[
 
 ```r
-original &lt;- theme_update(text = element_text(family = "Serif"), 
-                         axis.title = element_text(size = 24,
-                                                   color = "blue"),
-                         axis.text = element_text(size = 20), 
-                         legend.title = element_text("Species", 
-                                                     size = 24, 
-                                                     color = "blue"),
-                         legend.text = element_text(size = 20,
-                                                    face = "italic"),
-                         axis.line = element_line(),
-                         panel.grid = element_blank(),
-                         panel.background = element_blank(),
-                         legend.key = element_blank())
+original &lt;- theme_update(
+  text = element_text(family = "Serif"), 
+  axis.title = element_text(size = 24,
+                            color = "blue"),
+  axis.text = element_text(size = 20), 
+  legend.title = element_text("Species", 
+                              size = 24, 
+                              color = "blue"),
+  legend.text = element_text(size = 20,
+                             face = "italic"),
+  axis.line = element_line(),
+  panel.grid = element_blank(),
+  panel.background = element_blank(),
+  legend.key = element_blank())
 
 bd_tl 
 ```
@@ -5090,6 +5467,7 @@ bd_tl
 
 ???
 Para retornar ao defaul original `theme_set(theme_grey())`
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

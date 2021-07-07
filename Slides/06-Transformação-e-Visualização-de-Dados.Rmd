@@ -27,6 +27,7 @@ class: inverse
 library(tidyverse)
 library(kableExtra)
 source("IRE_functions.R")
+theme_set(theme_grey())
 options(htmltools.dir.version = FALSE)
 xaringanExtra::use_xaringan_extra()
 xaringanExtra::use_clipboard()
@@ -415,7 +416,7 @@ streams_raw2 %>%
   separate(col = "original_width", 
            into = c("original_width", "width_obs")) %>% 
   separate(col = "original_depth", 
-           into = c("original_depth", "depth_obs"))
+           into = c("original_depth", "depth_obs")) 
 ```
 
 ```{r tidyr separete() 7, echo = FALSE, eval = TRUE}
@@ -424,6 +425,138 @@ head(streams_raw2, n = 4) %>%
            into = c("original_width", "width_obs")) %>% 
   separate(col = "original_depth", 
            into = c("original_depth", "depth_obs")) %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif") 
+```
+
+
+???
+A função separate() separa uma coluna em duas colunas, gerando uma nova variável.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Pacote tidyr - unite()**]
+
+<BR/>
+
+
+```{r tidyr unite() 1, echo = FALSE, eval = TRUE, fig.align='center'}
+knitr::include_graphics("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Frstudio-conf-2020.github.io%2Fr-for-excel%2Fimg%2Frstudio-cheatsheet-unite.png&f=1&nofb=1")
+```
+
+
+???
+A função unite() une duas ou mais coluna em uma coluna, gerando uma nova variável.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Pacote tidyr - unite()**]
+.center[.red[**Juntar Duas Coluna em Uma**]]
+```{r, echo = FALSE}
+streams_raw3 <- streams_raw2 %>% 
+  separate(col = "original_width", 
+           into = c("original_width", "width_obs")) %>% 
+  separate(col = "original_depth", 
+           into = c("original_depth", "depth_obs")) 
+```
+
+```{r tidyr unite() 2, echo = TRUE, eval = FALSE}
+streams_raw3 %>% 
+  unite(original_width, width_obs, 
+        col = "width_obs", 
+        sep = ".")
+```
+
+```{r tidyr unite() 3, echo = FALSE, eval = TRUE}
+head(streams_raw3, n = 5) %>% 
+  unite(original_width, width_obs, 
+        col = "width_obs", 
+        sep = ".") %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif") 
+```
+
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Pacote tidyr - unite()**]
+.center[.red[**Juntar Duas Coluna em Uma**]]
+```{r tidyr unite() 4, echo = TRUE, eval = FALSE}
+streams_raw3 %>% 
+  unite(original_depth, depth_obs, 
+        col = "depth_obs", 
+        sep = ".")
+```
+
+```{r tidyr unite() 5, echo = FALSE, eval = TRUE}
+head(streams_raw3, n = 5) %>% 
+  unite(original_depth, depth_obs, 
+        col = "depth_obs", 
+        sep = ".") %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif") 
+```
+
+
+???
+A função separate() separa uma coluna em duas colunas, gerando uma nova variável.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fd33wubrfki0l68.cloudfront.net%2F5f8c22ec53a1ac61684f3e8d59c623d09227d6b9%2Fb15de%2Fimages%2Fhex-tidyr.png&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Pacote tidyr - unite()**]
+.center[.red[**Juntar Duas Coluna em Uma**]]
+```{r tidyr unite() 6, echo = TRUE, eval = FALSE}
+streams_raw3 %>% 
+  unite(original_width, width_obs, 
+        col = "width_obs", 
+        sep = ".") %>% 
+  unite(original_depth, depth_obs, 
+        col = "depth_obs", 
+        sep = ".")
+```
+
+```{r tidyr unite() 7, echo = FALSE, eval = TRUE}
+head(streams_raw3, n = 4) %>% 
+  unite(original_width, width_obs, 
+        col = "width_obs", 
+        sep = ".") %>% 
+  unite(original_depth, depth_obs, 
+        col = "depth_obs", 
+        sep = ".") %>% 
   kbl() %>% 
   kable_material_dark("striped", 
                       fixed_thead = list(enabled = T, 
@@ -893,6 +1026,7 @@ background-size: 15%, 10%
 .center[.red[**Gráficos de Barras<br/><BR/>Número de Indivíduos x Espécie**]]
 .pull-left[
 ```{r ggplot2 geom_bar() 1, echo = FALSE, fig.align='center', out.width= "70%"}
+theme_set(theme_grey())
 tadpoles_clean %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   select(species) %>% 
@@ -1476,9 +1610,9 @@ tadpoles_clean %>%
   geom_bar(color = "black", 
            position = "dodge",
            width = 0.7) +
-   scale_x_discrete("Species") + #<<
+   scale_x_discrete("Species") + 
    scale_y_continuous("Number of tadpoles", 
-                   breaks = seq(0, 175, 25)) + #<<
+                   breaks = seq(0, 175, 25)) +
    scale_fill_discrete("Stream", type = minhas_cores)  #<<
 ```
 ]
@@ -1499,7 +1633,7 @@ tadpoles_clean %>%
    scale_x_discrete("Species") + #<<
    scale_y_continuous("Number of tadpoles", 
                    breaks = seq(0, 175, 25)) + #<<
-   scale_color_discrete("Stream", type = minhas_cores) + 
+   scale_fill_discrete("Stream", type = minhas_cores) + 
   theme(text = element_text(size = 24)) #<<
 ```
 ]
@@ -1528,9 +1662,9 @@ tadpoles_clean %>%
   geom_bar(color = "black", 
            position = "dodge",
            width = 0.7) +
-   scale_x_discrete("Species") + #<<
+   scale_x_discrete("Species") + 
    scale_y_continuous("Number of tadpoles", 
-                   breaks = seq(0, 175, 25)) + #<<
+                   breaks = seq(0, 175, 25)) + 
    scale_fill_brewer("Stream")  #<<
 ```
 ]
@@ -1814,10 +1948,6 @@ tadpoles_len_sp %>%
                  center = 0.5, 
                  alpha = 0.5) #<<
 ```
-
-```{r ggplot2 camada geom_histogram() 6, echo = FALSE, fig.align='center'}
-knitr::include_graphics("https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png")
-```
 ]
 
 .pull-right[
@@ -1860,7 +1990,8 @@ tadpoles_len_sp %>%
                  alpha = 0.5) +
    scale_x_continuous("Species") + #<<
    scale_y_continuous("Relative frequency") + #<<
-   scale_fill_brewer("Species") #<<
+   scale_fill_brewer("Species",
+                     palette = 8) #<<
 ```
 ]
 
@@ -1877,7 +2008,8 @@ tadpoles_len_sp %>%
                  alpha = 0.5) +
    scale_x_continuous("Species") + #<<
    scale_y_continuous("Relative frequency") + #<<
-   scale_fill_discrete("Species") +
+   scale_fill_brewer("Species",
+                     palette = 8) +
   theme(text = element_text(size = 24))
 ```
 ]
@@ -2044,7 +2176,52 @@ background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/image
 background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
-# .blue[**Mapeamento Estético - alpha**]
+# .blue[**Atributo Geométrico - position**]
+
+.center[.red[**Gráfico de Pontos<br/><BR/>Tamanho do Corpo x Espécie**]]
+.pull-left[
+```{r ggplot2 pontos x categorias extra 1, echo = FALSE, fig.align='center', out.width= "70%"}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = 0, 
+             y = body_len, 
+             color = species)) +
+  geom_point(position = position_jitter(0.25,
+                                        seed = 136), 
+             size = 3) + 
+  theme(text = element_text(size = 24))
+```
+]
+
+.pull-right[
+```{r ggplot2 pontos x categorias extra 2, eval = FALSE}
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = 0, 
+             y = body_len, 
+             color = species)) +
+  geom_point(position = position_jitter(0.25, #<<
+                        seed = 136)) #<<
+```
+]
+
+???
+Adicionando um mapeamento estético: `color = species`
+
+Adicionando um atributo `position = "jitter"` adiciona uma variação aleatória ao redor de cada observação para reduzir a sobreposição dos pontos.
+
+ATENÇÃO!!!
+Não confundir estéticos com atributos. Atributos serão sempre chamados na camada gemoétrica `geom_()`. Estéticos são chamados na camada de estéticos `aes()`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Atributo Geométrico - alpha**]
 
 .center[.red[**Gráfico de Pontos<br/><BR/>Tamanho do Corpo x Espécie**]]
 .pull-left[
@@ -2054,10 +2231,11 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species,
-             alpha = 0.3)) +
-  geom_point(position = "jitter", 
-             size = 3) + 
+             color = species)) +
+  geom_point(position = position_jitter(0.25, 
+            seed = 136), 
+             size = 3,
+             alpha = 0.3) + 
   theme(text = element_text(size = 24))
 ```
 ]
@@ -2069,9 +2247,10 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3)) + #<<
-  geom_point(position = "jitter")
+             color = species) + 
+  geom_point(position = position_jitter(0.25, 
+            seed = 136), 
+             alpha = 0.3)) #<<
 ```
 ]
 
@@ -2099,11 +2278,12 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
-  geom_point(position = "jitter", 
-             size = 3) + 
+  geom_point(position = position_jitter(0.25, 
+            seed = 136), 
+             size = 3, 
+             alpha = 0.3) + 
   theme(text = element_text(size = 24))
 ```
 ]
@@ -2115,10 +2295,11 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) + #<<
-  geom_point(position = "jitter")
+  geom_point(position = position_jitter(0.25, 
+            seed = 136), 
+             alpha = 0.3)
 ```
 ]
 
@@ -2146,11 +2327,12 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species, 
              size = stage)) +
-  geom_point(position = "jitter") + 
+  geom_point(position = position_jitter(0.25, 
+            seed = 136), 
+             alpha = 0.3) + 
   theme(text = element_text(size = 24))
 ```
 ]
@@ -2162,11 +2344,12 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species,
              size = stage)) + #<<
-  geom_point(position = "jitter")
+  geom_point(position = position_jitter(0.25, 
+            seed = 136), 
+             alpha = 0.3)
 ```
 ]
 
@@ -2198,15 +2381,14 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
-  geom_point(position = 
-  position_jitter(0.25,
-            seed = 136)) +
+  geom_point(position = position_jitter(0.25,
+            seed = 136), 
+             alpha = 0.3, 
+             size = 3) +
    scale_x_discrete("") + #<<
-   scale_y_continuous("Body Length (mm)") + #<<
-   scale_color_discrete("Species")  #<<
+   scale_y_continuous("Body Length (mm)") #<<
 ```
 ]
 
@@ -2217,15 +2399,14 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
   geom_point(position = position_jitter(0.25,
                                         seed = 136),
-             size = 3) +
+             size = 3, 
+             alpha = 0.3) +
   scale_x_discrete("") +
-  scale_y_continuous("Body Length (mm)") + 
-  scale_color_discrete("Species") +
+  scale_y_continuous("Body Length (mm)") +
   theme(text = element_text(size = 24))
 ```
 ]
@@ -2257,16 +2438,15 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
-  geom_point(position = 
-  position_jitter(0.25,
-            seed = 136)) +
+  geom_point(position = position_jitter(0.25,
+            seed = 136), 
+             alpha = 0.3, 
+             size = 3) +
   scale_x_discrete("") + 
-  scale_y_continuous("Body Length (mm)",
-                     limits = c(0, 30)) + #<<
-  scale_color_discrete("Species") 
+  scale_y_continuous("Body Length (mm)", 
+                     limits = c(0, 30))  #<<
 ```
 ]
 
@@ -2277,17 +2457,15 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
-  geom_point(position = 
-  position_jitter(0.25,
+  geom_point(position = position_jitter(0.25,
             seed = 136), 
-  size = 3) +
+  size = 3, 
+             alpha = 0.3) +
   scale_x_discrete("") + 
   scale_y_continuous("Body Length (mm)",
                      limits = c(0, 30)) +
-  scale_color_discrete("Species") +
   theme(text = element_text(size = 24))
 ```
 ]
@@ -2311,17 +2489,15 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
-  geom_point(position = 
-  position_jitter(0.25,
-            seed = 136)) +
+  geom_point(position = position_jitter(0.25,
+            seed = 136), 
+             alpha = 0.3) +
   scale_x_discrete("") + 
   scale_y_continuous("Body Length (mm)",
                      limits = c(0, 30),
-                     breaks = seq(0, 30, 5)) + #<<
-  scale_color_discrete("Species") 
+                     breaks = seq(0, 30, 5)) #<<
 ```
 ]
 
@@ -2332,18 +2508,16 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
-  geom_point(position = 
-  position_jitter(0.25,
-            seed = 136),
-  size = 3) +
+  geom_point(position = position_jitter(0.25,
+             seed = 136),
+             size = 3, 
+             alpha = 0.3) +
   scale_x_discrete("") + 
   scale_y_continuous("Body Length (mm)",
                      limits = c(0, 30),
-                     breaks = seq(0, 30, 5)) + 
-  scale_color_discrete("Species") +
+                     breaks = seq(0, 30, 5)) +
   theme(text = element_text(size = 24))
 ```
 ]
@@ -2368,19 +2542,18 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
   geom_point(position = 
-  position_jitter(0.25,
-            seed = 136)) +
+               position_jitter(0.25,
+                               seed = 136), 
+             alpha = 0.3) +
   scale_x_discrete("") + 
   scale_y_continuous("Body Length (mm)",
                      limits = c(0, 30),
-                     breaks = seq(0, 30, 5),
-                     expand = c(0, 0)) +
-  scale_color_discrete("Species", #<<
-                     labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) #<<
+                     breaks = seq(0, 30, 5)) +
+  scale_color_discrete("Species", labels = c("Hylodes \npipilans",  "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + #<<
+  scale_shape_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) #<<
 ```
 ]
 
@@ -2391,19 +2564,19 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
   geom_point(position = 
-  position_jitter(0.25,
-            seed = 136),
-  size = 3) +
+               position_jitter(0.25,
+                               seed = 136), 
+             alpha = 0.3, 
+             size = 3) +
   scale_x_discrete("") + 
   scale_y_continuous("Body Length (mm)",
                      limits = c(0, 30),
-                     breaks = seq(0, 30, 5)) + 
-  scale_color_discrete("Species", 
-                     labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
+                     breaks = seq(0, 30, 5)) +
+  scale_color_discrete("Species", labels = c("Hylodes \npipilans",  "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + #<<
+  scale_shape_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + #<< 
   theme(text = element_text(size = 24))
 ```
 ]
@@ -2428,39 +2601,41 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
   geom_point(position = 
-  position_jitter(0.25,
-            seed = 136), 
-  show.legend = c(alpha = FALSE, shape = FALSE)) + #<<
+               position_jitter(0.25,
+                               seed = 136), 
+             alpha = 0.3) +
   labs(x = "", #<<
        y = "Body Length (mm)", #<<
-       color = "Species") + #<<
-  scale_color_discrete(labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) 
+       color = "Species", #<<
+       shape = "Species") + #<<
+  scale_color_discrete(labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
+  scale_shape_discrete(labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus"))
 ```
 ]
 
 .pull-right[
 ```{r ggplot2 funções scale 12, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>%
+tadpoles_len_sp %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
   geom_point(position = 
                position_jitter(0.25,
-                               seed = 136),
-             size = 3, 
-             show.legend = c(alpha = FALSE, shape = FALSE)) +
-  labs(x = "",
-       y = "Body Length (mm)",
-       color = "Species") +
-  scale_color_discrete(labels = c("Hylodese \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
+                               seed = 136), 
+             alpha = 0.3, 
+             size = 3) +
+  labs(x = "", #<<
+       y = "Body Length (mm)", #<<
+       color = "Species", #<<
+       shape = "Species") + #<<
+  scale_color_discrete(labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
+  scale_shape_discrete(labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
   theme(text = element_text(size = 24))
 ```
 ]
@@ -2469,6 +2644,59 @@ tadpoles_len_sp %>%
 `labs` altera os títulos dos eixos e da legenda.
 
 Também permite adicionar título, subtítulo, legenda e um tag.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Relação entre Variáveis - geom_point()**]
+
+.center[.red[**Gráfico de Pontos<BR/><br/>Tamanho do Corpo x Espécie**]]
+
+.pull-left[
+```{r ggplot2 relações variavel continua x discreta 1, eval = FALSE, fig.align='center', out.width="100%"}
+tadpoles_len_sp %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             y = body_len, #<<
+             color = stage)) + #<<
+  geom_point(position = 
+               position_jitter(0.25,
+                               seed = 136), 
+             alpha = 0.3) +
+  labs(x = "Species", #<<
+       y = "Body Length (mm)",
+       color = "Development \nClass") #<<
+```
+]
+
+.pull-right[
+```{r ggplot2 relações variavel continua x discreta 2, echo = FALSE, fig.align='center', out.width="70%"}
+tadpoles_len_sp %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             y = body_len,
+             color = stage)) +
+  geom_point(position = 
+               position_jitter(0.25,
+                               seed = 136),
+             size = 3, 
+             alpha = 0.3) +
+  labs(x = "Species",
+       y = "Body Length (mm)",
+       color = "Development \nClass") +
+  theme(text = element_text(size = 24))
+```
+]
+
+???
+Cada geom_*() está associado a estéticos específicos, alguns dos quais são essenciais.
+
+X e Y são estéticos essenciais em geom_point()
 
 ---
 
@@ -2876,7 +3104,7 @@ background-size: 15%, 10%
 
 # .blue[**Mapeando Estéticos - color**]
 
-.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo** x Espécie**]]
+.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo x Espécie**]]
 
 .pull-left[
 ```{r ggplot2 gráfico de linhas 3, eval = FALSE, fig.align='center', out.width="100%"}
@@ -2918,7 +3146,7 @@ background-size: 15%, 10%
 
 # .blue[**Mapeando Estéticos - linetype**]
 
-.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo** x Espécie**]]
+.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo x Espécie**]]
 
 .pull-left[
 ```{r ggplot2 gráfico de linhas 5, eval = FALSE, fig.align='center', out.width="100%"}
@@ -2957,7 +3185,7 @@ background-size: 15%, 10%
 
 # .blue[**Mapeando Estéticos - color e linetype**]
 
-.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo** x Espécie**]]
+.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo x Espécie**]]
 
 .pull-left[
 ```{r ggplot2 gráfico de linhas 7, eval = FALSE, fig.align='center', out.width="100%"}
@@ -2998,7 +3226,7 @@ background-size: 15%, 10%
 
 # .blue[**Adicionando Camadas - geom_line() + geom_point()**]
 
-.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo** x Espécie**]]
+.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo x Espécie**]]
 
 .pull-left[
 ```{r ggplot2 gráfico de linhas 9, eval = FALSE, fig.align='center', out.width="100%"}
@@ -3008,9 +3236,9 @@ tadpoles_clean %>%
   ggplot(aes(x = time, 
              y = n,
              color = species,
-             linetype = species)) +  #<< 
+             linetype = species)) +   
   geom_line() +
-  geom_point(aes(shape = species))
+  geom_point(aes(shape = species)) #<<
 ```
 ]
 
@@ -3021,9 +3249,10 @@ tadpoles_clean %>%
   count(time = date, species) %>% 
   ggplot(aes(x = time, 
              y = n,
-             color = species, #<<
-             linetype = species)) +  #<< 
-  geom_line()   + 
+             color = species,
+             linetype = species)) +   
+  geom_line() +
+  geom_point(aes(shape = species)) + 
   theme(text = element_text(size = 24))
 ```
 ]
@@ -3043,20 +3272,22 @@ background-size: 15%, 10%
 
 # .blue[**Mapeamento Estético - scale_*()**]
 
-.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo** x Espécie**]]
+.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo x Espécie**]]
 
 .pull-left[
 ```{r ggplot2 gráfico de linhas 11, eval = FALSE, fig.align='center', out.width="100%"}
 tadpoles_clean %>%
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = date, species) %>% 
+  count(time = lubridate::as_date(date), species) %>% #<<
   ggplot(aes(x = time, 
              y = n,
              color = species,
              linetype = species)) +  
   geom_line() +
   geom_point(aes(shape = species)) + 
-  scale_x_continuous("Time") + #<< 
+  scale_x_date("Time", #<< 
+               date_breaks = "4 months", #<< 
+               date_labels = "%b-%y") + #<< 
   scale_y_continuous("Number of tadpoles", #<< 
                      breaks = seq(0, 40, 5)) #<<
 ```
@@ -3066,16 +3297,76 @@ tadpoles_clean %>%
 ```{r ggplot2 gráfico de linhas 12, echo = FALSE, fig.align='center', out.width="70%"}
 tadpoles_clean %>%
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = date, species) %>% 
+  count(time = lubridate::as_date(date), species) %>% #<<
   ggplot(aes(x = time, 
              y = n,
              color = species,
              linetype = species)) +  
   geom_line() +
   geom_point(aes(shape = species)) + 
-  scale_x_continuous("Time") + #<< 
+  scale_x_date("Time", #<< 
+               date_breaks = "4 months", #<< 
+               date_labels = "%b-%y") + #<< 
   scale_y_continuous("Number of tadpoles", #<< 
                      breaks = seq(0, 40, 5)) + #<<
+  theme(text = element_text(size = 24))
+```
+]
+
+???
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Mapeamento Estético - scale_*()**]
+
+.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo x Espécie**]]
+
+.pull-left[
+```{r ggplot2 gráfico de linhas 13, eval = FALSE, fig.align='center', out.width="100%"}
+tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  count(time = lubridate::as_date(date), species) %>% 
+  ggplot(aes(x = time, 
+             y = n,
+             color = species,
+             linetype = species)) +  
+  geom_line() +
+  geom_point(aes(shape = species)) + 
+  scale_x_date("Time",  
+               date_breaks = "4 months",
+               date_labels = "%b-%y") + 
+  scale_y_continuous("Number of tadpoles", 
+                     breaks = seq(0, 40, 5)) + 
+  scale_color_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + #<<
+  scale_linetype_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + #<<
+  scale_shape_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) #<<
+```
+]
+
+.pull-right[
+```{r ggplot2 gráfico de linhas 14, echo = FALSE, fig.align='center', out.width="70%"}
+tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  count(time = lubridate::as_date(date), species) %>% 
+  ggplot(aes(x = time, 
+             y = n,
+             color = species,
+             linetype = species)) +  
+  geom_line() +
+  geom_point(aes(shape = species)) + 
+  scale_x_date("Time", 
+               date_breaks = "4 month", 
+               date_labels = "%b-%y") + 
+  scale_y_continuous("Number of tadpoles", 
+                     breaks = seq(0, 40, 5)) + 
+  scale_color_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + 
+  scale_linetype_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
+  scale_shape_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
   theme(text = element_text(size = 24))
 ```
 ]
@@ -3145,7 +3436,7 @@ tadpoles_len_sp %>%
 ---
 
 background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 98%, 100% 0%
+background-position: 0% 96%, 100% 0%
 background-size: 15%, 10%
 
 # .blue[**Elementos de Texto - element_text()**]
@@ -3353,7 +3644,7 @@ tadpoles_len_sp %>%
 ---
 
 background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 98%, 100% 0%
+background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
 # .blue[**Elementos de Linhas - element_line()**]
@@ -3516,7 +3807,7 @@ Agora, o que resta de parâmetros não relacionados aos dados são apenas retân
 ---
 
 background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 98%, 100% 0%
+background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
 # .blue[**Elementos de Retângulos - element_rect()**]
@@ -3706,11 +3997,11 @@ Agora, o que resta de parâmetros não relacionados aos dados são apenas retân
 ---
 
 background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
+background-position: 0% 98.5%, 100% 0%
 background-size: 15%, 10%
 
 # .blue[**Salvando e Reutilizando Camada de Temas**]
-.pull-left[
+
 ```{r salvando e reutiliznaod tema 1, eval = TRUE, fig.align='center'}
 bd_tl <- tadpoles_len_sp %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
@@ -3736,14 +4027,23 @@ meu_tema <- theme(text = element_text(family = "Serif"),
         panel.background = element_blank(),
         legend.key = element_blank())
 ```
-]
 
-.pull-right[
-```{r salvando e reutiliznaod tema 2, echo = TRUE, fig.align='center', out.width="80%"}
+???
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Salvando e Reutilizando Camada de Temas**]
+
+
+```{r salvando e reutiliznaod tema 2, echo = TRUE, fig.align='center', out.width="35%"}
 bd_tl +
   meu_tema #<<
 ```
-]
+
 
 ???
 
@@ -3968,21 +4268,21 @@ background-size: 15%, 10%
 ```{r reutilizando tema 9, eval = FALSE, fig.align='center'}
 tadpoles_clean %>%
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = date, species) %>% 
+  count(time = lubridate::as_date(date), species) %>% 
   ggplot(aes(x = time, 
              y = n,
              color = species,
              linetype = species)) +  
-  geom_line(show.legend = c(linetype = FALSE)) +
-  geom_point(aes(shape = species),
-             show.legend = c(shape = FALSE)) + 
-  scale_x_continuous("Time") + 
-  scale_y_continuous("Number of tadpoles",
-                     breaks = seq(0, 40, 5)) +
-  scale_color_discrete("Species",
-                       labels = c("Hylodes \npipilans",
-                                  "Proceratophrys\nappendiculata",
-                                  "Scinax \nflavoguttatus")) +
+  geom_line() +
+  geom_point(aes(shape = species)) + 
+  scale_x_date("Time", 
+               date_breaks = "1 month", 
+               date_labels = "%b-%y") + 
+  scale_y_continuous("Number of tadpoles", 
+                     breaks = seq(0, 40, 5)) + 
+  scale_color_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + 
+  scale_linetype_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
+  scale_shape_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
   meu_tema #<<
 ```
 ]
@@ -3991,21 +4291,21 @@ tadpoles_clean %>%
 ```{r reutilizando tema 10, echo = FALSE, fig.align='center', out.width="90%"}
 tadpoles_clean %>%
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = date, species) %>% 
+  count(time = lubridate::as_date(date), species) %>% 
   ggplot(aes(x = time, 
              y = n,
              color = species,
              linetype = species)) +  
-  geom_line(show.legend = c(linetype = FALSE)) +
-  geom_point(aes(shape = species),
-             show.legend = c(shape = FALSE)) + 
-  scale_x_continuous("Time") + 
-  scale_y_continuous("Number of tadpoles",
-                     breaks = seq(0, 40, 5)) +
-  scale_color_discrete("Species",
-                       labels = c("Hylodes \npipilans",
-                                  "Proceratophrys\nappendiculata",
-                                  "Scinax \nflavoguttatus")) +
+  geom_line() +
+  geom_point(aes(shape = species)) + 
+  scale_x_date("Time", 
+               date_breaks = "1 month", 
+               date_labels = "%b-%y") + 
+  scale_y_continuous("Number of tadpoles", 
+                     breaks = seq(0, 40, 5)) + 
+  scale_color_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + 
+  scale_linetype_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
+  scale_shape_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
   meu_tema
 ```
 ]
@@ -4077,7 +4377,7 @@ bd_tl +
 .pull-right[
 ```{r built-in themes 6, echo = TRUE, fig.align='center', out.width="70%"}
 bd_tl +
-  theme_dark() #<<  
+  theme_economist() #<<  
 ```
 ]
 
@@ -4116,19 +4416,20 @@ background-size: 15%, 10%
 # .blue[**Alterando Temas Existentes - theme_update()**]
 .pull-left[
 ```{r alterando temas existentes 1, eval = FALSE, fig.align='center'}
-original <- theme_update(text = element_text(family = "Serif"), 
-                         axis.title = element_text(size = 24,
-                                                   color = "blue"),
-                         axis.text = element_text(size = 20), 
-                         legend.title = element_text("Species", 
-                                                     size = 24, 
-                                                     color = "blue"),
-                         legend.text = element_text(size = 20,
-                                                    face = "italic"),
-                         axis.line = element_line(),
-                         panel.grid = element_blank(),
-                         panel.background = element_blank(),
-                         legend.key = element_blank())
+original <- theme_update(
+  text = element_text(family = "Serif"), 
+  axis.title = element_text(size = 24,
+                            color = "blue"),
+  axis.text = element_text(size = 20), 
+  legend.title = element_text("Species", 
+                              size = 24, 
+                              color = "blue"),
+  legend.text = element_text(size = 20,
+                             face = "italic"),
+  axis.line = element_line(),
+  panel.grid = element_blank(),
+  panel.background = element_blank(),
+  legend.key = element_blank())
 
 bd_tl 
 ```
@@ -4182,3 +4483,4 @@ bd_tl
 
 ???
 Para retornar ao defaul original `theme_set(theme_grey())`
+
