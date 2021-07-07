@@ -7,7 +7,7 @@
 # Carregar pacotes  -------------------------------------------
 library(tidyverse)
 source("IRE_functions.R")
-tadpoles_clean <- read_tadpoles_raw("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/tadpoles_raw.csv")
+tadpoles_clean <- read_tadpoles_raw("tadpoles_raw.csv")
 
 # OBS: ANTES DE COMEÇAR A EXECUTAR ESSE SCRIPT, ABRA E EXECUTE O SCRIPT DA
 # AULA 05 PARA GERAR OS OBJETOS NECESSÁRIOS PARA A EXECUÇÃO DESSE SCRIPT
@@ -29,6 +29,14 @@ gather(data = streams_raw,
        key = "original_width", 
        value = "width", 
        Width.1:Width.5)
+
+# outra forma só com as variaveis de interesse
+streams_raw %>% 
+  select(Data, Stream, Width.1:Width.5) %>% 
+  gather(key = "original_width", 
+         value = "width",
+         Width.1:Width.5)
+
 
 gather(data = streams_raw, 
        key = "original_depth", 
@@ -87,9 +95,42 @@ streams_raw2 %>%
   separate(col = "original_width", 
            into = c("original_width", "width_obs")) %>% 
   separate(col = "original_depth", 
-           into = c("original_depth", "depth_obs"))
+           into = c("original_depth", "depth_obs")) 
+
+# Unindo duas colunas  -------------------------------------------
+streams_raw3 <- streams_raw2 %>% 
+  separate(col = "original_width", 
+           into = c("original_width", "width_obs")) %>% 
+  separate(col = "original_depth", 
+           into = c("original_depth", "depth_obs")) 
+
+streams_raw3 %>% 
+  unite(original_width,
+        width_obs, 
+        col = "width_obs", 
+        sep = ".")
+
+streams_raw3 %>% 
+  unite(original_depth, depth_obs, 
+        col = "depth_obs", 
+        sep = ".")
+
+streams_raw3 %>% 
+  unite(original_width, width_obs, 
+        col = "width_obs", 
+        sep = ".") %>% 
+  unite(original_depth, depth_obs, 
+        col = "depth_obs", 
+        sep = ".")
 
 # Formato longo para largo  -------------------------------------------
+tadpoles_clean %>% 
+  count(stream, species) %>% 
+  drop_na() %>%  
+  group_by(stream) %>% 
+  spread(key = species, 
+         value =  n,
+         fill = 0)
 # Frequencia das espécies por riacho
 tadpoles_community <- tadpoles_freq_stream %>%
   select(stream, species, n) %>% 
@@ -98,7 +139,7 @@ tadpoles_community <- tadpoles_freq_stream %>%
          value =  n,
          fill = 0)
 
-tadpoles_community
+ifelse(tadpoles_community[, -1] > 0, 1, 0)
 
 # Frequência das espécies por mês por riacho
 tadpoles_community_date <- tadpoles_freq_date_stream %>%
@@ -131,12 +172,22 @@ tadpoles_rich_stream %>%
   inner_join(streams_variables, 
              by = c("stream" = "stream"))
 
+novo_objeto <- tadpoles_clean %>% 
+  count(stream, species) %>% 
+  count(stream) %>% 
+  inner_join(streams_variables, 
+             by = c("stream" = "stream"))
+
+write.table(novo_objeto, "novo_objeto.txt")
 # Unindo riqueza de espécies por data riacho com variáveis ambientais por raicho
 tadpoles_rich_date_stream %>% 
   inner_join(streams_date_variables,
              by = c("date" = "date", "stream" = "stream"))
 
 # ggplot2 - grmática gráfica em R  -------------------------------------------
+tadpoles_len_sp <- tadpoles_clean %>% 
+  select(date, species,stage, body_len, total_len) 
+
 tadpoles_len_sp %>%  
   drop_na() %>% 
   ggplot(aes(x = species, 
@@ -272,7 +323,8 @@ tadpoles_clean %>%
   scale_x_discrete("Species") +
   scale_y_continuous("Number of tadpoles", 
                      breaks = seq(0, 175, 25)) +
-  scale_fill_discrete("Stream", type = minhas_cores) # controla as cores das barras
+  scale_fill_discrete("Stream", 
+                      type = minhas_cores) # controla as cores das barras
 
 tadpoles_clean %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
@@ -285,7 +337,7 @@ tadpoles_clean %>%
   scale_x_discrete("Species") +
   scale_y_continuous("Number of tadpoles", 
                      breaks = seq(0, 175, 25)) +
-  scale_fill_brewer("Stream") # gera conres sequênciais
+  scale_fill_brewer("Stream", palette = 8) # gera cores sequênciais
 
 # Histograma geom_hist()  -------------------------------------------
 tadpoles_len_sp %>% 
@@ -336,11 +388,10 @@ tadpoles_len_sp %>%
              y = ..density.., 
              fill = species)) +   
   geom_histogram(binwidth = 1,
-                 center = 0.5, 
-                 alpha = 0.5) +
+                 center = 0.5) +
   scale_x_continuous("Species") + # controla características do eixo x
   scale_y_continuous("Relative frequency") + # controla características do eixo y
-  scale_fill_brewer("Species") # controla as cores do estético fill
+  scale_fill_brewer("Species", palette = 8) # controla as cores do estético fill
  
 # Gráfico de pontos com uma variável - geom_point()  -------------------------------------------
 tadpoles_len_sp %>% 
@@ -368,26 +419,37 @@ tadpoles_len_sp %>%
              color = species)) +
   geom_point(position = "jitter") # adiciona variação aleatória ao pontos sobrepostos
 
-# Mapeamento estético alpha  -------------------------------------------
 tadpoles_len_sp %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3)) + # atribui transparência aos pontos
-  geom_point(position = "jitter")
+             color = species)) +
+  geom_point(position = position_jitter(0.25, #<<
+                                        seed = 136)) #<< outra forma de adicionar variação aleatória aos pontos sobrepostos com maior controle sobre os espaçamento entre os pontos
 
+# Atributo geométrico alpha  -------------------------------------------
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = 0, 
+             y = body_len, 
+             color = species) + 
+           geom_point(position = position_jitter(0.25, 
+                                                 seed = 136), 
+                      alpha = 0.3)) #<< atribui transparência aos pontos
+  
 # Mapeamento estético shape  -------------------------------------------
 tadpoles_len_sp %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3, 
-             shape = species)) + # atribui diferentes formas aos pontos de acordo com uma variável categórica
-  geom_point(position = "jitter")
+             color = species,
+             shape = species)) + #<<  atribui diferentes formas aos pontos de acordo com uma variável categórica
+  geom_point(position = position_jitter(0.25, 
+                                        seed = 136), 
+             alpha = 0.3)
 
 # Mapeamento estético size  -------------------------------------------
 tadpoles_len_sp %>% 
@@ -395,11 +457,12 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species,
-             size = stage)) + # atribui diferentes tamanhos de acordo com uma variável preferencialmente contínua
-  geom_point(position = "jitter")
+             size = stage)) + #<<  atribui diferentes tamanhos de acordo com uma variável preferencialmente contínua
+  geom_point(position = position_jitter(0.25, 
+                                        seed = 136), 
+             alpha = 0.3)
 
 # Modificando esteticos com scale_*_*()  -------------------------------------------
 tadpoles_len_sp %>% 
@@ -407,87 +470,95 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
-  geom_point(position = 
-               position_jitter(0.25,
-                               seed = 136)) +
-  scale_x_discrete("") +
-  scale_y_continuous("Body Length (mm)") +
-  scale_color_discrete("Species")
+  geom_point(position = position_jitter(0.25,
+                                        seed = 136), 
+             alpha = 0.3) +
+  scale_x_discrete("") + #<< controla características do eixo x - alterando título do eixo
+  scale_y_continuous("Body Length (mm)") #<< controla características do eixo y - alterando título do eixo
 
 tadpoles_len_sp %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
-  geom_point(position = 
-               position_jitter(0.25,
-                               seed = 136)) +
+  geom_point(position = position_jitter(0.25,
+                                        seed = 136), 
+             alpha = 0.3) +
   scale_x_discrete("") + 
-  scale_y_continuous("Body Length (mm)",
-                     limits = c(0, 30)) + # atribui limites ao eixo y
-  scale_color_discrete("Species")
+  scale_y_continuous("Body Length (mm)", 
+                     limits = c(0, 30))  #<< alterando limites do eixo
 
 tadpoles_len_sp %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
-  geom_point(position = 
-               position_jitter(0.25,
-                               seed = 136)) +
+  geom_point(position = position_jitter(0.25,
+                                        seed = 136), 
+             alpha = 0.3) +
   scale_x_discrete("") + 
   scale_y_continuous("Body Length (mm)",
                      limits = c(0, 30),
-                     breaks = seq(0, 30, 5)) + # determina intervalo entre valores no eixo y
-  scale_color_discrete("Species")
+                     breaks = seq(0, 30, 5)) #<< alterando intervalo entre os valores do eixo
 
 tadpoles_len_sp %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species, 
-             alpha = 0.3,
-             shape = species)) +
-  geom_point(position = 
-               position_jitter(0.25,
-                               seed = 136)) +
-  scale_x_discrete("") + 
-  scale_y_continuous("Body Length (mm)",
-                     limits = c(0, 30),
-                     breaks = seq(0, 30, 5),
-                     expand = c(0, 0)) +
-  scale_color_discrete("Species",
-                       labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus"))
-# controla características relacionadas ao estético color
-
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species, 
-             alpha = 0.3,
+             color = species,
              shape = species)) +
   geom_point(position = 
                position_jitter(0.25,
                                seed = 136), 
-             show.legend = c(alpha = FALSE, shape = FALSE)) +
-  labs(x = "", # também pode ser utilizado para controlar características dos eixos
-       y = "Body Length (mm)",
-       color = "Species") +
-  scale_color_discrete(labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus"))
+             alpha = 0.3) +
+  scale_x_discrete("") + 
+  scale_y_continuous("Body Length (mm)",
+                     limits = c(0, 30),
+                     breaks = seq(0, 30, 5)) +
+  scale_color_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
+  scale_shape_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus"))
+
+tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = 0, 
+             y = body_len, 
+             color = species,
+             shape = species)) +
+  geom_point(position = 
+               position_jitter(0.25,
+                               seed = 136), 
+             alpha = 0.3) +
+  labs(x = "", #<<
+       y = "Body Length (mm)", #<<
+       color = "Species",
+       shape = "Species") + #<<
+  scale_color_discrete(labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
+  scale_shape_discrete(labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus"))
 
 # Relação entre variáveis geom_point() -------------------------------------------
+tadpoles_len_sp %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             y = body_len,
+             color = stage)) +
+  geom_point(position = 
+               position_jitter(0.25,
+                               seed = 136),
+             size = 3, 
+             alpha = 0.3) +
+  labs(x = "Species",
+       y = "Body Length (mm)",
+       color = "Development \nClass")
+
 tadpoles_len_sp %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len,
@@ -629,9 +700,32 @@ tadpoles_clean %>%
              linetype = species)) +  
   geom_line() +
   geom_point(aes(shape = species)) + 
-  scale_x_continuous("Time") + # controla características do eixo x
+  scale_x_date("Time", 
+               date_breaks = "1 month", 
+               date_labels = "%b-%y") + # controla características do eixo x
   scale_y_continuous("Number of tadpoles",
                      breaks = seq(0, 40, 5)) # controla caracteristicas do eixo y
+
+tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  count(time = lubridate::as_date(date), species) %>% 
+  ggplot(aes(x = time, 
+             y = n,
+             color = species,
+             linetype = species)) +  
+  geom_line() +
+  geom_point(aes(shape = species)) + 
+  scale_x_date("Time", 
+               date_breaks = "1 month", 
+               date_labels = "%b-%y") + 
+  scale_y_continuous("Number of tadpoles", 
+                     breaks = seq(0, 40, 5)) + 
+  scale_color_discrete("Species", 
+                       labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + 
+  scale_linetype_discrete("Species", 
+                          labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
+  scale_shape_discrete("Species", 
+                       labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus"))
 
 # Camada themes()  -------------------------------------------
 # Gráfico base para alterações
@@ -903,20 +997,29 @@ tadpoles_len_sp %>%
 
 tadpoles_clean %>%
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = date, species) %>% 
+  count(time = lubridate::as_date(date), species) %>% 
   ggplot(aes(x = time, 
              y = n,
              color = species,
              linetype = species)) +  
-  geom_line(show.legend = c(linetype = FALSE)) +
-  geom_point(aes(shape = species),
-             show.legend = c(shape = FALSE)) + 
-  scale_x_continuous("Time") + 
-  scale_y_continuous("Number of tadpoles",
-                     breaks = seq(0, 40, 5)) +
-  scale_color_discrete("Species",
-                       labels = c("Hylodes \npipilans",
-                                  "Proceratophrys\nappendiculata",
+  geom_line() +
+  geom_point(aes(shape = species)) + 
+  scale_x_date("Time", 
+               date_breaks = "1 month", 
+               date_labels = "%b-%y") + 
+  scale_y_continuous("Number of tadpoles", 
+                     breaks = seq(0, 40, 5)) + 
+  scale_color_discrete("Species", 
+                       labels = c("Hylodes \npipilans", 
+                                  "Proceratophrys \nappendiculata",
+                                  "Scinax \nflavoguttatus")) + 
+  scale_linetype_discrete("Species", 
+                          labels = c("Hylodes \npipilans",
+                                     "Proceratophrys \nappendiculata",
+                                     "Scinax \nflavoguttatus")) +
+  scale_shape_discrete("Species", 
+                       labels = c("Hylodes \npipilans", 
+                                  "Proceratophrys \nappendiculata", 
                                   "Scinax \nflavoguttatus")) +
   meu_tema
 
@@ -937,6 +1040,9 @@ bd_tl +
 library(ggthemes)
 bd_tl +
   theme_tufte()
+
+bd_tl +
+  theme_economist()
 
 bd_tl +
   theme_excel()
