@@ -136,10 +136,6 @@ penguins %>%
 ```
 
 - Ainda é necessário alterar o título da legenda, dos seus rótulos e as cores das barras. Você pode realizar essas alterações utilizando `scale_fill_dsicrete("Sex", type = c("black", "dark grey"), labels = c("Female", "Male"))`;
-- Gráficos para publicação em periódicos científicos impressos devem ser coloridos em escala de cinza. Contudo, atualmente muitas publicações também são disponibilizadas onlie e permitem gráficos coloridos. Experimente alterar as cores das barras do seu gráfico, alterando as cores fornecidas no argumento `type = `;
-- Experimente trocar a camada `scale_fill_dsicrete()` pela camada `scale_fill_brewer()`;
-- Experimente alterar o argumento `pelette = `, por exemplo `palette = "Dark2"`
-- Consulte o `help()` da camada `scale_fill_brewer()` para conhecer melhor seu funcionamento e expandir sua capacidade de gerar gráficos de barra bem coloridos.
 
 ```{r, echo = FALSE}
 penguins %>% 
@@ -156,6 +152,75 @@ penguins %>%
                       type = c("black", "dark grey"),
                       labels = c("Female", "Male"))
 ```
+
+- Também é possível gerar barras em escala de cinza de forma automática. Experimente trocar a camada estética `scale_fill_discrete()` por `scale_fill_grey("Sex", labels = c("Female", "Male"))` ao final do seu código.
+
+
+```{r, echo = FALSE}
+penguins %>% 
+  select(species, sex) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, fill = sex)) +
+  geom_bar(position = "dodge",
+           color = "black") +
+  geom_hline(yintercept = 0) +
+  scale_x_discrete("Species") +
+  scale_y_continuous("Number of penguins",
+                     breaks = seq(0, 80, 10)) +
+  scale_fill_grey("Sex",
+                      labels = c("Female", "Male"))
+```
+
+- Gráficos para publicação em periódicos científicos impressos devem ser coloridos em escala de cinza. Contudo, muitas publicações também são disponibilizadas online e permitem gráficos coloridos. Experimente alterar manualmente as cores das barras do seu gráfico, alterando as cores fornecidas no argumento `type = `.
+
+
+```{r, echo = FALSE}
+penguins %>% 
+  select(species, sex) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, fill = sex)) +
+  geom_bar(position = "dodge",
+           color = "black") +
+  geom_hline(yintercept = 0) +
+  scale_x_discrete("Species") +
+  scale_y_continuous("Number of penguins",
+                     breaks = seq(0, 80, 10)) +
+  scale_fill_discrete("Sex", 
+                      type = c("blue", "pink"),
+                      labels = c("Female", "Male"))
+```
+
+- Instale o pacote `RColorBrewer` (`install.packages("RColorBrewer")`). Essas são algumas opções de cores oferecidas pelo pacote:
+[Opções de cores do pacote RColorBrewer](http://www.sthda.com/sthda/RDoc/figure/graphs/colors-in-r-built-in-color-names1.png)
+- Você também pode alterar as cores utilizando seus códigos hexadecimais:
+[Códigos hexadecimais das opções de cores do pacote RColorBrewer](http://www.sthda.com/sthda/RDoc/images/hextable.gif)
+- Você também pode consultar as paletas de cores disponíveis no pacote executando a função `display.brewer.all()`:
+
+```{r}
+library(RColorBrewer)
+display.brewer.all()
+```
+
+- Experimente trocar a camada `scale_fill_dsicrete()` pela camada `scale_fill_brewer()` e experimente alterar o argumento `pelette = `, por `palette = "Dark2"`.
+
+```{r, echo = FALSE}
+penguins %>% 
+  select(species, sex) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, fill = sex)) +
+  geom_bar(position = "dodge",
+           color = "black") +
+  geom_hline(yintercept = 0) +
+  scale_x_discrete("Species") +
+  scale_y_continuous("Number of penguins",
+                     breaks = seq(0, 80, 10)) +
+  scale_fill_brewer("Sex", 
+                      palette = "Dark2",
+                      labels = c("Female", "Male"))
+```
+
+
+Consulte o `help()` da camada `scale_fill_brewer()` para conhecer melhor seu funcionamento e expandir sua capacidade de gerar gráficos de barra bem coloridos. Consulte também [este link](http://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually#default-colors) para um guia mais completo sobre como alterar cores de pontos e barras utilizando variáveis discretas ou contínuas como estéticos.
 
 ## **Salvando o gráfico como um objeto**
 
@@ -517,7 +582,7 @@ Qual é a espécie de pinguim mais pesada?
 
 ## **Relação comprimento x largura do bico**
 
-Agora você irá avalia a relação entre o comprimento e a largura do bico dos pinguins do  arquipélogo Palmers. Esta relação é importante pois diferenças entre as espécies podem ser sugestivas de diferenças tróficas entre elas.
+Agora você irá avaliar a relação entre o comprimento e a largura do bico dos pinguins do arquipélogo Palmers. Esta relação é importante pois diferenças entre as espécies podem ser sugestivas de diferenças tróficas entre elas.
 
 - Selecione as variáveis `species`, `bill_length_mm` e `bill_depth_mm` utilizando a função `select()`;
 - Lembre-se de descartar valores ausentes (`NA`) aplicando a função `drop_na()`;
@@ -533,7 +598,9 @@ penguins %>%
   geom_point()
 ```
 
-## **Relação massa x comprimento da nadadeira por espécie**
+Da forma como foi gerado, o gráfico não sugere nenhume relação aparente entre o comprimento e a largura do bico dos pinguins. Mas fatos novos podem surgir se você puder diferenciar os pontos do gráfico por espécie.
+
+- Aplique o estético `color = species` na camada ggplot(aes()) para atribuir diferentes cores a cada espécie.
 
 ```{r, echo = FALSE}
 penguins %>% 
@@ -545,7 +612,7 @@ penguins %>%
   geom_point()
 ```
 
-Altere os símbolos 
+- Diferencie as espécies também pelos símbolos atribuindo o estético `shape = species` a camada `ggplot(aes())`.
 
 ```{r, echo = FALSE}
 penguins %>% 
@@ -558,9 +625,7 @@ penguins %>%
   geom_point()
 ```
 
-## **Modificando a aparência do gráfico**
-
-- adicione transparência aos pontos
+- Adicione transparência aos símbolos adicionando o atributo geométrico `alpha = 0.5` a camada geométrica `geom_point()`.
 
 ```{r, echo = FALSE}
 penguins %>% 
@@ -573,7 +638,11 @@ penguins %>%
   geom_point(alpha = 0.5)
 ```
 
-- alterando o título dos eixos x
+## **Modificando os eixos do gráfico**
+
+- Alterando o título do eixos x adicionando a camada de mapeamento estético `scale_x_continuous("Bill depth (mm)")` ao final do seu código.
+- Para ter um maior controle dos rótulos do eixo x, utilize o argumento `breaks = seq(round(min(penguins$bill_depth_mm, na.rm = TRUE))` e compare com os valores plotado neste eixo no gráfico anterior. 
+- A parte do comando `seq(round(min(penguins$bill_depth_mm, na.rm = TRUE))` serve para gerar a sequência de valores que será potada nos rótulos do eixo x.
 
 ```{r, echo = FALSE}
 penguins %>% 
@@ -590,7 +659,9 @@ penguins %>%
                                   1))
 ```
 
-- alterando o título do eixo y
+- Alterando o título do eixos x adicionando a camada de mapeamento estético `scale_y_continuous("Bill length (mm)")` ao final do seu código.
+- Para ter um maior controle dos rótulos do eixo y, utilize o argumento `breaks = seq(round(min(penguins$bill_length_mm, na.rm = TRUE))` e compare com os valores plotado neste eixo no gráfico anterior. 
+- A parte do comando `seq(round(min(penguins$bill_length_mm, na.rm = TRUE))` serve para gerar a sequência de valores que será potada nos rótulos do eixo y.
 
 ```{r, echo = FALSE}
 penguins %>% 
@@ -611,8 +682,8 @@ penguins %>%
                                   5))
 ```
 
-- alterando o título da legenda e as cores dos pontos
-
+- Alterando o título da legenda adicionando as camadas estéticas `scale_color_discrete("Species")` e `scale_shape_discrete("Species")` ao final do seu código.
+- Altere manualmente as cores das formas adicionando o argumento `type = c("purple", "green", "orange")` a camada `scale_color_discrete()`.
 
 ```{r, echo = FALSE}
 penguins %>% 
@@ -636,7 +707,80 @@ penguins %>%
   scale_shape_discrete("Species")
 ```
 
+- Experimente substituir a camada `scale_color_discrete()` por `scale_color_brewer("Species", pelette = "Accent")`.
+
+```{r, echo = FALSE}
+penguins %>% 
+  select(species, bill_length_mm, bill_depth_mm) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm,
+             color = species, 
+             shape = species)) +
+  geom_point(alpha = 0.5) +
+  scale_x_continuous("Bill depth (mm)",
+                     breaks = seq(round(min(penguins$bill_depth_mm, na.rm = TRUE)),
+                                  round(max(penguins$bill_depth_mm, na.rm = TRUE)), 
+                                  1)) +
+  scale_y_continuous("Bill length (mm)",
+                     breaks = seq(round(min(penguins$bill_length_mm, na.rm = TRUE)),
+                                  round(max(penguins$bill_length_mm, na.rm = TRUE)), 
+                                  5)) +
+  scale_color_brewer("Species", 
+                       palette = "Set1") +
+  scale_shape_discrete("Species")
+```
+- Altera as cores dos pontos para escala de cinza alterando o argumento `type = ` para `type = c("black", "dark grey", "grey")` a camada estética `scale_color_discrete()`.
+
+```{r, echo = FALSE}
+penguins %>% 
+  select(species, bill_length_mm, bill_depth_mm) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm,
+             color = species, 
+             shape = species)) +
+  geom_point(alpha = 0.5) +
+  scale_x_continuous("Bill depth (mm)",
+                     breaks = seq(round(min(penguins$bill_depth_mm, na.rm = TRUE)),
+                                  round(max(penguins$bill_depth_mm, na.rm = TRUE)), 
+                                  1)) +
+  scale_y_continuous("Bill length (mm)",
+                     breaks = seq(round(min(penguins$bill_length_mm, na.rm = TRUE)),
+                                  round(max(penguins$bill_length_mm, na.rm = TRUE)), 
+                                  5)) +
+  scale_color_discrete("Species", 
+                       type = c("black", "dark grey", "grey")) +
+  scale_shape_discrete("Species")
+```
+
+- Você também pode gerar gráficos em escala de cinza sem controlar manualmente as cores. Experimente substituir a camada estética `scale_color_discrete()` pela camada scale_color_grey() no seu código.
+
+```{r, echo = FALSE}
+penguins %>% 
+  select(species, bill_length_mm, bill_depth_mm) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = bill_depth_mm,
+             y = bill_length_mm,
+             color = species, 
+             shape = species)) +
+  geom_point(alpha = 0.5) +
+  scale_x_continuous("Bill depth (mm)",
+                     breaks = seq(round(min(penguins$bill_depth_mm, na.rm = TRUE)),
+                                  round(max(penguins$bill_depth_mm, na.rm = TRUE)), 
+                                  1)) +
+  scale_y_continuous("Bill length (mm)",
+                     breaks = seq(round(min(penguins$bill_length_mm, na.rm = TRUE)),
+                                  round(max(penguins$bill_length_mm, na.rm = TRUE)), 
+                                  5)) +
+  scale_color_grey("Species") +
+  scale_shape_discrete("Species")
+```
+Consulte [este link](http://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually#default-colors) para um guia mais completo sobre como alterar cores de pontos e barras utilizando variáveis discretas ou contínuas como estéticos.
+
 ## **Salvando o gráfico como um objeto**
+
+- Salve seu gráfico em um objeto chamado `bill_depth_length`.
 
 ```{r, echo = FALSE}
 bill_depth_length <- penguins %>% 
@@ -655,12 +799,15 @@ bill_depth_length <- penguins %>%
                      breaks = seq(round(min(penguins$bill_length_mm, na.rm = TRUE)),
                                   round(max(penguins$bill_length_mm, na.rm = TRUE)), 
                                   5)) +
-  scale_color_discrete("Species", 
-                       type = c("purple", "green", "orange")) +
+  scale_color_grey("Species") +
   scale_shape_discrete("Species")
 ```
 
 ## **Adicionando o tema `meu_tema_barras`**
+
+Seu gráfico está quase pronto para ser publicado. Falta apenas realizar os ajutes nos componentes de aparência não relacionados aos dados. 
+
+- Aplique o tema `meu_tema_barras` ao seu gráfico armazenado no objeto `bill_depth_length`.
 
 ```{r, echo = FALSE}
 bill_depth_length +
@@ -669,10 +816,12 @@ bill_depth_length +
 
 ## **Modificando um tema existente**
 
-- adicionar linha no eixo x
-- adicionar barras transversais no eixo x (ticks)
-- ocultar fundo cinza nos rótulos da legenda
-- salvar tema como novo objeto
+Infelizmente o seu tema personalizado para os gráficos de barras não é totalmente apropriado para o gráfico de pontos. Mas isso não é um problema. Basta que você acrescente a este tema as alterações necessárias utilizando a camada `theme()` e as salve em um novo objeto `meu_tema_relacoes`.
+
+- Adicione a linha do eixo x aplicando a função `element_line()` no argumento `axis.line.x = `;
+- Adicione barras transversais no eixo x (ticks) aplicando a função `element_line()` no argumento `axis.ticks.x = `;
+- Oculte o fundo cinza nos rótulos da legenda aplicando a função `element_rect()` no argumento `legend.key = `;
+- Salve as alterações no tema existente como novo objeto `meu_tema_relacoes`.
 
 ```{r, echo = FALSE}
 meu_tema_relacoes <- meu_tema_barras +
@@ -681,14 +830,31 @@ meu_tema_relacoes <- meu_tema_barras +
         legend.key = element_blank())
 ```
 
+- Agora, aplique seu novo tema ao gráfico `bill_depth_length`.
+
 ```{r, echo = FALSE}
 bill_depth_length +
   meu_tema_relacoes
 ```
 
+Pronto, seu gráfico está pronto para publicação! Você consegue identifica se há relação entre a largura e o comprimento do bico em cada uma das espécies de pinguim? A relação difere entre as espécies? 
+
+- antes de gera o gráfico de linhas do próximo exercício, torne seu tema o tema *default* do `ggplot2` usando a função `set_update()`.
+
+```{r, echo = FALSE}
+theme_set(meu_tema_relacoes)
+```
+
 # **Visualizando a variação do número de pinguins ao longo do tempo**
 
 ## **Relação número de pinguins x anos**
+
+Agora, você vair gerar um gráfico de linhas para visualizar a variação no número de pinguins ao longo dos anos de estudo.
+
+- Selecione as variáveis `year` e `species`;
+- Conte o número total de pinguins observados em cada ano utilizando a função `count(year)`;
+- Aplique os estéticos `x = year` e `y = n`na camada `ggplot(aes())`;
+- Aplique a camada geométrica `geom_line()` ao final do seu código.
 
 ```{r, echo = FALSE}
 penguins %>% 
@@ -699,9 +865,14 @@ penguins %>%
   geom_line()
 ```
 
+Note que seu gráfico já está com o tema `meu_tema_relacoes` gerado no exercício anterior e você terá menos trabalho para obter a versão final desse gráfico.
+
 ## **Relação número de pinguins x anos por espécie**
 
-- utilize o estético color para gerar uma linha para cada espécie com diferentes cores
+- Agora você vai visualizar o número de pinguins observados para cada espécie e em cada ano. Para isso, selecione as variáveis `year` e `species`;
+- Obtenha o númerode pinguins de cada espécie e em cada ano utilizando a função `count(year, species)`;
+- Utilize os estéticos `x = year`, `y = n` e `color = species` para gerar uma linha para cada espécie com diferentes cores;
+- Adicione a camada geométrica `geom_line()`ao final do seu código.
 
 ```{r, echo = FALSE}
 penguins %>% 
@@ -713,7 +884,7 @@ penguins %>%
   geom_line()
 ```
 
-- utilize o estético linetype para gerar um tipo de linha para cada espécie
+- Adicione o estético `linetype = species` na camada `ggplot(aes())` para gerar um tipo de linha para cada espécie.
 
 ```{r, echo = FALSE}
 penguins %>% 
@@ -726,7 +897,7 @@ penguins %>%
   geom_line()
 ```
 
-- adicione uma camada de pontos utilizando geom_point() e o estético color para atribuir diferentes símbolos para cada espécies 
+- Adicione uma camada de pontos utilizando o geométrico `geom_point()` e o estético `color = species` para atribuir diferentes símbolos para cada espécies. 
 
 ```{r, echo = FALSE}
 penguins %>% 
@@ -742,7 +913,7 @@ penguins %>%
 
 ## **Modificando a aparência do gráfico**
 
-- alterando o título dos eixos x
+- Altere o título do eixo x e o intervalo entre os rótulos do eixo adicionando o mapeamento estético `scale_x_continuous("Year", breaks = seq(round(min(penguins$year, na.rm = TRUE)), round(max(penguins$year, na.rm = TRUE)), 1))`.
 
 ```{r, echo = FALSE}
 penguins %>% 
@@ -760,7 +931,7 @@ penguins %>%
                                   1))
 ```
 
-- alterando o título do eixo y
+- Altere o título do eixo y e o intervalo entre os rótulos do eixoadicionando o mapeamento estético `scale_y_continuous("Number of penguins", breaks = seq(15, 55, 5))`.
 
 ```{r, echo = FALSE}
 penguins %>% 
@@ -780,8 +951,8 @@ penguins %>%
                      breaks = seq(15, 55, 5))
 ```
 
-- alterando o título da legenda e as cores dos pontos
-
+- Altere o título da legenda e as cores das formas adicionando o mapeamento estético  `scale_color_discrete("Species", type = c("purple", "green", "orange"))`.
+- Altere também o título dos mapeamentos estéticos scale_shape_discrete("Species") e scale_linetype_discrete("Species") para evitar a criação de uma nova legenda.
 
 ```{r, echo = FALSE}
 penguins %>% 
@@ -807,6 +978,8 @@ penguins %>%
 
 ## **Salvando o gráfico como um objeto e adicionar o tema `meu_tema_relacoes`**
 
+- Salve seu gráfico em um objeto chamado `n_penguins_year`.
+
 ```{r, echo = FALSE}
 n_penguins_year <- penguins %>% 
   select(species, year) %>% 
@@ -829,10 +1002,11 @@ n_penguins_year <- penguins %>%
   scale_linetype_discrete("Species")
 ```
 
-- Adicionando o tema `meu_tema_relacoes`
+- Se você precisa de um gráfico em escalas de cinza, você pode somar os mapeamentos estáticos scale_color_grey("Species") ao objeto que armazena seu gráfico.
 
 ```{r, echo = FALSE}
 n_penguins_year +
-  meu_tema_relacoes
+  scale_color_grey("Species")
 ```
 
+Seu gráfico está pronto para publicação! Qual espécie foi a mais numerosa ao longo do tempo? Qual espécie apresentou a maior variação no número de indivíduos entre os anos?
