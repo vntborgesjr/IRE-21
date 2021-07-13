@@ -2711,6 +2711,7 @@ background-size: 15%, 10%
 .pull-left[
 ```{r ggplot2 funções scale 14, eval = FALSE, fig.align='center', out.width="100%"}
 tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, #<<
              y = body_len)) + #<< 
@@ -2725,6 +2726,7 @@ knitr::include_graphics("https://englelab.gatech.edu/useRguide/images/dataviz/ge
 .pull-right[
 ```{r ggplot2 funções scale 15, echo = FALSE, fig.align='center', out.width="70%"}
 tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len)) +
@@ -2751,6 +2753,7 @@ background-size: 15%, 10%
 .pull-left[
 ```{r ggplot2 funções scale 16, eval = FALSE, fig.align='center', out.width="100%"}
 tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -2799,7 +2802,7 @@ tadpoles_media <- tadpoles_len_sp %>%
 .pull-left[
 ```{r ggplot2 funções scale 18, eval = FALSE, fig.align='center', out.width="70%"}
 tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -2873,7 +2876,7 @@ tadpoles_media <- tadpoles_len_sp %>%
 .pull-left[
 ```{r ggplot2 funções scale 20, eval = FALSE, fig.align='center', out.width="100%"}
 tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -2921,7 +2924,7 @@ background-size: 15%, 10%
 .pull-left[
 ```{r ggplot2 funções scale 22, eval = FALSE, fig.align='center', out.width="100%"}
 tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -2969,7 +2972,7 @@ tadpoles_media <- tadpoles_len_sp %>%
 .pull-left[
 ```{r ggplot2 funções scale 25, eval = FALSE, fig.align='center', out.width="100%"}
 tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -3010,7 +3013,7 @@ background-size: 15%, 10%
 .pull-left[
 ```{r ggplot2 funções scale 27, eval = FALSE, fig.align='center', out.width="100%"}
 tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -3029,7 +3032,7 @@ tadpoles_len_sp %>%
 .pull-right[
 ```{r ggplot2 funções scale 28, echo = FALSE, fig.align='center', out.width="70%", warning = FALSE, message=FALSE}
 tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -4213,7 +4216,7 @@ background-size: 15%, 10%
 .pull-left[
 ```{r reutilizando tema 7, eval = FALSE, fig.align='center'}
 tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -4235,7 +4238,7 @@ tadpoles_len_sp %>%
 .pull-right[
 ```{r reutilizando tema 8, echo = FALSE, fig.align='center', out.width="90%"}
 tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -4421,8 +4424,7 @@ original <- theme_update(
   axis.title = element_text(size = 24,
                             color = "blue"),
   axis.text = element_text(size = 20), 
-  legend.title = element_text("Species", 
-                              size = 24, 
+  legend.title = element_text(size = 24, 
                               color = "blue"),
   legend.text = element_text(size = 20,
                              face = "italic"),
@@ -4441,8 +4443,7 @@ original <- theme_update(text = element_text(family = "Serif"),
                          axis.title = element_text(size = 24,
                                                    color = "blue"),
                          axis.text = element_text(size = 20), 
-                         legend.title = element_text("Species", 
-                                                     size = 24, 
+                         legend.title = element_text(size = 24, 
                                                      color = "blue"),
                          legend.text = element_text(size = 20,
                                                     face = "italic"),

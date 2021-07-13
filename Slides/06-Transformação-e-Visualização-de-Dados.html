@@ -4128,6 +4128,7 @@ background-size: 15%, 10%
 
 ```r
 tadpoles_len_sp %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
   drop_na() %&gt;% 
 * ggplot(aes(x = total_len,
 *            y = body_len)) +
@@ -4160,6 +4161,7 @@ background-size: 15%, 10%
 
 ```r
 tadpoles_len_sp %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
   drop_na() %&gt;% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -4195,7 +4197,7 @@ background-size: 15%, 10%
 
 ```r
 tadpoles_len_sp %&gt;% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
   drop_na() %&gt;% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -4250,7 +4252,7 @@ background-size: 15%, 10%
 
 ```r
 tadpoles_len_sp %&gt;% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
   drop_na() %&gt;% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -4285,7 +4287,7 @@ background-size: 15%, 10%
 
 ```r
 tadpoles_len_sp %&gt;% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
   drop_na() %&gt;% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -4318,7 +4320,7 @@ background-size: 15%, 10%
 
 ```r
 tadpoles_len_sp %&gt;% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
   drop_na() %&gt;% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -4350,7 +4352,7 @@ background-size: 15%, 10%
 
 ```r
 tadpoles_len_sp %&gt;% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
   drop_na() %&gt;% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -5219,7 +5221,7 @@ background-size: 15%, 10%
 
 ```r
 tadpoles_len_sp %&gt;% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %&gt;% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
   drop_na() %&gt;% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -5415,8 +5417,7 @@ original &lt;- theme_update(
   axis.title = element_text(size = 24,
                             color = "blue"),
   axis.text = element_text(size = 20), 
-  legend.title = element_text("Species", 
-                              size = 24, 
+  legend.title = element_text(size = 24, 
                               color = "blue"),
   legend.text = element_text(size = 20,
                              face = "italic"),
