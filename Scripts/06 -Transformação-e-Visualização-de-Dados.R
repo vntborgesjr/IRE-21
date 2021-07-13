@@ -434,10 +434,10 @@ tadpoles_len_sp %>%
   drop_na() %>% 
   ggplot(aes(x = 0, 
              y = body_len, 
-             color = species) + 
+             color = species)) + 
            geom_point(position = position_jitter(0.25, 
                                                  seed = 136), 
-                      alpha = 0.3)) #<< atribui transparência aos pontos
+                      alpha = 0.3) #<< atribui transparência aos pontos
   
 # Mapeamento estético shape  -------------------------------------------
 tadpoles_len_sp %>% 
@@ -567,6 +567,7 @@ tadpoles_len_sp %>%
 
 # Modificando estéticos  -------------------------------------------
 tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -576,12 +577,13 @@ tadpoles_len_sp %>%
 # Sobrepondo geométricos  -------------------------------------------
 # gera tabela com as médias de tamanho total e corporal para as três espécies
 tadpoles_media <- tadpoles_len_sp %>% 
+  select(species, total_len, body_len) %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   group_by(species) %>% 
   summarise_all(mean, na.rm = TRUE)
 
 tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -593,7 +595,7 @@ tadpoles_len_sp %>%
              stroke = 2)
 
 tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -607,7 +609,7 @@ tadpoles_len_sp %>%
 
 # Atributo geométrico alpha  -------------------------------------------
 tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -617,7 +619,7 @@ tadpoles_len_sp %>%
 
 # Atributo geométrico shape  -------------------------------------------
 tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -627,7 +629,7 @@ tadpoles_len_sp %>%
 # Mapeamento estético scale_*_*()  -------------------------------------------
 
 tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -635,9 +637,9 @@ tadpoles_len_sp %>%
   geom_point(shape = 1,
              alpha = 0.5) +
   scale_x_continuous("Total length (mm)",
-                     breaks = seq(0, round(max(tadpoles_len_sp$total_len,   na.rm = TRUE)), 10)) +
+                     breaks = seq(0, round(max(tadpoles_clean$total_len,   na.rm = TRUE)), 10)) +
   scale_y_continuous("Body length (mm)",
-                     breaks = seq(0, round(max(tadpoles_len_sp$body_len, na.rm = TRUE)), 5)) +
+                     breaks = seq(0, round(max(tadpoles_clean$body_len, na.rm = TRUE)), 5)) +
   scale_color_discrete("Species",
                        labels = c("Hylodes \npipilans", "Proceratophrys\nappendiculata", "Scinax \nflavoguttatus"))
 
@@ -693,7 +695,7 @@ tadpoles_clean %>%
 # Mapeamento estético scale_*_*()  -------------------------------------------
 tadpoles_clean %>%
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = date, species) %>% 
+  count(time = lubridate::as_date(date), species) %>% 
   ggplot(aes(x = time, 
              y = n,
              color = species,
@@ -701,7 +703,7 @@ tadpoles_clean %>%
   geom_line() +
   geom_point(aes(shape = species)) + 
   scale_x_date("Time", 
-               date_breaks = "1 month", 
+               date_breaks = "3 months", 
                date_labels = "%b-%y") + # controla características do eixo x
   scale_y_continuous("Number of tadpoles",
                      breaks = seq(0, 40, 5)) # controla caracteristicas do eixo y
@@ -716,8 +718,8 @@ tadpoles_clean %>%
   geom_line() +
   geom_point(aes(shape = species)) + 
   scale_x_date("Time", 
-               date_breaks = "1 month", 
-               date_labels = "%b-%y") + 
+               date_breaks = "3 months", 
+               date_labels = "%b %y") + 
   scale_y_continuous("Number of tadpoles", 
                      breaks = seq(0, 40, 5)) + 
   scale_color_discrete("Species", 
@@ -729,7 +731,7 @@ tadpoles_clean %>%
 
 # Camada themes()  -------------------------------------------
 # Gráfico base para alterações
-tadpoles_len_sp %>% 
+tadpoles_clean %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, y = body_len, color = species)) +
@@ -740,6 +742,30 @@ tadpoles_len_sp %>%
                                   Pa = "Proceratophrys \nappendiculata",
                                   Sf = "Scinax \nflavoguttatus"))
 
+# Alterando a cor dos pontos no gráfico  -------------------------------------------
+
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_manual("Species", values = c("red", "orange", "purple"),
+                       labels = c(Hp = "Hylodes \npipilans",
+                                  Pa = "Proceratophrys \nappendiculata",
+                                  Sf = "Scinax \nflavoguttatus"))
+library(RColorBrewer)
+
+tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, y = body_len, color = species)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Total length (mm)", y = "Body length (mm)") +
+  scale_color_brewer("Species", palette = "Set1",
+                     labels = c(Hp = "Hylodes \npipilans",
+                                Pa = "Proceratophrys \nappendiculata",
+                                Sf = "Scinax \nflavoguttatus"))
 # Alterando características do texto  -------------------------------------------
 tadpoles_len_sp %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
@@ -811,7 +837,7 @@ tadpoles_len_sp %>%
                                    face = "italic"),
         axis.line = element_line()) #<< gera as linhas dos eixos x e y
 
-tadpoles_len_sp %>% 
+tadpoles_clean %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, y = body_len, color = species)) +
@@ -871,8 +897,7 @@ tadpoles_len_sp %>%
         axis.title = element_text(size = 24,
                                   color = "blue"),
         axis.text = element_text(size = 20), 
-        legend.title = element_text("Species", #<<
-                                    size = 24, #<<
+        legend.title = element_text(size = 24, #<<
                                     color = "blue"),
         legend.text = element_text(size = 20,
                                    face = "italic"),
@@ -894,7 +919,7 @@ tadpoles_len_sp %>%
         text = element_blank()) #<< desativa todos os elementos de texto
 
 # Salvando e reutilizando camada de tema  -------------------------------------------
-bd_tl <- tadpoles_len_sp %>% 
+bd_tl <- tadpoles_clean %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, y = body_len, color = species)) +
@@ -909,8 +934,7 @@ meu_tema <- theme(text = element_text(family = "Serif"), #<<
                   axis.title = element_text(size = 24,
                                             color = "blue"),
                   axis.text = element_text(size = 20), 
-                  legend.title = element_text("Species", #<<
-                                              size = 24, #<<
+                  legend.title = element_text(size = 24, #<<
                                               color = "blue"),
                   legend.text = element_text(size = 20,
                                              face = "italic"),
@@ -938,9 +962,10 @@ tadpoles_clean %>%
   scale_y_continuous("Number of tadpoles",
                      breaks = seq(0, 175, 25)) +
   scale_color_discrete("Species") +
-  meu_tema 
+  meu_tema + 
+  scale_fill_discrete("Stream")
 
-tadpoles_len_sp %>% 
+tadpoles_clean %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>%
   drop_na() %>% 
   ggplot(aes(x = body_len, 
@@ -949,12 +974,12 @@ tadpoles_len_sp %>%
   geom_histogram(binwidth = 1,
                  center = 0.5, 
                  alpha = 0.5) +
-  scale_x_continuous("Species",
-                     labels = c("Hylodes \npipilans",
-                                "Proceratophrys\nappendiculata",
-                                "Scinax \nflavoguttatus")) + 
+  scale_x_continuous("Species") + 
   scale_y_continuous("Relative frequency") + 
-  scale_fill_discrete("Species") +
+  scale_fill_discrete("Species",
+                      labels = c("Hylodes \npipilans",
+                                 "Proceratophrys\nappendiculata",
+                                 "Scinax \nflavoguttatus")) +
   meu_tema #<<
 
 tadpoles_len_sp %>% 
@@ -978,7 +1003,7 @@ tadpoles_len_sp %>%
   meu_tema
 
 tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
@@ -1054,8 +1079,7 @@ original <- theme_update(text = element_text(family = "Serif"), #<< torna este t
                          axis.title = element_text(size = 24,
                                                    color = "blue"),
                          axis.text = element_text(size = 20), 
-                         legend.title = element_text("Species", 
-                                                     size = 24, 
+                         legend.title = element_text(size = 24, 
                                                      color = "blue"),
                          legend.text = element_text(size = 20,
                                                     face = "italic"),
@@ -1074,3 +1098,4 @@ theme_set(theme_classic()) # ou qualquer outro tema
 
 bd_tl 
 
+theme_set(theme_grey()) # retorna ao tema original como default...
