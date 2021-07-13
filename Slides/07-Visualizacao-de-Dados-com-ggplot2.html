@@ -78,7 +78,7 @@ background-size: 15%, 10%
 .center[.red[**Três Elementos Essenciais da Gramática Gráfica**]]
 
 .pull-left[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-1-1.png" width="85%" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-2-1.png" width="85%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
@@ -220,7 +220,7 @@ p +  geom_histogram()
 ]
 
 .pull-right[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ???
@@ -241,11 +241,11 @@ p + stat_bin()
 ```
 
 .pull-left[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-6-1.png" width="85%" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-7-1.png" width="85%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-7-1.png" width="85%" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-8-1.png" width="85%" style="display: block; margin: auto;" /&gt;
 ]
 
 ???
@@ -266,7 +266,7 @@ p +  geom_bar(stat = "bin")
 ```
 
 
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-9-1.png" width="45%" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-10-1.png" width="45%" style="display: block; margin: auto;" /&gt;
 
 
 ???
@@ -296,11 +296,11 @@ p + stat_count()
 ```
 
 .pull-left[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-11-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-12-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-12-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-13-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 ]
 
 ???
@@ -350,11 +350,10 @@ background-size: 15%, 10%
 p &lt;- tadpoles_clean %&gt;% 
   drop_na() %&gt;% 
   ggplot(aes(x = total_len, 
-             y = body_len)
+             y = body_len))
 
 p +  geom_point() +
-  geom_smooth() +
-  theme(text = element_text(size = 24))
+  geom_smooth() 
 ```
 
 ```
@@ -365,7 +364,7 @@ and formula 'y ~ x'
 
 
 .pull-right[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-15-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ???
@@ -389,11 +388,10 @@ background-size: 15%, 10%
 p &lt;- tadpoles_clean %&gt;% 
   drop_na() %&gt;% 
   ggplot(aes(x = total_len, 
-             y = body_len)
+             y = body_len))
 
 p +  geom_point() +
-  geom_smooth(se = FALSE) +
-  theme(text = element_text(size = 24))
+  geom_smooth(se = FALSE) 
 ```
 
 ```
@@ -405,7 +403,7 @@ and formula 'y ~ x'
 
 
 .pull-right[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-17-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-18-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ???
@@ -427,12 +425,11 @@ background-size: 15%, 10%
 p &lt;- tadpoles_clean %&gt;% 
   drop_na() %&gt;% 
   ggplot(aes(x = total_len, 
-             y = body_len)
+             y = body_len))
 
 p +  geom_point() +
   geom_smooth(method = "loess", 
-              se = FALSE) +
-  theme(text = element_text(size = 24))
+              se = FALSE) 
 ```
 
 ```
@@ -443,7 +440,7 @@ and formula 'y ~ x'
 ]
 
 .pull-right[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-19-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-20-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ???
@@ -473,8 +470,7 @@ p &lt;- tadpoles_clean %&gt;%
 
 p +  geom_point() +
   geom_smooth(method = "loess", 
-              se = FALSE, span = 0.1) +
-  theme(text = element_text(size = 24))
+              se = FALSE, span = 0.1)
 ```
 
 ```
@@ -484,7 +480,7 @@ and formula 'y ~ x'
 ]
 
 .pull-right[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-21-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-22-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ???
@@ -514,12 +510,12 @@ p +  geom_point() +
 
 .pull-left[
 .center[.red[`span = 0.4`]]
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-23-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-24-1.png" width="55%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
 .center[.red[`span = 1`]]
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-24-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-25-1.png" width="55%" style="display: block; margin: auto;" /&gt;
 ]
 
 ???
@@ -540,7 +536,7 @@ p &lt;- tadpoles_clean %&gt;%
   filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
   drop_na() %&gt;% 
   ggplot(aes(x = total_len, 
-             y = body_len)
+             y = body_len))
 
 p +  geom_point() +
   geom_smooth(method = "lm", 
@@ -549,7 +545,7 @@ p +  geom_point() +
 ]
 
 .pull-right[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-26-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-27-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ???
@@ -570,7 +566,7 @@ p &lt;- tadpoles_clean %&gt;%
   filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
   drop_na() %&gt;% 
   ggplot(aes(x = total_len, 
-             y = body_len)
+             y = body_len))
 
 p +  geom_point() +
   geom_smooth(method = "lm",
@@ -579,7 +575,7 @@ p +  geom_point() +
 ]
 
 .pull-right[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-28-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-29-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ???
@@ -653,7 +649,7 @@ p &lt;- tadpoles_clean %&gt;%
 ]
 
 .pull-right[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-31-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-32-1.png" style="display: block; margin: auto;" /&gt;
 ]
 
 ???
@@ -740,7 +736,7 @@ tadpoles_clean %&gt;%
 ]
 
 .pull-right[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-35-1.png" width="95%" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-36-1.png" width="95%" /&gt;
 ]
 
 ???
@@ -785,7 +781,7 @@ p + stat_summary(fun.data = mean_sdl,
 ]
 
 .pull-right[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-38-1.png" width="95%" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-39-1.png" width="95%" /&gt;
 ]
 
 ???
@@ -820,7 +816,7 @@ p + stat_summary(fun = mean,
 ]
 
 .pull-right[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-40-1.png" width="95%" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-41-1.png" width="95%" /&gt;
 ]
 
 ???
@@ -857,7 +853,7 @@ p + stat_summary(fun = mean,
 ]
 
 .pull-right[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-42-1.png" width="95%" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-43-1.png" width="95%" /&gt;
 ]
 
 ???
@@ -871,7 +867,7 @@ background-size: 15%, 10%
 
 # .blue[**Verificando Distribuições**]
 
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-43-1.png" width="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-44-1.png" width="50%" style="display: block; margin: auto;" /&gt;
 
 ???
 O gráfico mostra um modelo de regressão linear ajustado aos dados de tamanho total e corporal de girinos.
@@ -913,7 +909,7 @@ p + geom_histogram(aes(y = ..density..)) +
 ]
 
 .pull-right[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-45-1.png" width="95%" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-46-1.png" width="95%" /&gt;
 ]
 
 ???
@@ -951,15 +947,668 @@ p + stat_qq() +
 ]
 
 .pull-right[
-&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-47-1.png" width="95%" /&gt;
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-48-1.png" width="95%" /&gt;
 ]
 
 ???
 QQ-plots também são úteis para comparar os dados a uma distribuição.
 
-QQ-plots plotam a amostra contra um distribuição teórica, como uma normal, e desenham uma linha que intercepta os dados nos primeiro e terceiro quantis. 
+QQ-plots plotam a amostra contra um distribuição teórica, como uma normal, e desenham uma linha que divide a área de plotagem ao meio. 
 
 Quantos mais os dados se alinham a essa linha, mais próximos eles estão da distribuição teórica.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Facetas**]
+
+&lt;br/&gt;
+&lt;BR/&gt;
+
+- Gerar .red[múltiplos] gráficos
+
+- Divisão a partir dos .red[níveis] de uma .red[variável categórica]
+
+- Mesmo .red[sistema de coordendas]
+
+- Facilita a red.[comparação]
+
+???
+A camada de facetas gera múltiplos gráficos com base nos diferentes níveis de uma variável categórica.
+
+A ideia é dividir um gráfico que apresenta um grande conjunto de dados em multiplos gráficos que apresentam subconjuntos dos dados originais e que apresentam o mesmo sistema de coordenadas, o que facilita a comparação.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Facetas**]
+
+.center[.red[**Tamanho do Corpo x Tamanho Total x Espécies**]]
+
+.pull-left[
+
+```r
+p &lt;- tadpoles_clean %&gt;%
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len,
+             color = species))
+
+p + geom_point()
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-50-1.png" width="95%" /&gt;
+]
+
+???
+Nesse gráfico temos informação sobre a relação entre a tamanho corporal e total de girinos de 3 espécies.
+
+Podemos adicionar uma camada de faceta `facet_grid()` para visualizar a relação individualmente para cada espécie.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Facetas**]
+
+.center[.red[**Tamanho do Corpo x Tamanho Total x Espécies**]]
+
+.pull-left[
+
+```r
+p &lt;- tadpoles_clean %&gt;%
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p + geom_point() +
+  facet_grid(cols = vars(species))
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-52-1.png" width="95%" /&gt;
+]
+
+???
+A camada `facet_grid()` tem argumentos para dividir os plots em linhas, ou colunas de acordo com a variável que alimenta a função `var()`.
+
+Aqui, o gráfico foi dividido em colunas usando o argumento `cols = `.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Facetas**]
+
+.center[.red[**Tamanho do Corpo x Tamanho Total x Espécies**]]
+
+.pull-left[
+
+```r
+p &lt;- tadpoles_clean %&gt;%
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p + geom_point() +
+  facet_grid(. ~ species)
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-54-1.png" width="95%" /&gt;
+]
+
+???
+O mesmo resultado pode ser obtido a partir da notação de fórmula.
+
+Tudo a direita do til gera gráfcos em diferentes colunas.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Facetas**]
+
+.center[.red[**Tamanho do Corpo x Tamanho Total x Espécies**]]
+
+.pull-left[
+
+```r
+p &lt;- tadpoles_clean %&gt;%
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p + geom_point() +
+  facet_grid(rows = vars(species))
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-56-1.png" width="95%" /&gt;
+]
+
+???
+A camada `facet_grid()` tem argumentos para dividir os plots em linhas, ou colunas de acordo com a variável que alimenta a função `var()`.
+
+Aqui, o gráfico foi dividido em colunas usando o argumento `rows = `.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Facetas**]
+
+.center[.red[**Tamanho do Corpo x Tamanho Total x Espécies**]]
+
+.pull-left[
+
+```r
+p &lt;- tadpoles_clean %&gt;%
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p + geom_point() +
+  facet_grid(species ~ .)
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-58-1.png" width="95%" /&gt;
+]
+
+???
+Tudo a esquerda do til gera gráfcos em diferentes linhas.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Facetas**]
+
+.center[.red[**Tamanho do Corpo x Tamanho Total x Espécies x Estágio**]]
+
+.pull-left[
+
+```r
+p &lt;- tadpoles_clean %&gt;%
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p + geom_point() +
+  facet_grid(rows = vars(stage),
+             cols= vars(species))
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-60-1.png" width="95%" /&gt;
+]
+
+???
+Subdividindo os gráficos em linhas e colunas a partir da notação moderna.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Facetas**]
+
+.center[.red[**Tamanho do Corpo x Tamanho Total x Espécies**]]
+
+.pull-left[
+
+```r
+p &lt;- tadpoles_clean %&gt;%
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p + geom_point() +
+  facet_grid(stage ~ species)
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-62-1.png" width="95%" /&gt;
+]
+
+???
+Subdividindo os gráficos em linhas e colunas a partir da notação de fórmula.
+
+Problemas típicos ao trabalhar com facetas são os títulos e a ordem dos rótulos. 
+
+Vamos connhecer algumas formas de alterar os títulos e suas ordens.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Renomeando Facetas**]
+
+.center[.red[**Tamanho do Corpo x Tamanho Total x Espécies**]]
+
+.pull-left[
+
+```r
+p &lt;- tadpoles_clean %&gt;%
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p + geom_point() +
+  facet_grid(cols = vars(species), 
+             labeller = label_value)
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-64-1.png" width="95%" /&gt;
+]
+
+???
+A função *default* da camada faceta que atribui os títulos a partir do argumento `labeller = label_value`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Renomeando Facetas**]
+
+.center[.red[**Tamanho do Corpo x Tamanho Total x Espécies**]]
+.pull-left[
+
+```r
+p &lt;- tadpoles_clean %&gt;%
+  filter(species %in% c("Hp", "Pa", "Sf")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p + geom_point() +
+  facet_grid(cols = vars(species), 
+             labeller = label_both)
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-66-1.png" width="95%" /&gt;
+]
+
+???
+A função mais útil da camada faceta que atribui os títulos a partir do argumento `labeller = label_both` que atribui ao título o nome da variável e o nível.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Renomeando Facetas**]
+
+.center[.red[**Renomeando os Dados Diretamente - fct_recode()**]]
+
+.pull-left[
+
+```r
+tadpoles_clean$species &lt;- fct_recode(tadpoles_clean$species,
+             `Hylodes pipilans` = "Hp")
+
+p &lt;- tadpoles_clean %&gt;%
+  rename(Species = species, Stage = stage) %&gt;% 
+  filter(Species %in% c("Hylodes pipilans")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p + geom_point() +
+  facet_grid(cols = vars(Species, 
+                         Stage))
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-68-1.png" width="95%" /&gt;
+]
+
+???
+É possível renomear os títulos das facetas diretamente nos dados utilizando a função `fct_recode()` do pacote `forcats`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Reordenando Facetas**]
+
+.center[.red[**Reordenando os Dados Diretamente - fct_recode()**]]
+
+
+
+
+.pull-left[
+
+```r
+tadpoles_clean$species &lt;- fct_recode(tadpoles_clean$species,
+             `Hylodes \npipilans` = "Hp",
+             `Proceratophrys \nappendiculata` = "Pa",
+             `Scinax \nflavoguttatus` = "Sf")
+
+p &lt;- tadpoles_clean %&gt;%
+  rename(Species = species, Stage = stage) %&gt;% 
+  filter(Species %in% c("Hylodes \npipilans", 
+                        "Proceratophrys \nappendiculata", 
+                        "Scinax \nflavoguttatus")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p + geom_point() +
+  facet_grid(cols = vars(Species))
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-71-1.png" width="95%" /&gt;
+]
+
+???
+É possível renomear os títulos das facetas diretamente nos dados utilizando a função `fct_recode()` do pacote `forcats`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Reordenando Facetas**]
+
+.center[.red[**Reordenando os Dados Diretamente - fct_relevel()**]]
+
+.pull-left[
+
+```r
+tadpoles_clean$species &lt;- fct_relevel(tadpoles_clean$species,
+             "Scinax \nflavoguttatus",
+             "Proceratophrys \nappendiculata",
+             "Hylodes \npipilans")
+
+p &lt;- tadpoles_clean %&gt;%
+  rename(Species = species, Stage = stage) %&gt;% 
+  filter(Species %in% c("Hylodes \npipilans", 
+                        "Proceratophrys \nappendiculata", 
+                        "Scinax \nflavoguttatus")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p + geom_point() +
+  facet_grid(cols = vars(Species))
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-73-1.png" width="95%" /&gt;
+]
+
+???
+É possível reordenar os títulos das facetas diretamente nos dados utilizando a função `fct_relevel()` do pacote `forcats`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Facetas - Ajustando o Espaço de Plotagem**]
+
+.center[.red[**Variáveis Contínuas**]]
+
+.pull-left[
+
+```r
+p &lt;- tadpoles_clean %&gt;%
+  rename(Species = species, Stage = stage) %&gt;% 
+  filter(Species %in% c("Hylodes \npipilans", 
+                        "Proceratophrys \nappendiculata", 
+                        "Scinax \nflavoguttatus")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p + geom_point() +
+  facet_grid(cols = vars(Species),
+             rows = vars(Stage))
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-75-1.png" width="95%" /&gt;
+]
+
+???
+Note que os dados de Sf variam menos em relação ao eixo x do que os dados de Hp, gerando muito espaço em branco na área de plotagem dos gráficos de Sf. 
+
+É possível reduzir o espaço em branco permitindo que os eixos x variem em escalas diferentes.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Facetas - Ajustando o Espaço de Plotagem**]
+
+.center[.red[**Variáveis Contínuas - `scales = `**]]
+
+.pull-left[
+
+```r
+p &lt;- tadpoles_clean %&gt;%
+  rename(Species = species, Stage = stage) %&gt;% 
+  filter(Species %in% c("Hylodes \npipilans", 
+                        "Proceratophrys \nappendiculata", 
+                        "Scinax \nflavoguttatus")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p + geom_point() +
+  facet_grid(cols = vars(Species),
+             rows = vars(Stage),
+             scales = "free_x")
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-77-1.png" width="95%" /&gt;
+]
+
+???
+Isto é alcançado utilizando o argumento `scales = "free_x"`
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Facetas - Ajustando o Espaço de Plotagem**]
+
+.center[.red[**Variáveis Contínuas - `scales = `**]]
+
+.pull-left[
+
+```r
+p &lt;- tadpoles_clean %&gt;%
+  rename(Species = species, Stage = stage) %&gt;% 
+  filter(Species %in% c("Hylodes \npipilans", 
+                        "Proceratophrys \nappendiculata", 
+                        "Scinax \nflavoguttatus")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p + geom_point() +
+  facet_grid(cols = vars(Species),
+             rows = vars(Stage),
+             scales = "free_y")
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-79-1.png" width="95%" /&gt;
+]
+
+???
+Também é possível alterar as escalas do eixo y utilizando o argumento `scales = "free_y"`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Facetas - Ajustando o Espaço de Plotagem**]
+
+.center[.red[**Variáveis Contínuas - `scales = `**]]
+
+.pull-left[
+
+```r
+p &lt;- tadpoles_clean %&gt;%
+  rename(Species = species, Stage = stage) %&gt;% 
+  filter(Species %in% c("Hylodes \npipilans", 
+                        "Proceratophrys \nappendiculata", 
+                        "Scinax \nflavoguttatus")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p + geom_point() +
+  facet_grid(cols = vars(Species),
+             rows = vars(Stage),
+             scales = "free")
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-81-1.png" width="95%" /&gt;
+]
+
+???
+Também é possível alterar ambas as escalas ao mesmo tempo utilizando o argumento `scales = "free"`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Facetas - Ajustando o Espaço de Plotagem**]
+
+.center[.red[**Variáveis Categóricas**]]
+
+.pull-left[
+
+```r
+p &lt;- tadpoles_clean %&gt;%
+  rename(Species = species, Stage = stage) %&gt;% 
+  filter(Species %in% c("Hylodes \npipilans", 
+                        "Proceratophrys \nappendiculata", 
+                        "Scinax \nflavoguttatus")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = body_len, 
+             y = Species,
+             color = Species))
+
+p + geom_jitter(height = 0.1, 
+                show.legend = FALSE) +
+  facet_grid(rows = vars(Stage))
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-83-1.png" width="95%" /&gt;
+]
+
+???
+Note que Pa não está presente no estágio 42.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&amp;f=1&amp;nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Camada de Facetas - Ajustando o Espaço de Plotagem**]
+
+.center[.red[**Variáveis Categóricas**]]
+
+.pull-left[
+
+```r
+p &lt;- tadpoles_clean %&gt;%
+  rename(Species = species, Stage = stage) %&gt;% 
+  filter(Species %in% c("Hylodes \npipilans", 
+                        "Proceratophrys \nappendiculata", 
+                        "Scinax \nflavoguttatus")) %&gt;% 
+  drop_na() %&gt;% 
+  ggplot(aes(x = body_len, 
+             y = Species,
+             color = Species))
+
+p + geom_jitter(height = 0.1, 
+                show.legend = FALSE) +
+  facet_grid(rows = vars(Stage),
+             scales = "free_y",
+             space = "free_y")
+```
+]
+
+.pull-right[
+&lt;img src="07-Visualizacao-de-Dados-com-ggplot2_files/figure-html/unnamed-chunk-85-1.png" width="95%" /&gt;
+]
+
+???
+Podemos controlar o espaço de plotagem do eixo y quando avaliamos variáveis categóricas utilizando o argumento `space = "free_y"`.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
