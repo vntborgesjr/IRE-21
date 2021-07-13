@@ -20,7 +20,7 @@ layout: true
 name: basic
 background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true")
 background-position: 0% 100%
-background-size: 20%
+background-size: 15%
 class: inverse
 
 ```{r setup, include=FALSE}
@@ -34,16 +34,16 @@ options(htmltools.dir.version = FALSE)
 xaringanExtra::use_xaringan_extra()
 xaringanExtra::use_clipboard()
 
-streams_raw <- readxl::read_xlsx("/Users/clari/Documents/Vitor/IRE-21/Dados/streams.xlsx")
-streams_variables <- read_csv("/Users/clari/Documents/Vitor/IRE-21/Dados/streams_variables.csv",
+streams_raw <- readxl::read_xlsx("/Usuário/Documents/Vitor/IRE-21/Dados/streams.xlsx")
+streams_variables <- read_csv("/Usuário/Documents/Vitor/IRE-21/Dados/streams_variables.csv",
                                col_types = cols(
                                  stream = col_factor()
                                ))
-streams_date_variables <- read_csv("/Users/clari/Documents/Vitor/IRE-21/Dados/streams_date_variables.csv",
+streams_date_variables <- read_csv("/Usuário/Documents/Vitor/IRE-21/Dados/streams_date_variables.csv",
                                col_types = cols(
                                  stream = col_factor()
                                ))
-tadpoles_clean <- read_tadpoles_raw("/Users/clari/Documents/Vitor/IRE-21/Dados/tadpoles_raw.csv")
+tadpoles_clean <- read_tadpoles_raw("/Usuário/Documents/Vitor/IRE-21/Dados/tadpoles_raw.csv")
 tadpoles_clean <- tadpoles_clean %>%
   mutate(ratio = body_len/total_len) 
 new_body_len <- tadpoles_clean$total_len[which(tadpoles_clean$ratio > 1)]
@@ -101,7 +101,7 @@ class: inverse, center, middle, title-slide
 ???
 IDEIAS DE MELHORIAS PARA O PRÓXIMO CURSO
 
-- Condensar o conteúdo de visalização dos dados para caber todo em uma aula.
+- Condensar o conteúdo de visualização dos dados para caber todo em uma aula.
 
 ---
 
@@ -111,6 +111,7 @@ background-size: 15%, 10%
 
 # .blue[**ggplot2 - Gramática Gráfica em R**]
 
+.center[.red[**Três Elementos Essenciais da Gramática Gráfica**]]
 
 .pull-left[
 ```{r, echo = FALSE, fig.align='center', out.width="85%"}
@@ -122,13 +123,13 @@ x <- rep(c(2, 1, 3 , 4), 4)
 y <- c(0, 0.75, 0.75, 0)
 
 for (i in 5:length(ids)) {
-  y[i] <- y[i - 4] + 0.5
+  y[i] <- y[i - 4] + 0.75
 }
 
 y1 <- y[2]
 
 for (i in 2:4) {
-  y1[i] <- y1[i - 1] + 0.5
+  y1[i] <- y1[i - 1] + 0.75
 }
 
 positions <- data.frame(camada = ids,
@@ -156,18 +157,55 @@ positions %>%
                      Estéticos = "#D95F02",
                      Geométricos = "#7570B3",
                      Temas = "#A6761D")) + 
-  xlim(0, 4) +
+  xlim(-0.6, 4) +
+  ylim(0, 5.5) +
   theme(text = element_blank(),
         line = element_blank(),
-        panel.background = element_rect(fill = "black", 
-                                        color = "black"))
+        panel.background = element_rect(fill = "black"))
+```
+]
 
+.pull-right[
+<br/>
+  <BR/>
+<br/>
+  <BR/>
+```{r ggplot2 elementos essenciais 1, echo = FALSE}
+data.frame(Descrição = c("Aparência do gráfico", "O elementos visuais utilizados para representar os dados", "A escala em que estamos mapeando nossos dados", "Os dados que estão sendo plotados")) %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif") 
 ```
 
 ]
 
-.pull-right[
-```{r, echo = FALSE, fig.align='center', out.width="85%"}
+???
+Existem três elementos gramaticais essenciais: os dados, os (elementos) estéticos e os (elementos) geométricos.
+
+A camada de dados se referem naturalmente aos dados 
+
+A camada de estéticos se referem a escala a qual mapearemos os dados 
+
+A camada gemoétrica se refere a forma que os dados assumirão no gráfico.
+
+Essas são as camadas obrigatórias que precisamos alimentar com informações para gerar o gráfico
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**ggplot2 - Gramática Gráfica em R**]
+
+.center[.red[**Elementos Essenciais e Não Essenciais da Gramática Gráfica**]]
+
+.pull-left[
+<br/>
+```{r ggplot2 elementos essenciais e não essenciais 1, echo = FALSE, out.width="85%", fig.align='center'}
 ids <- factor(rep(c("Dados", "Estéticos", "Geométricos", "Estatísticas",
                     "Facetas", "Coordenadas","Temas"), 
                   each = 4))
@@ -220,30 +258,13 @@ positions %>%
   xlim(-0.6, 4) +
   theme(text = element_blank(),
         line = element_blank(),
-        panel.background = element_rect(fill = "black",
-                                        color = "black"))
+        panel.background = element_rect(fill = "black"))
 ```
-
 ]
 
-???
-O pacote ggplot2 foi escrito com base na ideia de que um gráfico é construído a partir de diferentes camadas de elementos gramaticais e do mapeamento de elementos estéticos.
-
-Segundo a analogia com a gramática escrita, as camadas são como os substantivos e adjetivos e o mapeamento estético é como as regras gramaticais que determinam como operar esse vocabulário.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**ggplot2 - Gramática Gráfica em R**]
-
-<BR/>
-
-.center[.red[**Três Elementos Essenciais da Gramática Gráfica**]]
-```{r ggplot2 elementos essenciais 1, echo = FALSE}
-data.frame(Elemento = c("Dados", "Estéticos", "Geometrias"), Descrição = c("Os dados que estão sendo plotados", "A escala em que estamos mapeando nossos dados", "O elementos visuais utilizados para representar os dados")) %>% 
+.pull-right[
+```{r, echo = FALSE, fig.align='center', out.width="85%"}
+data.frame(Descrição = c("Aparência do gráfico", "O espaço em que os dados são plotados", "Gera múltiplos gráficos", "Representações que melhoram a compreensão", "Os elementos visuais utilizados para representar os dados", "A escala em que estamos mapeando nossos dados", "Os dados que estão sendo plotados")) %>% 
   kbl() %>% 
   kable_material_dark("striped", 
                       fixed_thead = list(enabled = T, 
@@ -251,35 +272,7 @@ data.frame(Elemento = c("Dados", "Estéticos", "Geometrias"), Descrição = c("O
                       full_width = F, 
                       html_font = "Serif") 
 ```
-
-???
-Existem três elementos gramaticais essenciais: os dados, os (elementos) estéticos e os (elementos) geométricos.
-
-A camada de dados se referem naturalmente aos dados 
-
-A camada de estéticos se referem a escala a qual mapearemos os dados 
-
-A camada gemoétrica se refere a forma que os dados assumirão no gráfico.
-
-Essas são as camadas obrigatórias que precisamos alimentar com informações para gerar o gráfico
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**ggplot2 - Gramática Gráfica em R**]
-.center[.red[**Elementos Essenciais e Não Essenciais da Gramática Gráfica**]]
-```{r ggplot2 elementos essenciais e não essenciais 1, echo = FALSE}
-data.frame(Elemento = c("Dados", "Estéticos", "Geometrias", "Temas", "Estatística", "Coordenadas", "Facetas"), Descrição = c("Os dados que estão sendo plotados", "A escala em que estamos mapeando nossos dados", "O elementos visuais utilizados para representar os dados", "Aparência do gráfico", "Representações que melhoram a compreensão", "O espaço em que os dados são plotados", "Gera múltiplos gráficos")) %>% 
-  kbl() %>% 
-  kable_material_dark("striped", 
-                      fixed_thead = list(enabled = T, 
-                                   background = "purple"),
-                      full_width = F, 
-                      html_font = "Serif") 
-```
+]
 
 ???
 Essas são as camadas não obrigatórias.
@@ -291,15 +284,189 @@ background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/image
 background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
-# .blue[**ggplot2 - Gramática Gráfica em R**]
-.center[.red[**Elementos e Argumentos Correspondentes**]]
-```{r ggplot2 elementos e argumentos 1, echo = FALSE}
-data.frame(Elemento = c("Data", "Aesthetics", "Geometries", "Themes", "Statistics", "Coordinates", "Facets"), 
-           Args1 = c("", "x-axis/y-axis", "point", "to many...", "binning", "cartesian", "columns"), 
-           Args2 = c("", "colour/fill", "line", "", "smoothing", "fixed", "rows"), 
-           Args3 = c("", "size/labels", "histogram", "", "descriptive", "polar", ""),
-           Args4 = c("", "alpha/shape", "bar", "", "inferential", "limits", ""),
-           Args5 = c("", "line width/line type", "boxplot", "", "", "", "")) %>% 
+# .blue[**Camadas de Estatística**]
+<br/>
+<BR/>
+
+- .red[Duas] categorias de funções estatísticas
+
+  - Chamadas dentro de um .red[`geom_()`]
+  
+  - Chamada .red[independentemente]
+
+--
+
+- .red[`stats_()`]
+
+
+???
+Há duas formas de usar a camada estatística. A partir de uma camada geométrica, ou a partir de uma chamada independente.
+
+De uma forma ou de outra, a chamada se dará a partir de uma função `stats_()`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Ligação entre geom\\\_() <-> stat\_()**]
+
+.pull-left[
+```{r, eval = FALSE}
+p <- tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>%
+  drop_na() %>% 
+  ggplot(aes(x = body_len))
+
+p +  geom_histogram()
+```
+]
+
+.pull-right[
+```{r, echo = FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+p <- tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>%
+  drop_na() %>% 
+  ggplot(aes(x = body_len))
+
+p +  geom_histogram() +
+  theme(text = element_text(size = 24))
+```
+]
+
+???
+Já utilizamos uma função `stat_()` antes quando construímos histogramas. A função `stat_bin()` está sendo chamada juntamente a camada geométrica `geom_histogram()` e fazendo a contagem dentro de cada "caixa".
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Ligação entre geom\\\_() <-> stat\_()**]
+
+```{r, eval = FALSE}
+p + geom_histogram()
+p + stat_bin()
+```
+
+.pull-left[
+```{r, echo = FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="85%"}
+p <- tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>%
+  drop_na() %>% 
+  ggplot(aes(x = body_len))
+
+p +  geom_histogram() +
+  theme(text = element_text(size = 24))
+```
+]
+
+.pull-right[
+```{r, echo = FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="85%"}
+p <- tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>%
+  drop_na() %>% 
+  ggplot(aes(x = body_len))
+
+p +  stat_bin() +
+  theme(text = element_text(size = 24))
+```
+]
+
+???
+O mesmo resultado é obtido usando `geom_histogram()` e `stat_bin()`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Ligação entre geom\\\_() <-> stat\_()**]
+
+
+```{r, eval = FALSE}
+p +  geom_bar(stat = "bin")
+```
+
+
+```{r, echo = FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="45%"}
+p <- tadpoles_len_sp %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>%
+  drop_na() %>% 
+  ggplot(aes(x = body_len))
+
+p +  geom_bar(stat = "bin") +
+  theme(text = element_text(size = 24))
+```
+
+
+???
+Nas funções `geom_()`, a ligação entre as camadas geométricas e estatísticas se dá pelo argumento `stat = `. 
+
+Note que é possível obter um histograma a partir da função `geom_bar(stat = "bin")`.
+
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Ligação entre geom\\\_() <-> stat\_()**]
+
+```{r, eval = FALSE}
+p <- tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species, stream) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, fill = stream))
+
+p + geom_bar()
+p + stat_count()
+```
+
+.pull-left[
+```{r, echo = FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="60%"}
+p <- tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species, stream) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, fill = stream))
+
+p +  geom_bar() +
+  theme(text = element_text(size = 24))
+```
+]
+
+.pull-right[
+```{r, echo = FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="60%"}
+p <- tadpoles_clean %>% 
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  select(species, stream) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, fill = stream))
+
+p +  stat_count() +
+  theme(text = element_text(size = 24))
+```
+]
+
+???
+No caso da camada geométrica `geom_bar()` a camada estatística equivalente é `stat_count()`.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Ligação entre geom\\\_() <-> stat\_()**]
+
+```{r, echo = FALSE, fig.align='center', out.width="85%"}
+tibble(`stat_()` = c("stat_bin()", "stat_count()"), `geom_()` = c("geom_histogram()", "geom_bar()")) %>% 
   kbl() %>% 
   kable_material_dark("striped", 
                       fixed_thead = list(enabled = T, 
@@ -309,8 +476,7 @@ data.frame(Elemento = c("Data", "Aesthetics", "Geometries", "Themes", "Statistic
 ```
 
 ???
-Essas são as camadas não obrigatórias.
-
+Resumidamente, essa é a ligação entre as camadas geométricas e estatísticas em gráficos de barras.
 
 ---
 
@@ -318,1855 +484,46 @@ background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/image
 background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
-# .blue[**ggplot2 - Gramática Gráfica em R**]<br/>
-<BR/>
-
-
-.center[.red[**Sobreposição de Camadas**]]
+# .blue[**geom\\\_smooth() <-> stat\_smooth()**]
 
 .pull-left[
-```{r ggplot2 camada dados1, echo = FALSE, fig.align='center'}
-knitr::include_graphics("https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png")
-```
-]
-
-.pull-right[
-```{r ggplot2 camada dados 2, eval = FALSE}
-tadpoles_len_sp %>%  #<<
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             y = body_len)) +
-  geom_point()
-```
-]
-
-.center[.red[**Dados**]]
-???
-
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-
-# .blue[**ggplot2 - Gramática Gráfica em R**]<br/>
-<BR/>
-
-
-.center[.red[**Sobreposição de Camadas**]]
-
-.pull-left[
-```{r ggplot2 camada dados 3, echo = FALSE, fig.align='center'}
-knitr::include_graphics("https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png")
-```
-]
-
-.pull-right[
-```{r ggplot2 camada dados 4, eval = FALSE}
- tadpoles_len_sp %>%  
-  drop_na() %>% 
-  ggplot(aes(x = species, #<<
-             y = body_len)) + #<<
-  geom_point()
-```
-]
-
-.center[.red[**Dados + Estéticos**]]
-???
-
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**ggplot2 - Gramática Gráfica em R**]<br/>
-<BR/>
-
-
-.center[.red[**Sobreposição de Camadas**]]
-
-.pull-left[
-```{r ggplot2 camada dados 5, echo = FALSE, fig.align='center'}
-knitr::include_graphics("https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png")
-```
-]
-
-.pull-right[
-```{r ggplot2 camada dados 6, eval = FALSE}
- tadpoles_len_sp %>%  
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             y = body_len)) + 
-  geom_point() #<<
-```
-]
-
-.center[.red[**Dados + Estéticos + Geométricos**]]
-
-???
-Visualizaçoes para dados discretos (contagens) e para dados contínuos (tamanho do corpo).
-Vamos começar com visualização para dados discretos com gráficos de barras.
-
-Dois tipos de gráficos de barras: 
-- contagens absolutas (discreto)
-- distribuições (contínuo)
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Modificando Geométricos - geom_*()**]<br/>
-<BR/>
-
-.center[.red[**Mais de 50 geométricos disponíveis**]]
-
-- .red[`geom_bar()`]<br/>
-<BR/>
-- .red[`geom_col()`]<br/>
-<BR/>
-- .red[`geom_histogram()`]<br/>
-<BR/>
-- .red[`geom_line()`]<br/>
-<BR/>
-- .red[`geom_point()`]<br/>
-<BR/>
-
-???
-A camada geométrica é a terceira camada essencial.
-
-Ela determina o tipo do gráfico que será gerado.
-
-Mais de 50 funções geom_*()
-
-Iremos nos familiarizar com os geométricos a partir desses 8.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Variável Discreta - geom_bar()**]
-.center[.red[**Gráficos de Barras<br/><BR/>Número de Indivíduos x Espécie**]]
-.pull-left[
-```{r ggplot2 geom_bar() 1, echo = FALSE, fig.align='center', out.width= "70%"}
-theme_set(theme_grey())
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species)) +
-  geom_bar() + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[
-```{r ggplot2 geom_bar() 2, echo = TRUE, eval = FALSE}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species)) +
-  geom_bar() #<<
-```
-
-```{r ggplot2 camada geom_bar() 3, echo = FALSE, fig.align='center'}
-knitr::include_graphics("https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png")
-```
-]
-
-???
-geom_bar() conta o número de casos em cada posição de x. stat = count
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Variável Discreta - geom_col()**]
-.center[.red[**Gráficos de Barras<br/><BR/>Número de Indivíduos x Espécie**]]
-.pull-left[
-```{r ggplot2 geom_col() 1, echo = FALSE, fig.align='center', out.width= "70%"}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(species) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, y = n)) +
-  geom_col() + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[
-```{r ggplot2 geom_col() 2, echo = TRUE, eval = FALSE}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(species) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, y = n)) +
-  geom_col() #<<
-```
-
-```{r ggplot2 camada geom_col() 3, echo = FALSE, fig.align='center'}
-knitr::include_graphics("https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png")
-```
-]
-
-???
-geom_col() plota os valores. stat = indentity
-
-atenção ao uso do drop_na() - vai produzir resultados diferentes dependendo de onde ele é aplicado na sequência das linhas de comando.
-
-Continuaremos os exemplos com geom_bar(), mas a aplicação de estéticos e atributos geométricos é a mesma para geom_col().
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Atributo Estéticos em geom_bar()**]<br/>
-<BR/>
-
-.center[.red[**Adição de Informação por Inclusão de Variável Categórica**]]<br/>
-<BR/>
-
-- .red[**fill**]<br/>
-<BR/>
-- .red[**color**]
-
-???
-
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Atributo Geométrico em geom_bar()**]<br/>
-<BR/>
-
-.center[.red[**Ajustes para Posição, Preencimento, Borda e Tamanho das baras**]]<br/>
-<BR/>
-
-- .red[**position**]
-  - .red["stack"]
-  - .red["dodge"]
-  - .red["fill"]
-
-- .red[**fill**]
-
-- .red[**color**]
-
-- .red[**width**]
-
-???
-ATENÇÃO!!!
-Não confundir estéticos com atributos. Atributos serão sempre chamados na camada gemoétrica `geom_()`. Estéticos são chamados na camada de estéticos `aes()`.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Atributo Geométrico - fill**]
-.center[.red[**Gráficos de Barras<br/><BR/>Número de Indivíduos x Espécie**]]
-.pull-left[
-```{r ggplot2 geom_bar() 4, echo = FALSE, fig.align='center', out.width= "70%"}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species)) +
-  geom_bar(fill = "red")  + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[
-```{r ggplot2 geom_bar() 5, echo = TRUE, eval = FALSE}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species)) +
-  geom_bar(fill = "red") #<<
-```
-
-```{r ggplot2 camada geom_bar() 6, echo = FALSE, fig.align='center'}
-knitr::include_graphics("https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png")
-```
-]
-
-???
-geom_bar() conta o número de casos em cada posição de x. stat = count
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Atributo Geométrico - color**]
-.center[.red[**Gráficos de Barras<br/><BR/>Número de Indivíduos x Espécie**]]
-.pull-left[
-```{r ggplot2 geom_bar() 7, echo = FALSE, fig.align='center', out.width= "70%"}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species)) +
-  geom_bar(fill = "red", 
-           color = "black") + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[
-```{r ggplot2 geom_bar() 8, echo = TRUE, eval = FALSE}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species)) +
-  geom_bar(fill = "red", 
-           color = "black") #<<
-```
-]
-
-???
-geom_bar() conta o número de casos em cada posição de x. stat = count
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Mapeamento Estético - fill**]
-
-.center[.red[**Gráficos de Barras<br/><BR/>Número de Indivíduos x Espécie x Riacho**]]
-.pull-left[
-```{r ggplot2 geom_bar() 10, echo = FALSE, fig.align='center', out.width= "70%"}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, fill = stream)) + #<<
-  geom_bar(color = "black") + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[
-```{r ggplot2 geom_bar() 11, eval = FALSE}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             fill = stream)) + #<<
-  geom_bar(color = "black")
-```
-]
-
-
-???
-Adicionando um mapeamento estético: `fill = stream`
-O mapeamento estético `fill = ` adiciona uma nova barra para cada riacho. 
-
-O posicionamento da barra vai variar de acordo com o atributo geométrico `position = `. `position = stack` gera barras empilhadas (default).
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Atributo Geométrico - position**]
-
-.center[.red[**Gráficos de Barras<br/><BR/>Número de Indivíduos x Espécie x Riacho**]]
-.pull-left[
-```{r ggplot2 geom_bar() 13, echo = FALSE, fig.align='center', out.width= "70%"}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, fill = stream)) +
-  geom_bar(color = "black", 
-           position = "dodge") + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[
-```{r ggplot2 geom_bar() 14, eval = FALSE}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             fill = stream)) +
-  geom_bar(color = "black", 
-           position = "dodge") #<<
-```
-]
-
-
-???
-`position = dodge` gera barras lado a lado. 
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Atributo Geométrico - position**]
-
-.center[.red[**Gráficos de Barras<br/><BR/>Número de Indivíduos x Espécie x Riacho**]]
-.pull-left[
-```{r ggplot2 geom_bar() 16, echo = FALSE, fig.align='center', out.width= "70%"}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, fill = stream)) +
-  geom_bar(color = "black",
-           position = position_dodge()) + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[
-```{r ggplot2 geom_bar() 17, eval = FALSE}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             fill = stream)) +
-  geom_bar(color = "black",
-           position = position_dodge()) #<<
-```
-]
-
-
-???
-`position = position_dodge()` gera barras lado a lado e controla a sobreposição das barras. 
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Atributo Geométrico - position e alpha**]
-
-.center[.red[**Gráficos de Barras<br/><BR/>Número de Indivíduos x Espécie x Riacho**]]
-.pull-left[
-```{r ggplot2 geom_bar() 19, echo = FALSE, fig.align='center', out.width= "70%"}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf"))%>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species,
-             fill = stream)) +
-  geom_bar(color = "black",
-           position = position_dodge(width = 0.2),
-           alpha = 0.5) + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[
-```{r ggplot2 geom_bar() 20, eval = FALSE}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             fill = stream)) +
-  geom_bar(color = "black",
-           position = position_dodge(width = 0.2),
-           alpha = 0.5) #<<
-```
-]
-
-
-???
-`position = position_dodge(width = 0.2)` gera barras lado a lado e controla a sobreposição das barras. 
-
-`alpha = ` controla a transparência das barras.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Atributo Geométrico - position**]
-
-.center[.red[**Gráficos de Barras<br/><BR/>Número de Indivíduos x Espécie x Riacho**]]
-.pull-left[
-```{r ggplot2 geom_bar() 22, echo = FALSE, fig.align='center', out.width= "70%"}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             fill = stream)) +
-  geom_bar(color = "black", 
-           position = "fill") + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[
-```{r ggplot2 geom_bar() 23, eval = FALSE}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             fill = stream)) +
-  geom_bar(color = "black", 
-           position = "fill") #<<
-```
-]
-
-
-???
-`position = fill` gera barras empilhadas representando proporções. 
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Atributo Geométrico - width**]
-
-.center[.red[**Gráficos de Barras<br/><BR/>Número de Indivíduos x Espécie x Riacho**]]
-.pull-left[
-```{r ggplot2 geom_bar() 25, echo = FALSE, fig.align='center', out.width= "70%"}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, fill = stream)) +
-  geom_bar(color = "black",
-           width = 0.7,
-           position = "fill") + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[
-```{r ggplot2 geom_bar() 26, eval = FALSE}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             fill = stream)) +
-  geom_bar(color = "black",
-           width = 0.7, #<<
-           position = "fill") 
-
-```
-]
-
-
-???
-`width = ` controla a distância entre as barras. 
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Modificando Estético - scale_*()**]<br/>
-<BR/>
-
-- .red[`scale_x_continuous()`]
-
-- .red[`scale\_y_*()`]
-
-- .red[`scale_color_discrete()`]
-  - ou .red[`scale\_coulor_*()`]
-
-- .red[`scale\_fill_*()`]
-
-- .red[`scale\_shape_()`]
-
-- .red[`scale\_linetype_*()`]
-
-- .red[`scale\_size_*()`]
-
-???
-Para escolher corretamente a função necessária para alterar um estético, é necessário conhecer o tipo de dado com o qual se está trabalhando.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Modificando Estético - scale_*\()**]
-
-.center[.red[**Gráficos de Barras<br/><BR/>Número de Indivíduos x Espécie x Riacho**]]
-.pull-left[
-```{r ggplot2 geom_bar() 28, eval = FALSE}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             fill = stream)) +
-  geom_bar(color = "black", 
-           position = "dodge",
-           width = 0.7) +
-   scale_x_discrete("Species") + #<<
-   scale_y_continuous("Number of tadpoles") #<<
-```
-]
-
-.pull-right[
-```{r ggplot2 geom_bar() 29, echo = FALSE, fig.align='center',  out.width="70%"}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             fill = stream)) +
-  geom_bar(color = "black", 
-           position = "dodge",
-           width = 0.7) +
-   scale_x_discrete("Species") + 
-   scale_y_continuous("Number of tadpoles") + 
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-O eixo x é formado por uma variável discreta, espécies. Podemos controlar características como o título do eixo utilizando `scale_x_discrete()`.
-
-O eixo y é formado por uma variável discreta, mas numérica (número de girinos). Podemos controlar características como o título do eixo utilizando `scale_y_continuous()`.
-
-A legenda é controlada pelo estético `color` e é uma variável discreta, estágio de desenvolvimento. Podemos controlar suas características utilizando `sclae_color_discrete()`. 
-
-O primeiro argumento será sempre o nome do estético. Nesse exemplo, `Species`e `Number of tadpoles (mm)` e `Streams`.
-
-Podemos modificar o intervalo entre os valores mostrados no eixo y através de `scale_y_continuous()`.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Modificando Estético - scale_y_continuous()**]
-
-.center[.red[**Gráficos de Barras<br/><BR/>Número de Indivíduos x Espécie x Riacho**]]
-.pull-left[
-```{r ggplot2 geom_bar() 30, eval = FALSE}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             fill = stream)) +
-  geom_bar(color = "black", 
-           position = "dodge",
-           width = 0.7) +
-   scale_x_discrete("Species") + 
-   scale_y_continuous("Number of tadpoles", #<<
-                   breaks = seq(0, 175, 25)) #<<
-```
-]
-
-.pull-right[
-```{r ggplot2 geom_bar() 31, echo = FALSE, fig.align='center',  out.width="70%"}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, fill = stream)) +
-  geom_bar(color = "black", 
-           position = "dodge",
-           width = 0.7) +
-   scale_x_discrete("Species") +
-   scale_y_continuous("Number of tadpoles", 
-                   breaks = seq(0, 175, 25)) + 
-  theme(text = element_text(size = 24)) 
-```
-]
-
-???
-`scale_y_continuous(breaks = )`.
-
-Também podemos alterar as cores alterando `scale_color_discrete()`.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Modificando Estético - scale_fill_discrete()**]
-
-.center[.red[**Gráficos de Barras<br/><BR/>Número de Indivíduos x Espécie x Riacho**]]
-.pull-left[
-```{r ggplot2 geom_bar() 32, eval = FALSE}
-minhas_cores <- c("black", "white", "blue", "green", "yellow", "red", "purple") #<<
-
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, fill = stream)) +
-  geom_bar(color = "black", 
-           position = "dodge",
-           width = 0.7) +
-   scale_x_discrete("Species") + 
-   scale_y_continuous("Number of tadpoles", 
-                   breaks = seq(0, 175, 25)) +
-   scale_fill_discrete("Stream", type = minhas_cores)  #<<
-```
-]
-
-.pull-right[
-```{r ggplot2 geom_bar() 33, echo = FALSE, fig.align='center',  out.width="70%"}
-# modificando as cores
-minhas_cores <- c("black", "white", "blue", "green", "yellow", "red", "purple")
-
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, fill = stream)) +
-  geom_bar(color = "black", 
-           position = "dodge",
-           width = 0.7) +
-   scale_x_discrete("Species") + #<<
-   scale_y_continuous("Number of tadpoles", 
-                   breaks = seq(0, 175, 25)) + #<<
-   scale_fill_discrete("Stream", type = minhas_cores) + 
-  theme(text = element_text(size = 24)) #<<
-```
-]
-
-???
-Também podemos alterar as cores alterando `scale_color_discrete()`.
-
-Também podemos alterar as cores alterando `scale_fill_brewer()`.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Modificando Estético - scale_fill_brewer()**]
-
-.center[.red[**Gráficos de Barras<br/><BR/>Número de Indivíduos x Espécie x Riacho**]]
-.pull-left[
-```{r ggplot2 geom_bar() 34, eval = FALSE}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, fill = stream)) +
-  geom_bar(color = "black", 
-           position = "dodge",
-           width = 0.7) +
-   scale_x_discrete("Species") + 
-   scale_y_continuous("Number of tadpoles", 
-                   breaks = seq(0, 175, 25)) + 
-   scale_fill_brewer("Stream")  #<<
-```
-]
-
-.pull-right[
-```{r ggplot2 geom_bar() 35, echo = FALSE, fig.align='center',  out.width="70%"}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, fill = stream)) +
-  geom_bar(color = "black", 
-           position = "dodge",
-           width = 0.7) +
-   scale_x_discrete("Species") + 
-   scale_y_continuous("Number of tadpoles", 
-                   breaks = seq(0, 175, 25)) +
-   scale_fill_brewer("Stream") + 
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-Também podemos alterar as cores alterando `scale_fill_brewer()`.
-
-Gera um gradiente de cores. Os gradientes podem ser alterados pelo argumento palette.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 98%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Visualizando uma Variável - geom_hist()**]
-
-.center[.red[**Histograma<br/><BR/>Tamanho do Corpo**]]
-
-.pull-left[
-```{r ggplot2 histogram 1, eval = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len)) +  
-  geom_histogram() #<< 
-```
-
-```{r ggplot2 camada geom_histogram() 1, echo = FALSE, fig.align='center'}
-knitr::include_graphics("https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png")
-```
-]
-
-.pull-right[
-```{r ggplot2 histogram 2, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len)) + 
-  geom_histogram()  + 
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-O histograma é um tipo especial de gráfico de barras para variáveis contínuas. O Histograma produz o encaixotamento de uma varável contínua para então gerar sua visualização a partir das barras.
-
-Notar a adição da camada geométrica e o uso de um único estético x.
-
-Atenção para a mensagem "stat_bin() using bins = 30. Pick a better value with binwidth.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Atributo Geométrico - binwidth**]
-
-.center[.red[**Histograma<br/><BR/>Tamanho do Corpo**]]
-
-.pull-left[
-```{r ggplot2 histogram 3, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len)) +  
-  geom_histogram(binwidth = 5) #<< 
-```
-]
-
-.pull-right[
-```{r ggplot2 histogram 4, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len)) + 
-  geom_histogram(binwidth = 5)  + 
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-Alterando a largura da barra com binwidth. Este exemplo a largura é de 5mm.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Atributo Geométrico - binwidth**]
-
-.center[.red[**Histograma<br/><BR/>Tamanho do Corpo**]]
-
-.pull-left[.center[.red[`binwidth = 5`]]
-```{r ggplot2 histogram 5, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len)) + 
-  geom_histogram(binwidth = 5)  + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[.center[.red[`binwidth = 0.05`]]
-```{r ggplot2 histogram 6, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len)) + 
-  geom_histogram(binwidth = 0.05)  + 
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-Cabe a você determinar a melhor largura da caixa para os seus dados.
-
-Características importantes para determinar o tamanho da caixa:
-- ausência de espaços em branco entre as barras
-- afinal vocês está representando uma variável contínua
-
-Note que os rótulos do eixo x deveriam estar localizados entre as barras e não no seu meio. Isso se dá porque se trata de uma variável contínua. Eles representam intervalos e não valores exatos. 
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Atributo Geométrico - center**]
-
-.center[.red[**Histograma<br/><BR/>Tamanho do Corpo**]]
-
-.pull-left[
-```{r ggplot2 histogram 7, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len)) +  
-  geom_histogram(binwidth = 1,
-                 center = 0.5) #<< 
-```
-]
-
-.pull-right[
-```{r ggplot2 histogram 8, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len)) + 
-  geom_histogram(binwidth = 1,
-                 center = 0.5)  + 
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-Para que os rótulos dos dados no eixo x localizem-se entre as barras, basta alimentar o argumento `center = ` um valor igual a metade do valor alimentado em `binwidth = `.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Mapeamento Estético - fill**]
-
-.center[.red[**Histograma<br/><BR/>Tamanho do Corpo**]]
-
-.pull-left[
-```{r ggplot2 histogram 9, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len,
-             fill = species)) + #<<   
-  geom_histogram(binwidth = 1,
-                 center = 0.5) 
-```
-]
-
-.pull-right[
-```{r ggplot2 histogram 10, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len,
-             fill = species)) + 
-  geom_histogram(binwidth = 1,
-                 center = 0.5)  + 
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-Para representar diferentes espécies podemos utilizar os estético `fill = `
-
-Há uma problema de sobreposição dos dados aqui.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Visualizando uma Variável - geom_hist()**]
-
-.center[.red[**Histograma - Frequência Relativa<br/><BR/>Tamanho do Corpo**]]
-
-.pull-left[
-```{r ggplot2 histogram 11, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len, 
-             y = ..density.., #<<
-             fill = species)) +   
-  geom_histogram(binwidth = 1,
-                 center = 0.5) 
-```
-]
-
-.pull-right[
-```{r ggplot2 histogram 12, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len, 
-             y = ..density..,
-             fill = species)) + 
-  geom_histogram(binwidth = 1,
-                 center = 0.5)  + 
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-Para obter um histograma com as frequências relativas basta adicionar o estético `y = ..density..`.
-
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Visualizando uma Variável - geom_hist()**]
-
-.center[.red[**Histograma - Frequência Relativa<br/><BR/>Tamanho do Corpo**]]
-
-.pull-left[
-```{r ggplot2 histogram 13, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len, 
-             y = ..density.., 
-             fill = species)) +   
-  geom_histogram(binwidth = 1,
-                 center = 0.5, 
-                 alpha = 0.5) #<<
-```
-]
-
-.pull-right[
-```{r ggplot2 histogram 14, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len, 
-             y = ..density..,
-             fill = species)) + 
-  geom_histogram(binwidth = 1,
-                 center = 0.5,
-                 alpha = 0.5)  + 
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-Também podemos utilizar o atributo geométrico `alpha = ` para atribuir um grau de transparência as barras do histograma.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Modificando Estético - scale_*()**]
-
-.center[.red[**Histograma - Frequência Relativa<br/><BR/>Tamanho do Corpo**]]
-.pull-left[
-```{r ggplot2 histogram 15, eval = FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len, 
-             y = ..density.., 
-             fill = species)) +   
-  geom_histogram(binwidth = 1,
-                 center = 0.5, 
-                 alpha = 0.5) +
-   scale_x_continuous("Species") + #<<
-   scale_y_continuous("Relative frequency") + #<<
-   scale_fill_brewer("Species",
-                     palette = 8) #<<
-```
-]
-
-.pull-right[
-```{r ggplot2 histogram 16, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len, 
-             y = ..density.., 
-             fill = species)) +   
-  geom_histogram(binwidth = 1,
-                 center = 0.5, 
-                 alpha = 0.5) +
-   scale_x_continuous("Species") + #<<
-   scale_y_continuous("Relative frequency") + #<<
-   scale_fill_brewer("Species",
-                     palette = 8) +
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-Também podemos alterar as cores alterando `scale_fill_brewer()`.
-
-Gera um gradiente de cores. Os gradientes podem ser alterados pelo argumento palette.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Visualizando uma Variável - geom_point()**]
-.center[.red[**Gráficos de Pontos<br/><BR/>Tamanho do Corpo**]]
-.pull-left[
-```{r ggplot2 slide 1, echo = FALSE, fig.align='center', out.width= "70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% 
-           c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len)) +
-  geom_point(size = 3) + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[
-```{r ggplot2 pontos x categorias 1, echo = TRUE, eval = FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len)) +
-  geom_point() #<<
-```
-
-```{r ggplot2 camada geom_point() 1, echo = FALSE, fig.align='center'}
-knitr::include_graphics("https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png")
-```
-]
-???
-Gráfico útil para visualizar a variação dos dados.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Mapeamento Estético - color**]
-
-.center[.red[**Gráficos de Pontos<br/><BR/>Tamanho do Corpo x Espécie**]]
-.pull-left[
-```{r ggplot2 pontos x categorias 5, echo = FALSE, fig.align='center', out.width= "70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species)) +
-  geom_point(size = 3) + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[
-```{r ggplot2 pontos x categorias 6, eval = FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species)) + #<<
-  geom_point()
-```
-]
-
-
-???
-Adicionando um mapeamento estético: `color = species`
-O mapeamento estético `color = ` funciona tanto com variáveis discretas (inteiros ou fatores) quanto com variáveis contínuas (gera um gradiente de cor).
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Atributo Geométrico - position**]<br/>
-<BR/>
-
-.center[.red[**Ajuste para Dados Sobrepostos**]]
-
-- identity
-
-- dodge
-
-- stack
-
-- fill
-
-- .red[**jitter**]
-
-- jitterdodge
-
-- nudge
-
-???
-Adicionando um atributo `position = "jitter"` adiciona uma variação aleatória ao redor de cada observação para reduzir a sobreposição dos pontos.
-
-ATENÇÃO!!!
-Não confundir estéticos com atributos. Atributos serão sempre chamados na camada gemoétrica `geom_()`. Estéticos são chamados na camada de estéticos `aes()`.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Atributo Geométrico - position**]
-
-.center[.red[**Gráfico de Pontos<br/><BR/>Tamanho do Corpo x Espécie**]]
-.pull-left[
-```{r ggplot2 pontos x categorias 9, echo = FALSE, fig.align='center', out.width= "70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species)) +
-  geom_point(position = "jitter", 
-             size = 3) + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[
-```{r ggplot2 pontos x categorias 10, eval = FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species)) +
-  geom_point(position = "jitter") #<<
-```
-]
-
-???
-Adicionando um mapeamento estético: `color = species`
-
-Adicionando um atributo `position = "jitter"` adiciona uma variação aleatória ao redor de cada observação para reduzir a sobreposição dos pontos.
-
-ATENÇÃO!!!
-Não confundir estéticos com atributos. Atributos serão sempre chamados na camada gemoétrica `geom_()`. Estéticos são chamados na camada de estéticos `aes()`.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Atributo Geométrico - position**]
-
-.center[.red[**Gráfico de Pontos<br/><BR/>Tamanho do Corpo x Espécie**]]
-.pull-left[
-```{r ggplot2 pontos x categorias extra 1, echo = FALSE, fig.align='center', out.width= "70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species)) +
-  geom_point(position = position_jitter(0.25,
-                                        seed = 136), 
-             size = 3) + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[
-```{r ggplot2 pontos x categorias extra 2, eval = FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species)) +
-  geom_point(position = position_jitter(0.25, #<<
-                        seed = 136)) #<<
-```
-]
-
-???
-Adicionando um mapeamento estético: `color = species`
-
-Adicionando um atributo `position = "jitter"` adiciona uma variação aleatória ao redor de cada observação para reduzir a sobreposição dos pontos.
-
-ATENÇÃO!!!
-Não confundir estéticos com atributos. Atributos serão sempre chamados na camada gemoétrica `geom_()`. Estéticos são chamados na camada de estéticos `aes()`.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Atributo Geométrico - alpha**]
-
-.center[.red[**Gráfico de Pontos<br/><BR/>Tamanho do Corpo x Espécie**]]
-.pull-left[
-```{r ggplot2 pontos x categorias 13, echo = FALSE, fig.align='center', out.width= "70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species)) +
-  geom_point(position = position_jitter(0.25, 
-            seed = 136), 
-             size = 3,
-             alpha = 0.3) + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[
-```{r ggplot2 pontos x categorias 14, eval = FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species) + 
-  geom_point(position = position_jitter(0.25, 
-            seed = 136), 
-             alpha = 0.3)) #<<
-```
-]
-
-???
-Adicionando um segundo mapeamento estético: `alpha = 0.3` (atribui um grau de transparência aos pontos)
-
-Adicionando um atributo `position = "jitter"` adiciona uma variação aleatória ao redor de cada observação para reduzir a sobreposição dos pontos.
-
-ATENÇÃO!!!
-Não confundir estéticos com atributos. Atributos serão sempre chamados na camada gemoétrica `geom_()`. Estéticos são chamados na camada de estéticos `aes()`.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Mapeamento Estético - shape**]
-
-.center[.red[**Gráfico de Pontos<br/><BR/>Tamanho do Corpo x Espécie**]]
-.pull-left[
-```{r ggplot2 pontos x categorias 17, echo = FALSE, fig.align='center', out.width= "70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species,
-             shape = species)) +
-  geom_point(position = position_jitter(0.25, 
-            seed = 136), 
-             size = 3, 
-             alpha = 0.3) + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[
-```{r ggplot2 pontos x categorias 18, eval = FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species,
-             shape = species)) + #<<
-  geom_point(position = position_jitter(0.25, 
-            seed = 136), 
-             alpha = 0.3)
-```
-]
-
-???
-Adicionando um mapeamento estético: `shape = species`
-
-Adicionando um atributo `position = "jitter"` adiciona uma variação aleatória ao redor de cada observação para reduzir a sobreposição dos pontos.
-
-ATENÇÃO!!!
-Não confundir estéticos com atributos. Atributos serão sempre chamados na camada gemoétrica `geom_()`. Estéticos são chamados na camada de estéticos `aes()`.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Mapeamento Estético - size**]
-
-.center[.red[**Gráfico de Pontos<br/><BR/>Tamanho do Corpo x Espécie x Estágio**]]
-.pull-left[
-```{r ggplot2 pontos x categorias 21, echo = FALSE, fig.align='center', out.width= "70%", warning = FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species,
-             shape = species, 
-             size = stage)) +
-  geom_point(position = position_jitter(0.25, 
-            seed = 136), 
-             alpha = 0.3) + 
-  theme(text = element_text(size = 24))
-```
-]
-
-.pull-right[
-```{r ggplot2 pontos x categorias 22, eval = FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species,
-             shape = species,
-             size = stage)) + #<<
-  geom_point(position = position_jitter(0.25, 
-            seed = 136), 
-             alpha = 0.3)
-```
-]
-
-???
-Adicionando um terceiro mapeamento estético: `size = stage`
-
-Adicionando um atributo `position = "jitter"` adiciona uma variação aleatória ao redor de cada observação para reduzir a sobreposição dos pontos.
-
-ATENÇÃO!!!
-Não confundir estéticos com atributos. Atributos serão sempre chamados na camada gemoétrica `geom_()`. Estéticos são chamados na camada de estéticos `aes()`.
-
-Agora vamos aprender a alterar características importantes como o título dos eixos, suas escalas de variação, título e valores das legendas.
-
-Faremos isso a partir da modificação da família de estéticos `scale_*_*()`
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Modificando Estético - scale_*_*()**]
-
-.center[.red[**Gráfico de Pontos<br/><BR/>Tamanho do Corpo x Espécie**]]
-.pull-left[
-```{r ggplot2 funções scale 1, eval = FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species,
-             shape = species)) +
-  geom_point(position = position_jitter(0.25,
-            seed = 136), 
-             alpha = 0.3, 
-             size = 3) +
-   scale_x_discrete("") + #<<
-   scale_y_continuous("Body Length (mm)") #<<
-```
-]
-
-.pull-right[
-```{r ggplot2 funções scale 2, echo = FALSE, fig.align='center', out.width= "70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species,
-             shape = species)) +
-  geom_point(position = position_jitter(0.25,
-                                        seed = 136),
-             size = 3, 
-             alpha = 0.3) +
-  scale_x_discrete("") +
-  scale_y_continuous("Body Length (mm)") +
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-O eixo x é formado por uma variável discreta, espécies. Podemos controlar características como o título do eixo utilizando `scale_x_discrete()`.
-
-O eixo y é formado por uma variável contínua, tamanho do corpo. Podemos controlar características como o título do eixo utilizando `scale_x_continuous()`.
-
-A legenda é controlada pelo estético `color` e é uma variável discreta, estágio de desenvolvimento. Podemos controlar suas características utilizando `sclae_color_discrete()`. 
-
-O primeiro argumento será sempre o nome do estético. Nesse exemplo, `Species`e `Body Length (mm)`.
-
-Os argumentos mais comumente utilizados, depois do título do eixo, são `limits`, `breaks`, `expand` e `labels`
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Modificando Estético - scale_*_*()**]
-
-.center[.red[**Gráfico de Pontos<br/><BR/>Tamanho do Corpo x Espécie**]]
-.pull-left[
-```{r ggplot2 funções scale 3, eval = FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species,
-             shape = species)) +
-  geom_point(position = position_jitter(0.25,
-            seed = 136), 
-             alpha = 0.3, 
-             size = 3) +
-  scale_x_discrete("") + 
-  scale_y_continuous("Body Length (mm)", 
-                     limits = c(0, 30))  #<<
-```
-]
-
-.pull-right[
-```{r ggplot2 funções scale 4, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species,
-             shape = species)) +
-  geom_point(position = position_jitter(0.25,
-            seed = 136), 
-  size = 3, 
-             alpha = 0.3) +
-  scale_x_discrete("") + 
-  scale_y_continuous("Body Length (mm)",
-                     limits = c(0, 30)) +
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-`limits`determina a amplitude da escala, ou seja, seus valores mínimos e máximos.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Modificando Estético - scale_*_*()**]
-
-.center[.red[**Gráfico de Pontos<br/><BR/>Tamanho do Corpo x Espécie**]]
-.pull-left[
-```{r ggplot2 funções scale 5, eval = FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species,
-             shape = species)) +
-  geom_point(position = position_jitter(0.25,
-            seed = 136), 
-             alpha = 0.3) +
-  scale_x_discrete("") + 
-  scale_y_continuous("Body Length (mm)",
-                     limits = c(0, 30),
-                     breaks = seq(0, 30, 5)) #<<
-```
-]
-
-.pull-right[
-```{r ggplot2 funções scale 6, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species,
-             shape = species)) +
-  geom_point(position = position_jitter(0.25,
-             seed = 136),
-             size = 3, 
-             alpha = 0.3) +
-  scale_x_discrete("") + 
-  scale_y_continuous("Body Length (mm)",
-                     limits = c(0, 30),
-                     breaks = seq(0, 30, 5)) +
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-`breaks` controla o intervalo entre os valores do eixo.
-
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 97%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Modificando Estético - scale_*_*()**]
-
-.center[.red[**Gráfico de Pontos<br/><BR/>Tamanho do Corpo x Espécie**]]
-.pull-left[
-```{r ggplot2 funções scale 9, eval = FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species,
-             shape = species)) +
-  geom_point(position = 
-               position_jitter(0.25,
-                               seed = 136), 
-             alpha = 0.3) +
-  scale_x_discrete("") + 
-  scale_y_continuous("Body Length (mm)",
-                     limits = c(0, 30),
-                     breaks = seq(0, 30, 5)) +
-  scale_color_discrete("Species", labels = c("Hylodes \npipilans",  "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + #<<
-  scale_shape_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) #<<
-```
-]
-
-.pull-right[
-```{r ggplot2 funções scale 10, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species,
-             shape = species)) +
-  geom_point(position = 
-               position_jitter(0.25,
-                               seed = 136), 
-             alpha = 0.3, 
-             size = 3) +
-  scale_x_discrete("") + 
-  scale_y_continuous("Body Length (mm)",
-                     limits = c(0, 30),
-                     breaks = seq(0, 30, 5)) +
-  scale_color_discrete("Species", labels = c("Hylodes \npipilans",  "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + #<<
-  scale_shape_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + #<< 
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-`labels` altera os nomes de variáveis catagóricas.
-
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Modificando Estético - labs()**]
-
-.center[.red[**Gráfico de Pontos<br/><BR/>Tamanho do Corpo x Espécie**]]
-.pull-left[
-```{r ggplot2 funções scale 11, eval = FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species,
-             shape = species)) +
-  geom_point(position = 
-               position_jitter(0.25,
-                               seed = 136), 
-             alpha = 0.3) +
-  labs(x = "", #<<
-       y = "Body Length (mm)", #<<
-       color = "Species", #<<
-       shape = "Species") + #<<
-  scale_color_discrete(labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
-  scale_shape_discrete(labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus"))
-```
-]
-
-.pull-right[
-```{r ggplot2 funções scale 12, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species,
-             shape = species)) +
-  geom_point(position = 
-               position_jitter(0.25,
-                               seed = 136), 
-             alpha = 0.3, 
-             size = 3) +
-  labs(x = "", #<<
-       y = "Body Length (mm)", #<<
-       color = "Species", #<<
-       shape = "Species") + #<<
-  scale_color_discrete(labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
-  scale_shape_discrete(labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-`labs` altera os títulos dos eixos e da legenda.
-
-Também permite adicionar título, subtítulo, legenda e um tag.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Relação entre Variáveis - geom_point()**]
-
-.center[.red[**Gráfico de Pontos<BR/><br/>Tamanho do Corpo x Espécie**]]
-
-.pull-left[
-```{r ggplot2 relações variavel continua x discreta 1, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_len_sp %>%
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             y = body_len, #<<
-             color = stage)) + #<<
-  geom_point(position = 
-               position_jitter(0.25,
-                               seed = 136), 
-             alpha = 0.3) +
-  labs(x = "Species", #<<
-       y = "Body Length (mm)",
-       color = "Development \nClass") #<<
-```
-]
-
-.pull-right[
-```{r ggplot2 relações variavel continua x discreta 2, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>%
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = species, 
-             y = body_len,
-             color = stage)) +
-  geom_point(position = 
-               position_jitter(0.25,
-                               seed = 136),
-             size = 3, 
-             alpha = 0.3) +
-  labs(x = "Species",
-       y = "Body Length (mm)",
-       color = "Development \nClass") +
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-Cada geom_*() está associado a estéticos específicos, alguns dos quais são essenciais.
-
-X e Y são estéticos essenciais em geom_point()
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Relação entre Variáveis - geom_point()**]
-
-.center[.red[**Gráfico de Pontos<BR/><br/>Tamanho do Corpo x Tamanho total**]]
-
-.pull-left[
-```{r ggplot2 funções scale 14, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_len_sp %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, #<<
-             y = body_len)) + #<< 
-  geom_point()
-```
-
-```{r ggplot2 camada geom_point() relações 1, echo = FALSE, fig.align='center'}
-knitr::include_graphics("https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png")
-```
-]
-
-.pull-right[
-```{r ggplot2 funções scale 15, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>% 
+```{r, eval = FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="60%"}
+p <- tadpoles_clean %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
-             y = body_len)) +
-  geom_point(size = 3) + 
+             y = body_len)
+
+p +  geom_point() +
+  geom_smooth() +
+  theme(text = element_text(size = 24))
+```
+
+```
+geom_smooth() using method = 'loess' 
+and formula 'y ~ x' 
+```
+]
+
+
+.pull-right[
+```{r, echo = FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+p <- tadpoles_clean %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p +  geom_point() +
+  geom_smooth() +
   theme(text = element_text(size = 24))
 ```
 ]
 
 ???
-Cada geom_*() está associado a estéticos específicos, alguns dos quais são essenciais.
+Uma camada geométrica/estatística bastante útil é geom_smooth()/stat_smooth(). 
 
-X e Y são estéticos essenciais em geom_point()
+Elas adicionam linhas de tendência de diferentes tipos.
+
+A região sombreada de cinza ao redor de cada reta representa um intervalo de confiança de 95%.
 
 ---
 
@@ -2174,40 +531,232 @@ background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/image
 background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
-# .blue[**Modificando Estéticos - color**]
-
-.center[.red[**Gráfico de Pontos<BR/><br/>Tamanho do Corpo x Tamanho total x Espécie**]]
+# .blue[**geom\\\_smooth() <-> stat\_smooth()**]
 
 .pull-left[
-```{r ggplot2 funções scale 16, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_len_sp %>% 
+```{r, eval = FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="60%"}
+p <- tadpoles_clean %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
-             y = body_len,
-             color = species)) + #<< 
-  geom_point()
+             y = body_len)
+
+p +  geom_point() +
+  geom_smooth(se = FALSE) +
+  theme(text = element_text(size = 24))
+```
+
+```
+geom_smooth() using method = 'loess' 
+and formula 'y ~ x' 
+```
+]
+
+
+
+.pull-right[
+```{r, echo = FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+p <- tadpoles_clean %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p +  geom_point() +
+  geom_smooth(se = FALSE) +
+  theme(text = element_text(size = 24))
+```
+]
+
+???
+É possível desabilitar o intervalo de confiança através do argumento `se = FALSE`.
+
+O tipo da reta que será plotada é controlada pelo argumento `method = `.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**geom\\\_smooth() <-> stat\_smooth()**]
+
+.pull-left[
+```{r, eval = FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="60%"}
+p <- tadpoles_clean %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len)
+
+p +  geom_point() +
+  geom_smooth(method = "loess", 
+              se = FALSE) +
+  theme(text = element_text(size = 24))
+```
+
+```
+geom_smooth() using method = 'loess' 
+and formula 'y ~ x' 
+```
+
+]
+
+.pull-right[
+```{r, echo = FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+p <- tadpoles_clean %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p +  geom_point() +
+  geom_smooth(se = FALSE) +
+  theme(text = element_text(size = 24))
+```
+]
+
+???
+O método *default* é o "loess". 
+
+LOESS é um método não paramétrico de regressão não linear.
+
+O método funciona calculando uma média ponderada de y ao passar uma janela móvel ao longo do eixo x.
+
+É uma ferramenta útil na etapa de exploração dos dados, pois facilita a visualização da forma da relação entre as variáveis.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**geom\\\_smooth() <-> stat\_smooth()**]
+
+.pull-left[
+```{r, eval = FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="60%"}
+p <- tadpoles_clean %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p +  geom_point() +
+  geom_smooth(method = "loess", 
+              se = FALSE, span = 0.1) +
+  theme(text = element_text(size = 24))
+```
+
+```
+geom_smooth() using method = 'loess' 
+and formula 'y ~ x' 
 ```
 ]
 
 .pull-right[
-```{r ggplot2 funções scale 17, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>% 
+```{r, echo = FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+p <- tadpoles_clean %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p +  geom_point() +
+  geom_smooth(se = FALSE, span = 0.4) +
+  theme(text = element_text(size = 24))
+```
+]
+
+???
+O grau de suavização da curva é controlado pelo argumento `span = ` o qual define o tamanho da janela.
+
+Quanto menor o valor do argumento `span = ` menos linear será a reta.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**geom\\\_smooth() <-> stat\_smooth()**]
+
+```{r, eval = FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="60%"}
+p <- iris %>%
+  ggplot(aes(x = Sepal.Length, 
+             y = Sepal.Width,
+             color = Species))
+
+p +  geom_point() +
+  geom_smooth(method = "loess", 
+              se = FALSE, span = 0.4)
+```
+
+.pull-left[
+.center[.red[`span = 0.4`]]
+```{r, echo = FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="55%"}
+p <- iris %>%
+  ggplot(aes(x = Sepal.Length, 
+             y = Sepal.Width,
+             color = Species))
+
+p +  geom_point(show.legend = FALSE) +
+  geom_smooth(method = "loess", 
+              se = FALSE, span = 0.4) +
+  theme(text = element_text(size = 24))
+```
+]
+
+.pull-right[
+.center[.red[`span = 1`]]
+```{r, echo = FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="55%"}
+p <- iris %>%
+  ggplot(aes(x = Sepal.Length, 
+             y = Sepal.Width,
+             color = Species))
+
+p +  geom_point(show.legend = FALSE) +
+  geom_smooth(method = "loess", 
+              se = FALSE, span = 1) +
+  theme(text = element_text(size = 24))
+```
+]
+
+???
+Exemplo com outra base de dados para deixar claro o papel do argumento `span = `.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**geom_smooth(method = "lm")**]
+
+.pull-left[
+```{r, eval = FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="60%"}
+p <- tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len)
+
+p +  geom_point() +
+  geom_smooth(method = "lm", 
+              se = FALSE)
+```
+]
+
+.pull-right[
+```{r, echo = FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+p <- tadpoles_clean %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
-             color = species)) +
-  geom_point(size = 3) + 
+             color = species))
+
+p +  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
   theme(text = element_text(size = 24))
 ```
 ]
 
 ???
-Cada geom_*() está associado a estéticos específicos, alguns dos quais são essenciais.
-
-X e Y são estéticos essenciais em geom_point()
-
-alpha, color, fill, shape, size e stroke são opicionais.
+O argumento método também pode definir modelos parmétricos, como "lm", como no exemplo, ou "glm", "rlm" e "gam".
 
 ---
 
@@ -2215,56 +764,44 @@ background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/image
 background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
-# .blue[**Sobrepondo Geométricos - geom_point()**]
-
-.center[.red[**Gráfico de Pontos<BR/><br/>Tamanho do Corpo x Tamanho total x Espécie**]]
-
-```{r gerando médias para algumas sp, echo = FALSE, warning = FALSE}
-tadpoles_media <- tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  group_by(species) %>% 
-  summarise_all(mean, na.rm = TRUE)
-```
+# .blue[**geom_smooth(method = "lm")**]
 
 .pull-left[
-```{r ggplot2 funções scale 18, eval = FALSE, fig.align='center', out.width="70%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
+```{r, eval = FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="60%"}
+p <- tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
-             y = body_len,
-             color = species)) + 
-  geom_point() + 
-  geom_point(data = tadpoles_media, #<<  
-             shape = 15, #<< 
-             size = 8, #<<  
-             stroke = 2) #<< 
+             y = body_len)
+
+p +  geom_point() +
+  geom_smooth(method = "lm",
+              fullrange = TRUE)
 ```
 ]
 
 .pull-right[
-```{r ggplot2 funções scale 19, echo = FALSE, fig.align='center', out.width="70%", warning = FALSE, message=FALSE}
-tadpoles_len_sp %>% 
+```{r, echo = FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+p <- tadpoles_clean %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len,
-             color = species)) +
-  geom_point(size = 3) + 
-  geom_point(data = tadpoles_media, #<<  
-             shape = 15, #<< 
-             size = 12, #<<  
-             stroke = 2) + #<<  
+             color = species))
+
+p +  geom_point() +
+  geom_smooth(method = "lm",
+              fullrange = TRUE) +
   theme(text = element_text(size = 24))
 ```
 ]
 
 ???
-Cada geom_*() está associado a estéticos específicos, alguns dos quais são essenciais.
+Por *default* os modelos são limitados pela variação de cada grupo.
 
-X e Y são estéticos essenciais em geom_point()
+Para métodos paramétricos é possível gerar previsões para além da varaição de cada grupo usando o argumento `fullrange = TRUE`.
 
-alpha, color, fill, shape, size e stroke são opicionais.
+Como esperado, o erro padrão aumenta aumenta conforme a reta se afasta dos dados.
 
 ---
 
@@ -2272,552 +809,10 @@ background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/image
 background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
-# .blue[**Sobrepondo Geométricos - geom_point()**]
+# .blue[**Ligação entre geom\\\_() <-> stat\_()**]
 
-.center[.red[**Gráfico de Pontos<BR/><br/>Tamanho do Corpo x Tamanho total x Espécie**]]
-
-```{r valores do atributo shape, echo = FALSE, warning = FALSE, out.width="40%", fig.align='center'}
-knitr::include_graphics("https://www.datanovia.com/en/wp-content/uploads/dn-tutorials/ggplot2/figures/030-ggplot-point-shapes-r-pch-list-showing-different-point-shapes-in-rstudio-1.png")
-```
-
-???
-Note que os números 21 a 25 não são apenas repetições. Eles permitem controlar a cor da borda e do preenchimento das formas. 
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Sobrepondo Geométricos - geom_point()**]
-
-.center[.red[**Gráfico de Pontos<BR/><br/>Tamanho do Corpo x Tamanho total x Espécie**]]
-
-```{r gerando médias para algumas sp 2, echo = FALSE, warning = FALSE, out.width="70%"}
-tadpoles_media <- tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  group_by(species) %>% 
-  summarise_all(mean, na.rm = TRUE)
-```
-
-.pull-left[
-```{r ggplot2 funções scale 20, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, 
-             y = body_len,
-             color = species)) + 
-  geom_point() + 
-  geom_point(data = tadpoles_media, #<<  
-             shape = 21, #<< 
-             size = 8, #<<  
-             fill = "black", #<<  
-             stroke = 2) #<< 
-```
-]
-
-.pull-right[
-```{r ggplot2 funções scale 21, echo = FALSE, fig.align='center', out.width="70%", warning = FALSE, message=FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, 
-             y = body_len,
-             color = species)) +
-  geom_point(size = 3) + 
-  geom_point(data = tadpoles_media, #<<  
-             shape = 21, #<< 
-             size = 12, #<<  
-             fill = "black", #<<  
-             stroke = 2) + #<<  
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-Com shape = 21 podemos atribuir um preenchimento (fill) diferente do contorno (color).
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Modificando Atributo Geométrico - alpha**]
-
-.center[.red[**Gráfico de Pontos<BR/><br/>Tamanho do Corpo x Tamanho total x Espécie**]]
-
-.pull-left[
-```{r ggplot2 funções scale 22, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, 
-             y = body_len,
-             color = species)) + 
-  geom_point(alpha = 0.5, #<< 
-             show.legend = c(alpha = FALSE)) #<< 
-```
-]
-
-.pull-right[
-```{r ggplot2 funções scale 24, echo = FALSE, fig.align='center', out.width="70%", warning = FALSE, message=FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, 
-             y = body_len,
-             color = species)) +
-  geom_point(alpha = 0.5, #<<
-             size = 3, 
-             show.legend = c(alpha = FALSE)) +   
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-Podemos amenizar o problema de sobreposição dos pontos utilizando o argumento alpha.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Modificando Atributo Geométrico - shape**]
-
-.center[.red[**Gráfico de Pontos<BR/><br/>Tamanho do Corpo x Tamanho total x Espécie**]]
-
-```{r gerando médias para algumas sp 4, echo = FALSE, warning = FALSE}
-tadpoles_media <- tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  group_by(species) %>% 
-  summarise_all(mean)
-```
-
-.pull-left[
-```{r ggplot2 funções scale 25, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, 
-             y = body_len,
-             color = species)) + 
-  geom_point(shape = 1) #<< 
-```
-]
-
-.pull-right[
-```{r ggplot2 funções scale 26, echo = FALSE, fig.align='center', out.width="70%", warning = FALSE, message=FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, 
-             y = body_len,
-             color = species)) +
-  geom_point(shape = 1, #<<
-             size = 3) +   
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-Ou utilizando o atributo shape = a uma forma vazada (ex. shape = 1).
-
-jitter também é um recurso, mas eu prefiro não utiliza-lo em scatter plots
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Mapeamento Estético - scale_*()**]
-
-.center[.red[**Gráfico de Pontos<BR/><br/>Tamanho do Corpo x Tamanho total x Espécie**]]
-
-.pull-left[
-```{r ggplot2 funções scale 27, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, 
-             y = body_len,
-             color = species)) + 
-  geom_point(shape = 1,
-             alpha = 0.5) + #<< 
-  scale_x_continuous("Total length (mm)", #<< 
-                     breaks = seq(0, round(max(tadpoles_len_sp$total_len,   na.rm = TRUE)), 10)) + #<< 
-  scale_y_continuous("Body length (mm)", #<< 
-                     breaks = seq(0, round(max(tadpoles_len_sp$body_len, na.rm = TRUE)), 5)) + #<< 
-    scale_color_discrete("Species", #<<
-                         labels = c("Hylodes \npipilans", "Proceratophrys\nappendiculata", "Scinax \nflavoguttatus")) #<<
-```
-]
-
-.pull-right[
-```{r ggplot2 funções scale 28, echo = FALSE, fig.align='center', out.width="70%", warning = FALSE, message=FALSE}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, 
-             y = body_len,
-             color = species)) + 
-  geom_point(shape = 1,
-             size = 3,
-             alpha = 0.5) + #<< 
-  scale_x_continuous("Total length (mm)", #<< 
-                     breaks = seq(0, round(max(tadpoles_len_sp$total_len,   na.rm = TRUE)), 10)) + #<< 
-  scale_y_continuous("Body length (mm)", #<< 
-                     breaks = seq(0, round(max(tadpoles_len_sp$body_len, na.rm = TRUE)), 5)) + #<< 
-    scale_color_discrete("Species", #<<
-                         labels = c("Hylodes \npipilans", "Proceratophrys\nappendiculata", "Scinax \nflavoguttatus")) + #<<
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 99%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Variação Temporal - geom_line()**]
-
-.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo**]]
-
-.pull-left[
-```{r ggplot2 gráfico de linhas 1, eval = FALSE}
-tadpoles_clean %>%
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = date, species) %>% 
-  group_by(time) %>% 
-  summarize(n = sum(n)) %>% 
-  ggplot(aes(x = time, #<<
-             y = n)) + #<< 
-  geom_line() #<< 
-```
-
-```{r ggplot2 camada geom_line() 1, echo = FALSE, fig.align='center'}
-knitr::include_graphics("https://englelab.gatech.edu/useRguide/images/dataviz/ge_geom.png")
-```
-]
-
-.pull-right[
-```{r ggplot2 gráfico de linhas 2, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_clean %>%
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = date, species) %>% 
-  group_by(time) %>% 
-  summarize(n = sum(n)) %>% 
-  ggplot(aes(x = time, #<<
-             y = n)) + #<< 
-  geom_line() + 
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-Cada geom_*() está associado a estéticos específicos, alguns dos quais são essenciais.
-
-X e Y são estéticos essenciais em geom_line()
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Mapeando Estéticos - color**]
-
-.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo x Espécie**]]
-
-.pull-left[
-```{r ggplot2 gráfico de linhas 3, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_clean %>%
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = date, species) %>% 
-  ggplot(aes(x = time, 
-             y = n,
-             color = species)) +  #<< 
-  geom_line()  
-```
-]
-
-.pull-right[
-```{r ggplot2 gráfico de linhas 4, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_clean %>%
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = date, species) %>% 
-  ggplot(aes(x = time, 
-             y = n,
-             color = species)) +  #<< 
-  geom_line()   + 
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-Cada geom_*() está associado a estéticos específicos, alguns dos quais são essenciais.
-
-X e Y são estéticos essenciais em geom_line()
-
-color, linetype são opicionais.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Mapeando Estéticos - linetype**]
-
-.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo x Espécie**]]
-
-.pull-left[
-```{r ggplot2 gráfico de linhas 5, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_clean %>%
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = date, species) %>% 
-  ggplot(aes(x = time, 
-             y = n,
-             linetype = species)) +  #<< 
-  geom_line()  
-```
-]
-
-.pull-right[
-```{r ggplot2 gráfico de linhas 6, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_clean %>%
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = date, species) %>% 
-  ggplot(aes(x = time, 
-             y = n,
-             linetype = species)) +  #<< 
-  geom_line()   + 
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-color, linetype são opicionais.
-
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Mapeando Estéticos - color e linetype**]
-
-.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo x Espécie**]]
-
-.pull-left[
-```{r ggplot2 gráfico de linhas 7, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_clean %>%
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = date, species) %>% 
-  ggplot(aes(x = time, 
-             y = n,
-             color = species,#<<
-             linetype = species)) +  #<< 
-  geom_line()  
-```
-]
-
-.pull-right[
-```{r ggplot2 gráfico de linhas 8, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_clean %>%
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = date, species) %>% 
-  ggplot(aes(x = time, 
-             y = n,
-             color = species,#<<
-             linetype = species)) +  #<< 
-  geom_line() +
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-color, linetype são opicionais.
-
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Adicionando Camadas - geom_line() + geom_point()**]
-
-.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo x Espécie**]]
-
-.pull-left[
-```{r ggplot2 gráfico de linhas 9, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_clean %>%
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = date, species) %>% 
-  ggplot(aes(x = time, 
-             y = n,
-             color = species,
-             linetype = species)) +   
-  geom_line() +
-  geom_point(aes(shape = species)) #<<
-```
-]
-
-.pull-right[
-```{r ggplot2 gráfico de linhas 10, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_clean %>%
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = date, species) %>% 
-  ggplot(aes(x = time, 
-             y = n,
-             color = species,
-             linetype = species)) +   
-  geom_line() +
-  geom_point(aes(shape = species)) + 
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-Cada geom_*() está associado a estéticos específicos, alguns dos quais são essenciais.
-
-X e Y são estéticos essenciais em geom_line()
-
-color, linetype são opicionais.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Mapeamento Estético - scale_*()**]
-
-.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo x Espécie**]]
-
-.pull-left[
-```{r ggplot2 gráfico de linhas 11, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_clean %>%
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = lubridate::as_date(date), species) %>% #<<
-  ggplot(aes(x = time, 
-             y = n,
-             color = species,
-             linetype = species)) +  
-  geom_line() +
-  geom_point(aes(shape = species)) + 
-  scale_x_date("Time", #<< 
-               date_breaks = "4 months", #<< 
-               date_labels = "%b-%y") + #<< 
-  scale_y_continuous("Number of tadpoles", #<< 
-                     breaks = seq(0, 40, 5)) #<<
-```
-]
-
-.pull-right[
-```{r ggplot2 gráfico de linhas 12, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_clean %>%
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = lubridate::as_date(date), species) %>% #<<
-  ggplot(aes(x = time, 
-             y = n,
-             color = species,
-             linetype = species)) +  
-  geom_line() +
-  geom_point(aes(shape = species)) + 
-  scale_x_date("Time", #<< 
-               date_breaks = "4 months", #<< 
-               date_labels = "%b-%y") + #<< 
-  scale_y_continuous("Number of tadpoles", #<< 
-                     breaks = seq(0, 40, 5)) + #<<
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Mapeamento Estético - scale_*()**]
-
-.center[.red[**Gráfico de Linhas<BR/><br/>Número de Girinos x Tempo x Espécie**]]
-
-.pull-left[
-```{r ggplot2 gráfico de linhas 13, eval = FALSE, fig.align='center', out.width="100%"}
-tadpoles_clean %>%
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = lubridate::as_date(date), species) %>% 
-  ggplot(aes(x = time, 
-             y = n,
-             color = species,
-             linetype = species)) +  
-  geom_line() +
-  geom_point(aes(shape = species)) + 
-  scale_x_date("Time",  
-               date_breaks = "4 months",
-               date_labels = "%b-%y") + 
-  scale_y_continuous("Number of tadpoles", 
-                     breaks = seq(0, 40, 5)) + 
-  scale_color_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + #<<
-  scale_linetype_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + #<<
-  scale_shape_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) #<<
-```
-]
-
-.pull-right[
-```{r ggplot2 gráfico de linhas 14, echo = FALSE, fig.align='center', out.width="70%"}
-tadpoles_clean %>%
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = lubridate::as_date(date), species) %>% 
-  ggplot(aes(x = time, 
-             y = n,
-             color = species,
-             linetype = species)) +  
-  geom_line() +
-  geom_point(aes(shape = species)) + 
-  scale_x_date("Time", 
-               date_breaks = "4 month", 
-               date_labels = "%b-%y") + 
-  scale_y_continuous("Number of tadpoles", 
-                     breaks = seq(0, 40, 5)) + 
-  scale_color_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + 
-  scale_linetype_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
-  scale_shape_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
-  theme(text = element_text(size = 24))
-```
-]
-
-???
-
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Camada de Temas - theme()**]
-
-
-.center[.red[**Controla elementos visuais que não fazem parte dos dados<BR/><br/>Classificados em 3 tipos**]] 
-
-```{r temas 1, echo = FALSE}
-tibble(Tipo = c("texto", "linha", "retângulo"),
-           `Modificado usando` = c("element_text()", "element_line()", "element_rect()")) %>% 
+```{r, echo = FALSE, fig.align='center', out.width="85%"}
+tibble(`stat_()` = c("stat_bin()", "stat_count()", "stat_smooth()"), `geom_()` = c("geom_histogram()", "geom_bar()", "geom_smooth()")) %>% 
   kbl() %>% 
   kable_material_dark("striped", 
                       fixed_thead = list(enabled = T, 
@@ -2825,11 +820,15 @@ tibble(Tipo = c("texto", "linha", "retângulo"),
                       full_width = F, 
                       html_font = "Serif") 
 ```
-  
-  
-???
-A camada theme() controla tudo que não é dado.
 
+???
+Em geral, não é necessário utilizar diretamente essas funções estatísticas. 
+
+Elas trabalham nos bastidores da chamada de funções das camadas geométricas. 
+
+Mas é importante conhecer a relação entre as camadas geométricas e suas respectivas camadas estatísticas. 
+
+Isso facilitará a compreensão de mensagens de erro e o uso das páginas de ajuda se você precisar implementar algum ajuste na camada estatística. 
 
 ---
 
@@ -2837,692 +836,39 @@ background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/image
 background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
-# .blue[**Camada de Temas - theme()**]
-
-```{r alteramndo tema 1, eval = FALSE, fig.align='center', out.width="30%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, y = body_len, color = species)) +
-  geom_point(alpha = 0.5)
-```
-
-```{r alteramndo tema 2, echo = FALSE, fig.align='center', out.width="30%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, y = body_len, color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)", y = "Body length (mm)") +
-  scale_color_discrete("Species",
-                       labels = c(Hp = "Hylodes \npipilans",
-                                  Pa = "Proceratophrys \nappendiculata",
-                                  Sf = "Scinax \nflavoguttatus"))
-```
-
-???
-
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 96%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Elementos de Texto - element_text()**]
+# .blue[**Gráficos com Estatísticas**]
 
 .pull-left[
-```{r alteramndo tema texto 3, echo = FALSE, fig.align='center', out.width= "90%"}
-tadpoles_len_sp %>% 
+```{r, eval = FALSE, warning=FALSE, message=FALSE, fig.align='center', out.width="60%"}
+p <- tadpoles_clean %>%
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, 
-             y = body_len, 
-             color = species)) +
-  geom_point(alpha = 0.5) + 
-  labs(x = "Total length (mm)", 
-       y = "Body length (mm)") +
-  scale_color_discrete("Species") +
-  theme(line = element_blank(),
-        rect = element_blank())
-```
-]
-
-.pull-rigth[
-```
-text
-  axis.title
-    axis.title.x
-      axis.title.x.top
-      axis.title.x.bottom
-    axis.title.y
-      axis.title.y.left
-      axis.title.y.right
-  title
-    legend.title
-    plot.title
-    plot.subtitle
-    plot.cpation
-    plot.tag
-  axis.text
-    axis.text.x
-      axis.text.x.top
-      axis.text.x.botom
-    axis.text.y
-      axis.text.y.left
-      axis.text.y.right
-  legend.text
-  strip.text
-    strip.text.x
-    strip.text.y
-```
-]
-
-???
-Cada argumento permite um controle fino das características textuais do gráfico.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Camada de Temas - theme()**]
-.pull-left[
-```{r alteramndo tema 4, eval = FALSE, fig.align='center'}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, 
-             y = body_len,
-             color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)",
-       y = "Body length (mm)") +
-  scale_color_discrete("Species") +
-  theme(text = element_text(family = "Serif"), #<<
-        axis.title = element_text(size = 24, #<<
-                                  color = "blue")) #<<
-```
-]
-
-.pull-right[
-```{r alteramndo tema 5, echo = FALSE, fig.align='center', out.width="90%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, y = body_len, color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)", y = "Body length (mm)") +
-  scale_color_discrete("Species",
-                       labels = c(Hp = "Hylodes \npipilans",
-                                  Pa = "Proceratophrys \nappendiculata",
-                                  Sf = "Scinax \nflavoguttatus")) +
-  theme(text = element_text(family = "Serif"), 
-        axis.title = element_text(size = 24,
-                                  color = "blue"))
-```
-]
-
-???
-
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Camada de Temas - theme()**]
-.pull-left[
-```{r alteramndo tema 6, eval = FALSE, fig.align='center'}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, 
-             y = body_len,
-             color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)",
-       y = "Body length (mm)") +
-  scale_color_discrete("Species") +
-  theme(text = element_text(family = "Serif"), 
-        axis.title = element_text(size = 24, 
-                                  color = "blue"),
-        axis.text = element_text(size = 20)) #<<
-```
-]
-
-.pull-right[
-```{r alteramndo tema 7, echo = FALSE, fig.align='center', out.width="90%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, y = body_len, color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)", y = "Body length (mm)") +
-  scale_color_discrete("Species",
-                       labels = c(Hp = "Hylodes \npipilans",
-                                  Pa = "Proceratophrys \nappendiculata",
-                                  Sf = "Scinax \nflavoguttatus")) +
-  theme(text = element_text(family = "Serif"), 
-        axis.title = element_text(size = 24,
-                                  color = "blue"),
-        axis.text = element_text(size = 20))
-```
-]
-
-???
-
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Camada de Temas - theme()**]
-.pull-left[
-```{r alteramndo tema 8, eval = FALSE, fig.align='center'}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, 
-             y = body_len,
-             color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)",
-       y = "Body length (mm)") +
-  scale_color_discrete("Species") +
-  theme(text = element_text(family = "Serif"), 
-        axis.title = element_text(size = 24, 
-                                  color = "blue"),
-        axis.text = element_text(size = 20), 
-        legend.title = element_text(size = 24, #<<
-                                    color = "blue"),
-        legend.text = element_text(size = 20, 
-                                   face = "italic")) #<<
-```
-]
-
-.pull-right[
-```{r alteramndo tema 9, echo = FALSE, fig.align='center', out.width="90%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, y = body_len, color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)", y = "Body length (mm)") +
-  scale_color_discrete("Species",
-                       labels = c(Hp = "Hylodes \npipilans",
-                                  Pa = "Proceratophrys \nappendiculata",
-                                  Sf = "Scinax \nflavoguttatus")) +
-  theme(text = element_text(family = "Serif"), #<<
-        axis.title = element_text(size = 24,
-                                  color = "blue"),
-        axis.text = element_text(size = 20), 
-        legend.title = element_text(size = 24, #<<
-                                    color = "blue"),
-        legend.text = element_text(size = 20, #<<
-                                   face = "italic")) #<<
-```
-]
-
-???
-
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Elementos de Linhas - element_line()**]
-
-.pull-left[
-```{r alterando tema linha 1, echo = FALSE, fig.align='center', out.width= "90%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, 
-             y = body_len, 
-             color = species)) +
-  geom_point(alpha = 0.5) + 
-  labs(x = "Total length (mm)", 
-       y = "Body length (mm)") +
-  scale_color_discrete("Species") +
-  theme(text = element_blank(),
-        rect = element_blank(),
-        line = element_line(color = "blue"),
-        panel.grid.major = element_line(colour = "blue"),
-        panel.grid.minor = element_line(color = "light grey"),
-        axis.line.x.top = element_line(color = "blue", ),
-        axis.line.x.bottom = element_line(colour = "blue"),
-        axis.line.y.right = element_line(colour = "blue"),
-        axis.line.y.left = element_line(colour = "blue"))
-```
-]
-
-.pull-rigth[
-```
-line
-  axis.ticks
-    axis.ticks.x
-      axis.ticks.x.top
-      axis.ticks.x.bottom
-    axis.ticks.y
-      axis.ticks.y.left
-      axis.ticks.y.right
-  axis.line
-    axis.line.x
-      axis.line.x.top
-      axis.line.x.botom
-    axis.line.y
-      axis.line.y.left
-      axis.line.y.right
-  panel.grid
-    panel.grid.major
-      panel.grid.major.x
-      panel.grid.major.y
-    panel.grid.minor
-      panel.grid.minor.x
-      panel.grid.minor.y
-```
-]
-
-???
-Cada argumento permite um controle fino das características textuais do gráfico.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Camada de Temas - theme()**]
-.pull-left[
-```{r alteramndo tema linha 2, eval = FALSE, fig.align='center'}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, y = body_len, color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)", y = "Body length (mm)") +
-  scale_color_discrete("Species") +
-  theme(axis.line = (element_line())) #<<
-
-```
-]
-
-.pull-right[
-```{r alteramndo tema linha 3, echo = FALSE, fig.align='center', out.width="90%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, y = body_len, color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)", y = "Body length (mm)") +
-  scale_color_discrete("Species",
-                       labels = c(Hp = "Hylodes \npipilans",
-                                  Pa = "Proceratophrys \nappendiculata",
-                                  Sf = "Scinax \nflavoguttatus")) +
-  theme(text = element_text(family = "Serif"), #<<
-        axis.title = element_text(size = 24,
-                                  color = "blue"),
-        axis.text = element_text(size = 20), 
-        legend.title = element_text("Species", #<<
-                                    size = 24, #<<
-                                    color = "blue"),
-        legend.text = element_text(size = 20,
-                                   face = "italic"),
-        axis.line = element_line())
-  #<<
-
-```
-]
-
-???
-
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Camada de Temas - theme()**]
-.pull-left[
-```{r alterando tema linha 4, eval = FALSE, fig.align='center'}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, y = body_len, color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)", y = "Body length (mm)") +
-  scale_color_discrete("Species") +
-  theme(axis.line = (element_line()),
-        panel.grid = element_blank()) #<<
-```
-]
-
-.pull-right[
-```{r alteramndo tema linha 5, echo = FALSE, fig.align='center', out.width="90%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, y = body_len, color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)", y = "Body length (mm)") +
-  scale_color_discrete("Species",
-                       labels = c(Hp = "Hylodes \npipilans",
-                                  Pa = "Proceratophrys \nappendiculata",
-                                  Sf = "Scinax \nflavoguttatus")) +
-  theme(text = element_text(family = "Serif"), #<<
-        axis.title = element_text(size = 24,
-                                  color = "blue"),
-        axis.text = element_text(size = 20), 
-        legend.title = element_text("Species", #<<
-                                    size = 24, #<<
-                                    color = "blue"),
-        legend.text = element_text(size = 20,
-                                   face = "italic"),
-        axis.line = element_line(),
-        panel.grid = element_blank())
-```
-]
-
-???
-Agora, o que resta de parâmetros não relacionados aos dados são apenas retângulos.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Elementos de Retângulos - element_rect()**]
-
-.pull-left[
-```{r alterando tema retângulos 1, echo = FALSE, fig.align='center', out.width= "90%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, 
-             y = body_len, 
-             color = species)) +
-  geom_point(alpha = 0.5) + 
-  labs(x = "Total length (mm)", 
-       y = "Body length (mm)") +
-  scale_color_discrete("Species") +
-  theme(text = element_blank(),
-        line = element_blank(),
-        plot.background = element_rect(fill = "light blue"),
-        panel.background = element_rect(fill = "blue"),
-        legend.background = element_rect(fill = "blue"),
-        legend.key = element_rect(fill = "light blue"))
-```
-]
-
-.pull-rigth[
-```
-rect
-  legend.background
-  legend.key
-  legend.box.background
-  panel.background
-  panel.border
-  plot.background
-  strip.background
-    strip.background.x
-    strip.background.y
-```
-]
-
-???
-Cada argumento permite um controle fino das características textuais do gráfico.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Camada de Temas - theme()**]
-.pull-left[
-```{r alteramndo tema retangulo 2, eval = FALSE, fig.align='center'}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, y = body_len, color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)", y = "Body length (mm)") +
-  scale_color_discrete("Species") +
-  theme(panel.background = element_blank()) #<<
-
-```
-]
-
-.pull-right[
-```{r alteramndo tema retangulo 3, echo = FALSE, fig.align='center', out.width="90%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, y = body_len, color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)", y = "Body length (mm)") +
-  scale_color_discrete("Species",
-                       labels = c(Hp = "Hylodes \npipilans",
-                                  Pa = "Proceratophrys \nappendiculata",
-                                  Sf = "Scinax \nflavoguttatus")) +
-  theme(text = element_text(family = "Serif"), #<<
-        axis.title = element_text(size = 24,
-                                  color = "blue"),
-        axis.text = element_text(size = 20), 
-        legend.title = element_text("Species", #<<
-                                    size = 24, #<<
-                                    color = "blue"),
-        legend.text = element_text(size = 20,
-                                   face = "italic"),
-        axis.line = element_line(),
-        panel.grid = element_blank(),
-        panel.background = element_blank())
-```
-]
-
-???
-
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Camada de Temas - theme()**]
-.pull-left[
-```{r alterando tema retangulo 4, eval = FALSE, fig.align='center'}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, y = body_len, color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)", y = "Body length (mm)") +
-  scale_color_discrete("Species") +
-  theme(panel.background = element_blank(),
-        legend.key = element_blank()) #<<
-```
-]
-
-.pull-right[
-```{r alteramndo tema retangulo 5, echo = FALSE, fig.align='center', out.width="90%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, y = body_len, color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)", y = "Body length (mm)") +
-  scale_color_discrete("Species",
-                       labels = c(Hp = "Hylodes \npipilans",
-                                  Pa = "Proceratophrys \nappendiculata",
-                                  Sf = "Scinax \nflavoguttatus")) +
-  theme(text = element_text(family = "Serif"), #<<
-        axis.title = element_text(size = 24,
-                                  color = "blue"),
-        axis.text = element_text(size = 20), 
-        legend.title = element_text("Species", #<<
-                                    size = 24, #<<
-                                    color = "blue"),
-        legend.text = element_text(size = 20,
-                                   face = "italic"),
-        axis.line = element_line(),
-        panel.grid = element_blank(),
-        panel.background = element_blank(),
-        legend.key = element_blank())
-```
-]
-
-???
-Agora, o que resta de parâmetros não relacionados aos dados são apenas retângulos.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Desativando elementos - element_blank()**]
-.pull-left[
-```{r desativando elementos 1, eval = FALSE, fig.align='center'}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, y = body_len, color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)", y = "Body length (mm)") +
-  scale_color_discrete("Species") +
-  theme(line = element_blank(), #<<
-        rect = element_blank(), #<<
-        text = element_blank()) #<<
-```
-]
-
-.pull-right[
-```{r desativando elementos 2, echo = FALSE, fig.align='center', out.width="90%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, y = body_len, color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)", y = "Body length (mm)") +
-  scale_color_discrete("Species") +
-  theme(line = element_blank(), #<<
-        rect = element_blank(), #<<
-        text = element_blank()) #<<
-```
-]
-
-???
-Agora, o que resta de parâmetros não relacionados aos dados são apenas retângulos.
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 98.5%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Salvando e Reutilizando Camada de Temas**]
-
-```{r salvando e reutiliznaod tema 1, eval = TRUE, fig.align='center'}
-bd_tl <- tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, y = body_len, color = species)) +
-  geom_point(alpha = 0.5) +
-  labs(x = "Total length (mm)", y = "Body length (mm)") +
-  scale_color_discrete("Species",
-                       labels = c(Hp = "Hylodes \npipilans",
-                                  Pa = "Proceratophrys \nappendiculata",
-                                  Sf = "Scinax \nflavoguttatus"))
-meu_tema <- theme(text = element_text(family = "Serif"), 
-        axis.title = element_text(size = 24,
-                                  color = "blue"),
-        axis.text = element_text(size = 20), 
-        legend.title = element_text("Species", 
-                                    size = 24, 
-                                    color = "blue"),
-        legend.text = element_text(size = 20,
-                                   face = "italic"),
-        axis.line = element_line(),
-        panel.grid = element_blank(),
-        panel.background = element_blank(),
-        legend.key = element_blank())
-```
-
-???
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Salvando e Reutilizando Camada de Temas**]
-
-
-```{r salvando e reutiliznaod tema 2, echo = TRUE, fig.align='center', out.width="35%"}
-bd_tl +
-  meu_tema #<<
-```
-
-
-???
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Reutilizando Camada de Temas**]
-.pull-left[
-```{r reutilizando tema 1, eval = FALSE, fig.align='center'}
-tadpoles_clean %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
   drop_na() %>% 
   ggplot(aes(x = species, 
-             fill = stream)) +
-  geom_bar(color = "black", 
-           position = "dodge",
-           width = 0.7) +
-  scale_x_discrete("Species") + 
-  scale_y_continuous("Number of tadpoles",
-                     breaks = seq(0, 175, 25)) +
-  scale_color_discrete("Species") +
-   meu_tema #<<
+             y = body_len))
+
+p + geom_jitter(width = 0.25, #<<
+              seed = 136, 
+              alpha = 0.3)
 ```
 ]
 
 .pull-right[
-```{r reutilizando tema 2, echo = FALSE, fig.align='center', out.width="90%"}
-tadpoles_clean %>% 
+```{r, echo = FALSE, warning=FALSE, message=FALSE, fig.align='center'}
+p <- tadpoles_clean %>%
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  select(species, stream) %>% 
   drop_na() %>% 
   ggplot(aes(x = species, 
-             fill = stream)) +
-  geom_bar(color = "black", 
-           position = "dodge",
-           width = 0.7) +
-  scale_x_discrete("Species") + 
-  scale_y_continuous("Number of tadpoles",
-                     breaks = seq(0, 175, 25)) +
-  scale_color_discrete("Species") +
-  meu_tema 
+             y = body_len))
+
+p + geom_jitter(width = 0.25, #<<
+              seed = 136, 
+              alpha = 0.3) +
+  theme(text = element_text(size = 24))
 ```
 ]
 
 ???
+Outra forma de representar esses dados visualmente é calcular e apresentar a média e o desvio padrão, ou o intervalo de confiança de 95%.
 
 ---
 
@@ -3530,217 +876,39 @@ background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/image
 background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
-# .blue[**Reutilizando Camada de Temas**]
-.pull-left[
-```{r reutilizando tema 3, eval = FALSE, fig.align='center'}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len, 
-             y = ..density.., 
-             fill = species)) +   
-  geom_histogram(binwidth = 1,
-                 center = 0.5, 
-                 alpha = 0.5) +
-  scale_x_continuous("Species") + 
-  scale_y_continuous("Relative frequency") + 
-  scale_fill_discrete("Species",
-                       labels = c("Hylodes \npipilans",
-                                  "Proceratophrys\nappendiculata",
-                                  "Scinax \nflavoguttatus"))+
-   meu_tema #<<
-```
-]
+# .blue[**Gráficos com Estatísticas - geom_pointrange()**]
 
-.pull-right[
-```{r reutilizando tema 4, echo = FALSE, fig.align='center', out.width="90%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>%
-  drop_na() %>% 
-  ggplot(aes(x = body_len, 
-             y = ..density.., 
-             fill = species)) +   
-  geom_histogram(binwidth = 1,
-                 center = 0.5, 
-                 alpha = 0.5) +
-  scale_x_continuous("Species") + 
-  scale_y_continuous("Relative frequency") + 
-  scale_fill_discrete("Species",
-                       labels = c("Hylodes \npipilans",
-                                  "Proceratophrys\nappendiculata",
-                                  "Scinax \nflavoguttatus")) +
-   meu_tema #<< 
-```
-]
-
-???
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Reutilizando Camada de Temas**]
-.pull-left[
-```{r reutilizando tema 5, eval = FALSE, fig.align='center'}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species)) +
-  geom_point(shape = 0,
-             position = 
-               position_jitter(0.25,
-                               seed = 136)) +
-  scale_x_discrete("") + 
-  scale_y_continuous("Body Length (mm)",
-                     limits = c(0, 30),
-                     breaks = seq(0, 30, 5)) +
-  scale_color_discrete("Species",
-                       labels = c("Hylodes \npipilans", 
-                                  "Proceratophrys \nappendiculata", 
-                                  "Scinax \nflavoguttatus")) +
-  meu_tema #<<
-```
-]
-
-.pull-right[
-```{r reutilizando tema 6, echo = FALSE, fig.align='center', out.width="90%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = 0, 
-             y = body_len, 
-             color = species)) +
-  geom_point(shape = 0,
-             position = 
-               position_jitter(0.25,
-                               seed = 136)) +
-  scale_x_discrete("") + 
-  scale_y_continuous("Body Length (mm)",
-                     limits = c(0, 30),
-                     breaks = seq(0, 30, 5)) +
-  scale_color_discrete("Species",
-                       labels = c("Hylodes \npipilans", 
-                                  "Proceratophrys \nappendiculata", 
-                                  "Scinax \nflavoguttatus")) +
-  meu_tema
-
-```
-]
-
-???
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Reutilizando Camada de Temas**]
-.pull-left[
-```{r reutilizando tema 7, eval = FALSE, fig.align='center'}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, 
-             y = body_len,
-             color = species)) + 
-  geom_point(shape = 1,
-             alpha = 0.5) +
-  scale_x_continuous("Total length (mm)",
-                     breaks = seq(0, round(max(tadpoles_len_sp$total_len,   na.rm = TRUE)), 10)) +
-  scale_y_continuous("Body length (mm)",
-                     breaks = seq(0, round(max(tadpoles_len_sp$body_len, na.rm = TRUE)), 5)) +
-  scale_color_discrete("Species",
-                       labels = c("Hylodes \npipilans",
-                                  "Proceratophrys\nappendiculata",
-                                  "Scinax \nflavoguttatus")) +
-   meu_tema #<<
-```
-]
-
-.pull-right[
-```{r reutilizando tema 8, echo = FALSE, fig.align='center', out.width="90%"}
-tadpoles_len_sp %>% 
-  filter(species %in% c("Hp", "Pb", "Sa")) %>% 
-  drop_na() %>% 
-  ggplot(aes(x = total_len, 
-             y = body_len,
-             color = species)) + 
-  geom_point(shape = 1,
-             alpha = 0.5) +
-  scale_x_continuous("Total length (mm)",
-                     breaks = seq(0, round(max(tadpoles_len_sp$total_len,   na.rm = TRUE)), 10)) +
-  scale_y_continuous("Body length (mm)",
-                     breaks = seq(0, round(max(tadpoles_len_sp$body_len, na.rm = TRUE)), 5)) +
-  scale_color_discrete("Species",
-                       labels = c("Hylodes \npipilans",
-                                  "Proceratophrys\nappendiculata",
-                                  "Scinax \nflavoguttatus")) +
-   meu_tema #<<
-
-```
-]
-
-???
-
----
-
-background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
-background-position: 0% 100%, 100% 0%
-background-size: 15%, 10%
-
-# .blue[**Reutilizando Camada de Temas**]
-.pull-left[
-```{r reutilizando tema 9, eval = FALSE, fig.align='center'}
+.center[.red[**Calcular na "mão" **]]
+```{r, eval = FALSE}
 tadpoles_clean %>%
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = lubridate::as_date(date), species) %>% 
-  ggplot(aes(x = time, 
-             y = n,
-             color = species,
-             linetype = species)) +  
-  geom_line() +
-  geom_point(aes(shape = species)) + 
-  scale_x_date("Time", 
-               date_breaks = "1 month", 
-               date_labels = "%b-%y") + 
-  scale_y_continuous("Number of tadpoles", 
-                     breaks = seq(0, 40, 5)) + 
-  scale_color_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + 
-  scale_linetype_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
-  scale_shape_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
-  meu_tema #<<
+  drop_na() %>% 
+  group_by(species) %>% 
+  summarise(media = mean(body_len),
+            `+sd` = media + sd(body_len),
+            `-sd` = media - sd(body_len))
 ```
-]
 
-.pull-right[
-```{r reutilizando tema 10, echo = FALSE, fig.align='center', out.width="90%"}
+```{r, echo = FALSE}
 tadpoles_clean %>%
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
-  count(time = lubridate::as_date(date), species) %>% 
-  ggplot(aes(x = time, 
-             y = n,
-             color = species,
-             linetype = species)) +  
-  geom_line() +
-  geom_point(aes(shape = species)) + 
-  scale_x_date("Time", 
-               date_breaks = "1 month", 
-               date_labels = "%b-%y") + 
-  scale_y_continuous("Number of tadpoles", 
-                     breaks = seq(0, 40, 5)) + 
-  scale_color_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) + 
-  scale_linetype_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
-  scale_shape_discrete("Species", labels = c("Hylodes \npipilans", "Proceratophrys \nappendiculata", "Scinax \nflavoguttatus")) +
-  meu_tema
+  drop_na() %>% 
+  group_by(species) %>% 
+  summarise(media = mean(body_len),
+            `+sd` = media + sd(body_len),
+            `-sd` = media - sd(body_len)) %>% 
+  kbl() %>% 
+  kable_material_dark("striped", 
+                      fixed_thead = list(enabled = T, 
+                                   background = "purple"),
+                      full_width = F, 
+                      html_font = "Serif") 
+  
 ```
-]
+
 
 ???
+Podemos calcular as estatísticas na mão para então plotar no gráfico usando a camada geométrica `geom_pointrange()`.
 
 ---
 
@@ -3748,23 +916,42 @@ background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/image
 background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
-# .blue[**Camada de Temas Pré-Construídas**]
+# .blue[**Gráficos com Estatísticas - geom_pointrange()**]
+
+.center[.red[**Calcular na "mão" **]]
 .pull-left[
-```{r built-in themes 1, eval = TRUE, fig.align='center', out.width="70%"}
-bd_tl +
-  theme_classic() #<< 
+```{r, eval = FALSE}
+tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  group_by(species) %>% 
+  summarise(media = mean(body_len),
+            `+sd` = media + sd(body_len),
+            `-sd` = media - sd(body_len)) %>% 
+  ggplot(aes(y = media, x = species)) +
+  geom_pointrange(aes(ymin = `-sd`,
+                      ymax = `+sd`))
 ```
 ]
 
 .pull-right[
-```{r built-in themes 2, echo = TRUE, fig.align='center', out.width="70%"}
-bd_tl +
-  theme_classic(base_size = 22, #<< 
-                base_family = "serif") #<<  
+```{r, echo = FALSE, out.width="95%"}
+tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  group_by(species) %>% 
+  summarise(media = mean(body_len),
+            `+sd` = media + sd(body_len),
+            `-sd` = media - sd(body_len)) %>% 
+  ggplot(aes(y = media, x = species)) +
+  geom_pointrange(aes(ymin = `-sd`, ymax = `+sd`)) +
+  theme(text = element_text(size = 24))
+  
 ```
 ]
 
 ???
+Podemos calcular as estatísticas na "mão" para então plotar no gráfico usando a camada geométrica `geom_pointrange()`.
 
 ---
 
@@ -3772,22 +959,48 @@ background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/image
 background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
-# .blue[**Camada de Temas Pré-Construídas**]
+# .blue[**Gráficos com Estatísticas**]
+
+.center[.red[**`stat_summary()`**]]
+
 .pull-left[
-```{r built-in themes 3, eval = TRUE, fig.align='center', out.width="70%"}
-bd_tl +
-  theme_grey() #<< 
+```{r}
+library(Hmisc)
+smean.sdl(tadpoles_clean$body_len, 
+          mult = 1, na.rm = TRUE)
 ```
+
+```{r, eval = FALSE}
+p <- tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             y = body_len))
+
+p + stat_summary(fun.data = mean_sdl,
+                 fun.args = list(mult = 1))
+```
+
+- Utiliza .red[`geom_pointrange()`] por *default*
 ]
 
 .pull-right[
-```{r built-in themes 4, echo = TRUE, fig.align='center', out.width="70%"}
-bd_tl +
-  theme_dark() #<<  
+```{r, echo = FALSE, out.width="95%"}
+p <- tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             y = body_len))
+
+p + stat_summary(fun.data = mean_sdl,
+                 fun.args = list(mult = 1)) + 
+  theme(text = element_text(size = 24))
+  
 ```
 ]
 
 ???
+Ou podemos utilizarcalcular as estatísticas desejadas dentro da função `stat_summary()`. Neste exemplo, usamos a função `mean_sdl()`do pacote `Hmisc` para gerar as estatísticas dentro da função `stat_summary()`. O argumento `mult = 1` é a opção para 1 desvio padrão.
 
 ---
 
@@ -3795,23 +1008,50 @@ background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/image
 background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
-# .blue[**Camada de Temas Pré-Construídas - ggthemes**]
+# .blue[**Gráficos com Estatísticas**]
+
+.center[.red[**`stat_summary()`**]]
+
 .pull-left[
-```{r built-in themes 5, eval = TRUE, fig.align='center', out.width="70%"}
-library(ggthemes)
-bd_tl +
-  theme_tufte() #<< 
+```{r, eval = FALSE}
+p <- tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             y = body_len))
+
+p + stat_summary(fun = mean,
+                 geom = "point") +
+  stat_summary(fun.data = mean_sdl,
+                 fun.args = list(mult = 1),
+               geom = "errorbar",
+               width = 0.1)
 ```
 ]
 
 .pull-right[
-```{r built-in themes 6, echo = TRUE, fig.align='center', out.width="70%"}
-bd_tl +
-  theme_economist() #<<  
+```{r, echo = FALSE, out.width="95%"}
+p <- tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             y = body_len))
+
+p + stat_summary(fun = mean,
+                 geom = "point") +
+  stat_summary(fun.data = mean_sdl,
+                 fun.args = list(mult = 1),
+               geom = "errorbar",
+               width = 0.1) + 
+  theme(text = element_text(size = 24))
+  
 ```
 ]
 
 ???
+Para obter barras de erro basta adicionar uma camada estatística nova, calcular a média e usar o argumento `geom = "point"`.
+
+A segunda camada usar o argumento `geom = "errorbar"` e o argumento `width = ` para determminar a largura da barra.
 
 ---
 
@@ -3819,22 +1059,80 @@ background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/image
 background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
-# .blue[**Camada de Temas Pré-Construídas - ggthemes**]
+# .blue[**Gráficos com Estatísticas**]
+
+.center[.red[**`stat_summary()`**]]
+
 .pull-left[
-```{r built-in themes 7, eval = TRUE, fig.align='center', out.width="70%"}
-bd_tl +
-  theme_excel() #<< 
+```{r, eval = FALSE}
+p <- tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             y = body_len))
+
+p + stat_summary(fun = mean,
+                 geom = "point") +
+  stat_summary(fun.data = mean_sdl,
+                 fun.args = list(mult = 1),
+               geom = "errorbar",
+               width = 0.1)
 ```
 ]
 
 .pull-right[
-```{r built-in themes 8, echo = TRUE, fig.align='center', out.width="70%"}
-bd_tl +
-  theme_gdocs() #<<  
+```{r, echo = FALSE, out.width="95%"}
+p <- tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = species, 
+             y = body_len))
+
+p + stat_summary(fun = mean,
+                 geom = "point") +
+  stat_summary(fun.data = mean_cl_normal,
+               geom = "errorbar",
+               width = 0.1) + 
+  theme(text = element_text(size = 24))
+  
 ```
 ]
 
 ???
+Para obter intervalos de confiança de 95% calculados usando a distribuição-t.
+
+---
+
+background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/imagens/AnalisaR_teste1.png?raw=true"), url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.libraries.rutgers.edu%2Fsites%2Fdefault%2Ffiles%2Fstyles%2Fresize_to_300px_width%2Fpublic%2Fevents%2F2020%2F01%2Fggplot2_0.png%3Fitok%3DMe9kSRI-&f=1&nofb=1")
+background-position: 0% 100%, 100% 0%
+background-size: 15%, 10%
+
+# .blue[**Verificando Distribuições**]
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE, fig.align='center', out.width = "50%"}
+p <- tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf"), 
+         total_len < 70,
+         body_len < 25) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p + geom_point() + 
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  theme(text = element_text(size = 24))
+  
+```
+
+???
+O gráfico mostra um modelo de regressão linear ajustado aos dados de tamanho total e corporal de girinos.
+
+Umas das premissas da regressão linear é a normalidade dos resíduos do modelo. 
+
+Isto também implica na normalidade da variável dependente. 
+
+Uma forma de acessar a normalidade de uma variável é a partir de inspeções gráficas.
+
 
 
 ---
@@ -3843,51 +1141,54 @@ background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/image
 background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
-# .blue[**Alterando Temas Existentes - theme_update()**]
-.pull-left[
-```{r alterando temas existentes 1, eval = FALSE, fig.align='center'}
-original <- theme_update(
-  text = element_text(family = "Serif"), 
-  axis.title = element_text(size = 24,
-                            color = "blue"),
-  axis.text = element_text(size = 20), 
-  legend.title = element_text("Species", 
-                              size = 24, 
-                              color = "blue"),
-  legend.text = element_text(size = 20,
-                             face = "italic"),
-  axis.line = element_line(),
-  panel.grid = element_blank(),
-  panel.background = element_blank(),
-  legend.key = element_blank())
+# .blue[**Verificando Distribuições**]
 
-bd_tl 
+.center[.red[**`stat_function()`**]]
+
+.pull-left[
+```{r, eval = FALSE}
+p <- tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf"), 
+         total_len < 70,
+         body_len < 25) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = body_len))
+
+p + geom_histogram(aes(y = ..density..)) +
+  geom_rug() +
+  stat_function(fun = dnorm, color = "red",
+                args = list(mean = mean(tadpoles_clean$body_len[tadpoles_clean$body_len < 25], na.rm = TRUE),
+                            sd = sd(tadpoles_clean$body_len[tadpoles_clean$body_len < 25], na.rm = TRUE)))
 ```
 ]
 
 .pull-right[
-```{r alterando temas existentes 2, echo = FALSE, fig.align='center', out.width="90%"}
-original <- theme_update(text = element_text(family = "Serif"), 
-                         axis.title = element_text(size = 24,
-                                                   color = "blue"),
-                         axis.text = element_text(size = 20), 
-                         legend.title = element_text("Species", 
-                                                     size = 24, 
-                                                     color = "blue"),
-                         legend.text = element_text(size = 20,
-                                                    face = "italic"),
-                         axis.line = element_line(),
-                         panel.grid = element_blank(),
-                         panel.background = element_blank(),
-                         legend.key = element_blank())
+```{r, echo = FALSE, out.width="95%", warning=FALSE, message=FALSE}
+p <- tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf"), 
+         total_len < 70,
+         body_len < 25) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = body_len))
 
-bd_tl
+p + geom_histogram(aes(y = ..density..)) +
+  geom_rug() +
+  stat_function(fun = dnorm, color = "red",
+                args = list(mean = mean(tadpoles_clean$body_len[tadpoles_clean$body_len < 25], na.rm = TRUE),
+                            sd = sd(tadpoles_clean$body_len[tadpoles_clean$body_len < 25], na.rm = TRUE))) + 
+  theme(text = element_text(size = 24))
+  
 ```
 ]
 
 ???
-Este comando atualiza o tema default e salva no objeto `original`
-Agora todos os plots terão o mesmo tema automaticamente
+Usando `stat_function()` é possível especificar qualquer função e pruduzir uma distribuição de probabilidades teórica como uma linha. 
+
+Aqui uma distribuição normal foi produzida utilizando `dnorm()` e seus argumentos, média e desvio padrão, foram adicionados como uma lista para centra-la com base na distribuição empírica dos dados.
+
+Isso permite comparar quão semelhante a dsitrbuição dos dados empíricos é a uma distribuição normal que possui os mesmos parâmetros, ou seja, a mesma média e desvio padrão.
+
+A camada `geom_rug()` serve para mostrar os dados reais que foram encaixotados pelo histograma.
 
 ---
 
@@ -3895,22 +1196,43 @@ background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/image
 background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
-# .blue[**Retornar ao Tema original - theme_set()**]
+# .blue[**Verificando Distribuições**]
+
+.center[.red[**`stat_qq()` + `geom_qq_line()`**]]
+
 .pull-left[
-```{r retornar tema original 1, eval = TRUE, fig.align='center', out.width="70%"}
-theme_set(theme_grey()) 
-bd_tl
+```{r, eval = FALSE}
+p <- tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf"), 
+         total_len < 70,
+         body_len < 25) %>% 
+  drop_na() %>% 
+  ggplot(aes(sample = body_len))
+
+p + stat_qq() +
+  geom_qq_line(color = "red")
 ```
 ]
 
 .pull-right[
-```{r retornar tema original 2, eval = TRUE, fig.align='center', out.width="70%"}
-theme_set(theme_classic(base_size = 24,
-                        base_family = "serif")) 
-bd_tl
+```{r, echo = FALSE, out.width="95%", warning=FALSE, message=FALSE}
+p <- tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf"), 
+         total_len < 70,
+         body_len < 25) %>% 
+  drop_na() %>% 
+  ggplot(aes(sample = body_len))
+
+p + stat_qq() +
+  geom_qq_line(color = "red") + 
+  theme(text = element_text(size = 24))
+  
 ```
 ]
 
 ???
-Para retornar ao defaul original `theme_set(theme_grey())`
+QQ-plots também são úteis para comparar os dados a uma distribuição.
 
+QQ-plots plotam a amostra contra um distribuição teórica, como uma normal, e desenham uma linha que intercepta os dados nos primeiro e terceiro quantis. 
+
+Quantos mais os dados se alinham a essa linha, mais próximos eles estão da distribuição teórica.
