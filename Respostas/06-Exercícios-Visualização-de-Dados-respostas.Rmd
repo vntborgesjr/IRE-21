@@ -33,7 +33,7 @@ Sua primeira tarefa é visualizar o número de pinguins amostrado para cada esp�
 - atribua a variável `species` ao estético `x`;
 - adicione a camada geométrica `geom_bar()` para gerar o gráfico de barras.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   ggplot(aes(x = species)) +
   geom_bar()
@@ -48,7 +48,7 @@ Uma das vantagens do `ggplot2` é a facilidade em adicionar novas informações 
 - Selecione as variáveis (colunas) `species` e `sex` utilizando a função select;
 - Atribua a variável `sex` ao estético `fill` para gerar barras empilhadas de diferentes cores que indicam o número de pinguins amostrados para cada sexo e para cada espécie.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, sex) %>% 
   ggplot(aes(x = species, fill = sex)) +
@@ -57,7 +57,7 @@ penguins %>%
 
 - Note que uma variável indesejada, `NA`, foi adicionada ao seu gráfico. Resolva esse problema aplicando a função `drop_na()` logo após a seleção das variáveis.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, sex) %>% 
   drop_na() %>% 
@@ -69,7 +69,7 @@ Outra forma de visualizar o número de pinguins machos e fêmeas amostrados para
 
 - atribua a posição `"dodge"` ao atributo geométrico `position = ` dentro da camada geométrica `geom_bar()`.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, sex) %>% 
   drop_na() %>% 
@@ -81,7 +81,7 @@ Outra característica do seu gráfico que pode ser alterada a partir de um atrib
 
 - adicione bordas pretas as barras do seu gráfico atribuindo a cor `"black"` ao atributo geométrico `color = ` dentro da função `geom_bar()`.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, sex) %>% 
   drop_na() %>% 
@@ -96,7 +96,7 @@ O pacote `ggplot2` gera uma versão customizada de gráfico, mas permite um cont
 
 - Seu gráfico não possui eixos. Adicione uma linha horizontal para representar o eixo x utilizando a função a camada geométrica `geom_hline(yintercept = 0)`.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, sex) %>% 
   drop_na() %>% 
@@ -108,7 +108,7 @@ penguins %>%
 
 - Agora que você adicionou a linha do eixo x, você pode corrigir o título desse eixo. Para deixar o título do eixo x com a primeira letra maiúscula, adicione a camada de mapeamento estético `scale_x_discrete("Species")` ao final do seu código. 
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, sex) %>% 
   drop_na() %>% 
@@ -122,7 +122,7 @@ penguins %>%
 - O título do eixo y também precisa ser modificado. Para isso, adicione a camada estética scale_y_continuous("Number of penguins") ao final do seu código;
 - Para ter um maior controle dos rótulos do eixo y, utilize o argumento breaks = seq(0, 80, 10) e compare com os valores plotado neste eixo no gráfico anterior. 
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, sex) %>% 
   drop_na() %>% 
@@ -137,7 +137,7 @@ penguins %>%
 
 - Ainda é necessário alterar o título da legenda, dos seus rótulos e as cores das barras. Você pode realizar essas alterações utilizando `scale_fill_dsicrete("Sex", type = c("black", "dark grey"), labels = c("Female", "Male"))`;
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, sex) %>% 
   drop_na() %>% 
@@ -156,7 +156,7 @@ penguins %>%
 - Também é possível gerar barras em escala de cinza de forma automática. Experimente trocar a camada estética `scale_fill_discrete()` por `scale_fill_grey("Sex", labels = c("Female", "Male"))` ao final do seu código.
 
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, sex) %>% 
   drop_na() %>% 
@@ -174,7 +174,7 @@ penguins %>%
 - Gráficos para publicação em periódicos científicos impressos devem ser coloridos em escala de cinza. Contudo, muitas publicações também são disponibilizadas online e permitem gráficos coloridos. Experimente alterar manualmente as cores das barras do seu gráfico, alterando as cores fornecidas no argumento `type = `.
 
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, sex) %>% 
   drop_na() %>% 
@@ -203,7 +203,7 @@ display.brewer.all()
 
 - Experimente trocar a camada `scale_fill_dsicrete()` pela camada `scale_fill_brewer()` e experimente alterar o argumento `pelette = `, por `palette = "Dark2"`.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, sex) %>% 
   drop_na() %>% 
@@ -226,7 +226,7 @@ Consulte o `help()` da camada `scale_fill_brewer()` para conhecer melhor seu fun
 
 Os gráficos gerados a partir do `ggplot2` podem ser salvos em objetos, os quais podem ser utilizados para adicionar novas camadas. Veja este exemplo:
 
-```{r, echo = FALSE}
+```{r}
 # gerando uma objeto contendo uma camada de dados e uma camda de estéticos
 camada1 <- penguins %>% 
   select(species, sex) %>% 
@@ -234,7 +234,7 @@ camada1 <- penguins %>%
   ggplot(aes(x = species, fill = sex))
 ```
 
-```{r, echo = FALSE}
+```{r}
 # utilizando a camada1 para adicoinar uma camda geométrica
 camada1 +
   geom_bar(position = "dodge",
@@ -250,7 +250,7 @@ camada1 +
 
 - Armazene o gráfico que você produziu até aqui em um objeto chamado `n_pinguins_sp`.
 
-```{r, echo = FALSE}
+```{r}
 n_pinguins_sp <- penguins %>% 
   select(species, sex) %>% 
   drop_na() %>% 
@@ -273,7 +273,7 @@ A camada `theme()` é reponsável por controlar todos os elementos gráficos nã
 - Altere o tipo da fonte atribuindo a função `element_text(family = "serif")` ao argumento `text = `;
 - Aumente o tamanho da fonte dos títulos dos eixos e deixe-os em negrito atribuindo a função `element_text(face = "bold", size = 24)` ao argumento `axis.title = `.
 
-```{r, echo = FALSE}
+```{r}
 n_pinguins_sp +
   theme(text = element_text(family = "serif"), 
         axis.title = element_text(face = "bold",
@@ -282,7 +282,7 @@ n_pinguins_sp +
 
 - Altere o tamanho dos rótulos dos eixos atribuindo a função `element_text(size = 18)` ao argumento `axis.text = `.
 
-```{r, echo = FALSE}
+```{r}
 n_pinguins_sp +
   theme(text = element_text(family = "serif"), 
         axis.title = element_text(face = "bold",
@@ -292,7 +292,7 @@ n_pinguins_sp +
 
 - Altere o tamanho do título da legenda e deixe-o em negrito atribuindo a função `element_text(size = 20, face = "bold")` ao argumento `legend.title = `.
 
-```{r, echo = FALSE}
+```{r}
 n_pinguins_sp +
   theme(text = element_text(family = "serif"), 
         axis.title = element_text(face = "bold",
@@ -304,7 +304,7 @@ n_pinguins_sp +
 
 - Aumente o tamanh oda fonte dos rótulos da legenda aplicando a função `element_text(size = 18)` ao argumento `legend.text = `. 
 
-```{r, echo = FALSE}
+```{r}
 n_pinguins_sp +
   theme(text = element_text(family = "serif"), 
         axis.title = element_text(face = "bold",
@@ -319,7 +319,7 @@ n_pinguins_sp +
 
 - Adicione a linha do eixo y aplicando a função `element_line()` ao argumento `axis.line.y = ` para adicionar a linha do eixo y.
 
-```{r, echo = FALSE}
+```{r}
 n_pinguins_sp +
   theme(text = element_text(family = "serif"), 
         axis.title = element_text(face = "bold",
@@ -333,7 +333,7 @@ n_pinguins_sp +
 
 - Exclua os *ticks* do eixo x aplicando a função `element_blanck()` ao argumento `axis.ticks.x = `.
 
-```{r, echo = FALSE}
+```{r}
 n_pinguins_sp +
   theme(text = element_text(family = "serif"), 
         axis.title = element_text(face = "bold",
@@ -350,7 +350,7 @@ n_pinguins_sp +
 
 - Oculte o fundo acinzentado do gráfico aplicando a função `element_blanck()` ao argumento `panel.background = `.
 
-```{r, echo = FALSE}
+```{r}
 n_pinguins_sp +
   theme(text = element_text(family = "serif"), 
         axis.title = element_text(face = "bold",
@@ -370,7 +370,7 @@ Como você viu no exercício 1.4, é possível gravar as camadas gráficas do `g
 
 - Armazene a camada final de tema que você produziu no último item do exercício 1.7 num objeto chamado `meu_tema_barras`.
 
-```{r, echo = FALSE}
+```{r}
 meu_tema_barras <- theme(text = element_text(family = "serif"), 
         axis.title = element_text(face = "bold",
                                  size = 24),
@@ -385,7 +385,7 @@ meu_tema_barras <- theme(text = element_text(family = "serif"),
 
 Imprima o seu gráfico de barras utilizando as camadas gráficas que você armazenou no objeto `n_pinguins_sp` e `meu_tema_barras`.
 
-```{r, echo = FALSE}
+```{r}
 n_pinguins_sp + 
   meu_tema_barras
 ```
@@ -400,7 +400,7 @@ Agora você irá visualizar a distribuição de frequências da massa dos pingui
 - Aplique o estético `x = body_mass_g` a função `ggplot(aes())`;
 - Adicione a camada geométrica `geom_histogram()`
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, body_mass_g) %>% 
   drop_na() %>% 
@@ -410,7 +410,7 @@ penguins %>%
 
 - Aplique o atributo geométrico `binwidth = 200` para a ajustar a largura das barras.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, body_mass_g) %>% 
   drop_na() %>% 
@@ -420,7 +420,7 @@ penguins %>%
 
 - Aplique o atributo geométrico `center = 100` para ajustar a posição dos *ticks* no eixo x. 
 
-```{r, echo = FALSE}
+```{r}
 penguins %>%
   select(species, body_mass_g) %>% 
   drop_na() %>% 
@@ -435,7 +435,7 @@ Você acabou de gera visualizações da distribuição de frequências da massa 
 
 - Adicione o mapeamento estético `fill = species` a camada `ggplot(aes())`.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>%
   select(species, body_mass_g) %>% 
   drop_na() %>% 
@@ -446,7 +446,7 @@ penguins %>%
 ```
 - Adicione um grau de transparência às barras aplicando o atributo geométrico `alpha = 0.5` acamada geomrica `geom_histogram()`.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>%
   select(species, body_mass_g) %>% 
   drop_na() %>% 
@@ -459,7 +459,7 @@ penguins %>%
 
 - Ttransforme o eixo y em frequência relativa (%) aplicando o estético `y =..density..` camada `ggplot(aes())`.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>%
   select(species, body_mass_g) %>% 
   drop_na() %>% 
@@ -475,7 +475,7 @@ penguins %>%
 
 Assim como o gráfico de barras, seu não possui eixos. Adicione uma linha horizontal para representar o eixo x utilizando a função a camada geométrica `geom_hline(yintercept = 0)`.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>%
   select(species, body_mass_g) %>% 
   drop_na() %>% 
@@ -490,7 +490,7 @@ penguins %>%
 
 - Altere o título do eixo x para que ele fique com a primeira letra maiúscula, adicionando a camada de mapeamento estético `scale_x_continuous("Body mass (g")` ao final do seu código.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>%
   select(species, body_mass_g) %>% 
   drop_na() %>% 
@@ -506,7 +506,7 @@ penguins %>%
 
 - O título do eixo y também precisa ser modificado. Para isso, adicione a camada estética `scale_y_continuous(“Relative frequency (%)”)` ao final do seu código;
 
-```{r, echo = FALSE}
+```{r}
 penguins %>%
   select(species, body_mass_g) %>% 
   drop_na() %>% 
@@ -523,7 +523,7 @@ penguins %>%
 
 - Ainda é necessário alterar o título da legenda e as cores das barras. Você pode realizar essas alterações utilizando `scale_fill_dsicrete("Species", type = c("black", "grey40", "dark grey"))`
 
-```{r, echo = FALSE}
+```{r}
 penguins %>%
   select(species, body_mass_g) %>% 
   drop_na() %>% 
@@ -548,7 +548,7 @@ penguins %>%
 
 -Armazene o gráfico que você produziu até aqui em um objeto chamado `body_mass_histogram`
 
-```{r, echo = FALSE}
+```{r}
 body_mass_histogram <- penguins %>%
   select(species, body_mass_g) %>% 
   drop_na() %>% 
@@ -570,7 +570,7 @@ body_mass_histogram <- penguins %>%
 
 - Imprima o seu gráfico de barras utilizando as camadas gráficas que você armazenou no objeto `body_mass_histogram` e `meu_tema_barras`.
 
-```{r, echo = FALSE}
+```{r}
 body_mass_histogram +
   meu_tema_barras
 ```
@@ -589,7 +589,7 @@ Agora você irá avaliar a relação entre o comprimento e a largura do bico dos
 - Aplique os estético `x = bill_depth_mm` e `y = bill_length_mm` na camada `ggplot(aes())`;
 - Ao final, adicione a camada geom_point().
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, bill_length_mm, bill_depth_mm) %>% 
   drop_na() %>% 
@@ -602,7 +602,7 @@ Da forma como foi gerado, o gráfico não sugere nenhume relação aparente entr
 
 - Aplique o estético `color = species` na camada ggplot(aes()) para atribuir diferentes cores a cada espécie.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, bill_length_mm, bill_depth_mm) %>% 
   drop_na() %>% 
@@ -614,7 +614,7 @@ penguins %>%
 
 - Diferencie as espécies também pelos símbolos atribuindo o estético `shape = species` a camada `ggplot(aes())`.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, bill_length_mm, bill_depth_mm) %>% 
   drop_na() %>% 
@@ -627,7 +627,7 @@ penguins %>%
 
 - Adicione transparência aos símbolos adicionando o atributo geométrico `alpha = 0.5` a camada geométrica `geom_point()`.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, bill_length_mm, bill_depth_mm) %>% 
   drop_na() %>% 
@@ -644,7 +644,7 @@ penguins %>%
 - Para ter um maior controle dos rótulos do eixo x, utilize o argumento `breaks = seq(round(min(penguins$bill_depth_mm, na.rm = TRUE))` e compare com os valores plotado neste eixo no gráfico anterior. 
 - A parte do comando `seq(round(min(penguins$bill_depth_mm, na.rm = TRUE))` serve para gerar a sequência de valores que será potada nos rótulos do eixo x.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, bill_length_mm, bill_depth_mm) %>% 
   drop_na() %>% 
@@ -663,7 +663,7 @@ penguins %>%
 - Para ter um maior controle dos rótulos do eixo y, utilize o argumento `breaks = seq(round(min(penguins$bill_length_mm, na.rm = TRUE))` e compare com os valores plotado neste eixo no gráfico anterior. 
 - A parte do comando `seq(round(min(penguins$bill_length_mm, na.rm = TRUE))` serve para gerar a sequência de valores que será potada nos rótulos do eixo y.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, bill_length_mm, bill_depth_mm) %>% 
   drop_na() %>% 
@@ -685,7 +685,7 @@ penguins %>%
 - Alterando o título da legenda adicionando as camadas estéticas `scale_color_discrete("Species")` e `scale_shape_discrete("Species")` ao final do seu código.
 - Altere manualmente as cores das formas adicionando o argumento `type = c("purple", "green", "orange")` a camada `scale_color_discrete()`.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, bill_length_mm, bill_depth_mm) %>% 
   drop_na() %>% 
@@ -709,7 +709,7 @@ penguins %>%
 
 - Experimente substituir a camada `scale_color_discrete()` por `scale_color_brewer("Species", pelette = "Accent")`.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, bill_length_mm, bill_depth_mm) %>% 
   drop_na() %>% 
@@ -732,7 +732,7 @@ penguins %>%
 ```
 - Altera as cores dos pontos para escala de cinza alterando o argumento `type = ` para `type = c("black", "dark grey", "grey")` a camada estética `scale_color_discrete()`.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, bill_length_mm, bill_depth_mm) %>% 
   drop_na() %>% 
@@ -756,7 +756,7 @@ penguins %>%
 
 - Você também pode gerar gráficos em escala de cinza sem controlar manualmente as cores. Experimente substituir a camada estética `scale_color_discrete()` pela camada scale_color_grey() no seu código.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, bill_length_mm, bill_depth_mm) %>% 
   drop_na() %>% 
@@ -782,7 +782,7 @@ Consulte [este link](http://www.sthda.com/english/wiki/ggplot2-colors-how-to-cha
 
 - Salve seu gráfico em um objeto chamado `bill_depth_length`.
 
-```{r, echo = FALSE}
+```{r}
 bill_depth_length <- penguins %>% 
   select(species, bill_length_mm, bill_depth_mm) %>% 
   drop_na() %>% 
@@ -809,7 +809,7 @@ Seu gráfico está quase pronto para ser publicado. Falta apenas realizar os aju
 
 - Aplique o tema `meu_tema_barras` ao seu gráfico armazenado no objeto `bill_depth_length`.
 
-```{r, echo = FALSE}
+```{r}
 bill_depth_length +
   meu_tema_barras
 ```
@@ -823,7 +823,7 @@ Infelizmente o seu tema personalizado para os gráficos de barras não é totalm
 - Oculte o fundo cinza nos rótulos da legenda aplicando a função `element_rect()` no argumento `legend.key = `;
 - Salve as alterações no tema existente como novo objeto `meu_tema_relacoes`.
 
-```{r, echo = FALSE}
+```{r}
 meu_tema_relacoes <- meu_tema_barras +
   theme(axis.line.x = element_line(),
         axis.ticks.x = element_line(),
@@ -832,7 +832,7 @@ meu_tema_relacoes <- meu_tema_barras +
 
 - Agora, aplique seu novo tema ao gráfico `bill_depth_length`.
 
-```{r, echo = FALSE}
+```{r}
 bill_depth_length +
   meu_tema_relacoes
 ```
@@ -841,7 +841,7 @@ Pronto, seu gráfico está pronto para publicação! Você consegue identifica s
 
 - antes de gera o gráfico de linhas do próximo exercício, torne seu tema o tema *default* do `ggplot2` usando a função `set_update()`.
 
-```{r, echo = FALSE}
+```{r}
 theme_set(meu_tema_relacoes)
 ```
 
@@ -856,7 +856,7 @@ Agora, você vair gerar um gráfico de linhas para visualizar a variação no n�
 - Aplique os estéticos `x = year` e `y = n`na camada `ggplot(aes())`;
 - Aplique a camada geométrica `geom_line()` ao final do seu código.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, year) %>% 
   count(year) %>% 
@@ -874,7 +874,7 @@ Note que seu gráfico já está com o tema `meu_tema_relacoes` gerado no exercí
 - Utilize os estéticos `x = year`, `y = n` e `color = species` para gerar uma linha para cada espécie com diferentes cores;
 - Adicione a camada geométrica `geom_line()`ao final do seu código.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, year) %>% 
   count(year, species) %>% 
@@ -886,7 +886,7 @@ penguins %>%
 
 - Adicione o estético `linetype = species` na camada `ggplot(aes())` para gerar um tipo de linha para cada espécie.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, year) %>% 
   count(year, species) %>% 
@@ -899,7 +899,7 @@ penguins %>%
 
 - Adicione uma camada de pontos utilizando o geométrico `geom_point()` e o estético `color = species` para atribuir diferentes símbolos para cada espécies. 
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, year) %>% 
   count(year, species) %>% 
@@ -915,7 +915,7 @@ penguins %>%
 
 - Altere o título do eixo x e o intervalo entre os rótulos do eixo adicionando o mapeamento estético `scale_x_continuous("Year", breaks = seq(round(min(penguins$year, na.rm = TRUE)), round(max(penguins$year, na.rm = TRUE)), 1))`.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, year) %>% 
   count(year, species) %>% 
@@ -933,7 +933,7 @@ penguins %>%
 
 - Altere o título do eixo y e o intervalo entre os rótulos do eixoadicionando o mapeamento estético `scale_y_continuous("Number of penguins", breaks = seq(15, 55, 5))`.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, year) %>% 
   count(year, species) %>% 
@@ -954,7 +954,7 @@ penguins %>%
 - Altere o título da legenda e as cores das formas adicionando o mapeamento estético  `scale_color_discrete("Species", type = c("purple", "green", "orange"))`.
 - Altere também o título dos mapeamentos estéticos scale_shape_discrete("Species") e scale_linetype_discrete("Species") para evitar a criação de uma nova legenda.
 
-```{r, echo = FALSE}
+```{r}
 penguins %>% 
   select(species, year) %>% 
   count(year, species) %>% 
@@ -980,7 +980,7 @@ penguins %>%
 
 - Salve seu gráfico em um objeto chamado `n_penguins_year`.
 
-```{r, echo = FALSE}
+```{r}
 n_penguins_year <- penguins %>% 
   select(species, year) %>% 
   count(year, species) %>% 
@@ -1004,7 +1004,7 @@ n_penguins_year <- penguins %>%
 
 - Se você precisa de um gráfico em escalas de cinza, você pode somar os mapeamentos estáticos scale_color_grey("Species") ao objeto que armazena seu gráfico.
 
-```{r, echo = FALSE}
+```{r}
 n_penguins_year +
   scale_color_grey("Species")
 ```
