@@ -1,5 +1,5 @@
 # --------------------------------------------------- 
-# 07 - Visualização de Dados com ggplot2
+# 07 - VisualizaÃ§Ã£o de Dados com ggplot2
 # 13 jul 2021 
 # VNTBJR 
 # --------------------------------------------------- 
@@ -12,7 +12,7 @@ source("IRE_functions.R")
 # Carregar dados -------------------------------------------------
 tadpoles_clean <- read_tadpoles_raw("tadpoles_raw.csv")
 
-# ligação entre geom_() e stat_() -------------------------------------------------
+# liga??o entre geom_() e stat_() -------------------------------------------------
 p <- tadpoles_len_sp %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>%
   drop_na() %>% 
@@ -104,7 +104,7 @@ p +  geom_point() +
   geom_smooth(method = "lm",
               fullrange = TRUE)
 
-# Gráficos com estatísticas -------------------------------------------------
+# Gr?ficos com estat?sticas -------------------------------------------------
 p <- tadpoles_clean %>%
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
@@ -169,7 +169,7 @@ p + stat_summary(fun = mean,
                geom = "errorbar",
                width = 0.1)
 
-# Verificando distribuições -------------------------------------------------
+# Verificando distribui??es -------------------------------------------------
 p <- tadpoles_clean %>%
   filter(species %in% c("Hp", "Pa", "Sf"), 
          total_len < 70,
@@ -323,7 +323,7 @@ p <- tadpoles_clean %>%
 p + geom_point() +
   facet_grid(cols = vars(Species))
 
-# Ajustando o espaço de plotagem -------------------------------------------------
+# Ajustando o espa?o de plotagem -------------------------------------------------
 p <- tadpoles_clean %>%
   rename(Species = species, Stage = stage) %>% 
   filter(Species %in% c("Hylodes \npipilans", 
@@ -417,8 +417,8 @@ p + geom_point() +
   facet_wrap(vars(Species, Stage),
              scales = "free")
 
-# Bonus - Gráfico do início da aula -------------------------------------------------
-ids <- factor(rep(c("Dados", "Estéticos", "Geométricos","Temas"), 
+# Bonus - Gr?fico do in?cio da aula -------------------------------------------------
+ids <- factor(rep(c("Dados", "Est?ticos", "Geom?tricos","Temas"), 
                   each = 4))
 
 x <- rep(c(2, 1, 3 , 4), 4)
@@ -446,8 +446,8 @@ positions %>%
   geom_polygon(alpha  = 0.5,
                show.legend = FALSE) +
   scale_fill_manual(values = c(Dados = "#1B9E77",
-                               Estéticos = "#D95F02",
-                               Geométricos = "#7570B3",
+                               Est?ticos = "#D95F02",
+                               Geom?tricos = "#7570B3",
                                Temas = "#A6761D")) +
   annotate(geom = "text", 
            x = c(0.5, 0.3, 0.125, 0.5), 
@@ -457,8 +457,8 @@ positions %>%
            fontface = "italic",
            size = 12,
            color = c(Dados = "#1B9E77",
-                     Estéticos = "#D95F02",
-                     Geométricos = "#7570B3",
+                     Est?ticos = "#D95F02",
+                     Geom?tricos = "#7570B3",
                      Temas = "#A6761D")) + 
   xlim(-0.6, 4) +
   theme(text = element_blank(),
@@ -466,7 +466,7 @@ positions %>%
         panel.background = element_rect(fill = NULL, 
                                         color = NULL))
 
-ids <- factor(rep(c("Dados", "Estéticos", "Geométricos", "Estatísticas",
+ids <- factor(rep(c("Dados", "Est?ticos", "Geom?tricos", "Estat?sticas",
                     "Facetas", "Coordenadas","Temas"), 
                   each = 4))
 
@@ -495,9 +495,9 @@ positions %>%
   geom_polygon(alpha  = 0.5,
                show.legend = FALSE) +
   scale_fill_manual(values = c(Dados = "#1B9E77",
-                               Estéticos = "#D95F02",
-                               Geométricos = "#7570B3",
-                               Estatísticas = "#E7298A",
+                               Est?ticos = "#D95F02",
+                               Geom?tricos = "#7570B3",
+                               Estat?sticas = "#E7298A",
                                Facetas = "#66A61E",
                                Coordenadas = "#E6AB02",
                                Temas = "#A6761D")) +
@@ -509,9 +509,9 @@ positions %>%
            fontface = "italic",
            size = 6,
            color = c(Dados = "#1B9E77",
-                     Estéticos = "#D95F02",
-                     Geométricos = "#7570B3",
-                     Estatísticas = "#E7298A",
+                     Est?ticos = "#D95F02",
+                     Geom?tricos = "#7570B3",
+                     Estat?sticas = "#E7298A",
                      Facetas = "#66A61E",
                      Coordenadas = "#E6AB02",
                      Temas = "#A6761D")) + 
