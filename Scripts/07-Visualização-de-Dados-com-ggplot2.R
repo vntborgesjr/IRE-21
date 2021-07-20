@@ -7,12 +7,13 @@
 # Carregar pacotes  -------------------------------------------
 library(tidyverse)
 library(RColorBrewer)
-source("IRE_functions.R")
-
+library(ggbeeswarm)
+source("IRE-21/Slides/IRE_functions.R")
+getwd()
 # Carregar dados -------------------------------------------------
-tadpoles_clean <- read_tadpoles_raw("tadpoles_raw.csv")
+tadpoles_clean <- read_tadpoles_raw("IRE-21/Dados/tadpoles_raw.csv")
 
-# liga??o entre geom_() e stat_() -------------------------------------------------
+# ligação entre geom_() e stat_() -------------------------------------------------
 p <- tadpoles_len_sp %>% 
   filter(species %in% c("Hp", "Pa", "Sf")) %>%
   drop_na() %>% 
@@ -417,8 +418,193 @@ p + geom_point() +
   facet_wrap(vars(Species, Stage),
              scales = "free")
 
-# Bonus - Gr?fico do in?cio da aula -------------------------------------------------
-ids <- factor(rep(c("Dados", "Est?ticos", "Geom?tricos","Temas"), 
+p + geom_point() +
+  facet_wrap(vars(Species, Stage),
+             scales = "free", 
+             nrow = 3,
+             ncol = 5)
+
+# Facet_wrap() e plotes marginais  -------------------------------------------
+p + geom_point() +
+  facet_grid(rows = vars(Species),
+             cols = vars(Stage),
+             scales = "free",
+             margins = TRUE)
+
+# Camada de coordenadas  -------------------------------------------
+# Razão entre eixo x e y 
+p + 
+  geom_point() +
+  geom_smooth(se = FALSE)
+
+p + 
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  coord_cartesian(xlim = c(40, 50)) # alterando razão xy 1
+
+p + 
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  xlim(40, 50) # alterando razão xy 2
+
+p +
+  geom_point() +
+  scale_x_continuous(limits = c(40, 50)) # alterando razão xy 3
+
+p + geom_point() +
+  coord_fixed(ratio = 1,
+              ylim = c(0, 25),
+              xlim = c(0, 80)) # alterando razão xy 4
+
+p + geom_point() +
+  coord_cartesian(expand = 0)
+
+p + geom_point() +
+  coord_cartesian(expand = 1)
+
+p + geom_point() +
+  coord_cartesian(expand = 0,
+                  clip = "off")
+
+# Coordenadas x escalas  -------------------------------------------
+# Log10 dos eixos x e y
+ggplot(msleep, aes(y = 1, 
+             x = bodywt)) +
+  geom_jitter() +
+  scale_x_continuous(limits = c(0, 7000),
+                     breaks = seq(0, 7000, 1000)) +
+  coord_fixed(ratio = 2500)
+  
+ggplot(msleep, aes(y = 1, 
+               x = log10(bodywt))) + # log10 direto nos dados
+  geom_jitter() +
+  scale_x_continuous(limits = c(-3, 4),
+                     breaks = -3:4) +
+  coord_fixed(ratio = 3)
+
+ggplot(msleep, aes(y = 1, 
+             x = log10(bodywt))) + # log10 direto nos dados
+  geom_jitter() +
+  scale_x_continuous() +
+  annotation_logticks(sides = "b") +
+  coord_fixed(ratio = 3)
+
+ggplot(msleep, aes(y = 1, 
+              x = bodywt)) +
+  geom_jitter() +
+  scale_x_log10(breaks = c(0.001, 0.01, 0.1, 1, 10, 100, 1000, 7000)) + # aqui os valores do eixo correspondem aos valores reais dos dados
+  coord_fixed(ratio = 3)
+
+ggplot(msleep, aes(y = 1, 
+              x = bodywt)) +
+  geom_jitter() +
+  coord_trans(x = "log10")  # aqui os valores do eixo correspondem aos valores reais dos dados
+
+# exemplos em gráficos de relações - y vs. x
+ggplot(msleep, aes(x = bodywt,
+                   y = brainwt)) +
+  geom_point()
+
+ggplot(msleep, aes(bodywt, brainwt)) +
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10() +
+  ggtitle("Scale_ functions")
+
+ggplot(msleep, aes(bodywt, brainwt)) +
+  geom_point() +
+  coord_trans(x = "log10",
+              y = "log10")
+
+ggplot(msleep, aes(bodywt, brainwt)) +
+  geom_point() +
+  geom_smooth(method = "lm", 
+              se = FALSE) +
+  scale_x_log10() +
+  scale_y_log10() +
+  ggtitle("Scale_ functions")
+
+ggplot(msleep, aes(bodywt, brainwt)) +
+  geom_point() +
+  geom_smooth(method = "lm", 
+              se = FALSE) +
+  coord_trans(x = "log10",
+              y = "log10")
+
+# Invertando os eixos  -------------------------------------------
+p +
+  geom_point()
+
+p +
+  geom_point() +
+  coord_flip()
+
+# Dobrando eixos  -------------------------------------------
+airquality$Year <- rep(1973, nrow(airquality))
+
+airquality <- airquality %>% 
+  unite("Date", Month:Year,
+        sep = "-") %>% 
+  mutate(Date = lubridate::as_date(Date,
+                                   format = "%m-%d-%Y"))
+  
+ggplot(airquality, aes(x = Date,
+                       y = Temp)) +
+  geom_line() +
+  labs(x = "Date (1973)",
+       y = "Fahrenheit")
+
+# eixo em Fahrenheit
+y_breaks <- c(59, 68, 77, 86, 95, 104)
+
+# criar segundo eixo em Celsius
+y_labels <- ((y_breaks -32) * 5)/9
+
+# Create a secondary x-axis
+secondary_y_axis <- sec_axis(
+  # Use identity transformation
+  trans = identity,
+  name = "Celsius",
+  # Define breaks and labels as above
+  breaks = y_breaks,
+  labels = y_labels
+)
+
+# adicionar segundo eixo ao plote
+ggplot(airquality, aes(x = Date,
+                       y = Temp)) +
+  geom_line() +
+  labs(x = "Date (1973)",
+       y = "Fahrenheit") +
+  scale_y_continuous(sec.axis = secondary_y_axis)
+
+# Coordenada polor  -------------------------------------------
+# transformando gráficos de barra...
+tadpoles_clean %>% 
+  filter(species %in% c("Ae", "Pb", "Sa")) %>% 
+  ggplot(aes(x = 1, 
+             fill = species)) +
+  geom_bar()
+
+# ...gráfico de pizza
+tadpoles_clean %>% 
+  filter(species %in% c("Ae", "Pb", "Sa")) %>% 
+  ggplot(aes(x = 1, 
+             fill = species)) +
+  geom_bar() +
+  coord_polar(theta = "y")
+
+# ...gráfico de pizza
+tadpoles_clean %>% 
+  filter(species %in% c("Ae", "Pb", "Sa")) %>% 
+  ggplot(aes(x = 1, 
+             fill = species)) +
+  geom_bar(width = 0.1) +
+  coord_polar(theta = "y") +
+  scale_x_continuous(limits = c(0.5, 1.5))
+
+# Bonus - Gráfico do início da aula -------------------------------------------------
+ids <- factor(rep(c("Dados", "Estéticos", "Geométricos","Temas"), 
                   each = 4))
 
 x <- rep(c(2, 1, 3 , 4), 4)
@@ -466,7 +652,7 @@ positions %>%
         panel.background = element_rect(fill = NULL, 
                                         color = NULL))
 
-ids <- factor(rep(c("Dados", "Est?ticos", "Geom?tricos", "Estat?sticas",
+ids <- factor(rep(c("Dados", "Estéticos", "Geométricos", "Estatísticas",
                     "Facetas", "Coordenadas","Temas"), 
                   each = 4))
 
@@ -520,4 +706,61 @@ positions %>%
         line = element_blank(),
         panel.background = element_rect(fill = "darkgrey"))
 
+# Bonus 2 -plots beeswarm e violino   -------------------------------------------
+library(ggbeeswarm)
+# Úteis para comparar distribuições
+# Beeswarm
+tadpoles_clean %>% 
+  filter(species %in% c("Ca", "Pb", "Sa")) %>% 
+  ggplot(aes(x = species, 
+             y = body_len)) +
+  geom_beeswarm(color = "steelblue", size = 0.5)
 
+# Violino
+tadpoles_clean %>% 
+  filter(species %in% c("Ca", "Pb", "Sa")) %>% 
+  ggplot(aes(x = species, 
+             y = body_len)) +
+  geom_violin(fill = "steelblue")
+
+# Beeswarm + violino
+tadpoles_clean %>% 
+  filter(species %in% c("Ca", "Pb", "Sa")) %>% 
+  ggplot(aes(x = species, 
+             y = body_len)) +
+  geom_beeswarm(color = "steelblue", 
+                size = 0.2) +
+  geom_violin(fill = "steelblue",
+              alpha = 0.3)
+
+# Violino + boxplot
+tadpoles_clean %>% 
+  filter(species %in% c("Ca", "Pb", "Sa")) %>% 
+  ggplot(aes(x = species, 
+             y = body_len)) +
+  geom_violin(fill = "steelblue") +
+  geom_boxplot(alpha = 0.3)
+
+# Violino + boxplot + beeswarm
+tadpoles_clean %>% 
+  filter(species %in% c("Ca", "Pb", "Sa")) %>% 
+  ggplot(aes(x = species, 
+             y = body_len)) +
+  geom_violin(fill = "steelblue") +
+  geom_boxplot(alpha = 0.3) +
+  geom_beeswarm(color = "steelblue", size = 0.5)
+
+# Ridgline plot
+library(ggridges)
+tadpoles_clean %>% 
+  filter(species %in% c("Ca", "Pb", "Sa")) %>% 
+  ggplot(aes(y = species, 
+             x = body_len)) +
+  geom_density_ridges(bandwidth = 2)
+
+library(ggridges)
+tadpoles_clean %>% 
+  filter(species == "Ca") %>% 
+  ggplot(aes(y = factor(date), 
+             x = body_len)) +
+  geom_density_ridges(bandwidth = 2)

@@ -34,16 +34,16 @@ options(htmltools.dir.version = FALSE)
 xaringanExtra::use_xaringan_extra()
 xaringanExtra::use_clipboard()
 
-streams_raw <- readxl::read_xlsx("/Usuário/Documents/Vitor/IRE-21/Dados/streams.xlsx")
-streams_variables <- read_csv("/Usuário/Documents/Vitor/IRE-21/Dados/streams_variables.csv",
+streams_raw <- readxl::read_xlsx("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/streams.xlsx")
+streams_variables <- read_csv("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/streams_variables.csv",
                                col_types = cols(
                                  stream = col_factor()
                                ))
-streams_date_variables <- read_csv("/Usuário/Documents/Vitor/IRE-21/Dados/streams_date_variables.csv",
+streams_date_variables <- read_csv("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/streams_date_variables.csv",
                                col_types = cols(
                                  stream = col_factor()
                                ))
-tadpoles_clean <- read_tadpoles_raw("/Usuário/Documents/Vitor/IRE-21/Dados/tadpoles_raw.csv")
+tadpoles_clean <- read_tadpoles_raw("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/tadpoles_raw.csv")
 tadpoles_clean <- tadpoles_clean %>%
   mutate(ratio = body_len/total_len) 
 new_body_len <- tadpoles_clean$total_len[which(tadpoles_clean$ratio > 1)]
@@ -1690,13 +1690,13 @@ background-image: url("https://github.com/vntborgesjr/AnalisaR/blob/master/image
 background-position: 0% 100%, 100% 0%
 background-size: 15%, 10%
 
-# .blue[**Reordenando Facetas**]
+# .blue[**Renomeando Facetas**]
 
-.center[.red[**Reordenando os Dados Diretamente - fct_recode()**]]
+.center[.red[**Renomeando os Dados Diretamente - fct_recode()**]]
 
 
 ```{r, echo = FALSE, warning=FALSE, message = FALSE}
-tadpoles_clean <- read_tadpoles_raw("/Usuário/Documents/Vitor/IRE-21/Dados/tadpoles_raw.csv")
+tadpoles_clean <- read_tadpoles_raw("/home/cla/Documentos/Vitor/Laboratórios/UNIRIO/Disciplinas/Introdução-ao-R-para-Ecólogos/IRE-21/Dados/tadpoles_raw.csv")
 ```
 
 .pull-left[
@@ -1778,10 +1778,10 @@ p + geom_point() +
 
 .pull-right[
 ```{r, echo = FALSE, out.width="95%", warning=FALSE, message=FALSE}
-tadpoles_clean$species <- fct_recode(tadpoles_clean$species,
-             `Hylodes pipilans` = "Hp",
-             `Proceratophrys appendiculata` = "Pa",
-             `Scinax flavoguttatus` = "Sf")
+tadpoles_clean$species <- fct_relevel(tadpoles_clean$species,
+             "Scinax \nflavoguttatus",
+             "Proceratophrys \nappendiculata",
+             "Hylodes \npipilans")
 
 p <- tadpoles_clean %>%
   rename(Species = species, Stage = stage) %>% 
@@ -1799,7 +1799,7 @@ p + geom_point() +
 ]
 
 ???
-É possível reordenar os títulos das facetas diretamente nos dados utilizando a função `fct_relevel()` do pacote `forcats`.
+É possível alterar a ordem das facetas diretamente nos dados utilizando a função `fct_relevel()` do pacote `forcats`.
 
 ---
 
