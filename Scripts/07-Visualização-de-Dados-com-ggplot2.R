@@ -151,6 +151,7 @@ p <- tadpoles_clean %>%
   drop_na() %>% 
   ggplot(aes(x = species, 
              y = body_len))
+
 p + stat_summary(fun = mean,
                  geom = "point") +
   stat_summary(fun.data = mean_sdl,
@@ -165,7 +166,7 @@ p <- tadpoles_clean %>%
              y = body_len))
 p + stat_summary(fun = mean,
                  geom = "point") +
-  stat_summary(fun.data = mean_sdl,
+  stat_summary(fun.data = mean_cl_normal,
                fun.args = list(mult = 1),
                geom = "errorbar",
                width = 0.1)
@@ -188,11 +189,16 @@ p <- tadpoles_clean %>%
          body_len < 25) %>% 
   drop_na() %>% 
   ggplot(aes(x = body_len))
+p + geom_histogram()
 p + geom_histogram(aes(y = ..density..)) +
   geom_rug() +
   stat_function(fun = dnorm, color = "red",
                 args = list(mean = mean(tadpoles_clean$body_len[tadpoles_clean$body_len < 25], na.rm = TRUE),
                             sd = sd(tadpoles_clean$body_len[tadpoles_clean$body_len < 25], na.rm = TRUE)))
+
+rnorm(n = 100)
+?rnorm
+p + geom_density() + geom_rug()
 
 p <- tadpoles_clean %>%
   filter(species %in% c("Hp", "Pa", "Sf"), 
@@ -217,9 +223,39 @@ p <- tadpoles_clean %>%
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len))
-p + geom_point() +
-  facet_grid(cols = vars(species))
 
+# alterar o título das facetas sem alterar os dados originais
+nomes <- c(Hp = "Hylodes \npipilans",
+           Pa = "Poceratophrys \nappendiculata",
+           Sf = "Scinax \nflavoguttatus")
+
+p + geom_point() +
+  facet_grid(cols = vars(species),
+             labeller = labeller(species = nomes))
+
+p + geom_point() +
+  facet_grid(cols = vars(species),
+             labeller = labeller(species = c(Hp = "Hylodes \npipilans",
+                                             Pa = "Poceratophrys \nappendiculata",
+                                             Sf = "Scinax \nflavoguttatus")))
+# reordenar as facetas sem alterar os dados - não funciona
+tadpoles_clean$species <- fct_relevel(tadpoles_clean$species,
+                                      "Sf", "Pa", "Hp")
+
+p <- tadpoles_clean %>%
+  filter(species %in% c("Hp", "Pa", "Sf")) %>% 
+  drop_na() %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len))
+
+p + geom_point() +
+  facet_grid(cols = vars(species),
+             labeller = labeller(species = c(Hp = "Hylodes \npipilans",
+                                             Pa = "Poceratophrys \nappendiculata",
+                                             Sf = "Scinax \nflavoguttatus")))
+
+
+# alterar os títulos das facetas alterando diretamente os dados
 p <- tadpoles_clean %>%
   filter(species %in% c("Hp", "Pa", "Sf")) %>% 
   drop_na() %>% 
@@ -268,6 +304,10 @@ p <- tadpoles_clean %>%
   drop_na() %>% 
   ggplot(aes(x = total_len, 
              y = body_len))
+
+p + geom_point() +
+  facet_grid(cols = vars(species))
+
 p + geom_point() +
   facet_grid(cols = vars(species), 
              labeller = label_value)
@@ -452,12 +492,12 @@ p +
   scale_x_continuous(limits = c(40, 50)) # alterando razão xy 3
 
 p + geom_point() +
-  coord_fixed(ratio = 1,
+  coord_fixed(ratio = 1, # muda o aspecto do gráfico, a razão entre o eixo x e y
               ylim = c(0, 25),
               xlim = c(0, 80)) # alterando razão xy 4
 
 p + geom_point() +
-  coord_cartesian(expand = 0)
+    coord_cartesian(expand = 0)
 
 p + geom_point() +
   coord_cartesian(expand = 1)
@@ -516,7 +556,7 @@ ggplot(msleep, aes(bodywt, brainwt)) +
   coord_trans(x = "log10",
               y = "log10")
 
-ggplot(msleep, aes(bodywt, brainwt)) +
+ggplot(msleep, aes(x = bodywt, y = brainwt)) +
   geom_point() +
   geom_smooth(method = "lm", 
               se = FALSE) +
@@ -529,9 +569,13 @@ ggplot(msleep, aes(bodywt, brainwt)) +
   geom_smooth(method = "lm", 
               se = FALSE) +
   coord_trans(x = "log10",
-              y = "log10")
+              y = "log10") # não funciona!
 
 # Invertando os eixos  -------------------------------------------
+p <- tadpoles_clean %>% 
+  ggplot(aes(x = total_len, 
+             y = body_len)) 
+
 p +
   geom_point()
 
@@ -540,6 +584,7 @@ p +
   coord_flip()
 
 # Dobrando eixos  -------------------------------------------
+data(airquality)
 airquality$Year <- rep(1973, nrow(airquality))
 
 airquality <- airquality %>% 
@@ -576,7 +621,8 @@ ggplot(airquality, aes(x = Date,
   geom_line() +
   labs(x = "Date (1973)",
        y = "Fahrenheit") +
-  scale_y_continuous(sec.axis = secondary_y_axis)
+  scale_y_continuous(breaks = y_breaks,
+                     sec.axis = secondary_y_axis)
 
 # Coordenada polor  -------------------------------------------
 # transformando gráficos de barra...
@@ -592,7 +638,11 @@ tadpoles_clean %>%
   ggplot(aes(x = 1, 
              fill = species)) +
   geom_bar() +
-  coord_polar(theta = "y")
+  coord_polar(theta = "y") + 
+  theme(rect = element_blank(),
+        line = element_blank(),
+        axis.title = element_blank(),
+        axis.text = element_blank())
 
 # ...gráfico de pizza
 tadpoles_clean %>% 
@@ -601,7 +651,11 @@ tadpoles_clean %>%
              fill = species)) +
   geom_bar(width = 0.1) +
   coord_polar(theta = "y") +
-  scale_x_continuous(limits = c(0.5, 1.5))
+  scale_x_continuous(limits = c(0.5, 1.5)) + 
+  theme(rect = element_blank(),
+        line = element_blank(),
+        axis.title = element_blank(),
+        axis.text = element_blank())
 
 # Bonus - Gráfico do início da aula -------------------------------------------------
 ids <- factor(rep(c("Dados", "Estéticos", "Geométricos","Temas"), 
@@ -632,8 +686,8 @@ positions %>%
   geom_polygon(alpha  = 0.5,
                show.legend = FALSE) +
   scale_fill_manual(values = c(Dados = "#1B9E77",
-                               Est?ticos = "#D95F02",
-                               Geom?tricos = "#7570B3",
+                               Estéticos = "#D95F02",
+                               Geométricos = "#7570B3",
                                Temas = "#A6761D")) +
   annotate(geom = "text", 
            x = c(0.5, 0.3, 0.125, 0.5), 
@@ -643,8 +697,8 @@ positions %>%
            fontface = "italic",
            size = 12,
            color = c(Dados = "#1B9E77",
-                     Est?ticos = "#D95F02",
-                     Geom?tricos = "#7570B3",
+                     Estéticos = "#D95F02",
+                     Geométricos = "#7570B3",
                      Temas = "#A6761D")) + 
   xlim(-0.6, 4) +
   theme(text = element_blank(),

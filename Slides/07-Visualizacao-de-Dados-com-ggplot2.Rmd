@@ -1069,7 +1069,7 @@ p <- tadpoles_clean %>%
 
 p + stat_summary(fun = mean,
                  geom = "point") +
-  stat_summary(fun.data = mean_sdl,
+  stat_summary(fun.data = mean_cl_normal,
                  fun.args = list(mult = 1),
                geom = "errorbar",
                width = 0.1)
@@ -2115,7 +2115,14 @@ p + geom_jitter(height = 0.1,
 ???
 Podemos controlar o espaço de plotagem do eixo y quando avaliamos variáveis categóricas utilizando o argumento `space = "free_y"`.
 
+- Próximo slide com facet_wrap()
 
-
+- Camada de coordenadas - apresentar funções
+  - coord_fixed()
+  - coord_cartesian()
+  - xlim()
+  - scale_x_continuous(limits = )
+  
+- Exemplos e diferenças
 
 

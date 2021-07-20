@@ -757,6 +757,38 @@ background-size: 15%, 10%
 
 ```r
 library(Hmisc)
+```
+
+```
+## Carregando pacotes exigidos: lattice
+```
+
+```
+## Carregando pacotes exigidos: survival
+```
+
+```
+## Carregando pacotes exigidos: Formula
+```
+
+```
+## 
+## Attaching package: 'Hmisc'
+```
+
+```
+## The following objects are masked from 'package:dplyr':
+## 
+##     src, summarize
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     format.pval, units
+```
+
+```r
 smean.sdl(tadpoles_clean$body_len, 
           mult = 1, na.rm = TRUE)
 ```
@@ -846,7 +878,7 @@ p &lt;- tadpoles_clean %&gt;%
 
 p + stat_summary(fun = mean,
                  geom = "point") +
-  stat_summary(fun.data = mean_sdl,
+  stat_summary(fun.data = mean_cl_normal,
                  fun.args = list(mult = 1),
                geom = "errorbar",
                width = 0.1)
@@ -1611,8 +1643,15 @@ p + geom_jitter(height = 0.1,
 ???
 Podemos controlar o espaço de plotagem do eixo y quando avaliamos variáveis categóricas utilizando o argumento `space = "free_y"`.
 
+- Próximo slide com facet_wrap()
 
-
+- Camada de coordenadas - apresentar funções
+  - coord_fixed()
+  - coord_cartesian()
+  - xlim()
+  - scale_x_continuous(limits = )
+  
+- Exemplos e diferenças
 
 
     </textarea>
